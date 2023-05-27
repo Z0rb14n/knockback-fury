@@ -4,11 +4,17 @@ public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
     public float speed = 69;
+    [Min(0), Tooltip("Jump Impulse")]
+    public float jumpForce = 10;
+    [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
+    public float testKnockbackForce = 10;
     private Rigidbody2D _body;
+    private Camera _cam;
 
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
+        _cam = Camera.main;
     }
 
     private void Update()
@@ -20,6 +26,16 @@ public class PlayerMovementScript : MonoBehaviour
         
         _body.AddForce(force * (Time.deltaTime * speed), ForceMode2D.Force);
         
-        if (Input.GetKeyDown(KeyCode.Space)) _body.AddForce(new Vector2(0,10), ForceMode2D.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space)) _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 dirVec = ((Vector2)(transform.position - worldMousePos)).normalized;
+            if (dirVec != Vector2.zero)
+            {
+                _body.AddForce(dirVec * testKnockbackForce, ForceMode2D.Impulse);
+            }
+        }
     }
 }
