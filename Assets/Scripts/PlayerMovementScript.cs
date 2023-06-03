@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
@@ -12,6 +13,10 @@ public class PlayerMovementScript : MonoBehaviour
     public Vector2 wallJumpForce = new(10,5);
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
+    [Min(0), Tooltip("Dash movement per physics update")]
+    public float dashSpeed = 1;
+    [Min(0), Tooltip("Time in Air Dash")]
+    public float dashTime = 1;
     private ContactFilter2D _groundFilter;
     private ContactFilter2D _leftWallFilter;
     private ContactFilter2D _rightWallFilter;
@@ -23,6 +28,9 @@ public class PlayerMovementScript : MonoBehaviour
     private Vector2 _knockbackDirection;
     private float _speed;
     private float _currentVelocity;
+    private bool _dashing;
+    private Vector2 _dashDirection;
+    private int _physicsCheckMask;
     
     private bool Grounded => _body.IsTouching(_groundFilter);
     private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -37,10 +45,10 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void InitializeContactFilters()
     {
-        int physicsCheckMask = LayerMask.GetMask("Default");
+        _physicsCheckMask = LayerMask.GetMask("Default");
         _groundFilter = new ContactFilter2D
         {
-            layerMask = physicsCheckMask,
+            layerMask = _physicsCheckMask,
             useLayerMask = true,
             useNormalAngle = true,
             minNormalAngle = 30,
@@ -48,7 +56,7 @@ public class PlayerMovementScript : MonoBehaviour
         };
         _leftWallFilter = new ContactFilter2D
         {
-            layerMask = physicsCheckMask,
+            layerMask = _physicsCheckMask,
             useLayerMask = true,
             useNormalAngle = true,
             minNormalAngle = -60,
@@ -56,7 +64,7 @@ public class PlayerMovementScript : MonoBehaviour
         };
         _rightWallFilter = new ContactFilter2D
         {
-            layerMask = physicsCheckMask,
+            layerMask = _physicsCheckMask,
             useLayerMask = true,
             useNormalAngle = true,
             minNormalAngle = 120,
@@ -76,6 +84,16 @@ public class PlayerMovementScript : MonoBehaviour
         _body.velocity = new Vector2(_speed, _body.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!_dashing && !Grounded && xInput != 0)
+            {
+                _dashing = true;
+                _dashDirection = new Vector2(xInput, 0);
+                StartCoroutine(DashCoroutine());
+            }
+        }
         
         if (Input.GetMouseButtonDown(0))
         {
@@ -107,5 +125,18 @@ public class PlayerMovementScript : MonoBehaviour
             _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
             _knockbackRequest = false;
         }
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
+        {
+            if (_body.IsTouchingLayers(_physicsCheckMask)) break;
+            Vector2 pos = _body.position;
+            _body.MovePosition(pos + (_dashDirection * dashSpeed));
+            yield return new WaitForFixedUpdate();
+        }
+
+        _dashing = false;
     }
 }
