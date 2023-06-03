@@ -23,13 +23,15 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        _force = Vector2.zero;
+        Vector2 force = Vector2.zero;
         
-        if (Input.GetKey(KeyCode.A)) _force += Vector2.left;
-        if (Input.GetKey(KeyCode.D)) _force += Vector2.right;
+        if (Input.GetKey(KeyCode.A)) force += Vector2.left;
+        if (Input.GetKey(KeyCode.D)) force += Vector2.right;
+        
+        _body.AddForce(force * (Time.deltaTime * speed), ForceMode2D.Force);
+        
+        if (Input.GetKeyDown(KeyCode.Space)) _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
 
-        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
-        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
@@ -44,8 +46,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _body.AddForce(_force * (Time.fixedDeltaTime * speed), ForceMode2D.Force);
-
         if (_jumpRequest)
         {
             _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
