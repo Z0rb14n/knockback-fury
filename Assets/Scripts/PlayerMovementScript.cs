@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
@@ -26,6 +27,13 @@ public class PlayerMovementScript : MonoBehaviour
     private Vector2 _knockbackDirection;
     private float _speed;
     private float _currentVelocity;
+    private bool _dashing;
+    private Vector2 _dashDirection;
+    private int _physicsCheckMask;
+    
+    private bool Grounded => _body.IsTouching(_groundFilter);
+    private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
+    private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
     private void Awake()
     {
@@ -77,6 +85,16 @@ public class PlayerMovementScript : MonoBehaviour
 
         _jumpRequest = Input.GetKeyDown(KeyCode.Space); // Removed if statement
         
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!_dashing && !Grounded && xInput != 0)
+            {
+                _dashing = true;
+                _dashDirection = new Vector2(xInput, 0);
+                StartCoroutine(DashCoroutine());
+            }
+        }
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
@@ -89,7 +107,12 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (_jumpRequest)
         {
-            _body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Used Vector2.up instead of new Vector2(0, jumpForce)
+            if (Grounded)
+                _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            else if (IsOnLeftWall)
+                _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+            else if (IsOnRightWall)
+                _body.AddForce(new Vector2(-wallJumpForce.x,wallJumpForce.y),ForceMode2D.Impulse);
             _jumpRequest = false;
         }
 
@@ -99,5 +122,18 @@ public class PlayerMovementScript : MonoBehaviour
                 _body.AddForce(_knockbackDirection * _weapon.weaponData.knockbackStrength, ForceMode2D.Impulse);
             _knockbackRequest = false;
         }
+    }
+
+    private IEnumerator DashCoroutine()
+    {
+        for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
+        {
+            if (_body.IsTouchingLayers(_physicsCheckMask)) break;
+            Vector2 pos = _body.position;
+            _body.MovePosition(pos + (_dashDirection * dashSpeed));
+            yield return new WaitForFixedUpdate();
+        }
+
+        _dashing = false;
     }
 }
