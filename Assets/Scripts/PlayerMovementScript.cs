@@ -102,6 +102,7 @@ public class PlayerMovementScript : MonoBehaviour
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 dirVec = ((Vector2)(transform.position - worldMousePos)).normalized;
+            _weapon.Fire();
             if (dirVec != Vector2.zero)
             {
                 _knockbackRequest = true;

@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -9,7 +8,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]
     private SpriteRenderer sprite;
 
-    [CanBeNull] public WeaponData weaponData;
+    public WeaponData weaponData;
     private Camera _mainCam;
     private Vector2 _spriteStartPosition;
     private Vector2 _recoilAnimDisplacement;
@@ -27,7 +26,7 @@ public class Weapon : MonoBehaviour
         UpdateFromWeaponData();
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         PointAtCursor();
 
         float dt = Time.deltaTime;
@@ -55,8 +54,7 @@ public class Weapon : MonoBehaviour
     /// Initialize values and start firing animation
     /// </summary>
     private void StartFireAnimation() {
-        if (weaponData != null)
-            _recoilAnimTimer = weaponData.recoilAnimationDuration;
+        _recoilAnimTimer = weaponData.recoilAnimationDuration;
     }
 
     /// <summary>
@@ -93,5 +91,6 @@ public class Weapon : MonoBehaviour
         Vector2 pivotPoint = spritePivot.position;
         Vector2 mousePos = GetMousePos();
         spritePivot.right = mousePos - pivotPoint;
-   }
+        sprite.flipY = mousePos.x < pivotPoint.x;
+    }
 }
