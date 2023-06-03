@@ -12,7 +12,6 @@ public class PlayerMovementScript : MonoBehaviour
     public float testKnockbackForce = 10;
     private Rigidbody2D _body;
     private Camera _cam;
-    private Vector2 _force;
     private bool _jumpRequest;
     private bool _knockbackRequest;
     private Vector2 _knockbackDirection;
@@ -32,9 +31,12 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) xInput -= 1;
         if (Input.GetKey(KeyCode.D)) xInput += 1;
 
-        _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-
-        _body.velocity = new Vector2(_speed, _body.velocity.y);
+        // Only change velocity when there's input
+        if (xInput != 0) 
+        {
+            _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+            _body.velocity = new Vector2(_speed, _body.velocity.y);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
         
