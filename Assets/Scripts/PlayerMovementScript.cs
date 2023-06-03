@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
@@ -10,14 +11,16 @@ public class PlayerMovementScript : MonoBehaviour
     public float jumpForce = 10;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
+    [Min(0), Tooltip("Post-knockback control delay")]
+    public float knockbackControlDelay = 0.5f;
     private Rigidbody2D _body;
     private Camera _cam;
-    private Vector2 _force;
     private bool _jumpRequest;
     private bool _knockbackRequest;
     private Vector2 _knockbackDirection;
     private float _speed;
     private float _currentVelocity;
+    private bool _controlEnabled = true;
 
     private void Awake()
     {
@@ -32,9 +35,11 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) xInput -= 1;
         if (Input.GetKey(KeyCode.D)) xInput += 1;
 
-        _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-
-        _body.velocity = new Vector2(_speed, _body.velocity.y);
+        if (_controlEnabled)
+        {
+            _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+            _body.velocity = new Vector2(_speed, _body.velocity.y);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
         
@@ -60,8 +65,16 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (_knockbackRequest)
         {
-            _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
+            StartCoroutine(Knockback());
             _knockbackRequest = false;
         }
+    }
+
+    private IEnumerator Knockback()
+    {
+        _controlEnabled = false;
+        _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(knockbackControlDelay);
+        _controlEnabled = true;
     }
 }
