@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: DoubleBarrelShotgun
+  m_Name: SMGData
   m_EditorClassIdentifier: 
-  weaponName: Double-Barrel Shotgun
-  numProjectiles: 10
+  weaponName: SMG
+  numProjectiles: 1
   range: 10
   projectileSpeed: 1
-  projectileDamage: 20
-  roundsPerSecond: 1.83
-  clipSize: 2
-  reloadTime: 2.5
-  spread: 45
+  projectileDamage: 14
+  roundsPerSecond: 9
+  clipSize: 50
+  reloadTime: 2
+  spread: 20
   isHitscan: 0
-  knockbackStrength: 12
+  knockbackStrength: 2
   recoilAnimationDuration: 0.2
-  sprite: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
+  fireMode: 1
+  sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
