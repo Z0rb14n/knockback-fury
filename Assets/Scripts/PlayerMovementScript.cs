@@ -11,12 +11,12 @@ public class PlayerMovementScript : MonoBehaviour
     public float jumpForce = 10;
     [Tooltip("Wall Jump Impulse")]
     public Vector2 wallJumpForce = new(10,5);
-    [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
-    public float testKnockbackForce = 10;
     [Min(0), Tooltip("Dash movement per physics update")]
     public float dashSpeed = 1;
     [Min(0), Tooltip("Time in Air Dash")]
     public float dashTime = 1;
+
+    private Weapon _weapon;
     private ContactFilter2D _groundFilter;
     private ContactFilter2D _leftWallFilter;
     private ContactFilter2D _rightWallFilter;
@@ -39,6 +39,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
+        _weapon = GetComponentInChildren<Weapon>();
         InitializeContactFilters();
     }
 
@@ -124,7 +125,8 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (_knockbackRequest)
         {
-            _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
+            if (!ReferenceEquals(_weapon, null) && !ReferenceEquals(_weapon.weaponData, null))
+                _body.AddForce(_knockbackDirection * _weapon.weaponData.knockbackStrength, ForceMode2D.Impulse);
             _knockbackRequest = false;
         }
     }
