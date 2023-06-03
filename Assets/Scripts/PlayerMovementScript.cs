@@ -4,15 +4,15 @@ using UnityEngine;
 public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
-    public float maxSpeed = 69;
+    public float maxSpeed = 10;
     [Min(0), Tooltip("Smoothness of Speed Changes")]
-    public float speedSmoothness = 0.5f;
+    public float speedSmoothness = 0.2f;
     [Min(0), Tooltip("Jump Impulse")]
-    public float jumpForce = 10;
+    public float jumpForce = 20;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
-    [Min(0), Tooltip("Post-knockback control delay")]
-    public float knockbackControlDelay = 0.5f;
+    [Min(0), Tooltip("Post-knockback control delay (DO NOT SET TO 0!)")]
+    public float knockbackControlDelay = 0.1f;
     private Rigidbody2D _body;
     private Camera _cam;
     private bool _jumpRequest;
