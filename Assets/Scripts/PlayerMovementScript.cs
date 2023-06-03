@@ -23,15 +23,16 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        Vector2 force = Vector2.zero;
+        float xInput = 0;
         
-        if (Input.GetKey(KeyCode.A)) force += Vector2.left;
-        if (Input.GetKey(KeyCode.D)) force += Vector2.right;
-        
-        _body.AddForce(force * (Time.deltaTime * speed), ForceMode2D.Force);
-        
-        if (Input.GetKeyDown(KeyCode.Space)) _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
+        if (Input.GetKey(KeyCode.A)) xInput -= 1;
+        if (Input.GetKey(KeyCode.D)) xInput += 1;
 
+        // Apply the speed directly to the x velocity, preserving the y velocity
+        _body.velocity = new Vector2(xInput * speed, _body.velocity.y);
+
+        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+        
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
