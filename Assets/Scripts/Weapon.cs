@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -9,77 +7,81 @@ public class Weapon : MonoBehaviour
     private Transform spritePivot;
     [SerializeField]
     private Transform sprite;
-    private Camera mainCam;
+    private Camera _mainCam;
     private const float knockbackStrength = 12;
     private const float recoilAnimDuration = 0.2f;
-    private Vector2 spriteStartPosition;
-    private Vector2 recoilAnimDisplacement;
+    private Vector2 _spriteStartPosition;
+    private Vector2 _recoilAnimDisplacement;
 
     // VARYING
-    private float recoilAnimTimer = 0;
+    private float _recoilAnimTimer = 0;
+
+    public float KnockbackStrength { get; private set; } = 12;
+
+    public Vector2 LookDirection => spritePivot.right;
 
 
-    // Start is called before the first frame update
-    void Start() {
-        mainCam = Camera.main;
-        spriteStartPosition = sprite.localPosition;
-        recoilAnimDisplacement = new Vector2(-0.02f,0);
+    private void Awake() {
+        _mainCam = Camera.main;
+        _spriteStartPosition = sprite.localPosition;
+        _recoilAnimDisplacement = new Vector2(-0.02f,0);
     }
 
-    void FixedUpdate() {
-        pointAtCursor();
+    private void FixedUpdate() {
+        PointAtCursor();
 
         float dt = Time.deltaTime;
 
-        if (recoilAnimTimer > 0) {
+        if (_recoilAnimTimer > 0) {
             FireAnimation(dt);
         }
     }
 
-    // fire weapon
+    /// <summary>
+    /// Fire weapon
+    /// </summary>
     public void Fire() {
         StartFireAnimation();
         // instantiate & shoot bullets etc
     }
 
-    // returns current weapons recoil knockback strength
-    public float GetKnockbackStrength() {
-        return knockbackStrength;
-    }
-
-    // return current lookdirection vector
-    public Vector2 GetLookDirection() {
-        return spritePivot.right;
-    }
-
-    // Initialise values and start firing animation
+    /// <summary>
+    /// Initialize values and start firing animation
+    /// </summary>
     private void StartFireAnimation() {
-        recoilAnimTimer = recoilAnimDuration;
+        _recoilAnimTimer = recoilAnimDuration;
     }
 
-    // update firing animation and values
+    /// <summary>
+    /// Update firing animation and values
+    /// </summary>
+    /// <param name="dt">Typically <code>Time.deltaTime</code></param>
     private void FireAnimation(float dt) {
-        float weight = recoilAnimTimer/recoilAnimDuration;
+        float weight = _recoilAnimTimer/recoilAnimDuration;
         if (weight <= 0.5) {
             weight = 1 - weight;
         }
         weight = (weight - 0.5f)*2;
 
-        sprite.localPosition = Vector2.Lerp(recoilAnimDisplacement, spriteStartPosition, weight);
+        sprite.localPosition = Vector2.Lerp(_recoilAnimDisplacement, _spriteStartPosition, weight);
 
-        recoilAnimTimer -= dt;
-        if (recoilAnimTimer <= 0) {
-            sprite.localPosition = spriteStartPosition;
+        _recoilAnimTimer -= dt;
+        if (_recoilAnimTimer <= 0) {
+            sprite.localPosition = _spriteStartPosition;
         }
     }
 
-    // return world mouse coordinates
+    /// <summary>
+    /// Return world mouse coordinates
+    /// </summary>
     private Vector2 GetMousePos() {
-        return mainCam.ScreenToWorldPoint(Input.mousePosition);
+        return _mainCam.ScreenToWorldPoint(Input.mousePosition);
     }
 
-    // make the sprite pivot point towards to cursor
-    private void pointAtCursor() {
+    /// <summary>
+    /// Make the sprite pivot point towards to cursor
+    /// </summary>
+    private void PointAtCursor() {
         Vector2 pivotPoint = spritePivot.position;
         Vector2 mousePos = GetMousePos();
         spritePivot.right = mousePos - pivotPoint;
