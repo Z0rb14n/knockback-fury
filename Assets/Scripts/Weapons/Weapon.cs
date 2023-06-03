@@ -7,7 +7,9 @@ namespace Weapons
         // CONSTANT
         [SerializeField] private Transform spritePivot;
         [SerializeField] private SpriteRenderer sprite;
+        [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
+        [SerializeField] private GameObject projectilePrefab;
 
         public WeaponData weaponData;
         private Camera _mainCam;
@@ -53,17 +55,33 @@ namespace Weapons
         {
             StartFireAnimation();
             // instantiate & shoot bullets etc
+            Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            Vector2 normalizedLookDirection = LookDirection.normalized;
             if (weaponData.isHitscan)
             {
-                Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
                 // TODO LAYERMASK FOR ENEMIES/PLAYERS
-                RaycastHit2D hit = Physics2D.Raycast(origin, LookDirection, weaponData.range);
-                Debug.DrawLine(origin,origin + (LookDirection*weaponData.range),Color.red,1,false);
-                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (LookDirection.normalized * weaponData.range) : hit.point;
-                GameObject go = Instantiate(linePrefab);
+                RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, weaponData.range);
+                // Debug.DrawLine(origin,origin + (normalizedLookDirection*weaponData.range),Color.red,1,false);
+                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * weaponData.range) : hit.point;
+                
+                GameObject go = ReferenceEquals(projectileParent, null) ? Instantiate(linePrefab) : Instantiate(linePrefab, projectileParent);
                 // expensive but required; Fire isn't called every frame(?)
                 WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
                 line.Initialize(origin,finalPos,1);
+            }
+            else
+            {
+                for (int i = 0; i < weaponData.numProjectiles; i++)
+                {
+                    GameObject go = ReferenceEquals(projectileParent, null)
+                        ? Instantiate(projectilePrefab, origin, Quaternion.identity)
+                        : Instantiate(projectilePrefab, origin, Quaternion.identity, projectileParent);
+                    float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
+                    angle += Random.Range(-weaponData.spread/2, weaponData.spread/2) * Mathf.Deg2Rad;
+                    Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                    WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
+                    proj.Initialize(weaponData.projectileDamage, weaponData.range, weaponData.projectileSpeed, finalDir);
+                }
             }
         }
 
