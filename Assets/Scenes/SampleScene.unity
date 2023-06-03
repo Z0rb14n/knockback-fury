@@ -502,9 +502,11 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 2567387db330b8643a5e6aec6720493a, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 14
-    m_Data: {fileID: 7482667652216324306, guid: 7ca57d2636fda5b44ba9161eb2f8ca49, type: 3}
+    m_Data: {fileID: 7482667652216324306, guid: 7ca57d2636fda5b44ba9161eb2f8ca49,
+      type: 3}
   - m_RefCount: 1
-    m_Data: {fileID: 7482667652216324306, guid: 5b1589864e352224a9e931435779fdb7, type: 3}
+    m_Data: {fileID: 7482667652216324306, guid: 5b1589864e352224a9e931435779fdb7,
+      type: 3}
   m_TileMatrixArray:
   - m_RefCount: 15
     m_Data:
@@ -628,7 +630,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -708,5 +711,6 @@ MonoBehaviour:
   jumpForce: 10
   wallJumpForce: {x: 10, y: 5}
   testKnockbackForce: 20
+  knockbackControlDelay: 0.1
   dashSpeed: 1
   dashTime: 1
