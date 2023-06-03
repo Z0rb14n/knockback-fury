@@ -16,7 +16,7 @@ public class PlayerMovementScript : MonoBehaviour
     [Min(0), Tooltip("Time in Air Dash")]
     public float dashTime = 1;
 
-    private Weapon _weapon;
+    private Weapons.Weapon _weapon;
     private ContactFilter2D _groundFilter;
     private ContactFilter2D _leftWallFilter;
     private ContactFilter2D _rightWallFilter;
@@ -39,7 +39,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
-        _weapon = GetComponentInChildren<Weapon>();
+        _weapon = GetComponentInChildren<Weapons.Weapon>();
         InitializeContactFilters();
     }
 

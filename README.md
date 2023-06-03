@@ -10,3 +10,4 @@ Clone the repository, then in Unity Hub: Open > Add project from disk to add the
 
 ## Assets Credits:
  - Shotgun: https://opengameart.org/content/pixel-art2d-shotgun
+ - AR + GL: https://opengameart.org/content/ar-r
