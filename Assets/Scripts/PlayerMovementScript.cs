@@ -1,6 +1,8 @@
 using System.Collections;
+using DashVFX;
 using UnityEngine;
 
+[DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),typeof(MeshTrail))]
 public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
@@ -16,6 +18,7 @@ public class PlayerMovementScript : MonoBehaviour
     [Min(0), Tooltip("Time in Air Dash")]
     public float dashTime = 1;
 
+    private MeshTrail _meshTrail;
     private Weapons.Weapon _weapon;
     private ContactFilter2D _groundFilter;
     private ContactFilter2D _leftWallFilter;
@@ -39,6 +42,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
+        _meshTrail = GetComponent<MeshTrail>();
         _weapon = GetComponentInChildren<Weapons.Weapon>();
         InitializeContactFilters();
     }
@@ -127,6 +131,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private IEnumerator DashCoroutine()
     {
+        _meshTrail.StartDash();
         for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
         {
             if (_body.IsTouchingLayers(_physicsCheckMask)) break;
@@ -136,5 +141,6 @@ public class PlayerMovementScript : MonoBehaviour
         }
 
         _dashing = false;
+        _meshTrail.StopDash();
     }
 }

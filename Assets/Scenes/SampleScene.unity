@@ -4040,9 +4040,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5138450944320709130, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: fadeSpeed
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138450944320709130, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: maxTimeInterval
+      value: 0.025
+      objectReference: {fileID: 0}
     - target: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: dashSpeed
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: testKnockbackForce
