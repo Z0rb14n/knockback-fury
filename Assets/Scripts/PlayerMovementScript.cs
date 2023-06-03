@@ -1,18 +1,15 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
-    public float maxSpeed = 10;
+    public float maxSpeed = 69;
     [Min(0), Tooltip("Smoothness of Speed Changes")]
-    public float speedSmoothness = 0.2f;
+    public float speedSmoothness = 0.5f;
     [Min(0), Tooltip("Jump Impulse")]
-    public float jumpForce = 20;
+    public float jumpForce = 10;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
-    [Min(0), Tooltip("Post-knockback control delay (DO NOT SET TO 0!)")]
-    public float knockbackControlDelay = 0.1f;
     private Rigidbody2D _body;
     private Camera _cam;
     private bool _jumpRequest;
@@ -20,7 +17,6 @@ public class PlayerMovementScript : MonoBehaviour
     private Vector2 _knockbackDirection;
     private float _speed;
     private float _currentVelocity;
-    private bool _controlEnabled = true;
 
     private void Awake()
     {
@@ -35,7 +31,8 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetKey(KeyCode.A)) xInput -= 1;
         if (Input.GetKey(KeyCode.D)) xInput += 1;
 
-        if (_controlEnabled)
+        // Only change velocity when there's input
+        if (xInput != 0) 
         {
             _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
             _body.velocity = new Vector2(_speed, _body.velocity.y);
@@ -65,16 +62,8 @@ public class PlayerMovementScript : MonoBehaviour
 
         if (_knockbackRequest)
         {
-            StartCoroutine(Knockback());
+            _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
             _knockbackRequest = false;
         }
-    }
-
-    private IEnumerator Knockback()
-    {
-        _controlEnabled = false;
-        _body.AddForce(_knockbackDirection * testKnockbackForce, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(knockbackControlDelay);
-        _controlEnabled = true;
     }
 }
