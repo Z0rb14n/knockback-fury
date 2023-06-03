@@ -74,10 +74,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        float xInput = 0;
-        
-        if (Input.GetKey(KeyCode.A)) xInput -= 1;
-        if (Input.GetKey(KeyCode.D)) xInput += 1;
+        float xInput = Input.GetAxisRaw("Horizontal"); // Using GetAxisRaw() instead of two if statements
 
         // Only change velocity when there's input
         if (xInput != 0) 
@@ -101,12 +98,8 @@ public class PlayerMovementScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 dirVec = ((Vector2)(transform.position - worldMousePos)).normalized;
-            if (dirVec != Vector2.zero)
-            {
-                _knockbackRequest = true;
-                _knockbackDirection = dirVec;
-            }
+            _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
+            _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
         }
     }
 
