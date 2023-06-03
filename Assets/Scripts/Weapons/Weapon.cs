@@ -55,12 +55,11 @@ namespace Weapons
             // instantiate & shoot bullets etc
             if (weaponData.isHitscan)
             {
-                Vector2 origin = sprite.transform.position;
-                // note i COULD change Physics2D.startInColliders but I CBA - TODO FIX WITH PROPER LAYERMASK
+                Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+                // TODO LAYERMASK FOR ENEMIES/PLAYERS
                 RaycastHit2D hit = Physics2D.Raycast(origin, LookDirection, weaponData.range);
                 Debug.DrawLine(origin,origin + (LookDirection*weaponData.range),Color.red,1,false);
-                float distance = hit.fraction * weaponData.range;
-                Vector2 finalPos = origin + (LookDirection.normalized * distance);
+                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (LookDirection.normalized * weaponData.range) : hit.point;
                 GameObject go = Instantiate(linePrefab);
                 // expensive but required; Fire isn't called every frame(?)
                 WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
