@@ -83,8 +83,8 @@ public class PlayerMovementScript : MonoBehaviour
             _body.velocity = new Vector2(_speed, _body.velocity.y);
         }
 
-        _jumpRequest = Input.GetKeyDown(KeyCode.Space); // Removed if statement
-        
+        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (!_dashing && !Grounded && xInput != 0)
