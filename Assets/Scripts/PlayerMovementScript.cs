@@ -35,9 +35,8 @@ public class PlayerMovementScript : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            fireWeapon();
+        if (Input.GetMouseButtonDown(0)) {
+            FireWeapon();
         }
     }
 
@@ -47,21 +46,25 @@ public class PlayerMovementScript : MonoBehaviour
         Move(dt);
     }
 
-    void fireWeapon() {
-        weaponScript.fire();
-        Vector2 knockbackDirection = -weaponScript.getLookDirection();
-        float knockbackStrength = weaponScript.getKnockbackStrength();
-        applyKnockback(knockbackDirection, knockbackStrength);
+    /// fire the current weapon and calls related functions
+    void FireWeapon() {
+        weaponScript.Fire();
+        Vector2 knockbackDirection = -weaponScript.GetLookDirection();
+        float knockbackStrength = weaponScript.GetKnockbackStrength();
+        ApplyKnockback(knockbackDirection, knockbackStrength);
     }
 
-    void applyKnockback(Vector2 direction, float knockbackStrength) {
+    /// applies knockback to the player
+    void ApplyKnockback(Vector2 direction, float knockbackStrength) {
         _body.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
     }
 
+    /// move the player acoording to player inputs
     void Move(float dt) {
         _body.AddForce(inputDirection * walkSpeed, ForceMode2D.Force);
     }
 
+    /// applys an upward force 
     void Jump() {
         _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
     }
