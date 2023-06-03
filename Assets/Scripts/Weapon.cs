@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -6,25 +7,24 @@ public class Weapon : MonoBehaviour
     [SerializeField] 
     private Transform spritePivot;
     [SerializeField]
-    private Transform sprite;
+    private SpriteRenderer sprite;
+
+    [CanBeNull] public WeaponData weaponData;
     private Camera _mainCam;
-    private const float knockbackStrength = 12;
-    private const float recoilAnimDuration = 0.2f;
     private Vector2 _spriteStartPosition;
     private Vector2 _recoilAnimDisplacement;
 
     // VARYING
     private float _recoilAnimTimer = 0;
 
-    public float KnockbackStrength { get; private set; } = 12;
-
     public Vector2 LookDirection => spritePivot.right;
 
 
     private void Awake() {
         _mainCam = Camera.main;
-        _spriteStartPosition = sprite.localPosition;
+        _spriteStartPosition = sprite.transform.localPosition;
         _recoilAnimDisplacement = new Vector2(-0.02f,0);
+        UpdateFromWeaponData();
     }
 
     private void FixedUpdate() {
@@ -35,6 +35,12 @@ public class Weapon : MonoBehaviour
         if (_recoilAnimTimer > 0) {
             FireAnimation(dt);
         }
+    }
+
+    private void UpdateFromWeaponData()
+    {
+        if (weaponData != null)
+            sprite.sprite = weaponData.sprite;
     }
 
     /// <summary>
@@ -49,7 +55,8 @@ public class Weapon : MonoBehaviour
     /// Initialize values and start firing animation
     /// </summary>
     private void StartFireAnimation() {
-        _recoilAnimTimer = recoilAnimDuration;
+        if (weaponData != null)
+            _recoilAnimTimer = weaponData.recoilAnimationDuration;
     }
 
     /// <summary>
@@ -57,17 +64,18 @@ public class Weapon : MonoBehaviour
     /// </summary>
     /// <param name="dt">Typically <code>Time.deltaTime</code></param>
     private void FireAnimation(float dt) {
-        float weight = _recoilAnimTimer/recoilAnimDuration;
+        // can be null but cba
+        float weight = _recoilAnimTimer/weaponData.recoilAnimationDuration;
         if (weight <= 0.5) {
             weight = 1 - weight;
         }
         weight = (weight - 0.5f)*2;
 
-        sprite.localPosition = Vector2.Lerp(_recoilAnimDisplacement, _spriteStartPosition, weight);
+        sprite.transform.localPosition = Vector2.Lerp(_recoilAnimDisplacement, _spriteStartPosition, weight);
 
         _recoilAnimTimer -= dt;
         if (_recoilAnimTimer <= 0) {
-            sprite.localPosition = _spriteStartPosition;
+            sprite.transform.localPosition = _spriteStartPosition;
         }
     }
 
