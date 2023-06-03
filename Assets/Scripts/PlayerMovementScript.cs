@@ -10,6 +10,13 @@ public class PlayerMovementScript : MonoBehaviour
     public float jumpForce = 10;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
+    private ContactFilter2D groundFilter;
+    private ContactFilter2D leftWallFilter;
+    private ContactFilter2D rightWallFilter;
+
+    private bool Grounded => _body.IsTouching(groundFilter);
+    private bool IsOnLeftWall => _body.IsTouching(leftWallFilter);
+    private bool IsOnRightWall => _body.IsTouching(rightWallFilter);
     private Rigidbody2D _body;
     private Camera _cam;
     private Vector2 _force;
@@ -22,7 +29,36 @@ public class PlayerMovementScript : MonoBehaviour
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
-        _cam = Camera.main;
+        _cam = Camera.main;    InitializeContactFilters();
+    }
+
+    private void InitializeContactFilters()
+    {
+        int physicsCheckMask = LayerMask.GetMask("Default");
+        groundFilter = new ContactFilter2D
+        {
+            layerMask = physicsCheckMask,
+            useLayerMask = true,
+            useNormalAngle = true,
+            minNormalAngle = 30,
+            maxNormalAngle = 150
+        };
+        leftWallFilter = new ContactFilter2D
+        {
+            layerMask = physicsCheckMask,
+            useLayerMask = true,
+            useNormalAngle = true,
+            minNormalAngle = -60,
+            maxNormalAngle = 60
+        };
+        rightWallFilter = new ContactFilter2D
+        {
+            layerMask = physicsCheckMask,
+            useLayerMask = true,
+            useNormalAngle = true,
+            minNormalAngle = 120,
+            maxNormalAngle = 240
+        };
     }
 
     private void Update()
@@ -36,7 +72,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         _body.velocity = new Vector2(_speed, _body.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+        if (Grounded && Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
         
         if (Input.GetMouseButtonDown(0))
         {
