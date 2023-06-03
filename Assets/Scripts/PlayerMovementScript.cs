@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerMovementScript : MonoBehaviour
 {
+    // CONSTANT
     [Min(0), Tooltip("Affects the speed of the player")]
-    public float speed = 69;
+    public float walkSpeed = 30;
     [Min(0), Tooltip("Jump Impulse")]
     public float jumpForce = 10;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
@@ -11,31 +12,58 @@ public class PlayerMovementScript : MonoBehaviour
     private Rigidbody2D _body;
     private Camera _cam;
 
+    // VARYING
+    [SerializeField] 
+    Weapon weaponScript;
+    Vector2 inputDirection = Vector2.zero; // current movement direction specified by WASD
+
+    /////////////////////////////
+    //        FUNCTIONS        //
+    /////////////////////////////
+
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
+        weaponScript = GetComponentInChildren<Weapon>();
     }
 
     private void Update()
     {
-        Vector2 force = Vector2.zero;
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        inputDirection = new Vector2(horizontalInput, 0).normalized;
         
-        if (Input.GetKey(KeyCode.A)) force += Vector2.left;
-        if (Input.GetKey(KeyCode.D)) force += Vector2.right;
-        
-        _body.AddForce(force * (Time.deltaTime * speed), ForceMode2D.Force);
-        
-        if (Input.GetKeyDown(KeyCode.Space)) _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
+        if (Input.GetKeyDown(KeyCode.Space)) Jump();
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 dirVec = ((Vector2)(transform.position - worldMousePos)).normalized;
-            if (dirVec != Vector2.zero)
-            {
-                _body.AddForce(dirVec * testKnockbackForce, ForceMode2D.Impulse);
-            }
+            fireWeapon();
         }
     }
+
+    private void FixedUpdate() {
+        float dt = Time.deltaTime;
+
+        Move(dt);
+    }
+
+    void fireWeapon() {
+        weaponScript.fire();
+        Vector2 knockbackDirection = -weaponScript.getLookDirection();
+        float knockbackStrength = weaponScript.getKnockbackStrength();
+        applyKnockback(knockbackDirection, knockbackStrength);
+    }
+
+    void applyKnockback(Vector2 direction, float knockbackStrength) {
+        _body.AddForce(direction * knockbackStrength, ForceMode2D.Impulse);
+    }
+
+    void Move(float dt) {
+        _body.AddForce(inputDirection * walkSpeed, ForceMode2D.Force);
+    }
+
+    void Jump() {
+        _body.AddForce(new Vector2(0,jumpForce), ForceMode2D.Impulse);
+    }
+
 }
