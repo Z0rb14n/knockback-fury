@@ -26,10 +26,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        float xInput = 0;
-        
-        if (Input.GetKey(KeyCode.A)) xInput -= 1;
-        if (Input.GetKey(KeyCode.D)) xInput += 1;
+        float xInput = Input.GetAxisRaw("Horizontal"); // Using GetAxisRaw() instead of two if statements
 
         // Only change velocity when there's input
         if (xInput != 0) 
@@ -38,17 +35,13 @@ public class PlayerMovementScript : MonoBehaviour
             _body.velocity = new Vector2(_speed, _body.velocity.y);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+        _jumpRequest = Input.GetKeyDown(KeyCode.Space); // Removed if statement
         
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 dirVec = ((Vector2)(transform.position - worldMousePos)).normalized;
-            if (dirVec != Vector2.zero)
-            {
-                _knockbackRequest = true;
-                _knockbackDirection = dirVec;
-            }
+            _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
+            _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
         }
     }
 
@@ -56,7 +49,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (_jumpRequest)
         {
-            _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            _body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); // Used Vector2.up instead of new Vector2(0, jumpForce)
             _jumpRequest = false;
         }
 
