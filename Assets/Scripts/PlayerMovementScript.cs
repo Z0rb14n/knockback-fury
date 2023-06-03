@@ -8,15 +8,13 @@ public class PlayerMovementScript : MonoBehaviour
     public float speedSmoothness = 0.5f;
     [Min(0), Tooltip("Jump Impulse")]
     public float jumpForce = 10;
+    [Tooltip("Wall Jump Impulse")]
+    public Vector2 wallJumpForce = new(10,5);
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
     public float testKnockbackForce = 10;
-    private ContactFilter2D groundFilter;
-    private ContactFilter2D leftWallFilter;
-    private ContactFilter2D rightWallFilter;
-
-    private bool Grounded => _body.IsTouching(groundFilter);
-    private bool IsOnLeftWall => _body.IsTouching(leftWallFilter);
-    private bool IsOnRightWall => _body.IsTouching(rightWallFilter);
+    private ContactFilter2D _groundFilter;
+    private ContactFilter2D _leftWallFilter;
+    private ContactFilter2D _rightWallFilter;
     private Rigidbody2D _body;
     private Camera _cam;
     private Vector2 _force;
@@ -25,17 +23,22 @@ public class PlayerMovementScript : MonoBehaviour
     private Vector2 _knockbackDirection;
     private float _speed;
     private float _currentVelocity;
+    
+    private bool Grounded => _body.IsTouching(_groundFilter);
+    private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
+    private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
     private void Awake()
     {
         _body = GetComponent<Rigidbody2D>();
-        _cam = Camera.main;    InitializeContactFilters();
+        _cam = Camera.main;
+        InitializeContactFilters();
     }
 
     private void InitializeContactFilters()
     {
         int physicsCheckMask = LayerMask.GetMask("Default");
-        groundFilter = new ContactFilter2D
+        _groundFilter = new ContactFilter2D
         {
             layerMask = physicsCheckMask,
             useLayerMask = true,
@@ -43,7 +46,7 @@ public class PlayerMovementScript : MonoBehaviour
             minNormalAngle = 30,
             maxNormalAngle = 150
         };
-        leftWallFilter = new ContactFilter2D
+        _leftWallFilter = new ContactFilter2D
         {
             layerMask = physicsCheckMask,
             useLayerMask = true,
@@ -51,7 +54,7 @@ public class PlayerMovementScript : MonoBehaviour
             minNormalAngle = -60,
             maxNormalAngle = 60
         };
-        rightWallFilter = new ContactFilter2D
+        _rightWallFilter = new ContactFilter2D
         {
             layerMask = physicsCheckMask,
             useLayerMask = true,
@@ -72,7 +75,7 @@ public class PlayerMovementScript : MonoBehaviour
 
         _body.velocity = new Vector2(_speed, _body.velocity.y);
 
-        if (Grounded && Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
         
         if (Input.GetMouseButtonDown(0))
         {
@@ -90,7 +93,12 @@ public class PlayerMovementScript : MonoBehaviour
     {
         if (_jumpRequest)
         {
-            _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            if (Grounded)
+                _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            else if (IsOnLeftWall)
+                _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+            else if (IsOnRightWall)
+                _body.AddForce(new Vector2(-wallJumpForce.x,wallJumpForce.y),ForceMode2D.Impulse);
             _jumpRequest = false;
         }
 
