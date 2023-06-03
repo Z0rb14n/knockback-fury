@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spritePivot: {fileID: 3054874151477731811}
-  sprite: {fileID: 3054874151231780715}
+  sprite: {fileID: 3054874151231780716}
+  weaponData: {fileID: 0}
 --- !u!1 &3054874151231780714
 GameObject:
   m_ObjectHideFlags: 0
