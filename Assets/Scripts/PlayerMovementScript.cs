@@ -3,7 +3,9 @@ using UnityEngine;
 public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
-    public float speed = 69;
+    public float maxSpeed = 69;
+    [Min(0), Tooltip("Smoothness of Speed Changes")]
+    public float speedSmoothness = 0.5f;
     [Min(0), Tooltip("Jump Impulse")]
     public float jumpForce = 10;
     [Min(0), Tooltip("Test Mouse1 Knockback Impulse")]
@@ -14,6 +16,8 @@ public class PlayerMovementScript : MonoBehaviour
     private bool _jumpRequest;
     private bool _knockbackRequest;
     private Vector2 _knockbackDirection;
+    private float _speed;
+    private float _currentVelocity;
 
     private void Awake()
     {
@@ -23,10 +27,14 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void Update()
     {
-        _force = Vector2.zero;
+        float xInput = 0;
         
-        if (Input.GetKey(KeyCode.A)) _force += Vector2.left;
-        if (Input.GetKey(KeyCode.D)) _force += Vector2.right;
+        if (Input.GetKey(KeyCode.A)) xInput -= 1;
+        if (Input.GetKey(KeyCode.D)) xInput += 1;
+
+        _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+
+        _body.velocity = new Vector2(_speed, _body.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
         
@@ -44,8 +52,6 @@ public class PlayerMovementScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _body.AddForce(_force * (Time.fixedDeltaTime * speed), ForceMode2D.Force);
-
         if (_jumpRequest)
         {
             _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
