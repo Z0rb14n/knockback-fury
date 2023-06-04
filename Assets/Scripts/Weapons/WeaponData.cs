@@ -23,7 +23,7 @@ namespace Weapons
         [Min(0), Tooltip("Spread of the weapon in degrees")]
         public float spread = 15;
         [Tooltip("Whether the gun is Hitscan")]
-        public bool isHitscan = false;
+        public bool isHitscan;
         public float knockbackStrength = 12;
         public float recoilAnimationDuration = 0.2f;
         public FireMode fireMode = FireMode.SemiAuto;
