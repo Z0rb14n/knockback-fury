@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8168244775167315299}
   - component: {fileID: 6824292787392864246}
   - component: {fileID: 5138450944320709130}
+  - component: {fileID: 1826430291910942609}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -160,6 +161,20 @@ MonoBehaviour:
   playerSprite: {fileID: 21300000, guid: 77f2427627b56a3489f25041b1f85fa3, type: 3}
   fadeSpeed: 0.8
   maxTimeInterval: 0.05
+--- !u!114 &1826430291910942609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244737822807091051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  health: 20
 --- !u!1 &8051101738936216417
 GameObject:
   m_ObjectHideFlags: 0
