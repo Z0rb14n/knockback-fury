@@ -21,6 +21,8 @@ namespace Weapons
         private float _reloadTimer;
         private float _weaponDelayTimer;
 
+        public float ReloadTime => _reloadTimer;
+
         public Vector2 LookDirection => spritePivot.right;
 
 
@@ -92,11 +94,7 @@ namespace Weapons
             }
 
             weaponData.DecrementClip();
-            if (weaponData.IsClipEmpty)
-            {
-                _reloadTimer = weaponData.reloadTime;
-                Debug.Log("Reloading...");
-            }
+            if (weaponData.IsClipEmpty) _reloadTimer = weaponData.reloadTime;
             _weaponDelayTimer = 1/weaponData.roundsPerSecond;
         }
 
@@ -117,7 +115,6 @@ namespace Weapons
         {
             if (_reloadTimer > 0) return;
             _reloadTimer = weaponData.reloadTime;
-            Debug.Log("Reloading...");
         }
 
         /// <summary>

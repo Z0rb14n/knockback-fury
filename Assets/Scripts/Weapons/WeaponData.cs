@@ -32,6 +32,8 @@ namespace Weapons
 
         private int _clip;
 
+        public int Clip => _clip;
+
         public bool IsClipEmpty => _clip <= 0;
 
         private void Awake()
@@ -47,7 +49,6 @@ namespace Weapons
         public void Reload()
         {
             _clip = clipSize;
-            Debug.Log("Reloaded...");
         }
 
         /// <summary>
