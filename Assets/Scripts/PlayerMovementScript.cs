@@ -98,14 +98,21 @@ public class PlayerMovementScript : MonoBehaviour
                 StartCoroutine(DashCoroutine());
             }
         }
-        
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
+
+        if (Input.GetMouseButton(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            _weapon.Fire();
-            _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
-            _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+            bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
+            if (fireResult)
+            {
+                _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
+                _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+            }
         }
+
+        if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
     }
 
     private void FixedUpdate()

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sniper
   numProjectiles: 1
-  range: 100
+  range: 500
   projectileSpeed: 69420
   projectileDamage: 150
   roundsPerSecond: 0.33
@@ -22,6 +22,15 @@ MonoBehaviour:
   reloadTime: 3
   spread: 0
   isHitscan: 1
+  hasMelee: 0
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
+  fireMode: 0
+  burstInfo:
+    burstAmount: 0
+    withinBurstFirerate: 0
+  meleeInfo:
+    baseDamage: 0
+    velMultiplier: 0
+    meleeRange: 0
   sprite: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
