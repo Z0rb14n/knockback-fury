@@ -35,20 +35,18 @@ namespace Weapons
 
         public Sprite sprite;
 
-        private int _clip;
+        public int Clip { get; private set; }
 
-        public int Clip => _clip;
-
-        public bool IsClipEmpty => _clip <= 0;
+        public bool IsClipEmpty => Clip <= 0;
 
         public void DecrementClip()
         {
-            _clip -= 1;
+            Clip -= 1;
         }
 
         public void Reload()
         {
-            _clip = clipSize;
+            Clip = clipSize;
         }
 
         /// <summary>

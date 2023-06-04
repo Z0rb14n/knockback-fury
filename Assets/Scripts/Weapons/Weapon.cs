@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Weapons
 {
@@ -136,11 +138,17 @@ namespace Weapons
         /// Fire weapon
         /// </summary>
         /// <param name="isFirstDown">Whether the mouse was pressed this frame</param>
+        /// <returns>Whether or not a shot was actually fired</returns>
         public bool Fire(bool isFirstDown)
         {
             if (_reloadTimer > 0) return false;
             if (_weaponDelayTimer > 0) return false;
             if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
+            if (weaponData.IsClipEmpty)
+            {
+                _reloadTimer = weaponData.reloadTime;
+                return false;
+            }
             if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
             FireWeaponUnchecked();
             return true;
@@ -156,6 +164,11 @@ namespace Weapons
         {
             if (_reloadTimer > 0) return;
             _reloadTimer = weaponData.reloadTime;
+        }
+
+        private void OnValidate()
+        {
+            UpdateFromWeaponData();
         }
 
         /// <summary>
