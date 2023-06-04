@@ -20,6 +20,8 @@ namespace Weapons
         private float _recoilAnimTimer;
         private float _reloadTimer;
         private float _weaponDelayTimer;
+        private float _weaponBurstTimer;
+        private int _weaponBurstCount;
 
         public float ReloadTime => _reloadTimer;
 
@@ -31,6 +33,7 @@ namespace Weapons
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
+            weaponData.Reload();
             UpdateFromWeaponData();
         }
 
@@ -49,6 +52,11 @@ namespace Weapons
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
+            if (_weaponBurstCount > 0 && _weaponBurstTimer > 0)
+            {
+                _weaponBurstTimer -= dt;
+                if (_weaponBurstTimer <= 0) FireWeaponUnchecked();
+            }
         }
 
         private void UpdateFromWeaponData()
@@ -96,6 +104,11 @@ namespace Weapons
             weaponData.DecrementClip();
             if (weaponData.IsClipEmpty) _reloadTimer = weaponData.reloadTime;
             _weaponDelayTimer = 1/weaponData.roundsPerSecond;
+            if (weaponData.fireMode == FireMode.Burst)
+            {
+                _weaponBurstCount--;
+                _weaponBurstTimer = 1/weaponData.burstInfo.withinBurstFirerate;
+            }
         }
 
         /// <summary>
@@ -107,6 +120,7 @@ namespace Weapons
             if (_reloadTimer > 0) return false;
             if (_weaponDelayTimer > 0) return false;
             if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
+            if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
             FireWeaponUnchecked();
             return true;
         }

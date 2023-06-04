@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Weapons
 {
@@ -27,6 +28,7 @@ namespace Weapons
         public float knockbackStrength = 12;
         public float recoilAnimationDuration = 0.2f;
         public FireMode fireMode = FireMode.SemiAuto;
+        public BurstInfo burstInfo;
 
         public Sprite sprite;
 
@@ -35,11 +37,6 @@ namespace Weapons
         public int Clip => _clip;
 
         public bool IsClipEmpty => _clip <= 0;
-
-        private void Awake()
-        {
-            Reload();
-        }
 
         public void DecrementClip()
         {
@@ -55,6 +52,14 @@ namespace Weapons
         /// Return the Damage Per Second (assuming all shots hit)
         /// </summary>
         public float DPS => numProjectiles * projectileDamage * roundsPerSecond;
+    }
 
+    [Serializable]
+    public struct BurstInfo
+    {
+        [Min(0), Tooltip("Number of bullets in the burst.")]
+        public int burstAmount;
+        [Min(0),Tooltip("RPS within the burst.")]
+        public float withinBurstFirerate;
     }
 }
