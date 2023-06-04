@@ -10,7 +10,7 @@ namespace Weapons
 
         public void Update()
         {
-            textObject.text = $"{weapon.weaponData.Clip}/{weapon.weaponData.clipSize}" + (weapon.ReloadTime <= 0
+            textObject.text = $"{weapon.weaponData.weaponName}: {weapon.weaponData.Clip}/{weapon.weaponData.clipSize}" + (weapon.ReloadTime <= 0
                 ? ""
                 : $" Reload Time: {weapon.ReloadTime:F2}");
         }

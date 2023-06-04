@@ -25,10 +25,13 @@ namespace Weapons
         public float spread = 15;
         [Tooltip("Whether the gun is Hitscan")]
         public bool isHitscan;
+        [Tooltip("Whether the gun has Melee")]
+        public bool hasMelee;
         public float knockbackStrength = 12;
         public float recoilAnimationDuration = 0.2f;
         public FireMode fireMode = FireMode.SemiAuto;
         public BurstInfo burstInfo;
+        public MeleeInfo meleeInfo;
 
         public Sprite sprite;
 
@@ -61,5 +64,15 @@ namespace Weapons
         public int burstAmount;
         [Min(0),Tooltip("RPS within the burst.")]
         public float withinBurstFirerate;
+    }
+    [Serializable]
+    public struct MeleeInfo
+    {
+        [Tooltip("Base Damage of Melee Weapon")]
+        public int baseDamage;
+        [Tooltip("Velocity multiplier")]
+        public float velMultiplier;
+        [Tooltip("Melee Range")]
+        public float meleeRange;
     }
 }

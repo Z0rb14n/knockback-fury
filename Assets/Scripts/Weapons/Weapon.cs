@@ -65,6 +65,37 @@ namespace Weapons
                 sprite.sprite = weaponData.sprite;
         }
 
+        private void HitscanLogic(bool isMelee, Vector2 vel)
+        {
+            Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            Vector2 normalizedLookDirection = LookDirection.normalized;
+            float range = isMelee ? weaponData.meleeInfo.meleeRange : weaponData.range;
+            // literally hitscan
+            // TODO LAYERMASK FOR ENEMIES/PLAYERS
+            RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, range);
+            Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * range) : hit.point;
+            int damage = isMelee
+                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * weaponData.meleeInfo.velMultiplier +
+                  weaponData.meleeInfo.baseDamage)
+                : weaponData.projectileDamage;
+            // TODO DEAL DAMAGE
+            Debug.Log(damage);
+            if (!isMelee)
+            {
+                GameObject go = ReferenceEquals(projectileParent, null)
+                    ? Instantiate(linePrefab)
+                    : Instantiate(linePrefab, projectileParent);
+                // expensive but required; Fire isn't called every frame(?)
+                WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
+                line.Initialize(origin, finalPos, 1);
+            }
+            else
+            {
+                Debug.DrawLine(origin,origin + (normalizedLookDirection*range),Color.red,1,false);
+            }
+
+        }
+
         /// <summary>
         /// Fire weapon: create projectiles and reset timers.
         /// </summary>
@@ -75,17 +106,7 @@ namespace Weapons
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
             Vector2 normalizedLookDirection = LookDirection.normalized;
             if (weaponData.isHitscan)
-            {
-                // TODO LAYERMASK FOR ENEMIES/PLAYERS
-                RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, weaponData.range);
-                // Debug.DrawLine(origin,origin + (normalizedLookDirection*weaponData.range),Color.red,1,false);
-                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * weaponData.range) : hit.point;
-                
-                GameObject go = ReferenceEquals(projectileParent, null) ? Instantiate(linePrefab) : Instantiate(linePrefab, projectileParent);
-                // expensive but required; Fire isn't called every frame(?)
-                WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
-                line.Initialize(origin,finalPos,1);
-            }
+                HitscanLogic(false, Vector2.zero);
             else
             {
                 for (int i = 0; i < weaponData.numProjectiles; i++)
@@ -123,6 +144,12 @@ namespace Weapons
             if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
             FireWeaponUnchecked();
             return true;
+        }
+
+        public void UseMelee(Vector2 vel)
+        {
+            if (!weaponData.hasMelee) return;
+            HitscanLogic(true, vel);
         }
 
         public void Reload()

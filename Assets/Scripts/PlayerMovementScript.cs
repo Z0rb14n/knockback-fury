@@ -111,6 +111,8 @@ public class PlayerMovementScript : MonoBehaviour
                 _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
             }
         }
+
+        if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
     }
 
     private void FixedUpdate()

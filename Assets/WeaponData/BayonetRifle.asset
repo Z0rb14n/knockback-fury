@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: SniperData
+  m_Name: BayonetRifle
   m_EditorClassIdentifier: 
-  weaponName: Sniper
+  weaponName: Bayonet Rifle
   numProjectiles: 1
-  range: 500
-  projectileSpeed: 69420
-  projectileDamage: 150
-  roundsPerSecond: 0.33
-  clipSize: 1
+  range: 200
+  projectileSpeed: 40
+  projectileDamage: 40
+  roundsPerSecond: 0.75
+  clipSize: 8
   reloadTime: 3
-  spread: 0
-  isHitscan: 1
-  hasMelee: 0
+  spread: 10
+  isHitscan: 0
+  hasMelee: 1
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
   fireMode: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
     burstAmount: 0
     withinBurstFirerate: 0
   meleeInfo:
-    baseDamage: 0
-    velMultiplier: 0
-    meleeRange: 0
-  sprite: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
+    baseDamage: 10
+    velMultiplier: 15
+    meleeRange: 2
+  sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
