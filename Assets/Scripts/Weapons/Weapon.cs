@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,14 +19,13 @@ namespace Weapons
 
         // VARYING
         private float _recoilAnimTimer;
-        private float _reloadTimer;
         private float _weaponDelayTimer;
         private float _weaponBurstTimer;
         private int _weaponBurstCount;
 
-        public float ReloadTime => _reloadTimer;
+        public float ReloadTime { get; private set; }
 
-        public Vector2 LookDirection => spritePivot.right;
+        private Vector2 LookDirection => spritePivot.right;
 
 
         private void Awake()
@@ -47,10 +45,10 @@ namespace Weapons
 
             if (_recoilAnimTimer > 0) FireAnimation(dt);
 
-            if (_reloadTimer > 0)
+            if (ReloadTime > 0)
             {
-                _reloadTimer -= dt;
-                if (_reloadTimer <= 0) weaponData.Reload();
+                ReloadTime -= dt;
+                if (ReloadTime <= 0) weaponData.Reload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -125,7 +123,7 @@ namespace Weapons
             }
 
             weaponData.DecrementClip();
-            if (weaponData.IsClipEmpty) _reloadTimer = weaponData.reloadTime;
+            if (weaponData.IsClipEmpty) ReloadTime = weaponData.reloadTime;
             _weaponDelayTimer = 1/weaponData.roundsPerSecond;
             if (weaponData.fireMode == FireMode.Burst)
             {
@@ -141,12 +139,12 @@ namespace Weapons
         /// <returns>Whether or not a shot was actually fired</returns>
         public bool Fire(bool isFirstDown)
         {
-            if (_reloadTimer > 0) return false;
+            if (ReloadTime > 0) return false;
             if (_weaponDelayTimer > 0) return false;
             if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
             if (weaponData.IsClipEmpty)
             {
-                _reloadTimer = weaponData.reloadTime;
+                ReloadTime = weaponData.reloadTime;
                 return false;
             }
             if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
@@ -162,8 +160,8 @@ namespace Weapons
 
         public void Reload()
         {
-            if (_reloadTimer > 0) return;
-            _reloadTimer = weaponData.reloadTime;
+            if (ReloadTime > 0) return;
+            ReloadTime = weaponData.reloadTime;
         }
 
         private void OnValidate()
