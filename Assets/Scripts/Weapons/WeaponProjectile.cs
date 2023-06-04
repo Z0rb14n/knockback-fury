@@ -5,11 +5,14 @@ namespace Weapons
     [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
     public class WeaponProjectile : MonoBehaviour
     {
+        private float _remainingDistance;
         private int _damage;
+        private Vector3 _prevPosition;
         private Rigidbody2D _body;
-
+        
         private void Awake()
         {
+            _prevPosition = transform.position;
             _body = GetComponent<Rigidbody2D>();
         }
 
@@ -23,13 +26,26 @@ namespace Weapons
         public void Initialize(int damage, float range, float speed, Vector2 direction)
         {
             _damage = damage;
+            _remainingDistance = range;
+
             _body.velocity = direction * speed;
-            Destroy(gameObject, range / speed); // projectile will be destroyed after travelling its range
         }
+
+        private void FixedUpdate()
+        {
+            Vector3 currPos = transform.position;
+            _remainingDistance -= (currPos - _prevPosition).magnitude;
+            _prevPosition = currPos;
+            if (_remainingDistance <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.tag == "Player") // using tag comparison instead of GetComponent
+            if (other.collider.GetComponent<PlayerMovementScript>() != null)
             {
                 Debug.Log($"Hit Player for {_damage}");
             }
