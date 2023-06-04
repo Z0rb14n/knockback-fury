@@ -29,7 +29,27 @@ namespace Weapons
         public FireMode fireMode = FireMode.SemiAuto;
 
         public Sprite sprite;
-    
+
+        private int _clip;
+
+        public bool IsClipEmpty => _clip <= 0;
+
+        private void Awake()
+        {
+            Reload();
+        }
+
+        public void DecrementClip()
+        {
+            _clip -= 1;
+        }
+
+        public void Reload()
+        {
+            _clip = clipSize;
+            Debug.Log("Reloaded...");
+        }
+
         /// <summary>
         /// Return the Damage Per Second (assuming all shots hit)
         /// </summary>

@@ -17,7 +17,9 @@ namespace Weapons
         private Vector2 _recoilAnimDisplacement;
 
         // VARYING
-        private float _recoilAnimTimer = 0;
+        private float _recoilAnimTimer;
+        private float _reloadTimer;
+        private float _weaponDelayTimer;
 
         public Vector2 LookDirection => spritePivot.right;
 
@@ -36,10 +38,15 @@ namespace Weapons
 
             float dt = Time.deltaTime;
 
-            if (_recoilAnimTimer > 0)
+            if (_recoilAnimTimer > 0) FireAnimation(dt);
+
+            if (_reloadTimer > 0)
             {
-                FireAnimation(dt);
+                _reloadTimer -= dt;
+                if (_reloadTimer <= 0) weaponData.Reload();
             }
+
+            if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
         }
 
         private void UpdateFromWeaponData()
@@ -49,9 +56,9 @@ namespace Weapons
         }
 
         /// <summary>
-        /// Fire weapon
+        /// Fire weapon: create projectiles and reset timers.
         /// </summary>
-        public void Fire()
+        private void FireWeaponUnchecked()
         {
             StartFireAnimation();
             // instantiate & shoot bullets etc
@@ -83,6 +90,34 @@ namespace Weapons
                     proj.Initialize(weaponData.projectileDamage, weaponData.range, weaponData.projectileSpeed, finalDir);
                 }
             }
+
+            weaponData.DecrementClip();
+            if (weaponData.IsClipEmpty)
+            {
+                _reloadTimer = weaponData.reloadTime;
+                Debug.Log("Reloading...");
+            }
+            _weaponDelayTimer = 1/weaponData.roundsPerSecond;
+        }
+
+        /// <summary>
+        /// Fire weapon
+        /// </summary>
+        /// <param name="isFirstDown">Whether the mouse was pressed this frame</param>
+        public bool Fire(bool isFirstDown)
+        {
+            if (_reloadTimer > 0) return false;
+            if (_weaponDelayTimer > 0) return false;
+            if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
+            FireWeaponUnchecked();
+            return true;
+        }
+
+        public void Reload()
+        {
+            if (_reloadTimer > 0) return;
+            _reloadTimer = weaponData.reloadTime;
+            Debug.Log("Reloading...");
         }
 
         /// <summary>
