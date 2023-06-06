@@ -1,6 +1,8 @@
 using System.Collections;
+using DashVFX;
 using UnityEngine;
 
+[DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),typeof(MeshTrail))]
 public class PlayerMovementScript : MonoBehaviour
 {
     [Min(0), Tooltip("Affects the speed of the player")]
@@ -16,6 +18,7 @@ public class PlayerMovementScript : MonoBehaviour
     [Min(0), Tooltip("Time in Air Dash")]
     public float dashTime = 1;
 
+    private MeshTrail _meshTrail;
     private Weapons.Weapon _weapon;
     private ContactFilter2D _groundFilter;
     private ContactFilter2D _leftWallFilter;
@@ -39,6 +42,7 @@ public class PlayerMovementScript : MonoBehaviour
     {
         _body = GetComponent<Rigidbody2D>();
         _cam = Camera.main;
+        _meshTrail = GetComponent<MeshTrail>();
         _weapon = GetComponentInChildren<Weapons.Weapon>();
         InitializeContactFilters();
     }
@@ -94,14 +98,21 @@ public class PlayerMovementScript : MonoBehaviour
                 StartCoroutine(DashCoroutine());
             }
         }
-        
-        if (Input.GetMouseButtonDown(0))
+
+        if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
+
+        if (Input.GetMouseButton(0))
         {
             Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            _weapon.Fire();
-            _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
-            _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+            bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
+            if (fireResult)
+            {
+                _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
+                _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+            }
         }
+
+        if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
     }
 
     private void FixedUpdate()
@@ -127,6 +138,7 @@ public class PlayerMovementScript : MonoBehaviour
 
     private IEnumerator DashCoroutine()
     {
+        _meshTrail.StartDash();
         for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
         {
             if (_body.IsTouchingLayers(_physicsCheckMask)) break;
@@ -136,5 +148,6 @@ public class PlayerMovementScript : MonoBehaviour
         }
 
         _dashing = false;
+        _meshTrail.StopDash();
     }
 }

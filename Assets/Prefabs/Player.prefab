@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2462369353442171125}
   - component: {fileID: 8168244775167315299}
   - component: {fileID: 6824292787392864246}
-  m_Layer: 0
+  - component: {fileID: 5138450944320709130}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +145,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.275
+--- !u!114 &5138450944320709130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244737822807091051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e86b1837bd62e48b7995c5ea1b052f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSprite: {fileID: 21300000, guid: 77f2427627b56a3489f25041b1f85fa3, type: 3}
+  fadeSpeed: 0.8
+  maxTimeInterval: 0.05
 --- !u!1 &8051101738936216417
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +324,7 @@ PrefabInstance:
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 58702b682724446469909705bca1de62, type: 3}
+      objectReference: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Color.b
       value: 1
