@@ -33,6 +33,7 @@ public class PlayerMovementScript : MonoBehaviour
     private bool _dashing;
     private Vector2 _dashDirection;
     private int _physicsCheckMask;
+    private bool _canMove;
     
     private bool Grounded => _body.IsTouching(_groundFilter);
     private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -44,6 +45,7 @@ public class PlayerMovementScript : MonoBehaviour
         _cam = Camera.main;
         _meshTrail = GetComponent<MeshTrail>();
         _weapon = GetComponentInChildren<Weapons.Weapon>();
+        _canMove = true;
         InitializeContactFilters();
     }
 
@@ -80,39 +82,45 @@ public class PlayerMovementScript : MonoBehaviour
     {
         float xInput = Input.GetAxisRaw("Horizontal"); // Using GetAxisRaw() instead of two if statements
 
-        // Only change velocity when there's input
-        if (xInput != 0) 
+        if (_canMove)
         {
-            _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-            _body.velocity = new Vector2(_speed, _body.velocity.y);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (!_dashing && !Grounded && xInput != 0)
+            // Only change velocity when there's input
+            if (xInput != 0) 
             {
-                _dashing = true;
-                _dashDirection = new Vector2(xInput, 0);
-                StartCoroutine(DashCoroutine());
+                _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+                _body.velocity = new Vector2(_speed, _body.velocity.y);
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
+            if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
 
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-            bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
-            if (fireResult)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
-                _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+                if (!_dashing && !Grounded && xInput != 0)
+                {
+                    _dashing = true;
+                    _dashDirection = new Vector2(xInput, 0);
+                    StartCoroutine(DashCoroutine());
+                }
             }
+
+            if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
+
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
+                bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
+                if (fireResult)
+                {
+                    _knockbackDirection = ((Vector2)(transform.position - worldMousePos)).normalized;
+                    _knockbackRequest = _knockbackDirection != Vector2.zero; // Removed if statement
+                }
+            }
+
+            if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
         }
 
-        if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
+
+        
     }
 
     private void FixedUpdate()
@@ -149,5 +157,15 @@ public class PlayerMovementScript : MonoBehaviour
 
         _dashing = false;
         _meshTrail.StopDash();
+    }
+
+    public void StopMovement()
+    {
+        _canMove = false;
+    }
+
+    public void AllowMovement()
+    {
+        _canMove = true;
     }
 }

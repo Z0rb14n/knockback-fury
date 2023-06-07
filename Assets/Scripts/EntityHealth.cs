@@ -6,20 +6,38 @@ public class EntityHealth : MonoBehaviour
 {
     public int maxHealth;
     public int health;
+    public float iFrameLength;
 
-    private void Awake()
+    protected float _iFrameTimer;
+
+    protected virtual void Awake()
     {
         health = maxHealth;
     }
 
-    public void takeDamage(int dmg)
+    private void Update()
     {
-        health -= dmg;
-        if (health <= 0)
+        if (_iFrameTimer > 0f)
         {
-            // TODO: die
-            Debug.Log("Death");
+            _iFrameTimer -= Time.deltaTime;
         }
     }
 
+    /// <summary>
+    /// Takes Damage: decreases health, sets iFrame timer, requests death if required
+    /// </summary>
+    public virtual void TakeDamage(int dmg)
+    {
+        if (_iFrameTimer <= 0)
+        {
+            health -= dmg;
+            _iFrameTimer = iFrameLength;
+
+            if (health <= 0)
+            {
+                // TODO: die
+                Debug.Log("Death");
+            }
+        }
+    }
 }
