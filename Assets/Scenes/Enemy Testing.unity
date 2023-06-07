@@ -245,17 +245,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
---- !u!114 &392937503 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1826430291910942609, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-  m_PrefabInstance: {fileID: 763855029}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &763855029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1399,10 +1388,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1481289855363877824, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6335998196205219546, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 392937503}
+      objectReference: {fileID: 1934789383}
+    - target: {fileID: 6335998196205219546, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 1934789382}
+    - target: {fileID: 6335998196205219546, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
+      propertyPath: knockbackForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9005711590793679261, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1453,3 +1454,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
+--- !u!1 &1934789382 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+  m_PrefabInstance: {fileID: 763855029}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1934789383 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1826430291910942609, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+  m_PrefabInstance: {fileID: 763855029}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934789382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

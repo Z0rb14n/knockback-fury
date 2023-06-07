@@ -17,6 +17,7 @@ public class EntityHealth : MonoBehaviour
         health -= dmg;
         if (health <= 0)
         {
+            // TODO: die
             Debug.Log("Death");
         }
     }
