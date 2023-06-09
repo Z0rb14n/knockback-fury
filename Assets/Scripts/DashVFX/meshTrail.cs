@@ -1,55 +1,62 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class meshTrail : MonoBehaviour
+namespace DashVFX
 {
-
-    public Sprite playerSprite;
-    public bool SetDashVFX = true;
-    public float fadeSpeed;
-    public float MaxtimeInterval;
-    float timeInterval;
- 
-
-    private void Start()
+    public class MeshTrail : MonoBehaviour
     {
-       
-        timeInterval = MaxtimeInterval;
-    }
-    private void Update()
-    {
-        if (SetDashVFX == true)
+        public Sprite playerSprite;
+
+        [Range(0,1),Tooltip("Affects time it takes to fade (higher = faster)")]
+        public float fadeSpeed = 0.5f;
+        [Tooltip("Maximum Time between generating VFX (seconds)")]
+        public float maxTimeInterval = 0.05f;
+
+        private bool _shouldShowVFX;
+
+        public void StartDash()
         {
+            _shouldShowVFX = true;
+            StartCoroutine(DashCoroutine());
+        }
 
-            timeInterval -= Time.deltaTime;
-            if (timeInterval <= 0)
+        public void StopDash()
+        {
+            _shouldShowVFX = false;
+        }
+
+        private IEnumerator DashCoroutine()
+        {
+            while (_shouldShowVFX)
             {
                 StartCoroutine(GenerateOneVFX());
-                timeInterval = MaxtimeInterval;
+                yield return new WaitForSeconds(maxTimeInterval);
             }
         }
-    }
 
-    IEnumerator GenerateOneVFX() 
-    {
-        GameObject obj = Instantiate(new GameObject(), transform.position, transform.rotation);
-        SpriteRenderer spriteRenderer = obj.AddComponent<SpriteRenderer>();
-        spriteRenderer.sprite = playerSprite;
-     
-
-      while (spriteRenderer.color.a >= 0f) 
+        private IEnumerator GenerateOneVFX()
         {
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a -= 0.01f;
-            spriteRenderer.color = spriteColor;
-            yield return new WaitForSeconds(Time.deltaTime/fadeSpeed);
+            GameObject obj = new GameObject("VFXObject", typeof(SpriteRenderer))
+            {
+                transform =
+                {
+                    position = transform.position,
+                    rotation = transform.rotation
+                }
+            };
+            SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
+            spriteRenderer.sprite = playerSprite;
+
+
+            while (spriteRenderer.color.a >= 0f)
+            {
+                Color spriteColor = spriteRenderer.color;
+                spriteColor.a -= 0.01f;
+                spriteRenderer.color = spriteColor;
+                yield return new WaitForSeconds(Time.deltaTime / fadeSpeed);
+            }
+
+            Destroy(obj);
         }
-      
-        Destroy(obj);
-
     }
-
 }
-
-
