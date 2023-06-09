@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
@@ -30,14 +28,24 @@ public class EntityHealth : MonoBehaviour
     {
         if (_iFrameTimer <= 0)
         {
-            health -= dmg;
-            _iFrameTimer = iFrameLength;
-
+            DoTakeDamage(dmg);
+            
             if (health <= 0)
             {
-                // TODO: die
-                Debug.Log("Death");
+                Die();
             }
         }
+    }
+
+    protected virtual void DoTakeDamage(int dmg)
+    {
+        health -= dmg;
+        _iFrameTimer = iFrameLength;
+    }
+
+    protected virtual void Die()
+    {
+        Debug.Log("Death");
+        // TODO: general entity death
     }
 }

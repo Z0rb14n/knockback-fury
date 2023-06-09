@@ -13,32 +13,24 @@ public class PlayerHealth : EntityHealth
     }
 
     /// <summary>
-    /// Takes Damage: decreases health, sets iFrame timer, requests death if required, 
-    ///               restricts player movement
+    /// Takes Damage: decreases health, sets iFrame timer, restricts player movement
     /// </summary>
-    public override void TakeDamage(int dmg)
+    protected override void DoTakeDamage(int dmg)
     {
-        if (_iFrameTimer <= 0)
-        {
-            health -= dmg;
-            _iFrameTimer = iFrameLength;
+        base.DoTakeDamage(dmg);
+        _playerMovement.StopMovement();
+        StartCoroutine(AllowMovementAfterDelay());
+    }
 
-            if (health <= 0)
-            {
-                // TODO: player die
-                Debug.Log("Player Death");
-            }
-            else
-            {
-                _playerMovement.StopMovement();
-                StartCoroutine(AllowMovementAfterDelay());
-            }
-        }
+    protected override void Die()
+    {
+        Debug.Log("Player death");
+        // TODO: player death
     }
 
     private IEnumerator AllowMovementAfterDelay()
     {
-        yield return new WaitForSeconds(iFrameLength * 0.75f); // disallows input upon damage
+        yield return new WaitForSeconds(iFrameLength * 0.75f);
         _playerMovement.AllowMovement();
     }
 }

@@ -1,47 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemyAttack : MonoBehaviour
+namespace Enemies
 {
-
-    public int damage;
-    public int knockbackForce;
-    public LayerMask playerLayer;
-    public GameObject playerObject;
-
-    private Rigidbody2D _playerBody;
-    private EntityHealth _playerHealth;
-    private bool _knockbackRequest;
-
-
-    public void Awake()
+    public class MeleeEnemyAttack : MonoBehaviour
     {
-        _playerHealth = playerObject.GetComponent<EntityHealth>();
-        _playerBody = playerObject.GetComponent<Rigidbody2D>();
-    }
+
+        public int damage;
+        public int knockbackForce;
+        public GameObject playerObject;
+
+        private Rigidbody2D _playerBody;
+        private EntityHealth _playerHealth;
+        private bool _knockbackRequest;
 
 
-
-    private void FixedUpdate()
-    {
-        if (_knockbackRequest)
+        public void Awake()
         {
-            Vector2 knockbackDirection = new Vector2((_playerBody.transform.position - transform.position).normalized.x * 0.1f, 0.04f);
-            _playerBody.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-            _knockbackRequest = false;
+            _playerHealth = playerObject.GetComponent<EntityHealth>();
         }
-    }
 
-    /// <summary>
-    /// Hits player: requests knockback, deals damage
-    /// </summary>
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+
+
+        private void FixedUpdate()
         {
-            _playerHealth.TakeDamage(damage);
-            _knockbackRequest = true;
+            if (_knockbackRequest)
+            {
+                Vector2 knockbackDirection = new Vector2((_playerBody.transform.position - transform.position).normalized.x * 0.1f, 0.04f);
+                _playerBody.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                _knockbackRequest = false;
+            }
+        }
+
+        /// <summary>
+        /// Hits player: requests knockback, deals damage
+        /// </summary>
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                _playerHealth.TakeDamage(damage);
+                _playerBody = collision.collider.gameObject.GetComponent<Rigidbody2D>();
+                _knockbackRequest = true;
+            }
         }
     }
 }
