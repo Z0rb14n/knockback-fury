@@ -90,7 +90,7 @@ namespace Player
 
             if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 if (!_dashing && !Grounded && xInput != 0)
                 {
