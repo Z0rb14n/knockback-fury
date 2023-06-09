@@ -1395,7 +1395,7 @@ PrefabInstance:
     - target: {fileID: 6335998196205219546, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: playerHealth
       value: 
-      objectReference: {fileID: 1934789383}
+      objectReference: {fileID: 0}
     - target: {fileID: 6335998196205219546, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: playerObject
       value: 
@@ -1459,14 +1459,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
   m_PrefabInstance: {fileID: 763855029}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1934789383 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1826430291910942609, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-  m_PrefabInstance: {fileID: 763855029}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1934789382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
