@@ -1,7 +1,6 @@
 ﻿using System;
-
-using Cell = System.ValueTuple<int, int>;
-using Grid = System.Collections.Generic.Dictionary<System.ValueTuple<int, int>, FloorGen.RoomType>;
+using UnityEngine;
+using Grid = System.Collections.Generic.Dictionary<UnityEngine.Vector2Int, FloorGen.RoomType>;
 
 namespace FloorGen
 {
@@ -28,15 +27,15 @@ namespace FloorGen
             };
         }
 
-        public static Cell Move(this RoomType type, Cell cell)
+        public static Vector2Int Move(this RoomType type, Vector2Int vector2Int)
         {
             return type switch
             {
-                RoomType.LeftOpen => (cell.Item1-1,cell.Item2),
-                RoomType.BottomOpen => (cell.Item1,cell.Item2-1),
-                RoomType.RightOpen => (cell.Item1+1,cell.Item2),
-                RoomType.TopOpen => (cell.Item1,cell.Item2+1),
-                _ => cell
+                RoomType.LeftOpen => vector2Int + Vector2Int.left,
+                RoomType.BottomOpen => vector2Int + Vector2Int.down,
+                RoomType.RightOpen => vector2Int + Vector2Int.right,
+                RoomType.TopOpen => vector2Int + Vector2Int.up,
+                _ => vector2Int
             };
         }
     }
