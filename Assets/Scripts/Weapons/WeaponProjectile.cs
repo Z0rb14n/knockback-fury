@@ -45,12 +45,8 @@ namespace Weapons
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.GetComponent<PlayerMovementScript>() != null)
-            {
-                Debug.Log($"Hit Player for {_damage}");
-            }
+            Weapon.HitEntityHealth(other.collider.GetComponent<EntityHealth>(),_damage);
             Destroy(gameObject);
-            // TODO HIT ENEMY
         }
     }
 }

@@ -1,36 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : EntityHealth
+namespace Player
 {
-    private PlayerMovementScript _playerMovement;
-
-    protected override void Awake()
+    [RequireComponent(typeof(PlayerMovementScript))]
+    public class PlayerHealth : EntityHealth
     {
-        base.Awake();
-        _playerMovement = GetComponent<PlayerMovementScript>();
-    }
+        private PlayerMovementScript _playerMovement;
 
-    /// <summary>
-    /// Takes Damage: decreases health, sets iFrame timer, restricts player movement
-    /// </summary>
-    protected override void DoTakeDamage(int dmg)
-    {
-        base.DoTakeDamage(dmg);
-        _playerMovement.StopMovement();
-        StartCoroutine(AllowMovementAfterDelay());
-    }
+        protected override void Awake()
+        {
+            base.Awake();
+            _playerMovement = GetComponent<PlayerMovementScript>();
+        }
 
-    protected override void Die()
-    {
-        Debug.Log("Player death");
-        // TODO: player death
-    }
+        /// <summary>
+        /// Takes Damage: decreases health, sets iFrame timer, restricts player movement
+        /// </summary>
+        protected override void DoTakeDamage(int dmg)
+        {
+            base.DoTakeDamage(dmg);
+            _playerMovement.StopMovement();
+            StartCoroutine(AllowMovementAfterDelay());
+        }
 
-    private IEnumerator AllowMovementAfterDelay()
-    {
-        yield return new WaitForSeconds(iFrameLength * 0.75f);
-        _playerMovement.AllowMovement();
+        protected override void Die()
+        {
+            Debug.Log("Player death");
+            // TODO: player death
+        }
+
+        private IEnumerator AllowMovementAfterDelay()
+        {
+            yield return new WaitForSeconds(iFrameLength * 0.75f);
+            _playerMovement.AllowMovement();
+        }
     }
 }

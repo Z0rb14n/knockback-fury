@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -78,8 +79,7 @@ namespace Weapons
                 ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * weaponData.meleeInfo.velMultiplier +
                   weaponData.meleeInfo.baseDamage)
                 : weaponData.projectileDamage;
-            // TODO DEAL DAMAGE
-            Debug.Log(damage);
+            if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
             if (!isMelee)
             {
                 GameObject go = ReferenceEquals(projectileParent, null)
@@ -218,6 +218,17 @@ namespace Weapons
             Vector2 mousePos = GetMousePos();
             spritePivot.right = mousePos - pivotPoint;
             sprite.flipY = mousePos.x < pivotPoint.x;
+        }
+
+        public static void HitEntityHealth(EntityHealth health, int damage)
+        {
+            if (health is PlayerHealth)
+            {
+                Debug.Log($"[Raycast] Hit player for {damage}");
+            }
+            // ReSharper disable once UseNullPropagation
+            if (!ReferenceEquals(health,null))
+                health.TakeDamage(damage);
         }
     }
 }

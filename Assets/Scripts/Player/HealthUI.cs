@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HealthUI : MonoBehaviour
+namespace Player
 {
-    public PlayerHealth playerHealth;
-    public TextMeshProUGUI textObject;
-
-
-    void Update()
+    public class HealthUI : MonoBehaviour
     {
-        textObject.text = $"HP: {playerHealth.health}/{playerHealth.maxHealth}";
+        public PlayerHealth playerHealth;
+        public TextMeshProUGUI textObject;
+
+        private void Update()
+        {
+            textObject.text = $"HP: {playerHealth.health}/{playerHealth.maxHealth}";
+        }
     }
 }

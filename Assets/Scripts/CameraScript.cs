@@ -5,14 +5,14 @@ public class CameraScript : MonoBehaviour
     [Tooltip("Maximum View Distance")]
     public float maxViewDist = 150;
     private Camera _mainCam;
-    private Vector2 screenDims; // Cache screen dimensions
-    private Vector3 displacement; // Reuse displacement vector to prevent frequent object creation
+    private Vector2 _screenDims; // Cache screen dimensions
+    private Vector3 _displacement; // Reuse displacement vector to prevent frequent object creation
 
     private void Awake() 
     {
         _mainCam = Camera.main;
         // Cache the screen dimensions magnitude
-        screenDims = new Vector2(Screen.width, Screen.height);
+        _screenDims = new Vector2(Screen.width, Screen.height);
     }
 
     private void FixedUpdate() 
@@ -30,11 +30,13 @@ public class CameraScript : MonoBehaviour
         float distance = lookVec.magnitude;
         
         // Reuse displacement vector and update its components
-        displacement.x = direction.x * Mathf.Lerp(0, maxViewDist, distance / screenDims.magnitude);
-        displacement.y = direction.y * Mathf.Lerp(0, maxViewDist, distance / screenDims.magnitude);
-        displacement.z = transform.position.z;
+        _displacement.x = direction.x * Mathf.Lerp(0, maxViewDist, distance / _screenDims.magnitude);
+        _displacement.y = direction.y * Mathf.Lerp(0, maxViewDist, distance / _screenDims.magnitude);
+        _displacement.z = transform.position.z;
 
-        transform.localPosition = displacement;
+        // how ironic that an optimization actually resulted in an inefficient property access huh
+        // ReSharper disable once Unity.InefficientPropertyAccess
+        transform.localPosition = _displacement;
     }
 
     /// <summary>

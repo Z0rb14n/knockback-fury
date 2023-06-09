@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 871210707627827411}
   - component: {fileID: 2462369353442171125}
   - component: {fileID: 8168244775167315299}
+  - component: {fileID: 7387056994418124513}
   - component: {fileID: 5138450944320709130}
   - component: {fileID: 1994587395661662118}
   - component: {fileID: 6824292787392864246}
@@ -130,6 +131,18 @@ MonoBehaviour:
   wallJumpForce: {x: 10, y: 5}
   dashSpeed: 1
   dashTime: 1
+--- !u!114 &7387056994418124513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244737822807091051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cec657ce04ed42bba564c3a06df62ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5138450944320709130
 MonoBehaviour:
   m_ObjectHideFlags: 0
