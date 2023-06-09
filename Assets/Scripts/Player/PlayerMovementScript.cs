@@ -27,8 +27,7 @@ namespace Player
         private Rigidbody2D _body;
         private bool _jumpRequest;
         private bool _knockbackRequest;
-        private Vector2 _knockbackDirection;
-        private float _knockbackStr;
+        private Vector2 _knockbackVector;
         private float _speed;
         private float _currentVelocity;
         private bool _dashing;
@@ -117,16 +116,20 @@ namespace Player
 
             if (_knockbackRequest)
             {
-                _body.AddForce(_knockbackDirection * _knockbackStr, ForceMode2D.Impulse);
+                _body.AddForce(_knockbackVector, ForceMode2D.Impulse);
+                _knockbackVector = Vector2.zero;
                 _knockbackRequest = false;
             }
         }
 
-        public void RequestKnockback(Vector2 dir, float str)
+        public void RequestKnockback(Vector2 dir, float str) => RequestKnockback(dir * str);
+
+        public void RequestKnockback(Vector2 vec)
         {
+            // honestly shouldn't really matter if it's here or just an addForce call
+            // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
-            _knockbackDirection = dir;
-            _knockbackStr = str;
+            _knockbackVector += vec;
         }
 
         private IEnumerator DashCoroutine()
