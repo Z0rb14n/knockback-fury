@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9005711590793679263}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.8918, y: -2.488, z: -6.8589}
   m_LocalScale: {x: 0.61109, y: 0.61109, z: 0.61109}
   m_ConstrainProportionsScale: 0
@@ -87,6 +87,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   health: 10
+  iFrameLength: 0
 --- !u!114 &6335998196205219546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,12 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
-  damageInterval: 1
   knockbackForce: 0
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  playerObject: {fileID: 0}
 --- !u!1 &9005711591082418749
 GameObject:
   m_ObjectHideFlags: 0
