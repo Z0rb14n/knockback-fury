@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 3237788133357728930}
   - component: {fileID: 3237788133357728928}
   - component: {fileID: 3237788133357728929}
+  - component: {fileID: 6166057425882935633}
+  - component: {fileID: 5126662251168286645}
   m_Layer: 0
   m_Name: Enemy_chaser
   m_TagString: Untagged
@@ -228,7 +230,7 @@ MonoBehaviour:
     PresetVelocity: 0
     Prediction: 0
     PredictionMagnitude: 0
-  targetTag: Untagged
+  targetTag: Enemy_chaser_follow
 --- !u!114 &3237788133357728931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,11 +253,9 @@ MonoBehaviour:
     tab3: 0
     tab4: 0
   advancedInspector: 0
-  FilteredEnvironments: []
-  GameObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  FilteredEnvironments:
+  - danger
+  GameObjects: []
   velocityGizmo:
     Enabled: 0
     Color: {r: 0.5, g: 0.5, b: 1, a: 1}
@@ -368,3 +368,36 @@ MonoBehaviour:
     AngleMapping: 2
     MaxIncrease: 0.2
     MaxAngle: 45
+--- !u!114 &6166057425882935633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237788133357728955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 336943168, guid: b26ce4b80a42c6441af375612ff69ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environmentFoldout: 0
+  SteeringPerceiver: {fileID: 0}
+  ObjectTag: Pathfinding_perciever
+  Range: -1
+  rangeGizmo:
+    Enabled: 0
+    Color: {r: 0.2627451, g: 0.79607844, b: 0.24705882, a: 1}
+--- !u!114 &5126662251168286645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237788133357728955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fdb29549b5e3af49b81f874653b5502, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explodeDistance: 1
+  explodeDelayTime: 0.5

@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enemy_chaser_follow
+  - Pathfinding_perciever
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - Player
   - Enemy
   - Projectile
-  - 
+  - Enemy_chaser_avoid
   - 
   - 
   - 
