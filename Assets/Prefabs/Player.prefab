@@ -129,8 +129,8 @@ MonoBehaviour:
   speedSmoothness: 0.01
   jumpForce: 10
   wallJumpForce: {x: 10, y: 5}
-  dashSpeed: 0.4
-  dashTime: 0.09
+  dashSpeed: 0.3
+  dashTime: 0.06
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0

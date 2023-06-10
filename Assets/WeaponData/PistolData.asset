@@ -19,8 +19,8 @@ MonoBehaviour:
   projectileDamage: 10
   roundsPerSecond: 2
   clipSize: 15
-  reloadTime: 2
-  spread: 0
+  reloadTime: 1.5
+  spread: 10
   isHitscan: 0
   hasMelee: 0
   knockbackStrength: 12
