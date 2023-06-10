@@ -19,7 +19,10 @@ namespace Player
         public float dashSpeed = 1;
         [Min(0), Tooltip("Time in Air Dash")]
         public float dashTime = 1;
+        [Min(0), Tooltip("Max number of dashes upon landing")]
+        public int maxDashes = 1;
 
+        private int _dashesRemaining = 1;
         private MeshTrail _meshTrail;
         private ContactFilter2D _groundFilter;
         private ContactFilter2D _leftWallFilter;
@@ -78,7 +81,7 @@ namespace Player
 
         private void Update()
         {
-
+            if (Grounded) _dashesRemaining = maxDashes;
             if (!_canMove) return;
             float xInput = Input.GetAxisRaw("Horizontal"); // Using GetAxisRaw() instead of two if statements
             // Only change velocity when there's input
@@ -92,11 +95,13 @@ namespace Player
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                if (!_dashing && !Grounded && xInput != 0)
+                float yInput = Input.GetAxisRaw("Vertical");
+                if (!_dashing && _dashesRemaining > 0 && !Grounded && (xInput != 0 || yInput != 0))
                 {
                     _dashing = true;
-                    _dashDirection = new Vector2(xInput, 0);
+                    _dashDirection = new Vector2(xInput, yInput).normalized;
                     StartCoroutine(DashCoroutine());
+                    _dashesRemaining--;
                 }
             }
         }
@@ -135,6 +140,7 @@ namespace Player
         private IEnumerator DashCoroutine()
         {
             _meshTrail.StartDash();
+            _body.velocity = Vector2.zero;
             for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
             {
                 if (_body.IsTouchingLayers(_physicsCheckMask)) break;
@@ -144,6 +150,7 @@ namespace Player
             }
 
             _dashing = false;
+            _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
         }
 
