@@ -372,7 +372,7 @@ PrefabInstance:
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponData
       value: 
-      objectReference: {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
+      objectReference: {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: projectileParent
       value: 
@@ -380,7 +380,7 @@ PrefabInstance:
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
     - target: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Name
       value: Player

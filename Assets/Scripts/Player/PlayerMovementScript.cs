@@ -88,9 +88,9 @@ namespace Player
                 _body.velocity = new Vector2(_speed, _body.velocity.y);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space)) _jumpRequest = true;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) _jumpRequest = true;
 
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 if (!_dashing && !Grounded && xInput != 0)
                 {

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: SMGData
+  m_Name: PistolData
   m_EditorClassIdentifier: 
-  weaponName: SMG
+  weaponName: Mouser Pistol
   numProjectiles: 1
-  range: 10
-  projectileSpeed: 15
-  projectileDamage: 14
-  roundsPerSecond: 9
-  clipSize: 50
+  range: 15
+  projectileSpeed: 10
+  projectileDamage: 10
+  roundsPerSecond: 2
+  clipSize: 15
   reloadTime: 1.5
-  spread: 20
+  spread: 10
   isHitscan: 0
   hasMelee: 0
-  knockbackStrength: 3
+  knockbackStrength: 12
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
