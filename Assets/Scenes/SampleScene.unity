@@ -4158,6 +4158,10 @@ PrefabInstance:
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 213685875}
+    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: weaponInventory.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 

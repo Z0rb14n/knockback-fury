@@ -12,8 +12,10 @@ namespace Weapons
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private WeaponData[] weaponInventory;
+        [SerializeField] private int weaponIndex = 0;
 
-        public WeaponData weaponData;
+        public WeaponData WeaponData => weaponInventory[weaponIndex];
         private Camera _mainCam;
         private Vector2 _spriteStartPosition;
         private Vector2 _recoilAnimDisplacement;
@@ -27,15 +29,22 @@ namespace Weapons
         public float ReloadTime { get; private set; }
 
         private Vector2 LookDirection => spritePivot.right;
-
-
+        
         private void Awake()
         {
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
-            weaponData.Reload();
+            WeaponData.Reload();
             UpdateFromWeaponData();
+            EnsureInventoryHasSpace();
+        }
+
+        private void EnsureInventoryHasSpace()
+        {
+            if (weaponInventory != null && weaponInventory.Length != 0) return;
+            weaponInventory = new WeaponData[2];
+            weaponIndex = 0;
         }
 
         private void Update()
@@ -49,7 +58,7 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) weaponData.Reload();
+                if (ReloadTime <= 0) WeaponData.Reload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -62,23 +71,23 @@ namespace Weapons
 
         private void UpdateFromWeaponData()
         {
-            if (weaponData != null)
-                sprite.sprite = weaponData.sprite;
+            if (WeaponData != null)
+                sprite.sprite = WeaponData.sprite;
         }
 
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
             Vector2 normalizedLookDirection = LookDirection.normalized;
-            float range = isMelee ? weaponData.meleeInfo.meleeRange : weaponData.range;
+            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.range;
             // literally hitscan
             // TODO LAYERMASK FOR ENEMIES/PLAYERS
             RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, range);
             Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * range) : hit.point;
             int damage = isMelee
-                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * weaponData.meleeInfo.velMultiplier +
-                  weaponData.meleeInfo.baseDamage)
-                : weaponData.projectileDamage;
+                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * WeaponData.meleeInfo.velMultiplier +
+                  WeaponData.meleeInfo.baseDamage)
+                : WeaponData.projectileDamage;
             if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
             if (!isMelee)
             {
@@ -105,30 +114,30 @@ namespace Weapons
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
             Vector2 normalizedLookDirection = LookDirection.normalized;
-            if (weaponData.isHitscan)
+            if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else
             {
-                for (int i = 0; i < weaponData.numProjectiles; i++)
+                for (int i = 0; i < WeaponData.numProjectiles; i++)
                 {
                     GameObject go = ReferenceEquals(projectileParent, null)
                         ? Instantiate(projectilePrefab, origin, Quaternion.identity)
                         : Instantiate(projectilePrefab, origin, Quaternion.identity, projectileParent);
                     float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                    angle += Random.Range(-weaponData.spread/2, weaponData.spread/2) * Mathf.Deg2Rad;
+                    angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
                     Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(weaponData.projectileDamage, weaponData.range, weaponData.projectileSpeed, finalDir);
+                    proj.Initialize(WeaponData.projectileDamage, WeaponData.range, WeaponData.projectileSpeed, finalDir);
                 }
             }
 
-            weaponData.DecrementClip();
-            if (weaponData.IsClipEmpty) ReloadTime = weaponData.reloadTime;
-            _weaponDelayTimer = 1/weaponData.roundsPerSecond;
-            if (weaponData.fireMode == FireMode.Burst)
+            WeaponData.DecrementClip();
+            if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+            _weaponDelayTimer = 1/WeaponData.roundsPerSecond;
+            if (WeaponData.fireMode == FireMode.Burst)
             {
                 _weaponBurstCount--;
-                _weaponBurstTimer = 1/weaponData.burstInfo.withinBurstFirerate;
+                _weaponBurstTimer = 1/WeaponData.burstInfo.withinBurstFirerate;
             }
         }
 
@@ -141,31 +150,52 @@ namespace Weapons
         {
             if (ReloadTime > 0) return false;
             if (_weaponDelayTimer > 0) return false;
-            if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
-            if (weaponData.IsClipEmpty)
+            if (!isFirstDown && WeaponData.fireMode != FireMode.Auto) return false;
+            if (WeaponData.IsClipEmpty)
             {
-                ReloadTime = weaponData.reloadTime;
+                ReloadTime = WeaponData.reloadTime;
                 return false;
             }
-            if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
+            if (WeaponData.fireMode == FireMode.Burst) _weaponBurstCount = WeaponData.burstInfo.burstAmount;
             FireWeaponUnchecked();
             return true;
         }
 
         public void UseMelee(Vector2 vel)
         {
-            if (!weaponData.hasMelee) return;
+            if (!WeaponData.hasMelee) return;
             HitscanLogic(true, vel);
         }
 
         public void Reload()
         {
             if (ReloadTime > 0) return;
-            ReloadTime = weaponData.reloadTime;
+            ReloadTime = WeaponData.reloadTime;
+        }
+
+        public void SwitchWeapon(bool up)
+        {
+            ReloadTime = 0;
+            int newIndex = weaponIndex + (up ? 1 : -1);
+            bool shouldDecrement = up || newIndex < 0;
+            if (newIndex < 0) newIndex = weaponInventory.Length - 1;
+            if (newIndex >= weaponInventory.Length) newIndex = 0;
+            if (shouldDecrement)
+            {
+                for (; newIndex > 0; newIndex--)
+                {
+                    if (!ReferenceEquals(null, weaponInventory[newIndex])) break;
+                }
+            }
+
+            weaponIndex = newIndex;
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / weaponInventory[weaponIndex].roundsPerSecond);
+            UpdateFromWeaponData();
         }
 
         private void OnValidate()
         {
+            EnsureInventoryHasSpace();
             UpdateFromWeaponData();
         }
 
@@ -174,7 +204,7 @@ namespace Weapons
         /// </summary>
         private void StartFireAnimation()
         {
-            _recoilAnimTimer = weaponData.recoilAnimationDuration;
+            _recoilAnimTimer = WeaponData.recoilAnimationDuration;
         }
 
         /// <summary>
@@ -184,7 +214,7 @@ namespace Weapons
         private void FireAnimation(float dt)
         {
             // can be null but cba
-            float weight = _recoilAnimTimer / weaponData.recoilAnimationDuration;
+            float weight = _recoilAnimTimer / WeaponData.recoilAnimationDuration;
             if (weight <= 0.5)
             {
                 weight = 1 - weight;
