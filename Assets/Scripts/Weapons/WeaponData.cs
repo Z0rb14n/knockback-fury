@@ -34,6 +34,7 @@ namespace Weapons
         public MeleeInfo meleeInfo;
 
         public Sprite sprite;
+        public GameObject customProjectile;
 
         public int Clip { get; private set; }
 
