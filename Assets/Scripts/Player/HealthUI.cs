@@ -7,9 +7,9 @@ namespace Player
     public class HealthUI : MonoBehaviour
     {
         public PlayerHealth playerHealth;
-        public TextMeshProUGUI textObject;
-        public Image healthBar;
-        public Gradient colorGradient;
+        [SerializeField] private TextMeshProUGUI textObject;
+        [SerializeField] private Image healthBar;
+        [SerializeField] private Gradient colorGradient;
         private RectTransform _healthBarRect;
 
         private int _prevDisplayedHp = 0;
