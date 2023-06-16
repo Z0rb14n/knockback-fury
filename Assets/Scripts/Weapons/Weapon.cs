@@ -118,11 +118,13 @@ namespace Weapons
                 HitscanLogic(false, Vector2.zero);
             else
             {
+                // ReSharper disable once MergeConditionalExpression
+                GameObject projectile = WeaponData.customProjectile == null ? projectilePrefab : WeaponData.customProjectile;
                 for (int i = 0; i < WeaponData.numProjectiles; i++)
                 {
                     GameObject go = ReferenceEquals(projectileParent, null)
-                        ? Instantiate(projectilePrefab, origin, Quaternion.identity)
-                        : Instantiate(projectilePrefab, origin, Quaternion.identity, projectileParent);
+                        ? Instantiate(projectile, origin, Quaternion.identity)
+                        : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
                     float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
                     angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
                     Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
@@ -189,7 +191,7 @@ namespace Weapons
             }
 
             weaponIndex = newIndex;
-            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / weaponInventory[weaponIndex].roundsPerSecond);
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
             UpdateFromWeaponData();
         }
 
