@@ -22,13 +22,17 @@ namespace Player
         {
             if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
 
+            if (Input.GetKeyDown(KeyCode.LeftControl)) _weapon.SwitchWeapon(true);
+            
+            if (Input.mouseScrollDelta.y != 0) _weapon.SwitchWeapon(Input.mouseScrollDelta.y > 0);
+
             if (Input.GetMouseButton(0))
             {
                 Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
                 bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
                 if (fireResult)
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.weaponData.knockbackStrength);
+                        _weapon.WeaponData.knockbackStrength);
             }
 
             if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
