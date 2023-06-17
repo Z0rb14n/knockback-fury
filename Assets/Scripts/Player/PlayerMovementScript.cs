@@ -125,6 +125,11 @@ namespace Player
                 _knockbackVector = Vector2.zero;
                 _knockbackRequest = false;
             }
+
+            if ((IsOnLeftWall || IsOnRightWall) && !Grounded)
+            {
+                _body.transform.Translate(new Vector2(0f, -0.05f));
+            }
         }
 
         public void RequestKnockback(Vector2 dir, float str) => RequestKnockback(dir * str);
