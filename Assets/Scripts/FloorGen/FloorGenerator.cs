@@ -12,11 +12,14 @@ namespace FloorGen
     {
         public Pair[] pairs;
         public int seed;
-        public int pathLength = 4;
-        public int pathHeight = 1;
-
-        [Min(0), Tooltip("Bias towards end goal. Not guaranteed to terminate if set to 0")]
-        public float biasFactor = 10;
+        [Min(0), Tooltip("Number of rows for generation")]
+        public int maxRows = 3;
+        [Min(0), Tooltip("Max number of rooms generated")]
+        public int minRooms = 12;
+        [Min(0), Tooltip("Max number of rooms generated")]
+        public int maxRooms = 15;
+        [Min(0), Tooltip("Minimum number of rows generated on center row")]
+        public int centerRowMin = 8;
         // ReSharper disable once StringLiteralTypo
         [Tooltip("Branchiness of final branch sweep")]
         // ReSharper disable two IdentifierTypo
@@ -27,6 +30,7 @@ namespace FloorGen
         public Vector2 gridSize = Vector2.one;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
+        private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
 
         private void Awake()
         {
@@ -47,72 +51,82 @@ namespace FloorGen
         {
             _pairsDict.Clear();
             foreach (Pair pair in pairs) _pairsDict.Add(pair.type, pair.roomPrefab);
+            if (minRooms < centerRowMin)
+            {
+                Debug.LogError("MinRooms < centerRowMin; clamping.");
+                minRooms = centerRowMin;
+            }
+
+            if (maxRooms < minRooms)
+            {
+                Debug.LogError("MaxRooms < minRooms; clamping.");
+                maxRooms = minRooms;
+            }
+        }
+
+        private Random GenerateRNG()
+        {
+            if (seed == 0)
+            {
+                int guidHash = Guid.NewGuid().GetHashCode();
+                Debug.Log($"Random seed: {guidHash}");
+                return new Random(guidHash);
+            }
+            Debug.Log($"Reusing old seed: {seed}");
+            return new Random(seed);
         }
 
         private void Generate()
         {
             Grid grid = new();
-            Random random;
-            if (seed == 0)
-            {
-                int guidHash = Guid.NewGuid().GetHashCode();
-                random = new Random(guidHash);
-                Debug.Log(guidHash.ToString());
-            }
-            else
-                random = new Random(seed);
+            Random random = GenerateRNG();
+            
+            int roomCount = random.Next(minRooms,maxRooms+1);
 
-            Vector2Int currVector2Int = Vector2Int.zero;
-            Vector2Int target = new(pathLength,pathHeight);
-            Queue<Vector2Int> toBranch = new();
-            toBranch.Enqueue(currVector2Int);
-            int iterationCount = 0;
-            while (currVector2Int != target)
-            {
-                // randomly move towards target; bias towards moving towards (duh)
-                // remember: it's bottom, left, right, top
-                float[] weights = { 1, 1, 1, 1 };
-                int dx = target.x - currVector2Int.x;
-                int dy = target.y - currVector2Int.y;
-                if (dx > 0) weights[2] += dx * biasFactor;
-                else weights[1] -= dx * biasFactor;
-                if (dy > 0) weights[3] += dy * biasFactor;
-                else weights[0] -= dy * biasFactor;
-                RoomType dir = RandomDir(random, weights);
-                ExpandSide(grid, currVector2Int, dir);
-                currVector2Int = dir.Move(currVector2Int);
-                toBranch.Enqueue(currVector2Int);
-                iterationCount++;
-                Debug.Log(currVector2Int);
-                if (iterationCount > 100)
-                {
-                    // prevent infinite loop from freezing unity (lmao)
-                    throw new Exception($"Runtime Iteration Limit Reached: {iterationCount}");
-                }
-            }
+            List<Vector2Int> toBranch = new() { Vector2Int.zero };
+            int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
+            roomCount -= middleLength;
 
-            while (toBranch.Count > 0)
+            while (roomCount > 0)
             {
+                int index = random.Next(0, toBranch.Count);
+                Vector2Int start = toBranch[index];
+                toBranch.RemoveAt(index); // yes, this is O(n). But n = like 10, so too bad!
                 // ReSharper disable once IdentifierTypo
                 int currBranchiness = branchiness;
-                currVector2Int = toBranch.Dequeue();
-                while (CalculateRandomLog(random, currBranchiness))
+                do
                 {
-                    RoomType dir = RandomDirUnweighted(random);
-                    ExpandSide(grid, currVector2Int, dir);
-                    currVector2Int = dir.Move(currVector2Int);
+                    RoomType dir = RandomDirUnweighted(random, AllowedBranchMovements(start, middleLength - 1));
+                    if (!grid.ContainsKey(dir.Move(start))) roomCount--;
+                    ExpandSide(grid, start, dir);
+                    start = dir.Move(start);
                     currBranchiness -= branchinessDecrease;
-                }
+                } while (roomCount > 0 && CalculateRandomLog(random, currBranchiness));
             }
             GenerateFromGrid(random,grid);
         }
 
+        private int GenerateMiddleRow(Random random, Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
+        {
+            int middle = (maxRoomCount + centerRowMin) / 2;
+            int roomsToGenerate = random.Next(centerRowMin, middle + 1)-1;
+            int retVal = roomsToGenerate;
+            Vector2Int currVector2Int = Vector2Int.zero;
+            while (roomsToGenerate > 0)
+            {
+                ExpandSide(grid, currVector2Int, RoomType.RightOpen);
+                currVector2Int = RoomType.RightOpen.Move(currVector2Int);
+                roomsToGenerate--;
+                if (roomsToGenerate != 0)
+                    toBranch.Add(currVector2Int);
+            }
+            return retVal;
+        }
+
         private void GenerateFromGrid(Random random, Grid grid)
         {
-            foreach (KeyValuePair<Vector2Int, RoomType> pair in grid)
+            foreach ((Vector2Int pos, RoomType type) in grid)
             {
-                Vector2Int pos = pair.Key;
-                RoomType type = pair.Value;
                 GameObject[] objects = _pairsDict[type];
                 int index = random.Next(0, objects.Length);
                 if (ReferenceEquals(worldParent, null))
@@ -138,34 +152,47 @@ namespace FloorGen
             return random.Next(0, 100) < prob * 100;
         }
 
-        private static RoomType RandomDir(Random random, float[] weights)
+        private RoomType[] AllowedBranchMovements(Vector2Int pos, int finalRoomX)
         {
-            Debug.Assert(weights.Length == 4);
-            float sum = weights[0];
-            for (int i = 1; i < weights.Length; i++)
+            List<RoomType> rooms = new()
             {
-                sum += weights[i];
+                RoomType.BottomOpen,
+                RoomType.TopOpen,
+                RoomType.LeftOpen,
+                RoomType.RightOpen
+            };
+            if (pos.x >= finalRoomX) rooms.Remove(RoomType.RightOpen);
+            if (pos.y == 0)
+            {
+                if (pos.x > 0) rooms.Remove(RoomType.LeftOpen);
+                rooms.Remove(RoomType.RightOpen);
             }
 
-            int rand = random.Next(0, Mathf.RoundToInt(sum * 100));
-            if (rand < weights[0] * 100) return RoomType.BottomOpen;
-            if (rand < weights[1] * 100) return RoomType.LeftOpen;
-            if (rand < weights[2] * 100) return RoomType.RightOpen;
-            return RoomType.TopOpen;
+            int minY = -maxRows / 2;
+            int maxY = maxRows + minY + 1;
+            if (pos.y >= maxY) rooms.Remove(RoomType.TopOpen);
+            if (pos.y <= minY) rooms.Remove(RoomType.BottomOpen);
+            return rooms.ToArray();
         }
 
-        private static RoomType RandomDirUnweighted(Random random)
+        private static RoomType RandomDir(Random random, RoomType[] types, float[] weights)
         {
-            int rand = random.Next(0, 4);
-            return rand switch
+            Debug.Assert(types.Length > 0);
+            float sum = weights[0];
+            for (int i = 1; i < types.Length; i++) sum += weights[i];
+
+            int rand = random.Next(0, Mathf.RoundToInt(sum * 100));
+            float cumSum = 0;
+            for (int i = 0; i < types.Length-1; i++)
             {
-                0 => RoomType.BottomOpen,
-                1 => RoomType.LeftOpen,
-                2 => RoomType.RightOpen,
-                3 => RoomType.TopOpen,
-                _ => 0
-            };
+                if (rand < cumSum + weights[i] * 100) return types[i];
+                cumSum += weights[i] * 100;
+            }
+
+            return types[^1];
         }
+
+        private static RoomType RandomDirUnweighted(Random random, RoomType[] types) => RandomDir(random, types, UnweightedWeights);
     }
 
     [Serializable]
