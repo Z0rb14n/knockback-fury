@@ -21,6 +21,8 @@ namespace Player
         public float dashTime = 1;
         [Min(0), Tooltip("Max number of dashes upon landing")]
         public int maxDashes = 1;
+        [Min(0), Tooltip("Slide speed when on a wall")]
+        public float slideSpeed = 0.05f;
 
         private int _dashesRemaining = 1;
         private MeshTrail _meshTrail;
@@ -128,7 +130,7 @@ namespace Player
 
             if ((IsOnLeftWall || IsOnRightWall) && !Grounded)
             {
-                _body.transform.Translate(new Vector2(0f, -0.05f));
+                _body.transform.Translate(new Vector2(0f, -slideSpeed));
             }
         }
 
