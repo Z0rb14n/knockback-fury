@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShootScript : MonoBehaviour
+public class ShootREnemyScript : MonoBehaviour
 {
     public GameObject bullet;
     public Transform bulletPos;
@@ -17,6 +17,18 @@ public class EnemyShootScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+
+        if (timer > 2)
+        {
+            timer = 0;
+            shoot();
+        }
+    }
+
+    // instantiates a bullet at the position of the ranged enemy
+    void shoot()
+    {
+        Instantiate(bullet, bulletPos.position, Quaternion.identity);
     }
 }
