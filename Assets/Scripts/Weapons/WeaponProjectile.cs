@@ -8,11 +8,18 @@ namespace Weapons
     {
         [Tooltip("Whether the projectile is a rotating one")]
         public bool rotating;
+        [Tooltip("Explosion range")]
+        public float explosionRange;
+        [Tooltip("(For Grenades) Detonates on destruction")]
+        public bool detonateOnDestroy;
+        [Tooltip("Detonation VFX Prefab")]
+        public GameObject detonationVFX;
         private float _remainingDistance;
         private int _damage;
         private Vector3 _prevPosition;
         private Rigidbody2D _body;
         private bool _hitPlayer;
+        private Collider2D[] _colliderTest = new Collider2D[20];
         
         private void Awake()
         {
@@ -49,6 +56,7 @@ namespace Weapons
 
             if (_remainingDistance <= 0)
             {
+                Detonation();
                 Destroy(gameObject);
             }
         }
@@ -59,7 +67,23 @@ namespace Weapons
             EntityHealth health = other.collider.GetComponent<EntityHealth>();
             if (!_hitPlayer && health is PlayerHealth) return;
             Weapon.HitEntityHealth(health,_damage);
+            Detonation();
             Destroy(gameObject);
+        }
+
+        private void Detonation()
+        {
+            if (!detonateOnDestroy) return;
+            int size = Physics2D.OverlapCircleNonAlloc(_body.position, explosionRange, _colliderTest);
+            for (int i = 0; i < size; i++)
+            {
+                EntityHealth health = _colliderTest[i].GetComponent<EntityHealth>();
+                Weapon.HitEntityHealth(health,_damage);
+            }
+
+            GameObject go = Instantiate(detonationVFX, transform.parent);
+            go.transform.position = transform.position;
+            go.GetComponent<ExplosionVFX>().SetSize(explosionRange);
         }
     }
 }
