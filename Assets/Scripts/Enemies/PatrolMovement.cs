@@ -7,18 +7,18 @@ namespace Enemies
     {
 
         public Transform[] patrolPoints;
-        public float speed;
-        public float pauseTime;
+        public float _speed;
+        public float _pauseTime;
 
-        private int _target;
-        private Vector2 _targetPos;
+        protected int _target;
+        protected Vector2 _targetPos;
         private float _originalSpeed;
 
         private void Start()
         {
             _target = 0;
             _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
-            _originalSpeed = speed;
+            _originalSpeed = _speed;
         }
 
 
@@ -34,10 +34,10 @@ namespace Enemies
 
         private void MoveToTarget()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, _targetPos, _speed * Time.deltaTime);
         }
 
-        private void SwitchTargets()
+        protected void SwitchTargets()
         {
             if (_target == 1)
             {
@@ -51,11 +51,11 @@ namespace Enemies
             }
         }
 
-        private IEnumerator PauseAtDestination()
+        protected IEnumerator PauseAtDestination()
         {
-            speed = 0;
-            yield return new WaitForSeconds(pauseTime);
-            speed = _originalSpeed;
+            _speed = 0;
+            yield return new WaitForSeconds(_pauseTime);
+            _speed = _originalSpeed;
         }
 
     }

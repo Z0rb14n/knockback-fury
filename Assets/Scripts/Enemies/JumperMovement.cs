@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class JumperMovement : MonoBehaviour
+    public class JumperMovement : PatrolMovement
     {
 
         public float jumpForce;
+ 
 
         private Rigidbody2D _body;
         private bool _canJump;
@@ -16,14 +17,18 @@ namespace Enemies
         private ContactFilter2D _rightWallFilter;
         private int _physicsCheckMask;
         private bool _canResetVelocity;
+        private float _direction;
+        
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
 
-        private void Awake()
+        private void Start()
         {
+            _target = 0;
+            _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
             _body = GetComponent<Rigidbody2D>();
             _canJump = true;
             _canResetVelocity = true;
@@ -62,10 +67,18 @@ namespace Enemies
         {
             _isTouchingSurface = Grounded || IsOnLeftWall || IsOnRightWall;
             StickOnWall();
+            DetermineDirection();
+
             // jump if jumping cooldown is over and entity is in contact with a surface
             if (_canJump && _isTouchingSurface)
             {
                 jump();
+            }
+
+            if (Vector2.Distance(transform.position, _targetPos) < 1f)
+            {
+                SwitchTargets();
+                StartCoroutine(PauseAtDestination());
             }
         }
 
@@ -81,6 +94,12 @@ namespace Enemies
             else _body.gravityScale = 1;
         }
 
+        // Determines which direction the jumper jumps towards; _direction should only be either -1 or 1
+        private void DetermineDirection()
+        {
+            _direction = Mathf.Sign(patrolPoints[_target].position.x - _body.position.x);
+        }
+
         // Jumping: if on ground, simply add force
         //          if touching wall, wall jump
         // TODO: jump directions/targeting, sprite flipping
@@ -88,7 +107,7 @@ namespace Enemies
         {
             if (Grounded)
             {
-                _body.AddForce(new Vector2(-100f, jumpForce * 100));
+                _body.AddForce(new Vector2(100f * _direction, jumpForce * 100));
             } 
             else if (IsOnLeftWall)
             {
@@ -108,6 +127,8 @@ namespace Enemies
             yield return new WaitForSeconds(4);
             _canJump = true;
         }
+
+
 
     }
 }
