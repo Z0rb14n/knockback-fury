@@ -20,3 +20,5 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - UZI: https://opengameart.org/content/uzi-with-hunting-knife
  - Arrow: https://opengameart.org/content/rotating-arrow-projectile
  - Bows: https://opengameart.org/content/dark-fantasy-item-sprites
+ - Bomb: https://opengameart.org/content/animated-bomb-16x16
+ - Revolvers: https://opengameart.org/content/revolvers

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: CrossbowData
+  m_Name: GLData
   m_EditorClassIdentifier: 
-  weaponName: Crossbow
+  weaponName: Grenade Launcher
   numProjectiles: 1
-  range: 500
+  range: 20
   projectileSpeed: 5
-  projectileDamage: 150
-  roundsPerSecond: 0.33
-  clipSize: 1
+  projectileDamage: 20
+  roundsPerSecond: 1
+  clipSize: 6
   reloadTime: 4
   spread: 0
   isHitscan: 0
@@ -34,5 +34,5 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
-  customProjectile: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed, type: 3}
+  sprite: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
+  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}

@@ -6,11 +6,20 @@ namespace Weapons
     [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
     public class WeaponProjectile : MonoBehaviour
     {
+        [Tooltip("Whether the projectile is a rotating one")]
+        public bool rotating;
+        [Tooltip("Explosion range")]
+        public float explosionRange;
+        [Tooltip("(For Grenades) Detonates on destruction")]
+        public bool detonateOnDestroy;
+        [Tooltip("Detonation VFX Prefab")]
+        public GameObject detonationVFX;
         private float _remainingDistance;
         private int _damage;
         private Vector3 _prevPosition;
         private Rigidbody2D _body;
         private bool _hitPlayer;
+        private Collider2D[] _colliderTest = new Collider2D[20];
         
         private void Awake()
         {
@@ -21,16 +30,14 @@ namespace Weapons
         /// <summary>
         /// Initializes required parameters
         /// </summary>
-        /// <param name="damage">Damage</param>
-        /// <param name="range">Distance before projectile disappears</param>
-        /// <param name="speed">Projectile Speed, units/sec</param>
+        /// <param name="data">Weapon that fired this</param>
         /// <param name="direction">Normalized Direction</param>
-        public void Initialize(int damage, float range, float speed, Vector2 direction, bool hitPlayer = false)
+        public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
         {
-            _damage = damage;
-            _remainingDistance = range;
+            _damage = data.projectileDamage;
+            _remainingDistance = data.range;
 
-            _body.velocity = direction * speed;
+            _body.velocity = direction * data.projectileSpeed;
             _hitPlayer = hitPlayer;
         }
 
@@ -39,8 +46,17 @@ namespace Weapons
             Vector3 currPos = transform.position;
             _remainingDistance -= (currPos - _prevPosition).magnitude;
             _prevPosition = currPos;
+            Vector2 vel = _body.velocity;
+
+            if (rotating)
+            {
+                float rotation = Mathf.Atan2(vel.y, vel.x);
+                transform.localEulerAngles = new Vector3(0, 0, rotation * Mathf.Rad2Deg);
+            }
+
             if (_remainingDistance <= 0)
             {
+                Detonation();
                 Destroy(gameObject);
             }
         }
@@ -51,7 +67,23 @@ namespace Weapons
             EntityHealth health = other.collider.GetComponent<EntityHealth>();
             if (!_hitPlayer && health is PlayerHealth) return;
             Weapon.HitEntityHealth(health,_damage);
+            Detonation();
             Destroy(gameObject);
+        }
+
+        private void Detonation()
+        {
+            if (!detonateOnDestroy) return;
+            int size = Physics2D.OverlapCircleNonAlloc(_body.position, explosionRange, _colliderTest);
+            for (int i = 0; i < size; i++)
+            {
+                EntityHealth health = _colliderTest[i].GetComponent<EntityHealth>();
+                Weapon.HitEntityHealth(health,_damage);
+            }
+
+            GameObject go = Instantiate(detonationVFX, transform.parent);
+            go.transform.position = transform.position;
+            go.GetComponent<ExplosionVFX>().SetSize(explosionRange);
         }
     }
 }
