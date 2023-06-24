@@ -6,6 +6,8 @@ namespace Weapons
     [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
     public class WeaponProjectile : MonoBehaviour
     {
+        [Tooltip("Whether the projectile is a rotating one")]
+        public bool rotating;
         private float _remainingDistance;
         private int _damage;
         private Vector3 _prevPosition;
@@ -21,16 +23,14 @@ namespace Weapons
         /// <summary>
         /// Initializes required parameters
         /// </summary>
-        /// <param name="damage">Damage</param>
-        /// <param name="range">Distance before projectile disappears</param>
-        /// <param name="speed">Projectile Speed, units/sec</param>
+        /// <param name="data">Weapon that fired this</param>
         /// <param name="direction">Normalized Direction</param>
-        public void Initialize(int damage, float range, float speed, Vector2 direction, bool hitPlayer = false)
+        public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
         {
-            _damage = damage;
-            _remainingDistance = range;
+            _damage = data.projectileDamage;
+            _remainingDistance = data.range;
 
-            _body.velocity = direction * speed;
+            _body.velocity = direction * data.projectileSpeed;
             _hitPlayer = hitPlayer;
         }
 
@@ -39,6 +39,14 @@ namespace Weapons
             Vector3 currPos = transform.position;
             _remainingDistance -= (currPos - _prevPosition).magnitude;
             _prevPosition = currPos;
+            Vector2 vel = _body.velocity;
+
+            if (rotating)
+            {
+                float rotation = Mathf.Atan2(vel.y, vel.x);
+                transform.localEulerAngles = new Vector3(0, 0, rotation * Mathf.Rad2Deg);
+            }
+
             if (_remainingDistance <= 0)
             {
                 Destroy(gameObject);

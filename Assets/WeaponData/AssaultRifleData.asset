@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: CrossbowData
+  m_Name: AssaultRifleData
   m_EditorClassIdentifier: 
-  weaponName: Crossbow
+  weaponName: Assault Rifle
   numProjectiles: 1
-  range: 500
-  projectileSpeed: 5
-  projectileDamage: 150
-  roundsPerSecond: 0.33
-  clipSize: 1
-  reloadTime: 4
-  spread: 0
+  range: 300
+  projectileSpeed: 15
+  projectileDamage: 20
+  roundsPerSecond: 5
+  clipSize: 30
+  reloadTime: 1.5
+  spread: 15
   isHitscan: 0
-  rightClickAction: 0
+  rightClickAction: 2
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
-  fireMode: 0
+  fireMode: 1
   burstInfo:
-    burstAmount: 0
-    withinBurstFirerate: 0
+    burstAmount: 3
+    withinBurstFirerate: 8
   meleeInfo:
     baseDamage: 0
     velMultiplier: 0
     meleeRange: 0
-  altFireMode: 0
-  sprite: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
-  customProjectile: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed, type: 3}
+  altFireMode: 2
+  sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+  customProjectile: {fileID: 0}

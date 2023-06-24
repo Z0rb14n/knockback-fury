@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -65,7 +66,11 @@ namespace Weapons
             if (_weaponBurstCount > 0 && _weaponBurstTimer > 0)
             {
                 _weaponBurstTimer -= dt;
-                if (_weaponBurstTimer <= 0) FireWeaponUnchecked();
+                if (_weaponBurstTimer <= 0)
+                {
+                    if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+                    else FireWeaponUnchecked();
+                }
             }
         }
 
@@ -129,7 +134,7 @@ namespace Weapons
                     angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
                     Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(WeaponData.projectileDamage, WeaponData.range, WeaponData.projectileSpeed, finalDir);
+                    proj.Initialize(WeaponData, finalDir);
                 }
             }
 
@@ -163,10 +168,20 @@ namespace Weapons
             return true;
         }
 
-        public void UseMelee(Vector2 vel)
+        public void UseRightClick(Vector2 vel)
         {
-            if (!WeaponData.hasMelee) return;
-            HitscanLogic(true, vel);
+            switch (WeaponData.rightClickAction)
+            {
+                case WeaponRightClickAction.FireModeToggle:
+                    (WeaponData.fireMode, WeaponData.altFireMode) = (WeaponData.altFireMode, WeaponData.fireMode);
+                    break;
+                case WeaponRightClickAction.Melee:
+                    HitscanLogic(true, vel);
+                    break;
+                case WeaponRightClickAction.None:
+                default:
+                    break;
+            }
         }
 
         public void Reload()

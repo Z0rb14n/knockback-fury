@@ -35,7 +35,7 @@ namespace Player
                         _weapon.WeaponData.knockbackStrength);
             }
 
-            if (Input.GetMouseButtonDown(1)) _weapon.UseMelee(_body.velocity);
+            if (Input.GetMouseButtonDown(1)) _weapon.UseRightClick(_body.velocity);
         }
     }
 }
