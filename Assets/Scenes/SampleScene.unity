@@ -4328,6 +4328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: dashSpeed
       value: 0.5
