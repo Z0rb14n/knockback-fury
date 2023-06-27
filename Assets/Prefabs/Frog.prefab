@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9173438616225212896}
   - component: {fileID: 7053698180394563384}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 9192570308432205651}
   - component: {fileID: 7310949198750745542}
   - component: {fileID: 4785929221087870910}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
-  _speed: 0
-  _pauseTime: 0
+  speed: 0
+  pauseTime: 0
   jumpForce: 8
 --- !u!114 &7310949198750745542
 MonoBehaviour:

@@ -118,8 +118,8 @@ MonoBehaviour:
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  _speed: 0
-  _pauseTime: 0
+  speed: 2
+  pauseTime: 1
 --- !u!1 &9005711591082418749
 GameObject:
   m_ObjectHideFlags: 0
