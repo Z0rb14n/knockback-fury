@@ -14,10 +14,11 @@ namespace Enemies
             _jumperMovement = GetComponent<JumperMovement>();
         }
 
+        // ensures jumper falls to the ground instead of clinging onto a wall
         public override void TakeDamage(int dmg)
         {
             base.TakeDamage(dmg);
-            _jumperMovement.ForceEnableGravity();
+            _jumperMovement.Stun();
         }
     }
 }

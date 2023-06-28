@@ -16,6 +16,7 @@ namespace Enemies
         private ContactFilter2D _rightWallFilter;
         private int _physicsCheckMask;
         private bool _canResetVelocity;
+        private bool _isStunned;
         
 
         private bool Grounded => _body.IsTouching(_groundFilter);
@@ -74,7 +75,7 @@ namespace Enemies
 
         private void StickOnWall()
         {
-            if (IsOnLeftWall || IsOnRightWall)
+            if ((IsOnLeftWall || IsOnRightWall) && !_isStunned)
             {
                 _body.gravityScale = 0;
                 // safeguard against accidental calls to reset velocity after jumping off walls
@@ -113,9 +114,17 @@ namespace Enemies
             CheckIfFlip();
         }
 
-        public void ForceEnableGravity()
+        public void Stun()
         {
+            StartCoroutine(StunDuration());
+        }
+
+        private IEnumerator StunDuration()
+        {
+            _isStunned = true;
             _body.gravityScale = 1;
+            yield return new WaitForSeconds(0.5f);
+            _isStunned = false;
         }
 
 
