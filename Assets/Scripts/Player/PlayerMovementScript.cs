@@ -1,6 +1,7 @@
 using System.Collections;
 using DashVFX;
 using UnityEngine;
+using Weapons;
 
 namespace Player
 {
@@ -26,7 +27,10 @@ namespace Player
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
 
-        private PlayerUpgradeManager _manager;
+        private float ActualDashTime => dashTime * (1 + _upgradeManager[PlayerUpgradeType.FarStride]);
+
+        private PlayerUpgradeManager _upgradeManager;
+        private Weapon _weapon;
         private int _dashesRemaining = 1;
         private MeshTrail _meshTrail;
         private ContactFilter2D _groundFilter;
@@ -147,11 +151,21 @@ namespace Player
             _knockbackVector += vec;
         }
 
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (!_dashing || _upgradeManager[PlayerUpgradeType.CloakAndDagger] <= 0) return;
+            EntityHealth health = other.collider.GetComponent<EntityHealth>();
+            if (health == null) return;
+            health.TakeDamage(_upgradeManager.GetData(PlayerUpgradeType.CloakAndDagger));
+        }
+
         private IEnumerator DashCoroutine()
         {
             _meshTrail.StartDash();
             _body.velocity = Vector2.zero;
-            for (float timePassed = 0; timePassed < dashTime; timePassed += Time.fixedDeltaTime)
+            float thisDashTime = ActualDashTime;
+            if (_upgradeManager[PlayerUpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
+            for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
             {
                 if (_body.IsTouchingLayers(_physicsCheckMask)) break;
                 Vector2 pos = _body.position;

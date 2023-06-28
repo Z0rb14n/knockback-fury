@@ -1,4 +1,3 @@
-using System;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -59,7 +58,7 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) WeaponData.Reload();
+                if (ReloadTime <= 0) ImmediateReload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -188,6 +187,11 @@ namespace Weapons
         {
             if (ReloadTime > 0) return;
             ReloadTime = WeaponData.reloadTime;
+        }
+
+        public void ImmediateReload()
+        {
+            WeaponData.Reload();
         }
 
         public void SwitchWeapon(bool up)
