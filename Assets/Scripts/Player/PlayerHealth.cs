@@ -36,7 +36,7 @@ namespace Player
 
         private IEnumerator AllowMovementAfterDelay()
         {
-            yield return new WaitForSeconds(iFrameLength * 0.75f);
+            yield return new WaitForSeconds(iFrameLength * 0.5f);
             _playerMovement.AllowMovement();
         }
 

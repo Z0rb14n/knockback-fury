@@ -9,7 +9,6 @@ namespace Enemies
         public float jumpForce;
  
 
-        private Rigidbody2D _body;
         private bool _canJump;
         private bool _isTouchingSurface;
         private ContactFilter2D _groundFilter;
@@ -17,7 +16,6 @@ namespace Enemies
         private ContactFilter2D _rightWallFilter;
         private int _physicsCheckMask;
         private bool _canResetVelocity;
-        private float _direction;
         
 
         private bool Grounded => _body.IsTouching(_groundFilter);
@@ -27,12 +25,11 @@ namespace Enemies
 
         private void Start()
         {
-            _target = 0;
-            _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
-            _body = GetComponent<Rigidbody2D>();
+            InitializeCommonVariables();
+            InitializeContactFilters();
             _canJump = true;
             _canResetVelocity = true;
-            InitializeContactFilters();
+            _switchTargetDistance = 1f;
         }
         private void InitializeContactFilters()
         {
@@ -67,18 +64,11 @@ namespace Enemies
         {
             _isTouchingSurface = Grounded || IsOnLeftWall || IsOnRightWall;
             StickOnWall();
-            DetermineDirection();
-
+            DoCommonUpdates();
             // jump if jumping cooldown is over and entity is in contact with a surface
             if (_canJump && _isTouchingSurface)
             {
                 jump();
-            }
-
-            if (Vector2.Distance(transform.position, _targetPos) < 1f)
-            {
-                SwitchTargets();
-                StartCoroutine(PauseAtDestination());
             }
         }
 
@@ -92,12 +82,6 @@ namespace Enemies
                 _canResetVelocity = false;
             } 
             else _body.gravityScale = 1;
-        }
-
-        // Determines which direction the jumper jumps towards; _direction should only be either -1 or 1
-        private void DetermineDirection()
-        {
-            _direction = Mathf.Sign(patrolPoints[_target].position.x - _body.position.x);
         }
 
         // Jumping: if on ground, simply add force
