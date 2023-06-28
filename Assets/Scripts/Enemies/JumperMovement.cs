@@ -113,6 +113,10 @@ namespace Enemies
             CheckIfFlip();
         }
 
+        public void ForceEnableGravity()
+        {
+            _body.gravityScale = 1;
+        }
 
 
     }
