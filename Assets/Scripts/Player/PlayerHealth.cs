@@ -40,11 +40,8 @@ namespace Player
 
         private IEnumerator DisableCollision()
         {
-            string _playerLayer = "Player";
-            string _enemyLayer = "Enemy";
-
-            int _playerLayerID = LayerMask.NameToLayer(_playerLayer);
-            int _enemyLayerID = LayerMask.NameToLayer(_enemyLayer);
+            int _playerLayerID = LayerMask.NameToLayer("Player");
+            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
 
             Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, true);
             for (float i = 0; i < iFrameLength; i += 0.2f)
