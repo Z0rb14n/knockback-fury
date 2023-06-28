@@ -4,7 +4,9 @@ using UnityEngine;
 
 namespace Player
 {
-    [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),typeof(MeshTrail))]
+    [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),
+         typeof(MeshTrail), 
+         typeof(PlayerUpgradeManager))]
     public class PlayerMovementScript : MonoBehaviour
     {
         [Min(0), Tooltip("Affects the speed of the player")]
@@ -24,6 +26,7 @@ namespace Player
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
 
+        private PlayerUpgradeManager _manager;
         private int _dashesRemaining = 1;
         private MeshTrail _meshTrail;
         private ContactFilter2D _groundFilter;

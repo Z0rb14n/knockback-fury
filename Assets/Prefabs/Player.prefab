@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7387056994418124513}
   - component: {fileID: 5138450944320709130}
   - component: {fileID: 1994587395661662118}
+  - component: {fileID: 2238002965259948386}
   - component: {fileID: 6824292787392864246}
   m_Layer: 6
   m_Name: Player
@@ -132,6 +133,7 @@ MonoBehaviour:
   dashSpeed: 0.3
   dashTime: 0.06
   maxDashes: 1
+  slideSpeed: 0.05
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +176,19 @@ MonoBehaviour:
   maxHealth: 20
   health: 20
   iFrameLength: 1
+--- !u!114 &2238002965259948386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244737822807091051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2cb4788d624b74b5570d1cb0f8e243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviour: {fileID: 0}
 --- !u!58 &6824292787392864246
 CircleCollider2D:
   m_ObjectHideFlags: 0
