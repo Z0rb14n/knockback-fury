@@ -55,6 +55,8 @@ namespace Player
         {
             _body = GetComponent<Rigidbody2D>();
             _meshTrail = GetComponent<MeshTrail>();
+            _weapon = GetComponentInChildren<Weapon>();
+            _upgradeManager = GetComponent<PlayerUpgradeManager>();
             _canMove = true;
             InitializeContactFilters();
         }

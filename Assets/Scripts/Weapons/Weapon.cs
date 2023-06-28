@@ -192,6 +192,7 @@ namespace Weapons
         public void ImmediateReload()
         {
             WeaponData.Reload();
+            ReloadTime = 0;
         }
 
         public void SwitchWeapon(bool up)
