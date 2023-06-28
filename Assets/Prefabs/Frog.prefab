@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   health: 10
-  iFrameLength: 1
+  iFrameLength: 0
 --- !u!212 &45822130718748350
 SpriteRenderer:
   m_ObjectHideFlags: 0

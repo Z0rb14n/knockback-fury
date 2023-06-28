@@ -40,7 +40,13 @@ namespace Player
 
         private IEnumerator DisableCollision()
         {
-            Physics2D.IgnoreLayerCollision(6, 7, true);
+            string _playerLayer = "Player";
+            string _enemyLayer = "Enemy";
+
+            int _playerLayerID = LayerMask.NameToLayer(_playerLayer);
+            int _enemyLayerID = LayerMask.NameToLayer(_enemyLayer);
+
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, true);
             for (float i = 0; i < iFrameLength; i += 0.2f)
             {
                 _sprite.color = new Color(1, 1, 1, 0.5f);
@@ -48,7 +54,7 @@ namespace Player
                 _sprite.color = Color.white;
                 yield return new WaitForSeconds(0.1f);
             }
-            Physics2D.IgnoreLayerCollision(6, 7, false);
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
         }
     }
 }
