@@ -110,6 +110,7 @@ namespace Enemies
             _canJump = false;
             yield return new WaitForSeconds(4);
             _canJump = true;
+            CheckIfFlip();
         }
 
 

@@ -42,12 +42,12 @@ namespace Enemies
         {
             DoCommonUpdates();
             MoveToTarget();
+            CheckIfFlip();
         }
 
         protected void DoCommonUpdates()
         {
             DetermineDirection();
-            CheckIfFlip();
             if (Vector2.Distance(transform.position, _targetPos) < _switchTargetDistance)
             {
                 SwitchTargets();

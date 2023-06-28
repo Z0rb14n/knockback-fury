@@ -604,6 +604,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frog
       objectReference: {fileID: 0}
+    - target: {fileID: 7310949198750745542, guid: a85fd61eaea00b64a8b3d645a0c36e24, type: 3}
+      propertyPath: knockbackForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 9192570308432205651, guid: a85fd61eaea00b64a8b3d645a0c36e24, type: 3}
       propertyPath: patrolPoints.Array.size
       value: 2
