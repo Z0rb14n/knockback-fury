@@ -8,9 +8,9 @@ namespace DashVFX
         public Sprite playerSprite;
 
         [Range(0,1),Tooltip("Affects time it takes to fade (higher = faster)")]
-        public float fadeSpeed = 0.5f;
+        public float fadeSpeed = 0.6f;
         [Tooltip("Maximum Time between generating VFX (seconds)")]
-        public float maxTimeInterval = 0.05f;
+        public float maxTimeInterval = 1;
 
         private bool _shouldShowVFX;
 

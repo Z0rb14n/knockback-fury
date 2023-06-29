@@ -25,15 +25,17 @@ namespace Weapons
         public float spread = 15;
         [Tooltip("Whether the gun is Hitscan")]
         public bool isHitscan;
-        [Tooltip("Whether the gun has Melee")]
-        public bool hasMelee;
+        [Tooltip("What action is the right click action")]
+        public WeaponRightClickAction rightClickAction = WeaponRightClickAction.None;
         public float knockbackStrength = 12;
         public float recoilAnimationDuration = 0.2f;
         public FireMode fireMode = FireMode.SemiAuto;
         public BurstInfo burstInfo;
         public MeleeInfo meleeInfo;
+        public FireMode altFireMode;
 
         public Sprite sprite;
+        public GameObject customProjectile;
 
         public int Clip { get; private set; }
 
