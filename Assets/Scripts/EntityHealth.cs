@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
@@ -30,15 +31,10 @@ public class EntityHealth : MonoBehaviour
     /// </summary>
     public virtual void TakeDamage(int dmg)
     {
-        if (_iFrameTimer <= 0)
-        {
-            DoTakeDamage(dmg);
+        if (!(_iFrameTimer <= 0)) return;
+        DoTakeDamage(dmg);
             
-            if (health <= 0)
-            {
-                Die();
-            }
-        }
+        if (health <= 0) Die();
         StartCoroutine(DamageFlash());
     }
 
@@ -53,11 +49,13 @@ public class EntityHealth : MonoBehaviour
     {
         health -= dmg;
         _iFrameTimer = iFrameLength;
+        PlayerHealth.Instance.OnDamageDealtToOther(dmg);
     }
 
     protected virtual void Die()
     {
         Debug.Log("Death");
+        PlayerMovementScript.Instance.OnEnemyKill();
         // TODO: general entity death
     }
 }

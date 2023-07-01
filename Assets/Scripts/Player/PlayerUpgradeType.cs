@@ -1,11 +1,22 @@
 ﻿namespace Player
 {
+    /// <summary>
+    /// Type of upgrade.
+    /// </summary>
+    /// <list type="bullet">
+    ///     <listheader>
+    ///         TODOs:
+    ///     </listheader>
+    ///     <item>Implement remaining types</item>
+    ///     <item>Refactor (don't switch on type)</item>
+    /// </list>
     public enum PlayerUpgradeType
     {
-        CloakAndDagger, FarStride, SleightOfPaws,       // TODO PERSONAL SPACE
-        TargetAnalysis, KeepingInStride, BogglingEyes,   // TODO TARGET ANALYSIS, TOSS BACK
+        CloakAndDagger, FarStride, PersonalSpace, SleightOfPaws,
+        TossBack, TargetAnalysis, KeepingInStride, BogglingEyes,
         Momentum, Adrenaline, SneakyJumper, StabilizedAim,
         FirstStrike, EfficientScurry, LastStrike, OneYearOfReload,
-        // TODO WALL RUN + GRAPPLING HOOK
+        SneakyRunner, DeadlyRunner, SpeedyRunner, RunAndGun,
+        ReinforcedCord, BountyHunter, RenewedVigor, RatInTheJungle,
     }
 }

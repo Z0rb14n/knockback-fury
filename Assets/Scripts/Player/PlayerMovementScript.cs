@@ -28,6 +28,18 @@ namespace Player
         public float slideSpeed = 0.05f;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[PlayerUpgradeType.FarStride]);
+        
+        public static PlayerMovementScript Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>();
+                return _instance;
+            }
+        }
+        private static PlayerMovementScript _instance;
+        
+        public bool IsWallSliding { get; private set; }
 
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
@@ -46,13 +58,18 @@ namespace Player
         private Vector2 _dashDirection;
         private int _physicsCheckMask;
         private bool _canMove;
+        private bool _hasKeepingInStrideDash;
+        private bool _hasMomentumDash;
     
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
+        private bool HasDash => _dashesRemaining > 0 || _hasMomentumDash || _hasKeepingInStrideDash;
+
         private void Awake()
         {
+            _instance = this;
             _body = GetComponent<Rigidbody2D>();
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
@@ -92,10 +109,21 @@ namespace Player
 
         private void Update()
         {
-            if (Grounded) _dashesRemaining = maxDashes;
+            if (Grounded)
+            {
+                _dashesRemaining = maxDashes;
+                _hasMomentumDash = false;
+                _hasKeepingInStrideDash = false;
+            }
             if (!_canMove) return;
-            float xInput = Input.GetAxisRaw("Horizontal"); // Using GetAxisRaw() instead of two if statements
-            // Only change velocity when there's input
+            float xInput = Input.GetAxisRaw("Horizontal");
+            switch (xInput)
+            {
+                case > 0 when IsOnRightWall:
+                case < 0 when IsOnLeftWall:
+                    xInput = 0;
+                    break;
+            }
             if (xInput != 0) 
             {
                 _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
@@ -107,12 +135,14 @@ namespace Player
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 float yInput = Input.GetAxisRaw("Vertical");
-                if (!_dashing && _dashesRemaining > 0 && !Grounded && (xInput != 0 || yInput != 0))
+                if (!_dashing && HasDash && !Grounded && (xInput != 0 || yInput != 0))
                 {
                     _dashing = true;
                     _dashDirection = new Vector2(xInput, yInput).normalized;
                     StartCoroutine(DashCoroutine());
-                    _dashesRemaining--;
+                    if (_dashesRemaining > 0) _dashesRemaining--;
+                    else if (_hasKeepingInStrideDash) _hasKeepingInStrideDash = false;
+                    else if (_hasMomentumDash) _hasMomentumDash = false;
                 }
             }
         }
@@ -124,9 +154,15 @@ namespace Player
                 if (Grounded)
                     _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 else if (IsOnLeftWall)
+                {
                     _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                    OnWallLaunch();
+                }
                 else if (IsOnRightWall)
+                {
                     _body.AddForce(new Vector2(-wallJumpForce.x,wallJumpForce.y),ForceMode2D.Impulse);
+                    OnWallLaunch();
+                }
                 _jumpRequest = false;
             }
 
@@ -136,10 +172,27 @@ namespace Player
                 _knockbackVector = Vector2.zero;
                 _knockbackRequest = false;
             }
-
-            if ((IsOnLeftWall || IsOnRightWall) && !Grounded)
+            
+            float xInput = Input.GetAxisRaw("Horizontal");
+            bool isSlidingThisFrame = false;
+            if (!Grounded && _body.velocity.y < 0 && xInput != 0)
             {
-                _body.transform.Translate(new Vector2(0f, -slideSpeed));
+                if (IsOnLeftWall && xInput < 0)
+                {
+                    isSlidingThisFrame = true;
+                    WallSlideLogic();
+                }
+                else if (IsOnRightWall && xInput > 0)
+                {
+                    isSlidingThisFrame = true;
+                    WallSlideLogic();
+                }
+            }
+
+            if (IsWallSliding && !isSlidingThisFrame)
+            {
+                PlayerWeaponControl.Instance.OnStopWallSlide();
+                IsWallSliding = false;
             }
         }
 
@@ -151,6 +204,33 @@ namespace Player
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
             _knockbackVector += vec;
+        }
+
+        public void OnEnemyKill()
+        {
+            if (!Grounded) return;
+            if (_upgradeManager[PlayerUpgradeType.KeepingInStride] > 0)
+            {
+                _hasKeepingInStrideDash = true;
+            }
+        }
+
+        private void WallSlideLogic()
+        {
+            _body.velocity = new Vector2(_body.velocity.x, -slideSpeed);
+            if (!IsWallSliding)
+            {
+                PlayerWeaponControl.Instance.OnStartWallSlide();
+            }
+
+            IsWallSliding = true;
+        }
+
+        private void OnWallLaunch()
+        {
+            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.Momentum] > 0) _hasMomentumDash = true;
+            PlayerHealth.Instance.OnWallLaunch();
+            PlayerWeaponControl.Instance.OnWallLaunch();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
