@@ -22,6 +22,8 @@ namespace Player
             base.DoTakeDamage(dmg);
             _playerMovement.StopMovement();
             StartCoroutine(AllowMovementAfterDelay());
+            StartCoroutine(DisableCollision());
+            
         }
 
         protected override void Die()
@@ -32,8 +34,24 @@ namespace Player
 
         private IEnumerator AllowMovementAfterDelay()
         {
-            yield return new WaitForSeconds(iFrameLength * 0.75f);
+            yield return new WaitForSeconds(iFrameLength * 0.5f);
             _playerMovement.AllowMovement();
+        }
+
+        private IEnumerator DisableCollision()
+        {
+            int _playerLayerID = LayerMask.NameToLayer("Player");
+            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
+
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, true);
+            for (float i = 0; i < iFrameLength; i += 0.2f)
+            {
+                _sprite.color = new Color(1, 1, 1, 0.5f);
+                yield return new WaitForSeconds(0.1f);
+                _sprite.color = Color.white;
+                yield return new WaitForSeconds(0.1f);
+            }
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
         }
     }
 }
