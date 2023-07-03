@@ -12,7 +12,7 @@ namespace Weapons
         {
             textObject.text = $"{weapon.WeaponData.weaponName}: {weapon.WeaponData.Clip}/{weapon.WeaponData.clipSize}" + (weapon.ReloadTime <= 0
                 ? ""
-                : $" Reload Time: {weapon.ReloadTime:F2}");
+                : $" Reload Time: {weapon.ReloadTime:F2}") + (weapon.IsOneYearOfReloadPossible ? " OneYearOfReload Possible" : "");
         }
     }
 }
