@@ -1,4 +1,3 @@
-using System;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -15,6 +14,19 @@ namespace Weapons
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private WeaponData[] weaponInventory;
         [SerializeField] private int weaponIndex = 0;
+        
+        public bool IsOneYearOfReloadPossible {
+            get
+            {
+                float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
+                float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
+                return PlayerUpgradeManager.Instance[PlayerUpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                       ReloadTime < max;
+            }
+        }
+
+        private const int BogglingEyesMaxDistance = 30;
+        private const int BogglingEyesMinDistance = 10;
 
         public WeaponData WeaponData => weaponInventory[weaponIndex];
         private Camera _mainCam;
@@ -59,7 +71,7 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) WeaponData.Reload();
+                if (ReloadTime <= 0) ImmediateReload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -186,8 +198,21 @@ namespace Weapons
 
         public void Reload()
         {
+            if (IsOneYearOfReloadPossible) ImmediateReload();
             if (ReloadTime > 0) return;
+            if (WeaponData.Clip == WeaponData.clipSize) return;
             ReloadTime = WeaponData.reloadTime;
+            if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[PlayerUpgradeType.LastStrike] > 0)
+            {
+                ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
+            }
+        }
+
+        public void ImmediateReload()
+        {
+            WeaponData.Reload();
+            ReloadTime = 0;
+            PlayerWeaponControl.Instance.OnFinishReload();
         }
 
         public void SwitchWeapon(bool up)
@@ -269,13 +294,31 @@ namespace Weapons
 
         public static void HitEntityHealth(EntityHealth health, int damage)
         {
+            int finalDamage = damage;
             if (health is PlayerHealth)
             {
                 Debug.Log($"[Raycast] Hit player for {damage}");
             }
+            else if (!ReferenceEquals(health,null))
+            {
+                if (PlayerUpgradeManager.Instance[PlayerUpgradeType.BogglingEyes] > 0)
+                {
+                    float dist = ((Vector2)(PlayerUpgradeManager.Instance.transform.position - health.transform.position)).magnitude;
+                    if (dist >= BogglingEyesMaxDistance)
+                        finalDamage += damage;
+                    else if (dist >= BogglingEyesMinDistance)
+                    {
+                        float boost = (dist - BogglingEyesMinDistance) /
+                                      (BogglingEyesMaxDistance - BogglingEyesMinDistance);
+                        finalDamage += Mathf.RoundToInt(damage * boost);
+                    }
+                }
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
+            }
             // ReSharper disable once UseNullPropagation
             if (!ReferenceEquals(health,null))
-                health.TakeDamage(damage);
+                health.TakeDamage(finalDamage);
         }
     }
 }

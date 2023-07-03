@@ -3,15 +3,35 @@ using UnityEngine;
 
 namespace Player
 {
-    [RequireComponent(typeof(PlayerMovementScript))]
+    [DisallowMultipleComponent, RequireComponent(typeof(PlayerMovementScript), typeof(PlayerUpgradeManager))]
     public class PlayerHealth : EntityHealth
     {
+        public static PlayerHealth Instance
+        {
+            get
+            {
+                // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+                if (_instance == null) _instance = FindObjectOfType<PlayerHealth>();
+                return _instance;
+            }
+        }
+        private static PlayerHealth _instance;
         private PlayerMovementScript _playerMovement;
+        private PlayerUpgradeManager _upgradeManager;
+
+        [SerializeField] private int sneakyJumperCooldown = 3;
+        [SerializeField] private int sneakyJumperInvulnTime = 1;
+
+        private bool _isTargetAnalysisShieldActive;
+        private int _sumTargetAnalysis;
+        private int _currSneakyJumpCooldown;
 
         protected override void Awake()
         {
             base.Awake();
+            _instance = this;
             _playerMovement = GetComponent<PlayerMovementScript>();
+            _upgradeManager = GetComponent<PlayerUpgradeManager>();
         }
 
         /// <summary>
@@ -19,9 +39,17 @@ namespace Player
         /// </summary>
         protected override void DoTakeDamage(int dmg)
         {
-            base.DoTakeDamage(dmg);
-            _playerMovement.StopMovement();
-            StartCoroutine(AllowMovementAfterDelay());
+            if (!_isTargetAnalysisShieldActive)
+            {
+                health -= dmg;
+                _iFrameTimer = iFrameLength;
+                _playerMovement.StopMovement();
+                StartCoroutine(AllowMovementAfterDelay());
+            }
+            else
+            {
+                _isTargetAnalysisShieldActive = false;
+            }
             StartCoroutine(DisableCollision());
             
         }
@@ -52,6 +80,30 @@ namespace Player
                 yield return new WaitForSeconds(0.1f);
             }
             Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+        }
+
+        public void OnDamageDealtToOther(int amount)
+        {
+            if (_isTargetAnalysisShieldActive) return;
+            if (_upgradeManager[PlayerUpgradeType.TargetAnalysis] > 0)
+            {
+                _sumTargetAnalysis += amount;
+                if (_sumTargetAnalysis >= _upgradeManager.GetData(PlayerUpgradeType.TargetAnalysis))
+                {
+                    _sumTargetAnalysis = 0;
+                    _isTargetAnalysisShieldActive = true;
+                }
+            }
+        }
+
+        public void OnWallLaunch()
+        {
+            if (_upgradeManager[PlayerUpgradeType.SneakyJumper] > 0)
+            {
+                if (_currSneakyJumpCooldown > 0) return;
+                _iFrameTimer = sneakyJumperInvulnTime;
+                _currSneakyJumpCooldown = sneakyJumperCooldown;
+            }
         }
     }
 }
