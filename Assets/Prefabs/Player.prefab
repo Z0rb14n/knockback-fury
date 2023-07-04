@@ -146,6 +146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cec657ce04ed42bba564c3a06df62ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxAdrenalineStacks: 4
+  adrenalineLength: 4
+  adrenalineBoost: 0.15
+  maxStabilizedAimStacks: 4
+  stabilizedAimLength: 5
+  stabilizedAimBoost: 0.15
+  firstStrikeBoost: 0.5
+  lastStrikeBoost: 50
+  weaponItemPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
 --- !u!114 &5138450944320709130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +185,8 @@ MonoBehaviour:
   maxHealth: 20
   health: 20
   iFrameLength: 1
+  sneakyJumperCooldown: 3
+  sneakyJumperInvulnTime: 1
 --- !u!114 &2238002965259948386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +199,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2cb4788d624b74b5570d1cb0f8e243, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behaviour: {fileID: 0}
+  upgrades: []
+  oneYearOfReloadPercent: 0.6
+  oneYearOfReloadTiming: 0.75
 --- !u!58 &6824292787392864246
 CircleCollider2D:
   m_ObjectHideFlags: 0

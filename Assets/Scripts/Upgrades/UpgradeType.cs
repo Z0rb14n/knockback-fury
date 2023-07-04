@@ -1,4 +1,4 @@
-﻿namespace Player
+﻿namespace Upgrades
 {
     /// <summary>
     /// Type of upgrade.
@@ -10,7 +10,7 @@
     ///     <item>Implement remaining types</item>
     ///     <item>Refactor (don't switch on type)</item>
     /// </list>
-    public enum PlayerUpgradeType
+    public enum UpgradeType
     {
         CloakAndDagger, FarStride, PersonalSpace, SleightOfPaws,
         TossBack, TargetAnalysis, KeepingInStride, BogglingEyes,
