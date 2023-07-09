@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5138450944320709130}
   - component: {fileID: 1994587395661662118}
   - component: {fileID: 2238002965259948386}
-  - component: {fileID: 6824292787392864246}
+  - component: {fileID: 3228942646842628699}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -202,8 +202,8 @@ MonoBehaviour:
   upgrades: []
   oneYearOfReloadPercent: 0.6
   oneYearOfReloadTiming: 0.75
---- !u!58 &6824292787392864246
-CircleCollider2D:
+--- !u!61 &3228942646842628699
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -216,8 +216,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.55, y: 0.51}
+    newSize: {x: 0.55, y: 0.51}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.275
+  m_Size: {x: 0.55, y: 0.51}
+  m_EdgeRadius: 0
 --- !u!1 &8051101738936216417
 GameObject:
   m_ObjectHideFlags: 0

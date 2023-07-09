@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Enemies
 {
+    [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
     public class PatrolMovement : MonoBehaviour
     {
 
@@ -32,6 +33,7 @@ namespace Enemies
         protected void InitializeCommonVariables()
         {
             _body = GetComponent<Rigidbody2D>();
+            _sprite = GetComponent<SpriteRenderer>();
             if (patrolPoints.Length > 0)
             {
                 _target = 0;
