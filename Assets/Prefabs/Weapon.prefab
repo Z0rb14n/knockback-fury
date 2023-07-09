@@ -47,9 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritePivot: {fileID: 3054874151477731811}
   sprite: {fileID: 3054874151231780716}
+  projectileParent: {fileID: 0}
   linePrefab: {fileID: 3541845685448228682, guid: f4fdade56ced25d4bb8c4cb5ff921439, type: 3}
-  projectilePrefab: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed, type: 3}
-  weaponData: {fileID: 0}
+  projectilePrefab: {fileID: 3532231881065436966, guid: b48b32432637ff94a981868708481f1a, type: 3}
+  weaponInventory:
+  - {fileID: 0}
+  - {fileID: 0}
+  weaponIndex: 0
 --- !u!1 &3054874151231780714
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,10 +19,18 @@ MonoBehaviour:
   projectileDamage: 14
   roundsPerSecond: 9
   clipSize: 50
-  reloadTime: 2
+  reloadTime: 1.5
   spread: 20
   isHitscan: 0
-  knockbackStrength: 2
+  hasMelee: 0
+  knockbackStrength: 3
   recoilAnimationDuration: 0.2
   fireMode: 1
+  burstInfo:
+    burstAmount: 0
+    withinBurstFirerate: 0
+  meleeInfo:
+    baseDamage: 0
+    velMultiplier: 0
+    meleeRange: 0
   sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
