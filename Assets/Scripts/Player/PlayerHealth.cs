@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Upgrades;
 
 namespace Player
 {
@@ -85,10 +86,10 @@ namespace Player
         public void OnDamageDealtToOther(int amount)
         {
             if (_isTargetAnalysisShieldActive) return;
-            if (_upgradeManager[PlayerUpgradeType.TargetAnalysis] > 0)
+            if (_upgradeManager[UpgradeType.TargetAnalysis] > 0)
             {
                 _sumTargetAnalysis += amount;
-                if (_sumTargetAnalysis >= _upgradeManager.GetData(PlayerUpgradeType.TargetAnalysis))
+                if (_sumTargetAnalysis >= _upgradeManager.GetData(UpgradeType.TargetAnalysis))
                 {
                     _sumTargetAnalysis = 0;
                     _isTargetAnalysisShieldActive = true;
@@ -98,7 +99,7 @@ namespace Player
 
         public void OnWallLaunch()
         {
-            if (_upgradeManager[PlayerUpgradeType.SneakyJumper] > 0)
+            if (_upgradeManager[UpgradeType.SneakyJumper] > 0)
             {
                 if (_currSneakyJumpCooldown > 0) return;
                 _iFrameTimer = sneakyJumperInvulnTime;

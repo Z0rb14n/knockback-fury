@@ -56,6 +56,7 @@ public class EntityHealth : MonoBehaviour
     {
         Debug.Log("Death");
         PlayerMovementScript.Instance.OnEnemyKill();
+        Destroy(gameObject);
         // TODO: general entity death
     }
 }

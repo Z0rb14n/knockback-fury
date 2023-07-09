@@ -1,5 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Upgrades;
+using Weapons;
 
 namespace Player
 {
@@ -29,9 +33,10 @@ namespace Player
         [SerializeField, Min(0)] private float stabilizedAimBoost = 0.15f;
         [SerializeField, Min(0)] private float firstStrikeBoost = 0.5f;
         [SerializeField, Range(0,100)] public float lastStrikeBoost = 50;
+        [SerializeField] private GameObject weaponItemPrefab;
 
         private PlayerMovementScript _playerMovement;
-        private Weapons.Weapon _weapon;
+        private Weapon _weapon;
         private Camera _cam;
         private Rigidbody2D _body;
         private int _currAdrenalineStacks;
@@ -39,10 +44,14 @@ namespace Player
         private IEnumerator _stabilizedAimCoroutine;
         private bool _isFirstStrikeActive;
 
+        public readonly List<WeaponPickup> weaponsOn = new();
+
+        private WeaponPickup FirstAvailableItem => weaponsOn.FirstOrDefault(t => t.delay <= 0);
+
         private void Awake()
         {
             _instance = this;
-            _weapon = GetComponentInChildren<Weapons.Weapon>();
+            _weapon = GetComponentInChildren<Weapon>();
             _cam = Camera.main;
             _body = GetComponent<Rigidbody2D>();
             _playerMovement = GetComponent<PlayerMovementScript>();
@@ -50,6 +59,8 @@ namespace Player
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Q)) DropWeapon();
+            
             if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
 
             if (Input.GetKeyDown(KeyCode.LeftControl)) _weapon.SwitchWeapon(true);
@@ -73,7 +84,7 @@ namespace Player
 
         public void OnWallLaunch()
         {
-            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.Adrenaline] > 0)
+            if (PlayerUpgradeManager.Instance[UpgradeType.Adrenaline] > 0)
             {
                 StartCoroutine(AdrenalineCoroutine());
             }
@@ -81,7 +92,7 @@ namespace Player
 
         public void OnStartWallSlide()
         {
-            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.StabilizedAim] > 0)
+            if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
             {
                 _stabilizedAimCoroutine = StabilizedAimStartCoroutine();
                 StartCoroutine(_stabilizedAimCoroutine);   
@@ -90,7 +101,7 @@ namespace Player
 
         public void OnStopWallSlide()
         {
-            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.StabilizedAim] > 0)
+            if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
             {
                 StopCoroutine(_stabilizedAimCoroutine);
             }
@@ -98,10 +109,41 @@ namespace Player
 
         public void OnFinishReload()
         {
-            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.FirstStrike] > 0)
+            if (PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] > 0)
             {
                 _isFirstStrikeActive = true;
             }
+        }
+
+        public void PickupWeapon(WeaponPickup pickup)
+        {
+            if (pickup.delay > 0) return;
+            if (_weapon.Pickup(pickup.weaponData)) Destroy(pickup.gameObject);
+            else weaponsOn.Add(pickup);
+        }
+
+        private void DropWeapon()
+        {
+            if (weaponsOn.Count > 0)
+            {
+                WeaponPickup pickupSwap = FirstAvailableItem;
+                if (pickupSwap != null)
+                {
+                    WeaponData toDrop = _weapon.SwapWeapon(pickupSwap.weaponData);
+                    Destroy(pickupSwap.gameObject);
+                    weaponsOn.Remove(pickupSwap);
+                    GameObject item = Instantiate(weaponItemPrefab, transform.position, Quaternion.identity);
+                    WeaponPickup pickup = item.GetComponent<WeaponPickup>();
+                    pickup.UpdateSprite(toDrop);
+                    return;
+                }
+            }
+            WeaponData shouldDrop = _weapon.DropWeapon();
+            if (ReferenceEquals(shouldDrop, null)) return;
+                
+            GameObject itemObject = Instantiate(weaponItemPrefab, transform.position, Quaternion.identity);
+            WeaponPickup pickupObject = itemObject.GetComponent<WeaponPickup>();
+            pickupObject.UpdateSprite(shouldDrop);
         }
 
         private IEnumerator StabilizedAimStartCoroutine()

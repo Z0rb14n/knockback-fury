@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Upgrades;
 
 namespace Player
 {
@@ -22,12 +23,31 @@ namespace Player
         [Range(0,1)]public float oneYearOfReloadPercent = 0.6f;
         [Min(0)] public float oneYearOfReloadTiming = 0.75f;
 
-        private readonly Dictionary<PlayerUpgradeType, int> _upgradesDict = new();
-        private readonly Dictionary<PlayerUpgradeType, int> _upgradesData = new();
+        private readonly Dictionary<UpgradeType, int> _upgradesDict = new();
+        private readonly Dictionary<UpgradeType, int> _upgradesData = new();
 
-        public int this[PlayerUpgradeType arg] => _upgradesDict.TryGetValue(arg, out int val) ? val : 0;
+        public int this[UpgradeType arg] => _upgradesDict.TryGetValue(arg, out int val) ? val : 0;
 
-        public int GetData(PlayerUpgradeType arg) => _upgradesData[arg];
+        public int GetData(UpgradeType arg) => _upgradesData[arg];
+        
+        public void PickupUpgrade(UpgradeType upgrade, int upgradeData)
+        {
+            if (_upgradesDict.TryGetValue(upgrade, out int value))
+            {
+                for (int i = 0; i < upgrades.Length; i++)
+                {
+                    if (upgrades[i].type != upgrade) continue;
+                    upgrades[i].count = value + 1;
+                    break;
+                }
+                _upgradesDict[upgrade] = value + 1;
+            }
+            else
+            {
+                _upgradesDict[upgrade] = 1;
+                _upgradesData[upgrade] = upgradeData;
+            }
+        }
 
         private void Awake()
         {
@@ -56,7 +76,7 @@ namespace Player
     [Serializable]
     public struct PlayerUpgradeCount
     {
-        public PlayerUpgradeType type;
+        public UpgradeType type;
         [Min(0), Tooltip("Number of this upgrade presently equipped")] public int count;
         [Tooltip("Unused: indicate optional comment")]
         public string comment;
