@@ -315,11 +315,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 143572641412750526, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_CellSize.x
-      value: 0.08
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 143572641412750526, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_CellSize.y
-      value: 0.08
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 638505489587741747, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_Name

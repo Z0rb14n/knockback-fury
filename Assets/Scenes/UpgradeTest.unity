@@ -5789,6 +5789,10 @@ PrefabInstance:
       propertyPath: upgrades.Array.data[0].integerData
       value: 500
       objectReference: {fileID: 0}
+    - target: {fileID: 2462369353442171125, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Name
       value: Player
