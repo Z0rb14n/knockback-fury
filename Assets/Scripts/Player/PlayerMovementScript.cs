@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using CustomTiles;
 using DashVFX;
 using UnityEngine;
 using Upgrades;
@@ -61,6 +63,7 @@ namespace Player
         private bool _canMove;
         private bool _hasKeepingInStrideDash;
         private bool _hasMomentumDash;
+        private readonly List<PlatformTileScript> _platformsOn = new List<PlatformTileScript>();
     
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -145,6 +148,11 @@ namespace Player
                     else if (_hasKeepingInStrideDash) _hasKeepingInStrideDash = false;
                     else if (_hasMomentumDash) _hasMomentumDash = false;
                 }
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
             }
         }
 
@@ -269,6 +277,16 @@ namespace Player
         public void AllowMovement()
         {
             _canMove = true;
+        }
+
+        public void AddPlatformOn(PlatformTileScript platform)
+        {
+            _platformsOn.Add(platform);
+        }
+
+        public void RemovePlatformOn(PlatformTileScript platform)
+        {
+            _platformsOn.Remove(platform);
         }
     }
 }
