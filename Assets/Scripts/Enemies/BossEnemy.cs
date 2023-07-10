@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Weapons;
 using Random = UnityEngine.Random;
 
 namespace Enemies
