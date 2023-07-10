@@ -24,6 +24,7 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - Revolvers: https://opengameart.org/content/revolvers
  - Pistol: https://opengameart.org/content/pixel-pistol
  - Tilemap: https://adamatomic.itch.io/cavernas
+ - Rat: https://opengameart.org/content/rat
 
 ### Sounds
  - https://opengameart.org/content/hollywood-style-pistol-silencer-sound-effect
