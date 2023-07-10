@@ -1,6 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
+using CustomTiles;
 using DashVFX;
 using UnityEngine;
+using Upgrades;
 using Weapons;
 
 namespace Player
@@ -27,7 +30,7 @@ namespace Player
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
 
-        private float ActualDashTime => dashTime * (1 + _upgradeManager[PlayerUpgradeType.FarStride]);
+        private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
         
         public static PlayerMovementScript Instance
         {
@@ -60,6 +63,7 @@ namespace Player
         private bool _canMove;
         private bool _hasKeepingInStrideDash;
         private bool _hasMomentumDash;
+        private readonly List<PlatformTileScript> _platformsOn = new List<PlatformTileScript>();
     
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -145,6 +149,11 @@ namespace Player
                     else if (_hasMomentumDash) _hasMomentumDash = false;
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
+            }
         }
 
         private void FixedUpdate()
@@ -209,7 +218,7 @@ namespace Player
         public void OnEnemyKill()
         {
             if (!Grounded) return;
-            if (_upgradeManager[PlayerUpgradeType.KeepingInStride] > 0)
+            if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;
             }
@@ -228,17 +237,17 @@ namespace Player
 
         private void OnWallLaunch()
         {
-            if (PlayerUpgradeManager.Instance[PlayerUpgradeType.Momentum] > 0) _hasMomentumDash = true;
+            if (PlayerUpgradeManager.Instance[UpgradeType.Momentum] > 0) _hasMomentumDash = true;
             PlayerHealth.Instance.OnWallLaunch();
             PlayerWeaponControl.Instance.OnWallLaunch();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (!_dashing || _upgradeManager[PlayerUpgradeType.CloakAndDagger] <= 0) return;
+            if (!_dashing || _upgradeManager[UpgradeType.CloakAndDagger] <= 0) return;
             EntityHealth health = other.collider.GetComponent<EntityHealth>();
             if (health == null) return;
-            health.TakeDamage(_upgradeManager.GetData(PlayerUpgradeType.CloakAndDagger));
+            health.TakeDamage(_upgradeManager.GetData(UpgradeType.CloakAndDagger));
         }
 
         private IEnumerator DashCoroutine()
@@ -246,7 +255,7 @@ namespace Player
             _meshTrail.StartDash();
             _body.velocity = Vector2.zero;
             float thisDashTime = ActualDashTime;
-            if (_upgradeManager[PlayerUpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
+            if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
             for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
             {
                 if (_body.IsTouchingLayers(_physicsCheckMask)) break;
@@ -268,6 +277,16 @@ namespace Player
         public void AllowMovement()
         {
             _canMove = true;
+        }
+
+        public void AddPlatformOn(PlatformTileScript platform)
+        {
+            _platformsOn.Add(platform);
+        }
+
+        public void RemovePlatformOn(PlatformTileScript platform)
+        {
+            _platformsOn.Remove(platform);
         }
     }
 }

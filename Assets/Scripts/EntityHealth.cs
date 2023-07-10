@@ -10,6 +10,7 @@ public class EntityHealth : MonoBehaviour
 
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
+    protected bool isDead;
 
 
     protected virtual void Awake()
@@ -54,8 +55,12 @@ public class EntityHealth : MonoBehaviour
 
     protected virtual void Die()
     {
-        Debug.Log("Death");
-        PlayerMovementScript.Instance.OnEnemyKill();
-        // TODO: general entity death
+        if (!isDead)
+        {
+            Debug.Log("Death");
+            PlayerMovementScript.Instance.OnEnemyKill();
+            Destroy(gameObject);
+            isDead = true;
+        }
     }
 }

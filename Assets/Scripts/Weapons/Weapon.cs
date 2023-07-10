@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using Upgrades;
 using Random = UnityEngine.Random;
 
 namespace Weapons
@@ -20,8 +21,21 @@ namespace Weapons
             {
                 float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
                 float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
-                return PlayerUpgradeManager.Instance[PlayerUpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                return PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
                        ReloadTime < max;
+            }
+        }
+
+        public int FirstAvailableInventorySpace
+        {
+            get
+            {
+                for (int i = 0; i < weaponInventory.Length; i++)
+                {
+                    if (weaponInventory[i] == null) return i;
+                }
+
+                return -1;
             }
         }
 
@@ -202,7 +216,7 @@ namespace Weapons
             if (ReloadTime > 0) return;
             if (WeaponData.Clip == WeaponData.clipSize) return;
             ReloadTime = WeaponData.reloadTime;
-            if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[PlayerUpgradeType.LastStrike] > 0)
+            if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
             {
                 ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
             }
@@ -233,6 +247,35 @@ namespace Weapons
             weaponIndex = newIndex;
             _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
             UpdateFromWeaponData();
+        }
+
+        public bool Pickup(WeaponData data)
+        {
+            int firstAvailableSpace = FirstAvailableInventorySpace;
+            if (firstAvailableSpace == -1) return false;
+            weaponInventory[firstAvailableSpace] = data;
+            return true;
+        }
+
+        public WeaponData DropWeapon()
+        {
+            if (FirstAvailableInventorySpace == 1) return null; // only one weapon; don't drop
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            for (int i = weaponIndex; i < weaponInventory.Length; i++)
+            {
+                weaponInventory[i] = i == weaponInventory.Length - 1 ? null : weaponInventory[i + 1];
+            }
+            SwitchWeapon(false);
+            return toDrop;
+        }
+
+        public WeaponData SwapWeapon(WeaponData to)
+        {
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            weaponInventory[weaponIndex] = to;
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
+            UpdateFromWeaponData();
+            return toDrop;
         }
 
         private void OnValidate()
@@ -301,7 +344,7 @@ namespace Weapons
             }
             else if (!ReferenceEquals(health,null))
             {
-                if (PlayerUpgradeManager.Instance[PlayerUpgradeType.BogglingEyes] > 0)
+                if (PlayerUpgradeManager.Instance[UpgradeType.BogglingEyes] > 0)
                 {
                     float dist = ((Vector2)(PlayerUpgradeManager.Instance.transform.position - health.transform.position)).magnitude;
                     if (dist >= BogglingEyesMaxDistance)
@@ -315,6 +358,7 @@ namespace Weapons
                 }
                 finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
                 finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
             }
             // ReSharper disable once UseNullPropagation
             if (!ReferenceEquals(health,null))
