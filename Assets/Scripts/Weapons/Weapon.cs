@@ -21,7 +21,7 @@ namespace Weapons
             {
                 float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
                 float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
-                return PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                return ReloadTime > 0 && PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
                        ReloadTime < max;
             }
         }
@@ -144,6 +144,7 @@ namespace Weapons
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            if (WeaponData.fireEffect != null) AudioSource.PlayClipAtPoint(WeaponData.fireEffect, origin);
             Vector2 normalizedLookDirection = LookDirection.normalized;
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
