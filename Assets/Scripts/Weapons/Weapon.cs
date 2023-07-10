@@ -151,7 +151,7 @@ namespace Weapons
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
             if (WeaponData.fireEffect != null)
             {
-                GetComponent<AudioSource>().Play();
+                _source.PlayOneShot(WeaponData.fireEffect);
             }
             Vector2 normalizedLookDirection = LookDirection.normalized;
             if (WeaponData.isHitscan)
