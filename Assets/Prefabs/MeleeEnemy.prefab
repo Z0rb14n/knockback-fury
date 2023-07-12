@@ -115,9 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba43d429fa983784db1ee4fb31132dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
   speed: 2
   pauseTime: 1
 --- !u!212 &6948117664754875511

@@ -28,6 +28,11 @@ namespace Weapons
             delay -= Time.deltaTime;
         }
 
+        private void OnValidate()
+        {
+            UpdateSprite(null);
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             PlayerWeaponControl playerWeaponControl = other.GetComponent<PlayerWeaponControl>();

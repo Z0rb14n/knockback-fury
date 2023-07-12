@@ -37,6 +37,8 @@ namespace Weapons
         public Sprite sprite;
         public GameObject customProjectile;
 
+        public AudioClip fireEffect;
+
         public int Clip { get; private set; }
 
         public bool IsClipEmpty => Clip <= 0;

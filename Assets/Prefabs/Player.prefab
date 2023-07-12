@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 77f2427627b56a3489f25041b1f85fa3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 58a26765089c0704db6fb8815145f1ce, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -215,19 +215,19 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.02, y: 0.08}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.050000004, y: 0.15833335, z: 0.10000001, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.55, y: 0.51}
+    oldSize: {x: 0.8333333, y: 0.8333333}
     newSize: {x: 0.55, y: 0.51}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.55, y: 0.51}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.5, y: 0.68}
+  m_EdgeRadius: 0.01
 --- !u!1 &8051101738936216417
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +396,7 @@ PrefabInstance:
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
+      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1
       objectReference: {fileID: 0}
+    - target: {fileID: 3338489004427352914, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
 --- !u!4 &1642441135221724550 stripped

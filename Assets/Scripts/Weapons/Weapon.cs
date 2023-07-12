@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Weapons
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Weapon : MonoBehaviour
     {
         // CONSTANT
@@ -21,7 +22,7 @@ namespace Weapons
             {
                 float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
                 float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
-                return PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                return ReloadTime > 0 && PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
                        ReloadTime < max;
             }
         }
@@ -52,6 +53,7 @@ namespace Weapons
         private float _weaponDelayTimer;
         private float _weaponBurstTimer;
         private int _weaponBurstCount;
+        private AudioSource _source;
 
         public float ReloadTime { get; private set; }
 
@@ -62,6 +64,7 @@ namespace Weapons
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
+            _source = GetComponent<AudioSource>();
             WeaponData.Reload();
             UpdateFromWeaponData();
             EnsureInventoryHasSpace();
@@ -102,8 +105,10 @@ namespace Weapons
 
         private void UpdateFromWeaponData()
         {
-            if (WeaponData != null)
-                sprite.sprite = WeaponData.sprite;
+            if (WeaponData == null) return;
+            sprite.sprite = WeaponData.sprite;
+            if (_source == null) _source = GetComponent<AudioSource>();
+            _source.clip = WeaponData.fireEffect;
         }
 
         private void HitscanLogic(bool isMelee, Vector2 vel)
@@ -144,6 +149,10 @@ namespace Weapons
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            if (WeaponData.fireEffect != null)
+            {
+                _source.PlayOneShot(WeaponData.fireEffect);
+            }
             Vector2 normalizedLookDirection = LookDirection.normalized;
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);

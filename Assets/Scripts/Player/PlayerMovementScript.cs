@@ -84,7 +84,7 @@ namespace Player
 
         private void InitializeContactFilters()
         {
-            _physicsCheckMask = LayerMask.GetMask("Default");
+            _physicsCheckMask = LayerMask.GetMask("Default", "Platform");
             _groundFilter = new ContactFilter2D
             {
                 layerMask = _physicsCheckMask,

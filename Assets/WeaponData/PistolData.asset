@@ -22,7 +22,7 @@ MonoBehaviour:
   reloadTime: 1.5
   spread: 10
   isHitscan: 0
-  hasMelee: 0
+  rightClickAction: 0
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
   fireMode: 1
@@ -33,4 +33,7 @@ MonoBehaviour:
     baseDamage: 0
     velMultiplier: 0
     meleeRange: 0
-  sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
+  altFireMode: 0
+  sprite: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+  customProjectile: {fileID: 0}
+  fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
