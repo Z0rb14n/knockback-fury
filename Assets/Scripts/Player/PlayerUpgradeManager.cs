@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Upgrades;
 
@@ -47,6 +48,7 @@ namespace Player
                 _upgradesDict[upgrade] = 1;
                 _upgradesData[upgrade] = upgradeData;
             }
+            UpdateEditorArray();
         }
 
         private void Awake()
@@ -70,6 +72,19 @@ namespace Player
                 _upgradesDict[upgrades[i].type] = upgrades[i].count;
                 _upgradesData[upgrades[i].type] = upgrades[i].integerData;
             }
+        }
+
+        private void UpdateEditorArray()
+        {
+#if UNITY_EDITOR // don't put this in a release build lol
+            upgrades = _upgradesDict
+                .Select(pair => new PlayerUpgradeCount
+                {
+                    type = pair.Key,
+                    count = pair.Value,
+                    integerData = _upgradesData.TryGetValue(pair.Key, out int value) ? value : 0
+                }).ToArray();
+#endif
         }
     }
 
