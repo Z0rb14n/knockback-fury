@@ -16,6 +16,7 @@ namespace Weapons
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private WeaponData[] weaponInventory;
         [SerializeField] private int weaponIndex = 0;
+        [SerializeField] private LayerMask raycastMask;
         
         public bool IsOneYearOfReloadPossible {
             get
@@ -37,6 +38,17 @@ namespace Weapons
                 }
 
                 return -1;
+            }
+        }
+
+        private Vector2 RandomizedLookDirection
+        {
+            get
+            {
+                Vector2 normalizedLookDirection = LookDirection.normalized;
+                float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
+                angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
+                return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
             }
         }
 
@@ -114,30 +126,36 @@ namespace Weapons
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            Vector2 normalizedLookDirection = LookDirection.normalized;
             float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.range;
             // literally hitscan
-            // TODO LAYERMASK FOR ENEMIES/PLAYERS
-            RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, range);
-            Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * range) : hit.point;
-            int damage = isMelee
-                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * WeaponData.meleeInfo.velMultiplier +
-                  WeaponData.meleeInfo.baseDamage)
-                : WeaponData.projectileDamage;
-            if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
-            if (!isMelee)
+            int count = isMelee ? 1 : WeaponData.numProjectiles;
+            Physics2D.queriesHitTriggers = false;
+            for (int i = 0; i < count; i++)
             {
-                GameObject go = ReferenceEquals(projectileParent, null)
-                    ? Instantiate(linePrefab)
-                    : Instantiate(linePrefab, projectileParent);
-                // expensive but required; Fire isn't called every frame(?)
-                WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
-                line.Initialize(origin, finalPos, 1);
+                Vector2 dir = RandomizedLookDirection;
+                RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, raycastMask);
+                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (dir * range) : hit.point;
+                int damage = isMelee
+                    ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
+                                       WeaponData.meleeInfo.baseDamage)
+                    : WeaponData.projectileDamage;
+                if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
+                if (!isMelee)
+                {
+                    GameObject go = ReferenceEquals(projectileParent, null)
+                        ? Instantiate(linePrefab)
+                        : Instantiate(linePrefab, projectileParent);
+                    // expensive but required; Fire isn't called every frame(?)
+                    WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
+                    line.Initialize(origin, finalPos, 1);
+                }
+                else
+                {
+                    Debug.DrawLine(origin,origin + (dir*range),Color.red,1,false);
+                }
             }
-            else
-            {
-                Debug.DrawLine(origin,origin + (normalizedLookDirection*range),Color.red,1,false);
-            }
+            
+            Physics2D.queriesHitTriggers = true;
 
         }
 
@@ -153,7 +171,6 @@ namespace Weapons
             {
                 _source.PlayOneShot(WeaponData.fireEffect);
             }
-            Vector2 normalizedLookDirection = LookDirection.normalized;
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else
@@ -165,11 +182,8 @@ namespace Weapons
                     GameObject go = ReferenceEquals(projectileParent, null)
                         ? Instantiate(projectile, origin, Quaternion.identity)
                         : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
-                    float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                    angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
-                    Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(WeaponData, finalDir);
+                    proj.Initialize(WeaponData, RandomizedLookDirection);
                 }
             }
 
@@ -235,6 +249,7 @@ namespace Weapons
         {
             WeaponData.Reload();
             ReloadTime = 0;
+            _weaponDelayTimer = 0;
             PlayerWeaponControl.Instance.OnFinishReload();
         }
 
