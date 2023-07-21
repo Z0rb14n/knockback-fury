@@ -89,21 +89,30 @@ namespace FloorGen
 
             while (roomCount > 0)
             {
+                // Swap with last element and remove last instead of removing by index.
                 int index = random.Next(0, toBranch.Count);
                 Vector2Int start = toBranch[index];
-                toBranch.RemoveAt(index); // yes, this is O(n). But n = like 10, so too bad!
-                // ReSharper disable once IdentifierTypo
+                SwapRemove(toBranch, index);
                 int currBranchiness = branchiness;
                 do
                 {
                     RoomType dir = RandomDirUnweighted(random, AllowedBranchMovements(start, middleLength - 1));
-                    if (!grid.ContainsKey(dir.Move(start))) roomCount--;
+                    Vector2Int movedStart = dir.Move(start);
+                    if (!grid.ContainsKey(movedStart)) roomCount--;
                     ExpandSide(grid, start, dir);
-                    start = dir.Move(start);
+                    start = movedStart;
                     currBranchiness -= branchinessDecrease;
                 } while (roomCount > 0 && CalculateRandomLog(random, currBranchiness));
             }
             GenerateFromGrid(random,grid);
+        }
+
+        // Added function
+        private void SwapRemove<T>(List<T> list, int index)
+        {
+            int last = list.Count - 1;
+            list[index] = list[last];
+            list.RemoveAt(last);
         }
 
         private int GenerateMiddleRow(Random random, Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
