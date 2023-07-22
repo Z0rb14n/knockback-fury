@@ -55,6 +55,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   weaponIndex: 0
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 129
 --- !u!82 &3338489004427352914
 AudioSource:
   m_ObjectHideFlags: 0
