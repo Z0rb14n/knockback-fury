@@ -1,3 +1,5 @@
+using Player;
+using System.Collections;
 using UnityEngine;
 
 namespace Enemies
@@ -6,25 +8,33 @@ namespace Enemies
     {
         public float attackDistance;
         public float attackWidth;
-        public float knockback;
+        public float attackDelay;
+        public int attackDamage;
+        public float knockbackForce;
 
         [SerializeField] private CapsuleCollider2D _collider;
         [SerializeField] private LayerMask _playerLayer;
         private Vector2 _attackBoxCenter;
         private Vector2 _attackBoxSize;
+        private PatrolMovement _movement;
+        private PlayerMovementScript _playerMovement;
+        private EntityHealth _playerHealth;
         private Transform _player;
+        private float attackTimer;
 
 
         private void Awake()
         {
-            // _playerLayer = LayerMask.NameToLayer("Player");
-
+            _movement = GetComponent<PatrolMovement>();
+            attackTimer = 0;
         }
 
         private void Update()
         {
-            if (PlayerInRange())
+            attackTimer -= Time.deltaTime;
+            if (PlayerInRange() && attackTimer <= 0)
             {
+                attackTimer = attackDelay;
                 PerformAttack();
             }
         }
@@ -34,7 +44,7 @@ namespace Enemies
         /// </summary>
         private bool PlayerInRange()
         {
-            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * transform.localScale.x;
+            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.GetDirection();
             _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y, _collider.bounds.size.z);
 
             RaycastHit2D hit = Physics2D.BoxCast(_attackBoxCenter, _attackBoxSize, 0,
@@ -42,6 +52,8 @@ namespace Enemies
 
             if (hit.collider != null)
             {
+                _playerMovement = hit.collider.gameObject.GetComponent<PlayerMovementScript>();
+                _playerHealth = hit.collider.gameObject.GetComponent<EntityHealth>();
                 _player = hit.collider.transform;
             }
 
@@ -63,7 +75,22 @@ namespace Enemies
         /// </summary>
         private void PerformAttack()
         {
+            StartCoroutine(DelayBeforeAttack());
+        }
 
+        private IEnumerator DelayBeforeAttack()
+        {
+            _movement.DisableMovement();
+            yield return new WaitForSeconds(1); // adjust attack animation time here
+
+            if (PlayerInRange())
+            {
+                _playerHealth.TakeDamage(attackDamage);
+                Vector2 knockbackDirection = new((_player.position - transform.position).normalized.x * 0.1f, 0.04f);
+                _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
+            }
+
+            _movement.EnableMovement();
         }
 
     }

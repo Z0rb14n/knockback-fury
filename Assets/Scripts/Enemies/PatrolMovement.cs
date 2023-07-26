@@ -20,6 +20,7 @@ namespace Enemies
         protected float _switchTargetDistance;
         
         private float _originalSpeed;
+        private bool _canMove;
 
         
 
@@ -28,6 +29,7 @@ namespace Enemies
             InitializeCommonVariables();
             _originalSpeed = speed;
             _switchTargetDistance = 0.2f;
+            _canMove = true;
         }
 
         protected void InitializeCommonVariables()
@@ -53,6 +55,9 @@ namespace Enemies
             }
         }
 
+        /// <summary>
+        /// Determine movement direction, change targets if needed
+        /// </summary>
         protected void DoCommonUpdates()
         {
             DetermineDirection();
@@ -65,7 +70,10 @@ namespace Enemies
 
         private void MoveToTarget()
         {
-            transform.position = Vector2.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
+            if (_canMove)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
+            }
         }
 
         // checks if sprite needs flipping; if intended movement direction and sprite direction don't match,
@@ -103,6 +111,21 @@ namespace Enemies
             speed = 0;
             yield return new WaitForSeconds(pauseTime);
             speed = _originalSpeed;
+        }
+
+        public void EnableMovement()
+        {
+            _canMove = true;
+        }
+
+        public void DisableMovement()
+        {
+            _canMove = false;
+        }
+
+        public int GetDirection()
+        {
+            return _direction;
         }
     }
 }

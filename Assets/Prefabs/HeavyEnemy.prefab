@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9160687194028808476}
   - component: {fileID: 3814316568827834456}
   - component: {fileID: 3250355253141131760}
+  - component: {fileID: 8982589570335167837}
   m_Layer: 7
   m_Name: HeavyEnemy
   m_TagString: Untagged
@@ -139,6 +140,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 1.5
   attackWidth: 2
+  attackDelay: 3
+  attackDamage: 5
+  knockbackForce: 150
   _collider: {fileID: 6502981059598909017}
   _playerLayer:
     serializedVersion: 2
@@ -158,3 +162,18 @@ MonoBehaviour:
   patrolPoints: []
   speed: 1
   pauseTime: 1
+--- !u!114 &8982589570335167837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980498073613225995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1000
+  health: 1000
+  iFrameLength: 0
