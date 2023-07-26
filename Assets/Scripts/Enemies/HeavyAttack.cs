@@ -20,21 +20,21 @@ namespace Enemies
         private PlayerMovementScript _playerMovement;
         private EntityHealth _playerHealth;
         private Transform _player;
-        private float attackTimer;
+        private float _attackTimer;
 
 
         private void Awake()
         {
             _movement = GetComponent<PatrolMovement>();
-            attackTimer = 0;
+            _attackTimer = 0;
         }
 
         private void Update()
         {
-            attackTimer -= Time.deltaTime;
-            if (PlayerInRange() && attackTimer <= 0)
+            _attackTimer -= Time.deltaTime;
+            if (PlayerInRange() && _attackTimer <= 0)
             {
-                attackTimer = attackDelay;
+                _attackTimer = attackDelay;
                 PerformAttack();
             }
         }
@@ -45,7 +45,7 @@ namespace Enemies
         private bool PlayerInRange()
         {
             _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.GetDirection();
-            _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y, _collider.bounds.size.z);
+            _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z);
 
             RaycastHit2D hit = Physics2D.BoxCast(_attackBoxCenter, _attackBoxSize, 0,
                 Vector2.left, 0, _playerLayer);
@@ -67,7 +67,7 @@ namespace Enemies
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * transform.localScale.x,
-                new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y, _collider.bounds.size.z));
+                new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z));
         }
 
         /// <summary>

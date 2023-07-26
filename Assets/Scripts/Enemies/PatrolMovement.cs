@@ -18,9 +18,10 @@ namespace Enemies
         protected SpriteRenderer _sprite;
         protected int _spriteDirection;
         protected float _switchTargetDistance;
-        
+        protected bool _canMove;
+
         private float _originalSpeed;
-        private bool _canMove;
+        
 
         
 
@@ -82,7 +83,7 @@ namespace Enemies
         {
             if (_direction != _spriteDirection)
             {
-                _sprite.flipX = !_sprite.flipX;
+                transform.localScale *= new Vector2(-1, 1);
                 _spriteDirection *= -1;
             }
         }
