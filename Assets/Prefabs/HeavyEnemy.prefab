@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3814316568827834456}
   - component: {fileID: 3250355253141131760}
   - component: {fileID: 8982589570335167837}
+  - component: {fileID: 781840091141345320}
   m_Layer: 7
   m_Name: HeavyEnemy
   m_TagString: Untagged
@@ -177,3 +178,17 @@ MonoBehaviour:
   maxHealth: 1200
   health: 1200
   iFrameLength: 0
+--- !u!114 &781840091141345320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980498073613225995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036dc8d9ef2d04d40a83d678a26b6dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  knockbackForce: 80

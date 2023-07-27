@@ -21,26 +21,38 @@ namespace Enemies
         private EntityHealth _playerHealth;
         private Transform _player;
         private float _attackTimer;
+        private bool _isAttacking;
 
 
         private void Awake()
         {
             _movement = GetComponent<PatrolMovement>();
             _attackTimer = 0;
-        }
-
-        private void Update()
-        {
-            _attackTimer -= Time.deltaTime;
-            if (PlayerInRange() && _attackTimer <= 0)
-            {
-                _attackTimer = attackDelay;
-                PerformAttack();
-            }
+            _playerMovement = PlayerMovementScript.Instance;
+            _playerHealth = PlayerHealth.Instance;
         }
 
         /// <summary>
-        ///  Determines whether player is within attack range
+        /// Enemy should always stand still when player is in range, only attacks when _attackTimer is below 0
+        /// </summary>
+        private void Update()
+        {
+            _attackTimer -= Time.deltaTime;
+            if (PlayerInRange()) {
+                _movement.DisableMovement();
+                if (_attackTimer <= 0)
+                {
+                    PerformAttack();
+                }
+            } else if (!_isAttacking)
+            {
+                _movement.EnableMovement();
+            }
+
+        }
+
+        /// <summary>
+        ///  Determines whether player is within attack range; range identical to box in OnDrawGizmos()
         /// </summary>
         private bool PlayerInRange()
         {
@@ -52,8 +64,6 @@ namespace Enemies
 
             if (hit.collider != null)
             {
-                _playerMovement = hit.collider.gameObject.GetComponent<PlayerMovementScript>();
-                _playerHealth = hit.collider.gameObject.GetComponent<EntityHealth>();
                 _player = hit.collider.transform;
             }
 
@@ -71,16 +81,17 @@ namespace Enemies
         }
 
         /// <summary>
-        /// attacks player after set amount of delay depending on animation, goes into cooldown afterwards
+        /// attacks player after set amount of delay depending on animation, sets attack cooldown timer
         /// </summary>
         private void PerformAttack()
         {
+            _attackTimer = attackDelay;
+            _isAttacking = true;
             StartCoroutine(DelayBeforeAttack());
         }
 
         private IEnumerator DelayBeforeAttack()
         {
-            _movement.DisableMovement();
             yield return new WaitForSeconds(1); // adjust attack animation time here
 
             if (PlayerInRange())
@@ -90,7 +101,7 @@ namespace Enemies
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
 
-            _movement.EnableMovement();
+            _isAttacking = false;
         }
 
     }
