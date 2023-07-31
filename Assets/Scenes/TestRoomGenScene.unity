@@ -485,10 +485,26 @@ MonoBehaviour:
   - type: 2
     roomPrefab:
     - {fileID: 4983919535184341483, guid: 93d3137eeac73084f9d84418e6bd35a9, type: 3}
+  layouts:
+  - sockets:
+    - positionOffset: {x: 0, y: 0}
+      approximateSize: {x: 6, y: 6}
+      prefabToInstantiate: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
+    - positionOffset: {x: 6, y: 6}
+      approximateSize: {x: 6, y: 6}
+      prefabToInstantiate: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
+  - sockets:
+    - positionOffset: {x: 6, y: 0}
+      approximateSize: {x: 6, y: 6}
+      prefabToInstantiate: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
+    - positionOffset: {x: 0, y: 6}
+      approximateSize: {x: 6, y: 6}
+      prefabToInstantiate: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
   seed: 0
-  pathLength: 4
-  pathHeight: 1
-  biasFactor: 10
+  maxRows: 3
+  minRooms: 12
+  maxRooms: 15
+  centerRowMin: 8
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 914233868}

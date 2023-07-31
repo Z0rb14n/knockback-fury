@@ -11,6 +11,7 @@ namespace FloorGen
     public class FloorGenerator : MonoBehaviour
     {
         public Pair[] pairs;
+        public Layout[] layouts;
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
         public int maxRows = 3;
@@ -28,6 +29,8 @@ namespace FloorGen
         public Transform worldParent;
         
         public Vector2 gridSize = Vector2.one;
+
+        public int ToPreview { get; set; } = -1;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
@@ -134,13 +137,22 @@ namespace FloorGen
 
         private void GenerateFromGrid(Random random, Grid grid)
         {
-            foreach ((Vector2Int pos, RoomType type) in grid)
+            foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
                 GameObject[] objects = _pairsDict[type];
+                Vector3 gridPos = gridIndex * gridSize;
                 int index = random.Next(0, objects.Length);
+                GameObject go;
                 if (ReferenceEquals(worldParent, null))
-                    Instantiate(objects[index], pos * gridSize, Quaternion.identity);
-                else Instantiate(objects[index], pos * gridSize, Quaternion.identity, worldParent);
+                    go = Instantiate(objects[index], gridPos, Quaternion.identity);
+                else go = Instantiate(objects[index], gridPos, Quaternion.identity, worldParent);
+                index = random.Next(0, layouts.Length);
+                Layout layout = layouts[index];
+                foreach (Socket socket in layout.sockets)
+                {
+                    Vector3 pos = ((Vector3) socket.positionOffset) + gridPos;
+                    Instantiate(socket.prefabToInstantiate, pos, Quaternion.identity, go.transform);
+                }
             }
         }
 
@@ -209,5 +221,19 @@ namespace FloorGen
     {
         public RoomType type;
         public GameObject[] roomPrefab;
+    }
+
+    [Serializable]
+    public struct Layout
+    {
+        public Socket[] sockets;
+    }
+
+    [Serializable]
+    public struct Socket
+    {
+        public Vector2 positionOffset;
+        public Vector2 approximateSize;
+        public GameObject prefabToInstantiate;
     }
 }
