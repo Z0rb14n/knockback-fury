@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Util;
+using Weapons;
 using Grid = System.Collections.Generic.Dictionary<UnityEngine.Vector2Int, FloorGen.RoomType>;
 using Random = System.Random;
 
@@ -13,6 +14,7 @@ namespace FloorGen
         public Pair[] pairs;
         public Layout[] layouts;
         public SocketObject[] socketObjects;
+        public WeaponData[] weaponsList;
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
         public int maxRows = 3;

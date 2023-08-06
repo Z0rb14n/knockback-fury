@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 
 namespace Enemies

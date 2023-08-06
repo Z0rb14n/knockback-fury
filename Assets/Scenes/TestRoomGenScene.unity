@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1367610322427148548, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d61d766a8013bb40a059c55a1b06b71, type: 3}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponData
       value: 
@@ -501,6 +505,18 @@ MonoBehaviour:
     prefab: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
   - size: {x: 12, y: 3}
     prefab: {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
+  weaponsList:
+  - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
+  - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
+  - {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
+  - {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
+  - {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
+  - {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7, type: 2}
+  - {fileID: 11400000, guid: 9e87ef4ed06ecd7468fc0062788de68b, type: 2}
+  - {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
+  - {fileID: 11400000, guid: d835523dddd6d2046854387e30949575, type: 2}
+  - {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
+  - {fileID: 11400000, guid: b0c1e383edee634469e31f9f3fa49ef8, type: 2}
   seed: 0
   maxRows: 3
   minRooms: 12
