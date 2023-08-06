@@ -13,8 +13,10 @@ namespace Weapons
 
         private void Awake()
         {
-            UpdateSprite(null);
+            UpdateSprite();
         }
+
+        public void UpdateSprite() => UpdateSprite(weaponData);
 
         public void UpdateSprite(WeaponData data)
         {
@@ -30,7 +32,7 @@ namespace Weapons
 
         private void OnValidate()
         {
-            UpdateSprite(null);
+            UpdateSprite();
         }
 
         private void OnTriggerEnter2D(Collider2D other)

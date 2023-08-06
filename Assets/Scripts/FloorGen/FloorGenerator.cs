@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Player;
 using UnityEngine;
 using Util;
 using Weapons;
@@ -11,10 +13,14 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class FloorGenerator : MonoBehaviour
     {
+        [Header("Socket Generation")]
         public Pair[] pairs;
         public Layout[] layouts;
         public SocketObject[] socketObjects;
+        [Header("Weapon Generation")]
         public WeaponData[] weaponsList;
+        public GameObject weaponPickupPrefab;
+        [Header("Room/Cell Generation")]
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
         public int maxRows = 3;
@@ -93,12 +99,20 @@ namespace FloorGen
             int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
             roomCount -= middleLength;
 
+            List<Vector2Int> withinIterationToBranch = new(toBranch);
+
             while (roomCount > 0)
             {
+                if (withinIterationToBranch.Count == 0)
+                {
+                    // Error reproducible on seed -2112351525
+                    Debug.LogWarning("Ran out of rooms to branch from - re-adding initial list.");
+                    withinIterationToBranch.AddRange(toBranch);
+                }
                 // Swap with last element and remove last instead of removing by index.
-                int index = random.Next(0, toBranch.Count);
-                Vector2Int start = toBranch[index];
-                toBranch.SwapRemove(index);
+                int index = random.Next(0, withinIterationToBranch.Count);
+                Vector2Int start = withinIterationToBranch[index];
+                withinIterationToBranch.SwapRemove(index);
                 int currBranchiness = branchiness;
                 do
                 {
@@ -110,7 +124,7 @@ namespace FloorGen
                     currBranchiness -= branchinessDecrease;
                 } while (roomCount > 0 && CalculateRandomLog(random, currBranchiness));
             }
-            GenerateFromGrid(random,grid);
+            GenerateFromGrid(random, grid, middleLength);
         }
 
         private int GenerateMiddleRow(Random random, Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
@@ -130,7 +144,7 @@ namespace FloorGen
             return retVal;
         }
 
-        private void GenerateFromGrid(Random random, Grid grid)
+        private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
             Dictionary<Vector2, List<GameObject>> prefabSizes = new();
             foreach (SocketObject so in socketObjects)
@@ -138,6 +152,13 @@ namespace FloorGen
                 if (!prefabSizes.ContainsKey(so.size))
                     prefabSizes[so.size] = new();
                 prefabSizes[so.size].Add(so.prefab);
+            }
+            bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
+            Vector2Int weaponRoomPos = Vector2Int.zero;
+            if (hasWeaponRoom)
+            {
+                List<Vector2Int> positions = grid.Keys.Where(key => key != new Vector2Int(middleLength,0)).ToList();
+                weaponRoomPos = positions.GetRandom(random);
             }
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
@@ -147,6 +168,15 @@ namespace FloorGen
                 GameObject cellObject = ReferenceEquals(worldParent, null) ?
                     Instantiate(randomCellPrefab, gridPos, Quaternion.identity) :
                     Instantiate(randomCellPrefab, gridPos, Quaternion.identity, worldParent);
+                // cba to save cellObjects so i'll just do a check here
+                if (hasWeaponRoom && weaponRoomPos == gridIndex)
+                {
+                    GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, gridPos, Quaternion.identity,
+                        cellObject.transform);
+                    WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
+                    weaponPickup.weaponData = Instantiate(weaponsList.GetRandom(random));
+                    weaponPickup.UpdateSprite();
+                }
                 Layout layout = layouts.GetRandom(random);
                 foreach (SocketShape shape in layout.sockets)
                 {

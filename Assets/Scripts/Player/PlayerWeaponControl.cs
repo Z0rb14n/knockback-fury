@@ -46,6 +46,8 @@ namespace Player
 
         public readonly List<WeaponPickup> weaponsOn = new();
 
+        public bool HasWeaponSpace => _weapon.FirstAvailableInventorySpace != -1;
+
         private WeaponPickup FirstAvailableItem => weaponsOn.FirstOrDefault(t => t.delay <= 0);
 
         private void Awake()
