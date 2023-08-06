@@ -25,7 +25,9 @@ namespace Editor
             newStyle.alignment = TextAnchor.UpperCenter;
             Handles.Label(initialPos + sizeOffset, $"Layout {floorGen.ToPreview}", newStyle);
             Handles.color = Color.red;
-            Handles.DrawWireCube(initialPos, (Vector3)floorGen.gridSize + Vector3.forward);
+            // grid generation has overlap on 1 cell boundaries
+            // inside space is -2 tiles
+            Handles.DrawWireCube(initialPos + new Vector3(-0.5f,0.5f,0), (Vector3)floorGen.gridSize + Vector3.forward - new Vector3(1,1,0));
             Layout layout = floorGen.layouts[floorGen.ToPreview];
             EditorGUI.BeginChangeCheck();
             Vector3[] newPositions = new Vector3[layout.sockets.Length];
