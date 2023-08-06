@@ -36,10 +36,12 @@ namespace Enemies
         [SerializeField] private Vector3[] summonLocations;
         
         private PlayerMovementScript _playerMovement;
+        private PlayerHealth _playerHealth;
 
         private void Awake()
         {
             _playerMovement = PlayerMovementScript.Instance;
+            _playerHealth = PlayerHealth.Instance;
         }
 
         private void FixedUpdate()
@@ -57,11 +59,11 @@ namespace Enemies
 
         private IEnumerator ZonesCoroutine()
         {
-            while (true)
+            while (_playerHealth.health > 0)
             {
                 yield return new WaitForSeconds(delayBetweenZones);
                 
-                List<int> randVals = randValues(numberOfZones, deathZones.Length);
+                List<int> randVals = RandValues(numberOfZones, deathZones.Length);
                 for (int i = 0; i < numberOfZones; i++)
                 {
                     deathZones[randVals[i]].StartZone(warningDuration, deathDuration, zoneDamage);
@@ -71,13 +73,13 @@ namespace Enemies
         
         private IEnumerator SummonCoroutine()
         {
-            while (true)
+            while (_playerHealth.health > 0)
             {
                 yield return new WaitForSeconds(delayBetweenSummons);
-                List<int> randVals = randValues(numberOfSummons, summonLocations.Length);
+                List<int> randVals = RandValues(numberOfSummons, summonLocations.Length);
                 for (int i = 0; i < numberOfSummons; i++)
                 {
-                    GameObject go = Instantiate(minionPrefab, summonLocations[randVals[i]], Quaternion.identity);
+                    Instantiate(minionPrefab, summonLocations[randVals[i]], Quaternion.identity);
                 }
             }
         }
@@ -90,7 +92,7 @@ namespace Enemies
             }
         }
 
-        private List<int> randValues(int number, int max)
+        private static List<int> RandValues(int number, int max)
         {
             List<int> retVal = new();
             List<int> randIndices = new();
@@ -99,7 +101,7 @@ namespace Enemies
             {
                 int index = Random.Range(0, randIndices.Count);
                 retVal.Add(randIndices[index]);
-                randIndices.RemoveAt(index);
+                randIndices.SwapRemove(index);
             }
 
             return retVal;

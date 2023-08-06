@@ -12,6 +12,7 @@ namespace FloorGen
     {
         public Pair[] pairs;
         public Layout[] layouts;
+        public SocketObject[] socketObjects;
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
         public int maxRows = 3;
@@ -95,7 +96,7 @@ namespace FloorGen
                 // Swap with last element and remove last instead of removing by index.
                 int index = random.Next(0, toBranch.Count);
                 Vector2Int start = toBranch[index];
-                SwapRemove(toBranch, index);
+                toBranch.SwapRemove(index);
                 int currBranchiness = branchiness;
                 do
                 {
@@ -108,14 +109,6 @@ namespace FloorGen
                 } while (roomCount > 0 && CalculateRandomLog(random, currBranchiness));
             }
             GenerateFromGrid(random,grid);
-        }
-
-        // Added function
-        private void SwapRemove<T>(List<T> list, int index)
-        {
-            int last = list.Count - 1;
-            list[index] = list[last];
-            list.RemoveAt(last);
         }
 
         private int GenerateMiddleRow(Random random, Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
@@ -137,21 +130,33 @@ namespace FloorGen
 
         private void GenerateFromGrid(Random random, Grid grid)
         {
+            Dictionary<Vector2, List<GameObject>> prefabSizes = new();
+            foreach (SocketObject so in socketObjects)
+            {
+                if (!prefabSizes.ContainsKey(so.size))
+                    prefabSizes[so.size] = new();
+                prefabSizes[so.size].Add(so.prefab);
+            }
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
                 GameObject[] objects = _pairsDict[type];
                 Vector3 gridPos = gridIndex * gridSize;
-                int index = random.Next(0, objects.Length);
-                GameObject go;
-                if (ReferenceEquals(worldParent, null))
-                    go = Instantiate(objects[index], gridPos, Quaternion.identity);
-                else go = Instantiate(objects[index], gridPos, Quaternion.identity, worldParent);
-                index = random.Next(0, layouts.Length);
-                Layout layout = layouts[index];
-                foreach (Socket socket in layout.sockets)
+                GameObject randomCellPrefab = objects.GetRandom(random);
+                GameObject cellObject = ReferenceEquals(worldParent, null) ?
+                    Instantiate(randomCellPrefab, gridPos, Quaternion.identity) :
+                    Instantiate(randomCellPrefab, gridPos, Quaternion.identity, worldParent);
+                Layout layout = layouts.GetRandom(random);
+                foreach (SocketShape shape in layout.sockets)
                 {
-                    Vector3 pos = ((Vector3) socket.positionOffset) + gridPos;
-                    Instantiate(socket.prefabToInstantiate, pos, Quaternion.identity, go.transform);
+                    Vector3 pos = (Vector3)shape.position + gridPos;
+                    if (prefabSizes.TryGetValue(shape.size, out List<GameObject> possibleSocketPrefabs) && possibleSocketPrefabs.Count > 0)
+                    {
+                        Instantiate(possibleSocketPrefabs.GetRandom(random), pos, Quaternion.identity, cellObject.transform);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] No game object entry for socket of size {shape.size}; skipping");
+                    }
                 }
             }
         }
@@ -216,6 +221,9 @@ namespace FloorGen
         private static RoomType RandomDirUnweighted(Random random, RoomType[] types) => RandomDir(random, types, UnweightedWeights);
     }
 
+    /// <summary>
+    /// Grouping of room/cell and open walls
+    /// </summary>
     [Serializable]
     public struct Pair
     {
@@ -223,17 +231,32 @@ namespace FloorGen
         public GameObject[] roomPrefab;
     }
 
+    /// <summary>
+    /// Layout of sockets to be placed within a room/cell
+    /// </summary>
     [Serializable]
     public struct Layout
     {
-        public Socket[] sockets;
+        public SocketShape[] sockets;
     }
 
+    /// <summary>
+    /// Socket prefab and its corresponding size
+    /// </summary>
     [Serializable]
-    public struct Socket
+    public struct SocketObject
     {
-        public Vector2 positionOffset;
-        public Vector2 approximateSize;
-        public GameObject prefabToInstantiate;
+        public Vector2 size;
+        public GameObject prefab;
+    }
+
+    /// <summary>
+    /// Individual size/position pairing for socket location
+    /// </summary>
+    [Serializable]
+    public struct SocketShape
+    {
+        public Vector2 size;
+        public Vector2 position;
     }
 }

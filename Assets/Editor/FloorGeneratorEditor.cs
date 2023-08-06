@@ -32,10 +32,10 @@ namespace Editor
             // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < layout.sockets.Length; i++)
             {
-                Socket socket = layout.sockets[i];
+                SocketShape socket = layout.sockets[i];
                 Handles.color = Color.yellow;
-                Handles.DrawWireCube(initialPos+(Vector3)socket.positionOffset, (Vector3) socket.approximateSize + Vector3.forward);
-                newPositions[i] = Handles.PositionHandle(initialPos + (Vector3)socket.positionOffset, floorGen.transform.rotation);
+                Handles.DrawWireCube(initialPos+(Vector3)socket.position, (Vector3) socket.size + Vector3.forward);
+                newPositions[i] = Handles.PositionHandle(initialPos + (Vector3)socket.position, floorGen.transform.rotation);
             }
             
             if (EditorGUI.EndChangeCheck())
@@ -43,7 +43,7 @@ namespace Editor
                 Undo.RecordObject(floorGen, $"Change Layout {floorGen.ToPreview} Socket position");
                 for (int i = 0; i < layout.sockets.Length; i++)
                 {
-                    floorGen.layouts[floorGen.ToPreview].sockets[i].positionOffset = newPositions[i];
+                    floorGen.layouts[floorGen.ToPreview].sockets[i].position = newPositions[i];
                 }
             }
         }
