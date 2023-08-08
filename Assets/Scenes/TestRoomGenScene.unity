@@ -440,6 +440,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec519cfb3b0f8e4b81c1c2fd8aabf74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layouts:
+  - sockets:
+    - size: {x: 6, y: 6}
+      position: {x: 0, y: 0}
+    - size: {x: 12, y: 3}
+      position: {x: 0, y: 6}
+  - sockets:
+    - size: {x: 12, y: 3}
+      position: {x: 0, y: 0}
+    - size: {x: 6, y: 6}
+      position: {x: 0, y: 4.5}
+  socketObjects:
+  - size: {x: 6, y: 6}
+    prefab: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
+  - size: {x: 12, y: 3}
+    prefab: {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
+  weaponsList:
+  - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
+  - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
+  - {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
+  - {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
+  - {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
+  - {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7, type: 2}
+  - {fileID: 11400000, guid: 9e87ef4ed06ecd7468fc0062788de68b, type: 2}
+  - {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
+  - {fileID: 11400000, guid: d835523dddd6d2046854387e30949575, type: 2}
+  - {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
+  - {fileID: 11400000, guid: b0c1e383edee634469e31f9f3fa49ef8, type: 2}
+  weaponPickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
+  weaponUpgradePrefab: {fileID: 3868675004188845447, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
   pairs:
   - type: -1
     roomPrefab:
@@ -489,36 +519,6 @@ MonoBehaviour:
   - type: 2
     roomPrefab:
     - {fileID: 4983919535184341483, guid: 93d3137eeac73084f9d84418e6bd35a9, type: 3}
-  layouts:
-  - sockets:
-    - size: {x: 6, y: 6}
-      position: {x: 0, y: 0}
-    - size: {x: 12, y: 3}
-      position: {x: 0, y: 6}
-  - sockets:
-    - size: {x: 12, y: 3}
-      position: {x: 0, y: 0}
-    - size: {x: 6, y: 6}
-      position: {x: 0, y: 3}
-  socketObjects:
-  - size: {x: 6, y: 6}
-    prefab: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
-  - size: {x: 12, y: 3}
-    prefab: {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
-  weaponsList:
-  - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
-  - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
-  - {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
-  - {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
-  - {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
-  - {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7, type: 2}
-  - {fileID: 11400000, guid: 9e87ef4ed06ecd7468fc0062788de68b, type: 2}
-  - {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
-  - {fileID: 11400000, guid: d835523dddd6d2046854387e30949575, type: 2}
-  - {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
-  - {fileID: 11400000, guid: b0c1e383edee634469e31f9f3fa49ef8, type: 2}
-  weaponPickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
-  weaponUpgradePrefab: {fileID: 3868675004188845447, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
   seed: 0
   maxRows: 3
   minRooms: 12

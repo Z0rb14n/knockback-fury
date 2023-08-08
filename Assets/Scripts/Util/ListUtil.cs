@@ -7,22 +7,6 @@ namespace Util
     public static class ListUtil
     {
         /// <summary>
-        /// Gets a random entry from a list or array.
-        ///
-        /// Uses Unity's Random.Range rather than a provided random number generator.
-        /// </summary>
-        /// <param name="list">List or array of elements</param>
-        /// <typeparam name="T">Type elements in array</typeparam>
-        /// <returns>Random element</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
-        public static T GetRandom<T>(this IReadOnlyList<T> list)
-        {
-            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
-            int index = UnityEngine.Random.Range(0, list.Count);
-            return list[index];
-        }
-
-        /// <summary>
         /// Gets a random entry from a list or array with a provided random number generator.
         /// </summary>
         /// <param name="list">List or array of elements</param>
@@ -35,6 +19,23 @@ namespace Util
             if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
             int index = random.Next(0, list.Count);
             return list[index];
+        }
+
+        /// <summary>
+        /// Gets a random entry from a list or array with a provided random number generator.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="random">Random number generator to generate a random index</param>
+        /// <param name="val">Random element</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Index of random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        public static int GetRandom<T>(this IReadOnlyList<T> list, Random random, out T val)
+        {
+            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
+            int index = random.Next(0, list.Count);
+            val = list[index];
+            return index;
         }
 
         /// <summary>
