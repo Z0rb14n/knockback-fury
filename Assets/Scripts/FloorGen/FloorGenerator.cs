@@ -220,6 +220,27 @@ namespace FloorGen
             return true;
         }
 
+        private WeaponPickup GenerateWeaponPickup(Random random, Vector3 pos, GameObject parent)
+        {
+            GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, pos, Quaternion.identity, parent.transform);
+            WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
+            HashSet<string> playerCurrInventory =
+                PlayerWeaponControl.Instance.GetInventory.Select(data => data.weaponName).ToHashSet();
+            List<WeaponData> eligibleWeapons =
+                weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName)).ToList();
+            weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(random));
+            weaponPickup.UpdateSprite();
+            return weaponPickup;
+        }
+
+        private CheesePickup GenerateCheesePickup(Vector3 position, GameObject parent)
+        {
+            GameObject cheesePickupObject = Instantiate(cheesePrefab, position, Quaternion.identity, parent.transform);
+            cheesePickupObject.SetActive(false);
+            CheesePickup cheesePickup = cheesePickupObject.GetComponent<CheesePickup>();
+            return cheesePickup;
+        }
+        
         // TODO: method length too long
         private void GenerateSockets(Random random, Vector2Int gridIndex, GameObject cellObject, bool hasEnemies, bool isEndRoom)
         {
@@ -258,21 +279,15 @@ namespace FloorGen
                 manager.pickup = pickup;
                 pickup.upgrade = Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().ToList().GetRandom(random);
                 // generate cheese
-                GameObject cheesePickupObject = Instantiate(cheesePrefab, gridPos + Vector3.left + Vector3.up, Quaternion.identity, cellObject.transform);
-                cheesePickupObject.SetActive(false);
-                CheesePickup cheesePickup = cheesePickupObject.GetComponent<CheesePickup>();
+                CheesePickup cheesePickup = GenerateCheesePickup(gridPos + Vector3.left + Vector3.up, cellObject);
                 manager.cheesePickup = cheesePickup;
                 cheesePickup.amount = 5;
                 if (isEndRoom)
                 {
                     cheesePickup.amount = 10;
                     Vector3 weaponPos = gridIndex * gridSize + Vector2.up;
-                    GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, weaponPos, Quaternion.identity, cellObject.transform);
-                    WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
-                    weaponPickup.weaponData = Instantiate(weaponsList.GetRandom(random));
-                    weaponPickup.UpdateSprite();
-                    weaponPickupObject.SetActive(false);
-                    manager.weaponPickup = weaponPickup;
+                    manager.weaponPickup = GenerateWeaponPickup(random, weaponPos, cellObject);
+                    manager.weaponPickup.gameObject.SetActive(false);
                 }
                 // generate enemies
                 // TODO: generate 'elite enemy variant'
@@ -342,11 +357,7 @@ namespace FloorGen
             {
                 // TODO FIX HACK: artificially increased y by 1
                 Vector3 weaponRoomGridPos = weaponRoomPos * gridSize + Vector2.up;
-                GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, weaponRoomGridPos,
-                    Quaternion.identity, cellObjects[weaponRoomPos].transform);
-                WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
-                weaponPickup.weaponData = Instantiate(weaponsList.GetRandom(random));
-                weaponPickup.UpdateSprite();
+                GenerateWeaponPickup(random, weaponRoomGridPos, cellObjects[weaponRoomPos]);
             }
 
             // TODO FIX HACK: artificially increased y by 1
