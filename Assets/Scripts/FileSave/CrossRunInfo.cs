@@ -13,6 +13,7 @@ namespace FileSave
         #region Singleton
         public static CrossRunInfo Instance
         {
+            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
             get
             {
                 if (_instance == null) _instance = FindObjectOfType<CrossRunInfo>();

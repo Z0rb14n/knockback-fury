@@ -48,6 +48,9 @@ namespace Player
 
         public bool HasWeaponSpace => _weapon.FirstAvailableInventorySpace != -1;
 
+        public int NumWeapons => _weapon.NumWeapons;
+        public WeaponData[] GetInventory => _weapon.weaponInventory;
+
         private WeaponPickup FirstAvailableItem => weaponsOn.FirstOrDefault(t => t.delay <= 0);
 
         private void Awake()
