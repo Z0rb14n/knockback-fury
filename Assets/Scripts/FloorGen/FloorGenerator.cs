@@ -263,7 +263,19 @@ namespace FloorGen
                 CheesePickup cheesePickup = cheesePickupObject.GetComponent<CheesePickup>();
                 manager.cheesePickup = cheesePickup;
                 cheesePickup.amount = 5;
+                if (isEndRoom)
+                {
+                    cheesePickup.amount = 10;
+                    Vector3 weaponPos = gridIndex * gridSize + Vector2.up;
+                    GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, weaponPos, Quaternion.identity, cellObject.transform);
+                    WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
+                    weaponPickup.weaponData = Instantiate(weaponsList.GetRandom(random));
+                    weaponPickup.UpdateSprite();
+                    weaponPickupObject.SetActive(false);
+                    manager.weaponPickup = weaponPickup;
+                }
                 // generate enemies
+                // TODO: generate 'elite enemy variant'
                 while (packSize > 0)
                 {
                     List<EnemySpawnType> eligibleSpawnTypes =

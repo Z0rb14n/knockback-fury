@@ -2,6 +2,7 @@
 using FileSave;
 using UnityEngine;
 using Upgrades;
+using Weapons;
 
 namespace FloorGen
 {
@@ -10,6 +11,7 @@ namespace FloorGen
     {
         public UpgradePickup pickup;
         public CheesePickup cheesePickup;
+        public WeaponPickup weaponPickup;
 
         private readonly HashSet<EntityHealth> _enemies = new();
 
@@ -26,6 +28,7 @@ namespace FloorGen
             if (_enemies.Count != 0) return;
             if (pickup) pickup.gameObject.SetActive(true);
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
+            if (weaponPickup) weaponPickup.gameObject.SetActive(true);
         }
     }
 }
