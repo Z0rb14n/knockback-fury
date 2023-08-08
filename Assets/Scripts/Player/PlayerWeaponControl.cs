@@ -53,6 +53,8 @@ namespace Player
 
         private WeaponPickup FirstAvailableItem => weaponsOn.FirstOrDefault(t => t.delay <= 0);
 
+        public bool HasNoUpgradedWeapons => _weapon.weaponInventory.All(data => !data || data.numUpgrades == 0);
+
         private void Awake()
         {
             _instance = this;

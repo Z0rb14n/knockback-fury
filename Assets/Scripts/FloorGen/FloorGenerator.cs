@@ -20,6 +20,7 @@ namespace FloorGen
         [Header("Weapon Generation")]
         public WeaponData[] weaponsList;
         public GameObject weaponPickupPrefab;
+        public GameObject weaponUpgradePrefab;
         [Header("Room/Cell Generation")]
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
@@ -144,6 +145,27 @@ namespace FloorGen
             return retVal;
         }
 
+        private static bool WeaponRoomPos(Random random, Grid grid, out Vector2Int pos, params Vector2Int[] disallowedRooms)
+        {
+            bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
+            pos = Vector2Int.zero;
+            if (!hasWeaponRoom) return false;
+            pos = grid.Keys.Except(disallowedRooms).ToList().GetRandom(random);
+            return true;
+        }
+        
+        private static bool SmithingRoomPos(Random random, Grid grid, out Vector2Int posOne, out Vector2Int posTwo, params Vector2Int[] disallowedRooms)
+        {
+            bool hasSecondSmithingRoom = random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
+            HashSet<Vector2Int> disallowed = new(disallowedRooms);
+            posOne = grid.Keys.Except(disallowed).ToList().GetRandom(random);
+            posTwo = Vector2Int.zero;
+            if (!hasSecondSmithingRoom) return false;
+            disallowed.Add(posOne);
+            posTwo = grid.Keys.Except(disallowed).ToList().GetRandom(random);
+            return true;
+        }
+        
         private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
             Dictionary<Vector2, List<GameObject>> prefabSizes = new();
@@ -153,21 +175,22 @@ namespace FloorGen
                     prefabSizes[so.size] = new();
                 prefabSizes[so.size].Add(so.prefab);
             }
-            bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
-            Vector2Int weaponRoomPos = Vector2Int.zero;
-            if (hasWeaponRoom)
-            {
-                List<Vector2Int> positions = grid.Keys.Where(key => key != new Vector2Int(middleLength,0)).ToList();
-                weaponRoomPos = positions.GetRandom(random);
-            }
+
+            Vector2Int finalRoomPos = new Vector2Int(middleLength, 0);
+            bool hasWeaponRoom = WeaponRoomPos(random, grid, out Vector2Int weaponRoomPos, finalRoomPos);
+
+            Vector2Int smithOne, smithTwo;
+            bool hasSecondSmithingRoom = hasWeaponRoom ?
+                SmithingRoomPos(random, grid, out smithOne, out smithTwo, finalRoomPos, weaponRoomPos)
+                : SmithingRoomPos(random, grid, out smithOne, out smithTwo, finalRoomPos);
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
                 GameObject[] objects = _pairsDict[type];
                 Vector3 gridPos = gridIndex * gridSize;
                 GameObject randomCellPrefab = objects.GetRandom(random);
-                GameObject cellObject = ReferenceEquals(worldParent, null) ?
-                    Instantiate(randomCellPrefab, gridPos, Quaternion.identity) :
-                    Instantiate(randomCellPrefab, gridPos, Quaternion.identity, worldParent);
+                GameObject cellObject = ReferenceEquals(worldParent, null)
+                    ? Instantiate(randomCellPrefab, gridPos, Quaternion.identity)
+                    : Instantiate(randomCellPrefab, gridPos, Quaternion.identity, worldParent);
                 // cba to save cellObjects so i'll just do a check here
                 if (hasWeaponRoom && weaponRoomPos == gridIndex)
                 {
@@ -176,6 +199,11 @@ namespace FloorGen
                     WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
                     weaponPickup.weaponData = Instantiate(weaponsList.GetRandom(random));
                     weaponPickup.UpdateSprite();
+                }
+
+                if (smithOne == gridIndex || (hasSecondSmithingRoom && gridIndex == smithTwo))
+                {
+                    Instantiate(weaponUpgradePrefab, gridPos, Quaternion.identity, cellObject.transform);
                 }
                 Layout layout = layouts.GetRandom(random);
                 foreach (SocketShape shape in layout.sockets)

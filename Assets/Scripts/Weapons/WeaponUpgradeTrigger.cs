@@ -1,3 +1,4 @@
+using System;
 using Player;
 using UnityEngine;
 
@@ -10,6 +11,11 @@ namespace Weapons
         public GameObject notificationOnEnter;
         
         private bool _isPlayerInside;
+
+        private void Awake()
+        {
+            if (!weaponUpgradeUI) weaponUpgradeUI = FindObjectOfType<WeaponUpgradeUI>();
+        }
 
         private void Update()
         {
