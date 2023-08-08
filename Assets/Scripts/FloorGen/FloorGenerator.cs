@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileSave;
 using Player;
 using UnityEngine;
+using Upgrades;
 using Util;
 using Weapons;
 using Grid = System.Collections.Generic.Dictionary<UnityEngine.Vector2Int, FloorGen.RoomType>;
@@ -30,6 +32,10 @@ namespace FloorGen
         public float chaserPackCost = 1f;
         [Min(0), Tooltip("Jumper Pack Cost")]
         public float jumperPackCost = 2f;
+        [Tooltip("Player Upgrade prefab")]
+        public GameObject playerUpgradePrefab;
+        [Tooltip("Cheese prefab")]
+        public GameObject cheesePrefab;
         
         [Header("Socket Generation")]
         public Layout[] layouts;
@@ -214,6 +220,7 @@ namespace FloorGen
             return true;
         }
 
+        // TODO: method length too long
         private void GenerateSockets(Random random, Vector2Int gridIndex, GameObject cellObject, bool hasEnemies, bool isEndRoom)
         {
             Vector3 gridPos = gridIndex * gridSize;
@@ -237,11 +244,26 @@ namespace FloorGen
 
             if (!hasEnemies) return;
 
+            RoomEnemyManager manager = cellObject.AddComponent<RoomEnemyManager>();
             FloorEnemyPack pack = floorEnemyPacks[floorNumber];
             bool generateBoss = isEndRoom && pack.endingHasBoss;
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
             if (!generateBoss)
             {
+                // TODO FIX HACKS: artificially increased x/y by 1
+                // generate player upgrade
+                GameObject playerUpgrade = Instantiate(playerUpgradePrefab, gridPos + Vector3.up, Quaternion.identity, cellObject.transform);
+                playerUpgrade.SetActive(false);
+                UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
+                manager.pickup = pickup;
+                pickup.upgrade = Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().ToList().GetRandom(random);
+                // generate cheese
+                GameObject cheesePickupObject = Instantiate(cheesePrefab, gridPos + Vector3.left + Vector3.up, Quaternion.identity, cellObject.transform);
+                cheesePickupObject.SetActive(false);
+                CheesePickup cheesePickup = cheesePickupObject.GetComponent<CheesePickup>();
+                manager.cheesePickup = cheesePickup;
+                cheesePickup.amount = 5;
+                // generate enemies
                 while (packSize > 0)
                 {
                     List<EnemySpawnType> eligibleSpawnTypes =
@@ -255,8 +277,19 @@ namespace FloorGen
                                 .Select(pair => pair.Item1).ToList();
                         if (supportedBehaviours.Count == 0) eligibleSpawnTypes.SwapRemove(indexType);
                         SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
-                        behaviour.SpawnEnemy(type);
-                        packSize -= GetCost(type);
+                        if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
+                        {
+                            packSize -= GetCost(type);
+                            EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
+                            if (health)
+                            {
+                                manager.AddEnemy(health);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Tried to spawn enemy of type " + type + " but failed.");
+                        }
                         break;
                     }
                 }
@@ -267,6 +300,7 @@ namespace FloorGen
             }
         }
         
+        // TODO: method length potentially too long
         private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
             Vector2Int finalRoomPos = new(middleLength, 0);
@@ -294,7 +328,8 @@ namespace FloorGen
 
             if (hasWeaponRoom)
             {
-                Vector3 weaponRoomGridPos = weaponRoomPos * gridSize;
+                // TODO FIX HACK: artificially increased y by 1
+                Vector3 weaponRoomGridPos = weaponRoomPos * gridSize + Vector2.up;
                 GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, weaponRoomGridPos,
                     Quaternion.identity, cellObjects[weaponRoomPos].transform);
                 WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
@@ -302,10 +337,11 @@ namespace FloorGen
                 weaponPickup.UpdateSprite();
             }
 
-            Instantiate(weaponUpgradePrefab, smithOne * gridSize,
+            // TODO FIX HACK: artificially increased y by 1
+            Instantiate(weaponUpgradePrefab, smithOne * gridSize + Vector2.up,
                 Quaternion.identity, cellObjects[smithOne].transform);
             if (hasSecondSmithingRoom)
-                Instantiate(weaponUpgradePrefab, smithTwo * gridSize, Quaternion.identity,
+                Instantiate(weaponUpgradePrefab, smithTwo * gridSize + Vector2.up, Quaternion.identity,
                     cellObjects[smithTwo].transform);
         }
 

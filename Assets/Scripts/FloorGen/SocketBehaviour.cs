@@ -15,30 +15,71 @@ namespace FloorGen
 
         public EnemySpawnType AllowedSpawnTypes => _spawnPoints.Aggregate<EnemySpawnPoint, EnemySpawnType>(0, (current, point) => current | point.types);
         
-        public bool SpawnEnemy(EnemySpawnType type)
+        public bool SpawnEnemy(EnemySpawnType type, out GameObject go)
         {
             switch (type)
             {
                 case EnemySpawnType.Jumper:
-                    return SpawnJumper();
+                    return SpawnJumper(out go);
                 case EnemySpawnType.Heavy:
-                    return SpawnHeavy();
+                    return SpawnHeavy(out go);
                 case EnemySpawnType.Ranged:
-                    return SpawnRanged();
+                    return SpawnRanged(out go);
                 case EnemySpawnType.Chaser:
-                    return SpawnChaser();
+                    return SpawnChaser(out go);
                 default:
                     Debug.LogError("[SocketBehaviour::SpawnEnemy called with invalid type: " + type);
+                    go = null;
                     return false;
             }
         }
 
-        public bool SpawnJumper() => _spawnPoints.Where(point => (point.types & EnemySpawnType.Jumper) != 0).Any(point => point.SpawnJumper());
+        private bool SpawnJumper(out GameObject go)
+        {
+            foreach (EnemySpawnPoint point in _spawnPoints)
+            {
+                if ((point.types & EnemySpawnType.Jumper) == 0) continue;
+                if (point.SpawnJumper(out go)) return true;
+            }
 
-        public bool SpawnHeavy() => _spawnPoints.Where(point => (point.types & EnemySpawnType.Heavy) != 0).Any(point => point.SpawnHeavy());
+            go = null;
+            return false;
+        }
 
-        public bool SpawnRanged() => _spawnPoints.Where(point => (point.types & EnemySpawnType.Ranged) != 0).Any(point => point.SpawnRanged());
+        private bool SpawnHeavy(out GameObject go)
+        {
+            foreach (EnemySpawnPoint point in _spawnPoints)
+            {
+                if ((point.types & EnemySpawnType.Heavy) == 0) continue;
+                if (point.SpawnHeavy(out go)) return true;
+            }
 
-        public bool SpawnChaser() => _spawnPoints.Where(point => (point.types & EnemySpawnType.Chaser) != 0).Any(point => point.SpawnChaser());
+            go = null;
+            return false;
+        }
+
+        private bool SpawnRanged(out GameObject go)
+        {
+            foreach (EnemySpawnPoint point in _spawnPoints)
+            {
+                if ((point.types & EnemySpawnType.Ranged) == 0) continue;
+                if (point.SpawnRanged(out go)) return true;
+            }
+
+            go = null;
+            return false;
+        }
+
+        private bool SpawnChaser(out GameObject go)
+        {
+            foreach (EnemySpawnPoint point in _spawnPoints)
+            {
+                if ((point.types & EnemySpawnType.Chaser) == 0) continue;
+                if (point.SpawnChaser(out go)) return true;
+            }
+
+            go = null;
+            return false;
+        }
     }
 }
