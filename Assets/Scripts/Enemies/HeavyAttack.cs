@@ -76,12 +76,12 @@ namespace Enemies
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * transform.localScale.x,
+            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * Mathf.Sign(transform.localScale.x),
                 new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z));
         }
 
         /// <summary>
-        /// attacks player after set amount of delay depending on animation, sets attack cooldown timer
+        /// attacks player after set amount of delay depending on animation and if player is still in range, sets attack cooldown timer
         /// </summary>
         private void PerformAttack()
         {
