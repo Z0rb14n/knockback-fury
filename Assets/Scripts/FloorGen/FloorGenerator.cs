@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enemies;
 using FileSave;
 using Player;
 using UnityEngine;
@@ -32,6 +33,10 @@ namespace FloorGen
         public float chaserPackCost = 1f;
         [Min(0), Tooltip("Jumper Pack Cost")]
         public float jumperPackCost = 2f;
+        [Min(0), Tooltip("Elite enemy health modifier")]
+        public float eliteHealthModifier = 2f;
+        [Min(0), Tooltip("Elite damage modifier")]
+        public float eliteDamageModifier = 2f;
         [Tooltip("Player Upgrade prefab")]
         public GameObject playerUpgradePrefab;
         [Tooltip("Cheese prefab")]
@@ -239,28 +244,28 @@ namespace FloorGen
         private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomEnemyManager manager)
         {
             EnemySpawnType[] enumValues = Enum.GetValues(typeof(EnemySpawnType)).Cast<EnemySpawnType>().ToArray();
-            // generate enemies
-            // TODO: generate 'elite enemy variant'
             while (packSize > 0)
             {
                 List<EnemySpawnType> eligibleSpawnTypes = enumValues.Where(type => GetCost(type) <= packSize).ToList();
-                if (eligibleSpawnTypes.Count == 0) return;
+                if (eligibleSpawnTypes.Count == 0) break;
                 while (eligibleSpawnTypes.Count > 0)
                 {
                     int indexType = eligibleSpawnTypes.GetRandom(random, out EnemySpawnType type);
                     List<SocketBehaviour> supportedBehaviours =
                         sockets.Where(pair => (pair.Item2 & type) != 0)
                             .Select(pair => pair.Item1).ToList();
-                    if (supportedBehaviours.Count == 0) eligibleSpawnTypes.SwapRemove(indexType);
+                    if (supportedBehaviours.Count == 0)
+                    {
+                        eligibleSpawnTypes.SwapRemove(indexType);
+                        continue;
+                    }
                     SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
                     if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
                     {
                         packSize -= GetCost(type);
                         EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
-                        if (health)
-                        {
-                            manager.AddEnemy(health);
-                        }
+                        Debug.Assert(health, "Added enemy should have EntityHealth attached");
+                        manager.AddEnemy(health);
                     }
                     else
                     {
@@ -270,6 +275,15 @@ namespace FloorGen
                     break;
                 }
             }
+
+            // elite dude
+            List<EntityHealth> enemies = manager.Enemies;
+            if (enemies.Count == 0) return;
+            EntityHealth randomEnemy = enemies.GetRandom(random);
+            randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
+            MeleeEnemyAttack attack = randomEnemy.GetComponent<MeleeEnemyAttack>();
+            Debug.Assert(attack, "Random enemy should have damage dealing capabilities");
+            attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
         }
         
         private void PopulateSocketsNormal(Random random, Vector2Int gridIndex, GameObject cellObject, bool isEndRoom,
@@ -291,7 +305,7 @@ namespace FloorGen
             }
             else
             {
-                // TODO BOSS GENERATION
+                PopulateSocketsBossRoom(random, gridIndex, cellObject, sockets);
             }
         }
 
@@ -309,6 +323,12 @@ namespace FloorGen
             // TODO FIX HACK: artificially increased y by 1
             Instantiate(weaponUpgradePrefab, gridIndex * gridSize + Vector2.up,
                 Quaternion.identity, cellObject.transform);
+        }
+
+        private void PopulateSocketsBossRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
+            List<(SocketBehaviour, EnemySpawnType)> sockets)
+        {
+            // TODO BOSS GENERATION
         }
 
         private List<(SocketBehaviour, EnemySpawnType)> GenerateSockets(Random random, Vector2Int gridIndex, GameObject cellObject)

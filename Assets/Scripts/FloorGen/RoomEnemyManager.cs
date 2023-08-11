@@ -15,6 +15,8 @@ namespace FloorGen
 
         private readonly HashSet<EntityHealth> _enemies = new();
 
+        public List<EntityHealth> Enemies => new(_enemies);
+
         public void AddEnemy(EntityHealth health)
         {
             _enemies.Add(health);
