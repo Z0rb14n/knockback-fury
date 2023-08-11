@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -128,6 +128,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 580788121172045447, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
@@ -195,6 +196,9 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
 --- !u!114 &87238628 stripped
 MonoBehaviour:
@@ -212,6 +216,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6101707826163836279, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
@@ -307,6 +312,9 @@ PrefabInstance:
       value: WeaponInfoCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
 --- !u!1 &227042017
 GameObject:
@@ -331,13 +339,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227042017}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295195406
 GameObject:
@@ -399,14 +407,19 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295195406}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &419107792 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 580788121172045447, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+  m_PrefabInstance: {fileID: 87238627}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &914233866
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,13 +499,17 @@ MonoBehaviour:
     roomPrefab:
     - {fileID: 4983919535184341483, guid: 93d3137eeac73084f9d84418e6bd35a9, type: 3}
   seed: 0
-  pathLength: 4
-  pathHeight: 1
-  biasFactor: 10
+  maxRows: 3
+  minRooms: 12
+  maxRooms: 15
+  centerRowMin: 8
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 914233868}
   gridSize: {x: 38, y: 38}
+  playerStart: {x: 0, y: 0}
+  playerTransform: {fileID: 419107792}
+  playerHeight: 1.1
 --- !u!4 &914233868
 Transform:
   m_ObjectHideFlags: 0
@@ -500,19 +517,20 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914233866}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1695561188
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 244903560612436376, guid: b800a519f6d9a1847aa407fe6166050e, type: 3}
@@ -572,4 +590,17 @@ PrefabInstance:
       value: PlayerHealthCanvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b800a519f6d9a1847aa407fe6166050e, type: 3}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 87238627}
+  - {fileID: 189590576}
+  - {fileID: 227042018}
+  - {fileID: 295195409}
+  - {fileID: 914233868}
+  - {fileID: 1695561188}

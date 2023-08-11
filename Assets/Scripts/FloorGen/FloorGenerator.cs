@@ -28,6 +28,12 @@ namespace FloorGen
         public Transform worldParent;
         
         public Vector2 gridSize = Vector2.one;
+        
+        public Vector2Int playerStart = Vector2Int.zero;
+        public Transform playerTransform;
+        public float playerHeight = 1f; // Adjust this value based on your player's model
+        private float floorHeight = 0f; // Adjust this value if your floor is at a different height
+
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
@@ -78,8 +84,15 @@ namespace FloorGen
 
         private void Generate()
         {
+            
             Grid grid = new();
             Random random = GenerateRNG();
+    
+            // Ensure the player's start position is part of the floor
+            grid[playerStart] = RoomType.BottomOpen | RoomType.LeftOpen | RoomType.RightOpen | RoomType.TopOpen; // Adjust the RoomType as needed
+            
+            // Set the player's position based on the starting position
+            playerTransform.position = new Vector3(playerStart.x * gridSize.x, floorHeight + playerHeight, playerStart.y * gridSize.y);
             
             int roomCount = random.Next(minRooms,maxRooms+1);
 
