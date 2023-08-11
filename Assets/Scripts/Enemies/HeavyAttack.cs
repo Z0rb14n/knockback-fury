@@ -22,7 +22,7 @@ namespace Enemies
         private Transform _player;
         private float _attackTimer;
         private bool _isAttacking;
-
+        private Animator _animator;
 
         private void Awake()
         {
@@ -30,6 +30,7 @@ namespace Enemies
             _attackTimer = 0;
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
+            _animator = GetComponent<Animator>();
         }
 
         /// <summary>
@@ -87,6 +88,7 @@ namespace Enemies
         {
             _attackTimer = attackDelay;
             _isAttacking = true;
+            _animator.SetBool("_isAttacking", true);
             StartCoroutine(DelayBeforeAttack());
         }
 
@@ -97,11 +99,12 @@ namespace Enemies
             if (PlayerInRange())
             {
                 _playerHealth.TakeDamage(attackDamage);
-                Vector2 knockbackDirection = new((_player.position - transform.position).normalized.x * 0.1f, 0.04f);
+                Vector2 knockbackDirection = new((_player.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
 
             _isAttacking = false;
+            _animator.SetBool("_isAttacking", false);
         }
 
     }
