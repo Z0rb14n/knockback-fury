@@ -241,7 +241,7 @@ namespace FloorGen
             return pickup;
         }
         
-        private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomEnemyManager manager)
+        private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomEnemyManager manager, bool isEndRoom)
         {
             EnemySpawnType[] enumValues = Enum.GetValues(typeof(EnemySpawnType)).Cast<EnemySpawnType>().ToArray();
             while (packSize > 0)
@@ -276,6 +276,7 @@ namespace FloorGen
                 }
             }
 
+            if (!isEndRoom) return;
             // elite dude
             List<EntityHealth> enemies = manager.Enemies;
             if (enemies.Count == 0) return;
@@ -301,7 +302,7 @@ namespace FloorGen
                 manager.cheesePickup = GenerateCheesePickup(gridPos + Vector3.left + Vector3.up, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
                     manager.weaponPickup = GenerateWeaponPickup(random, gridPos + Vector3.up, cellObject, false);
-                GenerateEnemies(random, sockets, packSize, manager);
+                GenerateEnemies(random, sockets, packSize, manager, isEndRoom);
             }
             else
             {
