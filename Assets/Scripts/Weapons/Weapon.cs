@@ -1,3 +1,4 @@
+using System.Linq;
 using Player;
 using UnityEngine;
 using Upgrades;
@@ -14,7 +15,7 @@ namespace Weapons
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private WeaponData[] weaponInventory;
+        public WeaponData[] weaponInventory;
         [SerializeField] private int weaponIndex = 0;
         [SerializeField] private LayerMask raycastMask;
         
@@ -40,6 +41,8 @@ namespace Weapons
                 return -1;
             }
         }
+
+        public int NumWeapons => weaponInventory.Count(t => t);
 
         private Vector2 RandomizedLookDirection
         {

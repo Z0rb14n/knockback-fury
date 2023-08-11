@@ -3,7 +3,12 @@ guid: 3ec519cfb3b0f8e4b81c1c2fd8aabf74
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
+  - cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
+  - weaponPickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
+  - weaponUpgradePrefab: {fileID: 3868675004188845447, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
+  - worldParent: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

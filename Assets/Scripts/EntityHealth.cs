@@ -8,6 +8,13 @@ public class EntityHealth : MonoBehaviour
     public int health;
     public float iFrameLength;
 
+    public bool canDropCheese = true;
+    public GameObject cheeseItemPickup;
+
+    public delegate void DeathDelegate(EntityHealth source);
+
+    public event DeathDelegate OnDeath;
+    
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
     protected bool isDead;
@@ -60,7 +67,12 @@ public class EntityHealth : MonoBehaviour
             Debug.Log("Death");
             PlayerMovementScript.Instance.OnEnemyKill();
             Destroy(gameObject);
+            OnDeath?.Invoke(this);
             isDead = true;
+            if (canDropCheese && cheeseItemPickup && Random.Range(0, 1f) < 0.05f)
+            {
+                Instantiate(cheeseItemPickup, transform.position, transform.rotation, transform.parent);
+            }
         }
     }
 }

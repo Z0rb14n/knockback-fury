@@ -7,8 +7,6 @@ namespace Editor
     [CustomEditor(typeof(JumperMovement))]
     public class JumperMovementEditor : UnityEditor.Editor
     {
-        // Custom in-scene UI for when ExampleScript
-        // component is selected.
         public void OnSceneGUI()
         {
             JumperMovement movement = (JumperMovement) target;

@@ -67,6 +67,8 @@ MonoBehaviour:
   maxHealth: 4000
   health: 4000
   iFrameLength: 0
+  canDropCheese: 0
+  cheeseItemPickup: {fileID: 0}
 --- !u!114 &302865858423597064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,3 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  deathZones: []
+  delayBetweenZones: 15
+  numberOfZones: 2
+  warningDuration: 3
+  deathDuration: 1
+  zoneDamage: 5
+  minionPrefab: {fileID: 0}
+  delayBetweenSummons: 5
+  numberOfSummons: 3
+  summonLocations: []
