@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDistance: 1
   attackWidth: 1.8
-  attackDelay: 3
+  attackDelay: 2
   attackDamage: 5
   knockbackForce: 150
   _collider: {fileID: 6502981059598909017}
@@ -179,6 +179,8 @@ MonoBehaviour:
   maxHealth: 1200
   health: 1200
   iFrameLength: 0
+  canDropCheese: 1
+  cheeseItemPickup: {fileID: 0}
 --- !u!114 &781840091141345320
 MonoBehaviour:
   m_ObjectHideFlags: 0

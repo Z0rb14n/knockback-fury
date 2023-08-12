@@ -282,7 +282,7 @@ namespace FloorGen
             if (enemies.Count == 0) return;
             EntityHealth randomEnemy = enemies.GetRandom(random);
             randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
-            MeleeEnemyAttack attack = randomEnemy.GetComponent<MeleeEnemyAttack>();
+            ContactDamage attack = randomEnemy.GetComponent<ContactDamage>();
             Debug.Assert(attack, "Random enemy should have damage dealing capabilities");
             attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
         }
