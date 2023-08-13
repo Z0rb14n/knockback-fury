@@ -88,7 +88,7 @@ namespace Enemies
 
         // Jumping: if on ground, simply add force
         //          if touching wall, wall jump
-        // TODO: jump directions/targeting, sprite flipping
+        // TODO: jump directions/targeting
         private void jump()
         {
             if (Grounded)
