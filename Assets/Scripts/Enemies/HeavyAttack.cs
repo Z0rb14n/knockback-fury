@@ -14,6 +14,7 @@ namespace Enemies
 
         [SerializeField] private CapsuleCollider2D _collider;
         [SerializeField] private LayerMask _playerLayer;
+        [SerializeField] private float _delayBeforeAttack;
         private Vector2 _attackBoxCenter;
         private Vector2 _attackBoxSize;
         private PatrolMovement _movement;
@@ -23,6 +24,10 @@ namespace Enemies
         private float _attackTimer;
         private bool _isAttacking;
         private Animator _animator;
+        private float _attackAnimationTime;
+        
+        private static readonly int _animationAtkHash = Animator.StringToHash("Attacking");
+
 
         private void Awake()
         {
@@ -31,7 +36,8 @@ namespace Enemies
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
             _animator = GetComponent<Animator>();
-        }
+            GetAttackAnimationTime();
+        }        
 
         /// <summary>
         /// Enemy should always stand still when player is in range, only attacks when _attackTimer is below 0
@@ -51,6 +57,8 @@ namespace Enemies
             }
 
         }
+
+        
 
         /// <summary>
         ///  Determines whether player is within attack range; range identical to box in OnDrawGizmos()
@@ -82,19 +90,27 @@ namespace Enemies
         }
 
         /// <summary>
-        /// attacks player after set amount of delay depending on animation and if player is still in range, sets attack cooldown timer
+        /// Attacks player after set amount of delay and if player is still in range, sets attack cooldown timer
         /// </summary>
         private void PerformAttack()
         {
             _attackTimer = attackDelay;
             _isAttacking = true;
-            _animator.SetBool("_isAttacking", true);
+            _animator.SetBool(_animationAtkHash, true);
             StartCoroutine(DelayBeforeAttack());
         }
 
+        /// <summary>
+        /// Helper for PerformAttack(); attacks player after set delay, damages player if in range, then waits for animation to finish
+        /// </summary>
         private IEnumerator DelayBeforeAttack()
         {
-            yield return new WaitForSeconds(1); // adjust attack animation time here
+            if (_delayBeforeAttack < 0 || _delayBeforeAttack > _attackAnimationTime)
+            {
+                Debug.LogError("HeavyAttack: Delay before attack must be 0 <= delay <= animation length");
+            }
+
+            yield return new WaitForSeconds(_delayBeforeAttack);
 
             if (PlayerInRange())
             {
@@ -103,9 +119,25 @@ namespace Enemies
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
 
+            yield return new WaitForSeconds(_attackAnimationTime - _delayBeforeAttack);
+
             _isAttacking = false;
-            _animator.SetBool("_isAttacking", false);
+            _animator.SetBool(_animationAtkHash, false);
         }
 
+        /// <summary>
+        /// Gets length of attack animation
+        /// </summary>
+        private void GetAttackAnimationTime()
+        {
+            AnimationClip[] clips = _animator.runtimeAnimatorController.animationClips;
+            foreach(AnimationClip clip in clips)
+            {
+                if (clip.name == "Attack")
+                {
+                    _attackAnimationTime = clip.length;
+                }
+            }
+        }
     }
 }
