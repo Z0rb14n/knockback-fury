@@ -14,7 +14,8 @@ namespace FileSave
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.GetComponent<PlayerMovementScript>()) return;
-            CrossRunInfo.Instance.data.cheese += amount;
+            if (CrossRunInfo.Instance)
+                CrossRunInfo.Instance.data.cheese += amount;
             Destroy(gameObject);
         }
     }
