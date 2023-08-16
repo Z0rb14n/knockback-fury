@@ -31,6 +31,7 @@ namespace FloorGen
         
         public Vector2Int playerStart = Vector2Int.zero;
         public Transform playerTransform;
+        [Tooltip("Player Spawn Height - Adjust this value based on your player's model")]
         public float playerHeight = 1f; // Adjust this value based on your player's model
         private float floorHeight = 0f; // Adjust this value if your floor is at a different height
 
