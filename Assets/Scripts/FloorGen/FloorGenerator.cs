@@ -85,13 +85,22 @@ namespace FloorGen
 
         private void Generate()
         {
-            
             Grid grid = new();
             Random random = GenerateRNG();
-    
-            // Ensure the player's start position is part of the floor
-            grid[playerStart] = RoomType.BottomOpen | RoomType.LeftOpen | RoomType.RightOpen | RoomType.TopOpen; // Adjust the RoomType as needed
-            
+
+            // Start the level generation from the player's position
+            Vector2Int currPos = playerStart;
+            grid[currPos] = RoomType.BottomOpen | RoomType.LeftOpen | RoomType.RightOpen | RoomType.TopOpen;
+
+            // Generate rooms around the player's starting position
+            for (int i = 0; i < 4; i++)
+            {
+                RoomType dir = (RoomType)(1 << i); // Get each direction (BottomOpen, LeftOpen, RightOpen, TopOpen)
+                ExpandSide(grid, currPos, dir);
+            }
+
+            // Continue with the rest of the level generation...
+
             // Set the player's position based on the starting position
             playerTransform.position = new Vector3(playerStart.x * gridSize.x, floorHeight + playerHeight, playerStart.y * gridSize.y);
             
