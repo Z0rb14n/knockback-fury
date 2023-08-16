@@ -65,7 +65,8 @@ namespace Enemies
         {
             _isTouchingSurface = Grounded || IsOnLeftWall || IsOnRightWall;
             StickOnWall();
-            DoCommonUpdates();
+            if (patrolPoints.Length > 0)
+                DoCommonUpdates();
             // jump if jumping cooldown is over and entity is in contact with a surface
             if (_canJump && _isTouchingSurface)
             {
@@ -87,7 +88,7 @@ namespace Enemies
 
         // Jumping: if on ground, simply add force
         //          if touching wall, wall jump
-        // TODO: jump directions/targeting, sprite flipping
+        // TODO: jump directions/targeting
         private void jump()
         {
             if (Grounded)
