@@ -17,7 +17,7 @@ MonoBehaviour:
   range: 50
   projectileSpeed: 20
   projectileDamage: 25
-  roundsPerSecond: 2
+  roundsPerSecond: 1.5
   clipSize: 24
   reloadTime: 1.5
   spread: 5
@@ -28,7 +28,7 @@ MonoBehaviour:
   fireMode: 2
   burstInfo:
     burstAmount: 3
-    withinBurstFirerate: 16
+    withinBurstFirerate: 6.77
   meleeInfo:
     baseDamage: 0
     velMultiplier: 0
@@ -37,3 +37,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
   customProjectile: {fileID: 0}
   fireEffect: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
+  numUpgrades: 0
