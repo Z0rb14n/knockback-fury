@@ -68,6 +68,13 @@ namespace FloorGen
         public Transform worldParent;
         
         public Vector2 gridSize = Vector2.one;
+        
+        public Vector2Int playerStart = Vector2Int.zero;
+        public Transform playerTransform;
+        [Tooltip("Player Spawn Height - Adjust this value based on your player's model")]
+        public float playerHeight = 1f; // Adjust this value based on your player's model
+        private float floorHeight = 0f; // Adjust this value if your floor is at a different height
+
 
         public int ToPreview { get; set; } = -1;
 
@@ -125,6 +132,22 @@ namespace FloorGen
         {
             Grid grid = new();
             Random random = GenerateRNG();
+
+            // Start the level generation from the player's position
+            Vector2Int currPos = playerStart;
+            grid[currPos] = RoomType.BottomOpen | RoomType.LeftOpen | RoomType.RightOpen | RoomType.TopOpen;
+
+            // Generate rooms around the player's starting position
+            for (int i = 0; i < 4; i++)
+            {
+                RoomType dir = (RoomType)(1 << i); // Get each direction (BottomOpen, LeftOpen, RightOpen, TopOpen)
+                ExpandSide(grid, currPos, dir);
+            }
+
+            // Continue with the rest of the level generation...
+
+            // Set the player's position based on the starting position
+            playerTransform.position = new Vector3(playerStart.x * gridSize.x, floorHeight + playerHeight, playerStart.y * gridSize.y);
             
             int roomCount = random.Next(minRooms,maxRooms+1);
 
