@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7310949198750745542}
   - component: {fileID: 3041133532461335286}
   - component: {fileID: 45822130718748350}
+  - component: {fileID: 5388541494157965474}
   m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
@@ -119,6 +120,7 @@ MonoBehaviour:
   maxHealth: 10
   health: 10
   iFrameLength: 0
+  canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!212 &45822130718748350
 SpriteRenderer:
@@ -161,14 +163,35 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 12a99a86ce90eaa488ebc412b9ece532, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f06cb63c091e52645b8837c2241776d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.2, y: 19.2}
+  m_Size: {x: 4.2, y: 2.7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5388541494157965474
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ab85a558e85620a45b92be6b9c29ee19, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
