@@ -42,8 +42,6 @@ namespace FloorGen
         [Tooltip("Cheese prefab")]
         public GameObject cheesePrefab;
         
-        [Header("Socket Generation")]
-        public Layout[] layouts;
         public SocketObject[] socketObjects;
         [Header("Weapon Generation")]
         public WeaponData[] weaponsList;
@@ -74,9 +72,6 @@ namespace FloorGen
         [Tooltip("Player Spawn Height - Adjust this value based on your player's model")]
         public float playerHeight = 1f; // Adjust this value based on your player's model
         private float floorHeight = 0f; // Adjust this value if your floor is at a different height
-
-
-        public int ToPreview { get; set; } = -1;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
@@ -264,13 +259,14 @@ namespace FloorGen
             return pickup;
         }
         
-        private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomEnemyManager manager, bool isEndRoom)
+        private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomData roomData, bool isEndRoom)
         {
             EnemySpawnType[] enumValues = Enum.GetValues(typeof(EnemySpawnType)).Cast<EnemySpawnType>().ToArray();
             while (packSize > 0)
             {
                 List<EnemySpawnType> eligibleSpawnTypes = enumValues.Where(type => GetCost(type) <= packSize).ToList();
                 if (eligibleSpawnTypes.Count == 0) break;
+                bool generatedEnemy = false;
                 while (eligibleSpawnTypes.Count > 0)
                 {
                     int indexType = eligibleSpawnTypes.GetRandom(random, out EnemySpawnType type);
@@ -286,9 +282,10 @@ namespace FloorGen
                     if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
                     {
                         packSize -= GetCost(type);
+                        generatedEnemy = true;
                         EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
                         Debug.Assert(health, "Added enemy should have EntityHealth attached");
-                        manager.AddEnemy(health);
+                        roomData.AddEnemy(health);
                     }
                     else
                     {
@@ -297,11 +294,17 @@ namespace FloorGen
 
                     break;
                 }
+
+                if (!generatedEnemy)
+                {
+                    Debug.LogWarning("Couldn't generate an enemy in an iteration: exiting...");
+                    break;
+                }
             }
 
             if (!isEndRoom) return;
             // elite dude
-            List<EntityHealth> enemies = manager.Enemies;
+            List<EntityHealth> enemies = roomData.Enemies;
             if (enemies.Count == 0) return;
             EntityHealth randomEnemy = enemies.GetRandom(random);
             randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
@@ -314,18 +317,18 @@ namespace FloorGen
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             Vector3 gridPos = gridIndex * gridSize;
-            RoomEnemyManager manager = cellObject.AddComponent<RoomEnemyManager>();
+            RoomData roomData = cellObject.GetComponent<RoomData>();
             FloorEnemyPack pack = floorEnemyPacks[floorNumber];
             bool generateBoss = isEndRoom && pack.endingHasBoss;
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
             if (!generateBoss)
             {
                 // TODO FIX HACKS: artificially increased x/y by 1
-                manager.pickup = GeneratePlayerUpgradePickup(random, gridPos + Vector3.up, cellObject);
-                manager.cheesePickup = GenerateCheesePickup(gridPos + Vector3.left + Vector3.up, cellObject, isEndRoom ? 10 : 5);
+                roomData.pickup = GeneratePlayerUpgradePickup(random, gridPos + Vector3.up, cellObject);
+                roomData.cheesePickup = GenerateCheesePickup(gridPos + Vector3.left + Vector3.up, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
-                    manager.weaponPickup = GenerateWeaponPickup(random, gridPos + Vector3.up, cellObject, false);
-                GenerateEnemies(random, sockets, packSize, manager, isEndRoom);
+                    roomData.weaponPickup = GenerateWeaponPickup(random, gridPos + Vector3.up, cellObject, false);
+                GenerateEnemies(random, sockets, packSize, roomData, isEndRoom);
             }
             else
             {
@@ -354,30 +357,6 @@ namespace FloorGen
         {
             // TODO BOSS GENERATION
         }
-
-        private List<(SocketBehaviour, EnemySpawnType)> GenerateSockets(Random random, Vector2Int gridIndex, GameObject cellObject)
-        {
-            Vector3 gridPos = gridIndex * gridSize;
-            List<(SocketBehaviour, EnemySpawnType)> socketBehaviours = new();
-            Layout layout = layouts.GetRandom(random);
-            foreach (SocketShape shape in layout.sockets)
-            {
-                Vector3 pos = (Vector3)shape.position + gridPos;
-                if (_socketPrefabSizes.TryGetValue(shape.size, out List<GameObject> possibleSocketPrefabs) && possibleSocketPrefabs.Count > 0)
-                {
-                    GameObject createdSocket = Instantiate(possibleSocketPrefabs.GetRandom(random), pos, Quaternion.identity, cellObject.transform);
-                    SocketBehaviour behaviour = createdSocket.GetComponent<SocketBehaviour>();
-                    EnemySpawnType type = behaviour.AllowedSpawnTypes;
-                    if (behaviour && type != 0) socketBehaviours.Add((behaviour, behaviour.AllowedSpawnTypes));
-                }
-                else
-                {
-                    Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] No game object entry for socket of size {shape.size}; skipping");
-                }
-            }
-
-            return socketBehaviours;
-        }
         
         private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
@@ -392,7 +371,8 @@ namespace FloorGen
                 GameObject[] objects = _pairsDict[type];
                 GameObject randomCellPrefab = objects.GetRandom(random);
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
-                List<(SocketBehaviour, EnemySpawnType)> sockets = GenerateSockets(random, gridIndex, cellObject);
+                RoomData roomData = cellObject.GetComponent<RoomData>();
+                List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)
                 {
                     PopulateSocketsWeaponRoom(random, gridIndex, cellObject, sockets);

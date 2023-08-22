@@ -7234,3 +7234,34 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
+--- !u!1 &4983919535184341483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 638505489587741747, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
+  m_PrefabInstance: {fileID: 5617709700101000664}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8309229495679150591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4983919535184341483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1870d823b22a4bdebb6004e87353a3e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickup: {fileID: 0}
+  cheesePickup: {fileID: 0}
+  weaponPickup: {fileID: 0}
+  layouts:
+  - sockets:
+    - size: {x: 6, y: 6}
+      position: {x: 0, y: 0}
+    - size: {x: 12, y: 3}
+      position: {x: 0, y: 4.5}
+  - sockets:
+    - size: {x: 6, y: 6}
+      position: {x: 0, y: 0}
+    - size: {x: 12, y: 3}
+      position: {x: 0, y: -4.5}
