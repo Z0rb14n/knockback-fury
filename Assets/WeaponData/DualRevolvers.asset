@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Dual Revolvers
   numProjectiles: 1
-  range: 150
+  range: 15
   projectileSpeed: 30
   projectileDamage: 40
   roundsPerSecond: 4
   clipSize: 12
-  reloadTime: 4
+  reloadTime: 2
   spread: 10
   isHitscan: 0
   rightClickAction: 0
@@ -37,3 +37,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
   customProjectile: {fileID: 0}
   fireEffect: {fileID: 8300000, guid: 83e7b65f9e184e542b7c9fda045dc653, type: 3}
+  numUpgrades: 0

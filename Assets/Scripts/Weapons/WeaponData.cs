@@ -38,6 +38,7 @@ namespace Weapons
         public GameObject customProjectile;
 
         public AudioClip fireEffect;
+        public int numUpgrades;
 
         public int Clip { get; private set; }
 
@@ -57,6 +58,31 @@ namespace Weapons
         /// Return the Damage Per Second (assuming all shots hit)
         /// </summary>
         public float DPS => numProjectiles * projectileDamage * roundsPerSecond;
+
+        public void UpgradeAmmoCapacity()
+        {
+            if (clipSize <= 3) clipSize++;
+            else clipSize = Mathf.RoundToInt(clipSize * 1.5f);
+            numUpgrades++;
+        }
+
+        public void UpgradeRecoil()
+        {
+            // TODO IMPL
+            numUpgrades++;
+        }
+
+        public void UpgradeKnockback()
+        {
+            knockbackStrength *= 1.5f;
+            numUpgrades++;
+        }
+
+        public void UpgradeRange()
+        {
+            range *= 1.5f;
+            numUpgrades++;
+        }
     }
 
     [Serializable]

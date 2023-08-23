@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using FileSave;
+using TMPro;
 using UnityEngine;
 
 namespace Weapons
@@ -13,6 +14,7 @@ namespace Weapons
             textObject.text = $"{weapon.WeaponData.weaponName}: {weapon.WeaponData.Clip}/{weapon.WeaponData.clipSize}" + (weapon.ReloadTime <= 0
                 ? ""
                 : $" Reload Time: {weapon.ReloadTime:F2}") + (weapon.IsOneYearOfReloadPossible ? " OneYearOfReload Possible" : "");
+            textObject.text += " Cheese: " + CrossRunInfo.Instance?.data?.cheese;
         }
     }
 }

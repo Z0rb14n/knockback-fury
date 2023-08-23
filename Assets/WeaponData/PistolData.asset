@@ -17,9 +17,9 @@ MonoBehaviour:
   range: 15
   projectileSpeed: 10
   projectileDamage: 10
-  roundsPerSecond: 2
-  clipSize: 15
-  reloadTime: 1.5
+  roundsPerSecond: 3
+  clipSize: 13
+  reloadTime: 1
   spread: 10
   isHitscan: 0
   rightClickAction: 0
@@ -37,3 +37,4 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
   customProjectile: {fileID: 0}
   fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
+  numUpgrades: 0

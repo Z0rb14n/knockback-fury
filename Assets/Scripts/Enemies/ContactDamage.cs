@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class MeleeEnemyAttack : MonoBehaviour
+    public class ContactDamage : MonoBehaviour
     {
         public int damage;
         public int knockbackForce;
