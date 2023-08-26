@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7038401393555889073}
   - component: {fileID: 1808535661520834910}
   - component: {fileID: 3337943952582462206}
-  - component: {fileID: -2179298767918370704}
+  - component: {fileID: 90657832701162447}
   - component: {fileID: -2639290612803136614}
   m_Layer: 8
   m_Name: Ranged Bullet
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2179298767918370704
+--- !u!114 &90657832701162447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7397105965758314663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61258300a41c78e4abfc86540c66b698, type: 3}
+  m_Script: {fileID: 11500000, guid: 094f2b2cab0be294fb9c475a3e6918db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   force: 5
