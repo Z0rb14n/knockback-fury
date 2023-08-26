@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Assault Rifle
   numProjectiles: 1
-  range: 300
-  projectileSpeed: 15
-  projectileDamage: 20
+  range: 30
+  projectileSpeed: 20
+  projectileDamage: 10
   roundsPerSecond: 5
-  clipSize: 30
+  clipSize: 24
   reloadTime: 1.5
   spread: 15
   isHitscan: 0
   rightClickAction: 2
-  knockbackStrength: 12
+  knockbackStrength: 8
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -36,3 +36,5 @@ MonoBehaviour:
   altFireMode: 2
   sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
   customProjectile: {fileID: 0}
+  fireEffect: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
+  numUpgrades: 0

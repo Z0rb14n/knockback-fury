@@ -22,3 +22,13 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - Bows: https://opengameart.org/content/dark-fantasy-item-sprites
  - Bomb: https://opengameart.org/content/animated-bomb-16x16
  - Revolvers: https://opengameart.org/content/revolvers
+ - Pistol: https://opengameart.org/content/pixel-pistol
+ - Tilemap: https://adamatomic.itch.io/cavernas
+ - Rat: https://opengameart.org/content/rat
+ - Cheese: https://opengameart.org/content/cartoon-food
+
+### Sounds
+ - https://opengameart.org/content/hollywood-style-pistol-silencer-sound-effect
+ - https://opengameart.org/content/light-machine-gun
+ - https://opengameart.org/content/shotgun-shoot-reload
+ - https://opengameart.org/content/gun-sound-effects

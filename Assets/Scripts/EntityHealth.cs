@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 
 public class EntityHealth : MonoBehaviour
@@ -7,8 +8,16 @@ public class EntityHealth : MonoBehaviour
     public int health;
     public float iFrameLength;
 
+    public bool canDropCheese = true;
+    public GameObject cheeseItemPickup;
+
+    public delegate void DeathDelegate(EntityHealth source);
+
+    public event DeathDelegate OnDeath;
+    
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
+    protected bool isDead;
 
 
     protected virtual void Awake()
@@ -30,15 +39,10 @@ public class EntityHealth : MonoBehaviour
     /// </summary>
     public virtual void TakeDamage(int dmg)
     {
-        if (_iFrameTimer <= 0)
-        {
-            DoTakeDamage(dmg);
+        if (!(_iFrameTimer <= 0)) return;
+        DoTakeDamage(dmg);
             
-            if (health <= 0)
-            {
-                Die();
-            }
-        }
+        if (health <= 0) Die();
         StartCoroutine(DamageFlash());
     }
 
@@ -53,11 +57,22 @@ public class EntityHealth : MonoBehaviour
     {
         health -= dmg;
         _iFrameTimer = iFrameLength;
+        PlayerHealth.Instance.OnDamageDealtToOther(dmg);
     }
 
     protected virtual void Die()
     {
-        Debug.Log("Death");
-        // TODO: general entity death
+        if (!isDead)
+        {
+            Debug.Log("Death");
+            PlayerMovementScript.Instance.OnEnemyKill();
+            Destroy(gameObject);
+            OnDeath?.Invoke(this);
+            isDead = true;
+            if (canDropCheese && cheeseItemPickup && Random.Range(0, 1f) < 0.05f)
+            {
+                Instantiate(cheeseItemPickup, transform.position, transform.rotation, transform.parent);
+            }
+        }
     }
 }

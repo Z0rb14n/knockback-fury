@@ -1,10 +1,12 @@
-using System;
+using System.Linq;
 using Player;
 using UnityEngine;
+using Upgrades;
 using Random = UnityEngine.Random;
 
 namespace Weapons
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Weapon : MonoBehaviour
     {
         // CONSTANT
@@ -13,8 +15,48 @@ namespace Weapons
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
-        [SerializeField] private WeaponData[] weaponInventory;
+        public WeaponData[] weaponInventory;
         [SerializeField] private int weaponIndex = 0;
+        [SerializeField] private LayerMask raycastMask;
+        
+        public bool IsOneYearOfReloadPossible {
+            get
+            {
+                float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
+                float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
+                return ReloadTime > 0 && PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                       ReloadTime < max;
+            }
+        }
+
+        public int FirstAvailableInventorySpace
+        {
+            get
+            {
+                for (int i = 0; i < weaponInventory.Length; i++)
+                {
+                    if (weaponInventory[i] == null) return i;
+                }
+
+                return -1;
+            }
+        }
+
+        public int NumWeapons => weaponInventory.Count(t => t);
+
+        private Vector2 RandomizedLookDirection
+        {
+            get
+            {
+                Vector2 normalizedLookDirection = LookDirection.normalized;
+                float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
+                angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
+                return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+        }
+
+        private const int BogglingEyesMaxDistance = 30;
+        private const int BogglingEyesMinDistance = 10;
 
         public WeaponData WeaponData => weaponInventory[weaponIndex];
         private Camera _mainCam;
@@ -26,6 +68,7 @@ namespace Weapons
         private float _weaponDelayTimer;
         private float _weaponBurstTimer;
         private int _weaponBurstCount;
+        private AudioSource _source;
 
         public float ReloadTime { get; private set; }
 
@@ -36,6 +79,7 @@ namespace Weapons
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
+            _source = GetComponent<AudioSource>();
             WeaponData.Reload();
             UpdateFromWeaponData();
             EnsureInventoryHasSpace();
@@ -59,7 +103,7 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) WeaponData.Reload();
+                if (ReloadTime <= 0) ImmediateReload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -76,37 +120,45 @@ namespace Weapons
 
         private void UpdateFromWeaponData()
         {
-            if (WeaponData != null)
-                sprite.sprite = WeaponData.sprite;
+            if (WeaponData == null) return;
+            sprite.sprite = WeaponData.sprite;
+            if (_source == null) _source = GetComponent<AudioSource>();
+            _source.clip = WeaponData.fireEffect;
         }
 
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            Vector2 normalizedLookDirection = LookDirection.normalized;
             float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.range;
             // literally hitscan
-            // TODO LAYERMASK FOR ENEMIES/PLAYERS
-            RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, range);
-            Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * range) : hit.point;
-            int damage = isMelee
-                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * WeaponData.meleeInfo.velMultiplier +
-                  WeaponData.meleeInfo.baseDamage)
-                : WeaponData.projectileDamage;
-            if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
-            if (!isMelee)
+            int count = isMelee ? 1 : WeaponData.numProjectiles;
+            Physics2D.queriesHitTriggers = false;
+            for (int i = 0; i < count; i++)
             {
-                GameObject go = ReferenceEquals(projectileParent, null)
-                    ? Instantiate(linePrefab)
-                    : Instantiate(linePrefab, projectileParent);
-                // expensive but required; Fire isn't called every frame(?)
-                WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
-                line.Initialize(origin, finalPos, 1);
+                Vector2 dir = RandomizedLookDirection;
+                RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, raycastMask);
+                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (dir * range) : hit.point;
+                int damage = isMelee
+                    ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
+                                       WeaponData.meleeInfo.baseDamage)
+                    : WeaponData.projectileDamage;
+                if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
+                if (!isMelee)
+                {
+                    GameObject go = ReferenceEquals(projectileParent, null)
+                        ? Instantiate(linePrefab)
+                        : Instantiate(linePrefab, projectileParent);
+                    // expensive but required; Fire isn't called every frame(?)
+                    WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
+                    line.Initialize(origin, finalPos, 1);
+                }
+                else
+                {
+                    Debug.DrawLine(origin,origin + (dir*range),Color.red,1,false);
+                }
             }
-            else
-            {
-                Debug.DrawLine(origin,origin + (normalizedLookDirection*range),Color.red,1,false);
-            }
+            
+            Physics2D.queriesHitTriggers = true;
 
         }
 
@@ -118,7 +170,10 @@ namespace Weapons
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            Vector2 normalizedLookDirection = LookDirection.normalized;
+            if (WeaponData.fireEffect != null)
+            {
+                _source.PlayOneShot(WeaponData.fireEffect);
+            }
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else
@@ -130,11 +185,8 @@ namespace Weapons
                     GameObject go = ReferenceEquals(projectileParent, null)
                         ? Instantiate(projectile, origin, Quaternion.identity)
                         : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
-                    float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                    angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
-                    Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(WeaponData, finalDir);
+                    proj.Initialize(WeaponData, RandomizedLookDirection);
                 }
             }
 
@@ -186,8 +238,22 @@ namespace Weapons
 
         public void Reload()
         {
+            if (IsOneYearOfReloadPossible) ImmediateReload();
             if (ReloadTime > 0) return;
+            if (WeaponData.Clip == WeaponData.clipSize) return;
             ReloadTime = WeaponData.reloadTime;
+            if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
+            {
+                ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
+            }
+        }
+
+        public void ImmediateReload()
+        {
+            WeaponData.Reload();
+            ReloadTime = 0;
+            _weaponDelayTimer = 0;
+            PlayerWeaponControl.Instance.OnFinishReload();
         }
 
         public void SwitchWeapon(bool up)
@@ -208,6 +274,35 @@ namespace Weapons
             weaponIndex = newIndex;
             _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
             UpdateFromWeaponData();
+        }
+
+        public bool Pickup(WeaponData data)
+        {
+            int firstAvailableSpace = FirstAvailableInventorySpace;
+            if (firstAvailableSpace == -1) return false;
+            weaponInventory[firstAvailableSpace] = data;
+            return true;
+        }
+
+        public WeaponData DropWeapon()
+        {
+            if (FirstAvailableInventorySpace == 1) return null; // only one weapon; don't drop
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            for (int i = weaponIndex; i < weaponInventory.Length; i++)
+            {
+                weaponInventory[i] = i == weaponInventory.Length - 1 ? null : weaponInventory[i + 1];
+            }
+            SwitchWeapon(false);
+            return toDrop;
+        }
+
+        public WeaponData SwapWeapon(WeaponData to)
+        {
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            weaponInventory[weaponIndex] = to;
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
+            UpdateFromWeaponData();
+            return toDrop;
         }
 
         private void OnValidate()
@@ -269,13 +364,32 @@ namespace Weapons
 
         public static void HitEntityHealth(EntityHealth health, int damage)
         {
+            int finalDamage = damage;
             if (health is PlayerHealth)
             {
                 Debug.Log($"[Raycast] Hit player for {damage}");
             }
+            else if (!ReferenceEquals(health,null))
+            {
+                if (PlayerUpgradeManager.Instance[UpgradeType.BogglingEyes] > 0)
+                {
+                    float dist = ((Vector2)(PlayerUpgradeManager.Instance.transform.position - health.transform.position)).magnitude;
+                    if (dist >= BogglingEyesMaxDistance)
+                        finalDamage += damage;
+                    else if (dist >= BogglingEyesMinDistance)
+                    {
+                        float boost = (dist - BogglingEyesMinDistance) /
+                                      (BogglingEyesMaxDistance - BogglingEyesMinDistance);
+                        finalDamage += Mathf.RoundToInt(damage * boost);
+                    }
+                }
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
+                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
+            }
             // ReSharper disable once UseNullPropagation
             if (!ReferenceEquals(health,null))
-                health.TakeDamage(damage);
+                health.TakeDamage(finalDamage);
         }
     }
 }
