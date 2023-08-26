@@ -339,18 +339,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.053889267
-      objectReference: {fileID: 0}
-    - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.053889267
-      objectReference: {fileID: 0}
-    - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
-      propertyPath: m_fontColor.r
-      value: 0.066037714
-      objectReference: {fileID: 0}
-    - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
       propertyPath: m_fontSizeBase
       value: 44.9
       objectReference: {fileID: 0}
@@ -360,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4279111185
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6101707827975948832, guid: 1ad037b800d18cf4ab7404c020414e74, type: 3}
       propertyPath: m_TextStyleHashCode
