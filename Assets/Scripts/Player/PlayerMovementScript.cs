@@ -59,6 +59,8 @@ namespace Player
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
 
+        public Vector2 Velocity => _body.velocity;
+
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
         private int _dashesRemaining = 1;
