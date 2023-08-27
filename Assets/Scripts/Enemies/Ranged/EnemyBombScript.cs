@@ -70,7 +70,6 @@ namespace Enemies.Ranged
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
 
             Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, _playerLayerMask);
-            Debug.Log(playerCollider);
             if (playerCollider)
             {
                 PlayerMovementScript playerMovement = PlayerMovementScript.Instance;
