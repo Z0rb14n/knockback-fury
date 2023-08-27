@@ -17,7 +17,6 @@ namespace Player
             }
         }
         private static PlayerHealth _instance;
-        private PlayerMovementScript _playerMovement;
         private PlayerUpgradeManager _upgradeManager;
 
         [SerializeField] private int sneakyJumperCooldown = 3;
@@ -31,7 +30,6 @@ namespace Player
         {
             base.Awake();
             _instance = this;
-            _playerMovement = GetComponent<PlayerMovementScript>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
         }
 
@@ -44,8 +42,6 @@ namespace Player
             {
                 health -= dmg;
                 _iFrameTimer = iFrameLength;
-                _playerMovement.StopMovement();
-                StartCoroutine(AllowMovementAfterDelay());
             }
             else
             {
@@ -59,12 +55,6 @@ namespace Player
         {
             Debug.Log("Player death");
             // TODO: player death
-        }
-
-        private IEnumerator AllowMovementAfterDelay()
-        {
-            yield return new WaitForSeconds(iFrameLength * 0.5f);
-            _playerMovement.AllowMovement();
         }
 
         private IEnumerator DisableCollision()

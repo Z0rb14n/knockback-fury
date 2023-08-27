@@ -12,11 +12,6 @@ namespace Enemies.Ranged
         public float radius = 1;
         public int playerDamage = 100;
 
-        protected override void Awake()
-        {
-            base.Awake();   
-        }
-
         public override void Initialize()
         {
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
