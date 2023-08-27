@@ -1,42 +1,46 @@
+using System.Collections;
 using Player;
 using UnityEngine;
 
 namespace Enemies.Ranged
 {
+    [RequireComponent(typeof(Collider2D))]
     public class RangedEnemyScript : MonoBehaviour
     {
-        public GameObject bullet;
+        [Tooltip("Prefab of bullet object")]
+        public GameObject bulletPrefab;
+        [Tooltip("Transform to create bullet position at")]
         public Transform bulletPos;
+        [Min(0), Tooltip("Time (seconds) between firing")]
+        public float fireDelay = 2;
 
-        private float timer;
-        private PlayerMovementScript _playerMovement;
-        
-        private void Awake()
+        private bool _isPlayerInside;
+        private IEnumerator _shootCoroutine;
+
+        private IEnumerator ShootCoroutine()
         {
-            _playerMovement = FindObjectOfType<PlayerMovementScript>();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            float distance = Vector2.Distance(transform.position, _playerMovement.transform.position);
-
-            if (distance < 4)
+            while (_isPlayerInside)
             {
-                timer += Time.deltaTime;
-
-                if (timer > 2)
-                {
-                    timer = 0;
-                    shoot();
-                }
+                yield return new WaitForSeconds(fireDelay);
+                GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
+                go.GetComponent<EnemyBulletScript>().Initialize();
             }
         }
 
-        // instantiates a bullet at the position of the ranged enemy
-        void shoot()
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            Instantiate(bullet, bulletPos.position, Quaternion.identity);
+            if (!other.GetComponent<PlayerMovementScript>()) return;
+            _isPlayerInside = true;
+            _shootCoroutine = ShootCoroutine();
+            StartCoroutine(_shootCoroutine);
+        }
+        
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.GetComponent<PlayerMovementScript>()) return;
+            _isPlayerInside = false;
+            StopCoroutine(_shootCoroutine);
+            _shootCoroutine = null;
         }
     }
 }
