@@ -13,11 +13,13 @@ namespace Enemies.Ranged
         public float delayBeforeDestruction = 10;
 
         private Rigidbody2D _rb;
+        private LayerMask _layerMask;
         private float _timer;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
+            _layerMask = LayerMask.NameToLayer("Player");
         }
 
         public void Initialize()
@@ -39,7 +41,7 @@ namespace Enemies.Ranged
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if ((other.gameObject.layer & _layerMask) != 0)
             {
                 EntityHealth playerHealth = other.gameObject.GetComponent<EntityHealth>();
                 PlayerMovementScript playerMovement = other.gameObject.GetComponent<PlayerMovementScript>();
