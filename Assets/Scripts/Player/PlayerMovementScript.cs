@@ -30,6 +30,20 @@ namespace Player
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
 
+        [Header("New Movement")]
+        [Tooltip("Whether new movement is enabled.")]
+        public bool newMovementEnabled = true;
+        [Min(0), Tooltip("Acceleration (scaled by time)")]
+        public float accel = 50;
+        [Min(0), Tooltip("Acceleration multiplier when turning around")]
+        public float turnAroundMultiplier = 2f;
+        [Min(0), Tooltip("Deceleration (scaled by time) when grounded")]
+        public float decel = 20;
+        [Min(0), Tooltip("Deceleration (scaled by time) when airborne")]
+        public float decelAirborne = 5;
+        [Min(0), Tooltip("Deceleration (scaled by time) when above max speed")]
+        public float decelWhenAbove = 5;
+
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
         
         public static PlayerMovementScript Instance
@@ -111,6 +125,52 @@ namespace Player
             };
         }
 
+        private void HorizontalMovementLogic(float xInput)
+        {
+            if (!newMovementEnabled)
+            {
+                if (xInput != 0)
+                {
+                    _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+                    _body.velocity = new Vector2(_speed, _body.velocity.y);
+                }
+            }
+            else
+            {
+                float originalX = _body.velocity.x;
+                float newX = originalX;
+
+                if (xInput != 0)
+                {
+                    float normalAccel = accel * Time.deltaTime;
+                    if (originalX > 0 && xInput < 0)
+                    {
+                        newX -= Mathf.Min(Mathf.Max(originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                    } else if (originalX < 0 && xInput > 0)
+                    {
+                        newX += Mathf.Min(Mathf.Max(-originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                    } else if (Mathf.Abs(originalX) < maxSpeed)
+                    {
+                        newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
+                    }
+                }
+                else
+                {
+                    float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
+                    newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
+                }
+
+                if (Mathf.Abs(originalX) > maxSpeed)
+                {
+                    float diff = Mathf.Abs(originalX) - maxSpeed;
+                    float normalDecel = decelWhenAbove * Time.deltaTime;
+                    newX -= Mathf.Sign(originalX) * Mathf.Min(normalDecel, diff);
+                }
+
+                _body.velocity = new Vector2(newX, _body.velocity.y);
+            }
+        }
+
         private void Update()
         {
             if (Grounded)
@@ -128,11 +188,8 @@ namespace Player
                     xInput = 0;
                     break;
             }
-            if (xInput != 0) 
-            {
-                _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-                _body.velocity = new Vector2(_speed, _body.velocity.y);
-            }
+            
+            HorizontalMovementLogic(xInput);
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) _jumpRequest = true;
 
