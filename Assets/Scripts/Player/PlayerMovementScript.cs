@@ -156,7 +156,7 @@ namespace Player
                 }
                 else
                 {
-                    float normalDecel = Grounded ? decel : decelAirborne * Time.deltaTime;
+                    float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
                     newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
                 }
 
