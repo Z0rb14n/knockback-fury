@@ -57,6 +57,9 @@ namespace Player
         private static PlayerMovementScript _instance;
         
         public bool IsWallSliding { get; private set; }
+        public bool CanMove { get; set; } = true;
+
+        public Vector2 Velocity => _body.velocity;
 
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
@@ -74,7 +77,6 @@ namespace Player
         private bool _dashing;
         private Vector2 _dashDirection;
         private int _physicsCheckMask;
-        private bool _canMove;
         private bool _hasKeepingInStrideDash;
         private bool _hasMomentumDash;
         private readonly List<PlatformTileScript> _platformsOn = new List<PlatformTileScript>();
@@ -92,7 +94,6 @@ namespace Player
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
-            _canMove = true;
             InitializeContactFilters();
         }
 
@@ -179,7 +180,7 @@ namespace Player
                 _hasMomentumDash = false;
                 _hasKeepingInStrideDash = false;
             }
-            if (!_canMove) return;
+            if (!CanMove) return;
             float xInput = Input.GetAxisRaw("Horizontal");
             switch (xInput)
             {
@@ -324,16 +325,6 @@ namespace Player
             _dashing = false;
             _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
-        }
-
-        public void StopMovement()
-        {
-            _canMove = false;
-        }
-
-        public void AllowMovement()
-        {
-            _canMove = true;
         }
 
         public void AddPlatformOn(PlatformTileScript platform)

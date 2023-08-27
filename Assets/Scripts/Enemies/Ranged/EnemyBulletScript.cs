@@ -1,4 +1,3 @@
-using System.Collections;
 using Player;
 using UnityEngine;
 
@@ -7,47 +6,43 @@ namespace Enemies.Ranged
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyBulletScript : MonoBehaviour
     {
-        public float force;
+        public float projectileSpeed;
         public int bulletDamage;
         public int knockbackForce;
         public float delayBeforeDestruction = 10;
+        public float verticalKnockback = 0.04f;
+        public float knockbackStrength = 0.1f;
 
-        private Rigidbody2D _rb;
-        private LayerMask _layerMask;
+        protected new Rigidbody2D rigidbody2D;
+        protected LayerMask playerLayerMask;
         private float _timer;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            _rb = GetComponent<Rigidbody2D>();
-            _layerMask = LayerMask.NameToLayer("Player");
+            rigidbody2D = GetComponent<Rigidbody2D>();
+            playerLayerMask = LayerMask.GetMask("Player");
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
-            if (!_rb) _rb = GetComponent<Rigidbody2D>();
+            if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
             
             Vector3 direction = PlayerMovementScript.Instance.transform.position - transform.position;
-            _rb.velocity = direction.normalized * force;
+            rigidbody2D.velocity = direction.normalized * projectileSpeed;
             float rot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.localEulerAngles = new Vector3(0, 0, rot);
-            StartCoroutine(DestroyCoroutine());
-        }
-
-        private IEnumerator DestroyCoroutine()
-        {
-            yield return new WaitForSeconds(delayBeforeDestruction);
-            Destroy(gameObject);
+            Destroy(gameObject, delayBeforeDestruction);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if ((other.gameObject.layer & _layerMask) != 0)
+            if ((other.gameObject.layer & playerLayerMask) != 0)
             {
                 EntityHealth playerHealth = other.gameObject.GetComponent<EntityHealth>();
                 PlayerMovementScript playerMovement = other.gameObject.GetComponent<PlayerMovementScript>();
 
                 playerHealth.TakeDamage(bulletDamage);
-                Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * 0.1f, 0.04f);
+                Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * knockbackStrength, verticalKnockback);
                 playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
 
                 Destroy(gameObject);

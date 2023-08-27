@@ -32,6 +32,7 @@ namespace Weapons
         /// </summary>
         /// <param name="data">Weapon that fired this</param>
         /// <param name="direction">Normalized Direction</param>
+        /// <param name="hitPlayer">Whether to hit the player or not</param>
         public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
         {
             _damage = data.projectileDamage;
@@ -66,7 +67,7 @@ namespace Weapons
         {
             EntityHealth health = other.collider.GetComponent<EntityHealth>();
             if (!_hitPlayer && health is PlayerHealth) return;
-            Weapon.HitEntityHealth(health,_damage);
+            Weapon.HitEntity(other.collider, _damage);
             Detonation();
             Destroy(gameObject);
         }
@@ -77,8 +78,7 @@ namespace Weapons
             int size = Physics2D.OverlapCircleNonAlloc(_body.position, explosionRange, _colliderTest);
             for (int i = 0; i < size; i++)
             {
-                EntityHealth health = _colliderTest[i].GetComponent<EntityHealth>();
-                Weapon.HitEntityHealth(health,_damage);
+                Weapon.HitEntity(_colliderTest[i], _damage);
             }
 
             GameObject go = Instantiate(detonationVFX, transform.parent);
