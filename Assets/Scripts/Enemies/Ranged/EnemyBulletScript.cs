@@ -1,14 +1,12 @@
-using System;
 using Player;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Enemies.Ranged
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class EnemyBulletScript : MonoBehaviour
     {
-        [FormerlySerializedAs("force")] public float projectileSpeed;
+        public float projectileSpeed;
         public int bulletDamage;
         public int knockbackForce;
         public float delayBeforeDestruction = 10;
