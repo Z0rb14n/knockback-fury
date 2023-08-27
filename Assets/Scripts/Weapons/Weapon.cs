@@ -1,4 +1,5 @@
 using System.Linq;
+using Enemies.Ranged;
 using Player;
 using UnityEngine;
 using Upgrades;
@@ -16,7 +17,7 @@ namespace Weapons
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
         public WeaponData[] weaponInventory;
-        [SerializeField] private int weaponIndex = 0;
+        [SerializeField] private int weaponIndex;
         [SerializeField] private LayerMask raycastMask;
         
         public bool IsOneYearOfReloadPossible {
@@ -142,7 +143,10 @@ namespace Weapons
                     ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
                                        WeaponData.meleeInfo.baseDamage)
                     : WeaponData.projectileDamage;
-                if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
+                if (!ReferenceEquals(hit.collider, null))
+                {
+                    HitEntity(hit.collider, damage);
+                }
                 if (!isMelee)
                 {
                     GameObject go = ReferenceEquals(projectileParent, null)
@@ -362,7 +366,14 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static void HitEntityHealth(EntityHealth health, int damage)
+        public static void HitEntity(Collider2D collider, int damage)
+        {
+            EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
+            if (enemyBomb) enemyBomb.Detonate(true);
+            HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+        }
+
+        private static void HitEntityHealth(EntityHealth health, int damage)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
