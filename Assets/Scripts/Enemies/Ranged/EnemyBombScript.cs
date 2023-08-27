@@ -14,6 +14,8 @@ namespace Enemies.Ranged
         public int playerDamage = 100;
         public bool playerVelocityPrediction = true;
 
+        private LayerMask _playerLayerMask;
+
         public override void Initialize()
         {
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
@@ -21,6 +23,7 @@ namespace Enemies.Ranged
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position, playerMovementScript.Velocity);
             StartCoroutine(DelayedExplosion());
+            _playerLayerMask = LayerMask.GetMask("Player");
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace Enemies.Ranged
             GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
 
-            Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, playerLayerMask);
+            Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, _playerLayerMask);
             Debug.Log(playerCollider);
             if (playerCollider)
             {

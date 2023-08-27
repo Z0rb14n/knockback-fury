@@ -48,9 +48,10 @@ public class EntityHealth : MonoBehaviour
 
     private IEnumerator DamageFlash()
     {
+        Color prevColor = _sprite.color;
         _sprite.color = new Color(1, 0, 0, 0.5f);
         yield return new WaitForSeconds(0.1f);
-        _sprite.color = Color.white;
+        _sprite.color = prevColor;
     }
 
     protected virtual void DoTakeDamage(int dmg)

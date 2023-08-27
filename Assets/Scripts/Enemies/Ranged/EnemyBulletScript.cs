@@ -14,13 +14,11 @@ namespace Enemies.Ranged
         public float knockbackStrength = 0.1f;
 
         protected new Rigidbody2D rigidbody2D;
-        protected LayerMask playerLayerMask;
         private float _timer;
 
         protected virtual void Awake()
         {
             rigidbody2D = GetComponent<Rigidbody2D>();
-            playerLayerMask = LayerMask.GetMask("Player");
         }
 
         public virtual void Initialize()
@@ -36,17 +34,15 @@ namespace Enemies.Ranged
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if ((other.gameObject.layer & playerLayerMask) != 0)
-            {
-                EntityHealth playerHealth = other.gameObject.GetComponent<EntityHealth>();
-                PlayerMovementScript playerMovement = other.gameObject.GetComponent<PlayerMovementScript>();
+            PlayerMovementScript playerMovement = other.GetComponent<PlayerMovementScript>();
+            if (!playerMovement) return;
+            EntityHealth playerHealth = other.gameObject.GetComponent<EntityHealth>();
 
-                playerHealth.TakeDamage(bulletDamage);
-                Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * knockbackStrength, verticalKnockback);
-                playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
+            playerHealth.TakeDamage(bulletDamage);
+            Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * knockbackStrength, verticalKnockback);
+            playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
 
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

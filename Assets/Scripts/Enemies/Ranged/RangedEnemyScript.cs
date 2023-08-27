@@ -16,6 +16,12 @@ namespace Enemies.Ranged
 
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
+        private AudioSource _source;
+
+        private void Awake()
+        {
+            _source = GetComponent<AudioSource>();
+        }
 
         private IEnumerator ShootCoroutine()
         {
@@ -24,6 +30,7 @@ namespace Enemies.Ranged
                 yield return new WaitForSeconds(fireDelay);
                 GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
                 go.GetComponent<EnemyBulletScript>().Initialize();
+                if (_source && _source.clip) _source.Play();
             }
         }
 
