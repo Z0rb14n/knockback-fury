@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 31957445104503070, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 31957445104503070, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_ChunkCullingBounds.y
       value: 0
       objectReference: {fileID: 0}
