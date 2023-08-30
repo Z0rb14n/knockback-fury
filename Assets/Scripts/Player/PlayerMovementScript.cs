@@ -30,6 +30,20 @@ namespace Player
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
 
+        [Header("New Movement")]
+        [Tooltip("Whether new movement is enabled.")]
+        public bool newMovementEnabled = true;
+        [Min(0), Tooltip("Acceleration (scaled by time)")]
+        public float accel = 50;
+        [Min(0), Tooltip("Acceleration multiplier when turning around")]
+        public float turnAroundMultiplier = 2f;
+        [Min(0), Tooltip("Deceleration (scaled by time) when grounded")]
+        public float decel = 20;
+        [Min(0), Tooltip("Deceleration (scaled by time) when airborne")]
+        public float decelAirborne = 5;
+        [Min(0), Tooltip("Deceleration (scaled by time) when above max speed")]
+        public float decelWhenAbove = 5;
+
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
         
         public static PlayerMovementScript Instance
@@ -43,6 +57,9 @@ namespace Player
         private static PlayerMovementScript _instance;
         
         public bool IsWallSliding { get; private set; }
+        public bool CanMove { get; set; } = true;
+
+        public Vector2 Velocity => _body.velocity;
 
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
@@ -60,7 +77,6 @@ namespace Player
         private bool _dashing;
         private Vector2 _dashDirection;
         private int _physicsCheckMask;
-        private bool _canMove;
         private bool _hasKeepingInStrideDash;
         private bool _hasMomentumDash;
         private readonly List<PlatformTileScript> _platformsOn = new List<PlatformTileScript>();
@@ -78,7 +94,6 @@ namespace Player
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
-            _canMove = true;
             InitializeContactFilters();
         }
 
@@ -111,6 +126,52 @@ namespace Player
             };
         }
 
+        private void HorizontalMovementLogic(float xInput)
+        {
+            if (!newMovementEnabled)
+            {
+                if (xInput != 0)
+                {
+                    _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
+                    _body.velocity = new Vector2(_speed, _body.velocity.y);
+                }
+            }
+            else
+            {
+                float originalX = _body.velocity.x;
+                float newX = originalX;
+
+                if (xInput != 0)
+                {
+                    float normalAccel = accel * Time.deltaTime;
+                    if (originalX > 0 && xInput < 0)
+                    {
+                        newX -= Mathf.Min(Mathf.Max(originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                    } else if (originalX < 0 && xInput > 0)
+                    {
+                        newX += Mathf.Min(Mathf.Max(-originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                    } else if (Mathf.Abs(originalX) < maxSpeed)
+                    {
+                        newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
+                    }
+                }
+                else
+                {
+                    float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
+                    newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
+                }
+
+                if (Mathf.Abs(originalX) > maxSpeed)
+                {
+                    float diff = Mathf.Abs(originalX) - maxSpeed;
+                    float normalDecel = decelWhenAbove * Time.deltaTime;
+                    newX -= Mathf.Sign(originalX) * Mathf.Min(normalDecel, diff);
+                }
+
+                _body.velocity = new Vector2(newX, _body.velocity.y);
+            }
+        }
+
         private void Update()
         {
             if (Grounded)
@@ -119,7 +180,7 @@ namespace Player
                 _hasMomentumDash = false;
                 _hasKeepingInStrideDash = false;
             }
-            if (!_canMove) return;
+            if (!CanMove) return;
             float xInput = Input.GetAxisRaw("Horizontal");
             switch (xInput)
             {
@@ -128,11 +189,8 @@ namespace Player
                     xInput = 0;
                     break;
             }
-            if (xInput != 0) 
-            {
-                _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-                _body.velocity = new Vector2(_speed, _body.velocity.y);
-            }
+            
+            HorizontalMovementLogic(xInput);
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) _jumpRequest = true;
 
@@ -267,16 +325,6 @@ namespace Player
             _dashing = false;
             _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
-        }
-
-        public void StopMovement()
-        {
-            _canMove = false;
-        }
-
-        public void AllowMovement()
-        {
-            _canMove = true;
         }
 
         public void AddPlatformOn(PlatformTileScript platform)
