@@ -101,8 +101,7 @@ namespace Enemies
             for (int i = 0; i < number; i++)
             {
                 int index = Random.Range(0, randIndices.Count);
-                retVal.Add(randIndices[index]);
-                randIndices.SwapRemove(index);
+                retVal.Add(randIndices.SwapRemove(index));
             }
 
             return retVal;

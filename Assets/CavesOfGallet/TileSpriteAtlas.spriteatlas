@@ -132,9 +132,7 @@ SpriteAtlas:
   - {fileID: -292795906, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
   - {fileID: -1691311532, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
   - {fileID: -609928467, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
-  - {fileID: 21300000, guid: 9d199e4e52bc7324399b61b359ae657b, type: 3}
   m_PackedSpriteNamesToIndex:
-  - PlatformLeft
   - cavesofgallet_tiles_0
   - cavesofgallet_tiles_1
   - cavesofgallet_tiles_2
@@ -228,7 +226,6 @@ SpriteAtlas:
   - cavesofgallet_tiles_72
   - cavesofgallet_tiles_8
   - cavesofgallet_tiles_9
-  - PillarPlatformL
   m_RenderDataMap: {}
   m_Tag: TileSpriteAtlas
   m_IsVariant: 0

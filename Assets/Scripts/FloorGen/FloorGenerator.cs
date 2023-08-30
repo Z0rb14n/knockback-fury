@@ -65,13 +65,15 @@ namespace FloorGen
         public int branchinessDecrease = 4;
         public Transform worldParent;
         
+        [Tooltip("Size of the grid cells (world size)")]
         public Vector2 gridSize = Vector2.one;
         
-        public Vector2Int playerStart = Vector2Int.zero;
+        [Tooltip("Where the world generates from and where the player starts")]
+        public Vector2Int generationStart = Vector2Int.zero;
+        [Tooltip("Transform to forcibly set position of")]
         public Transform playerTransform;
-        [Tooltip("Player Spawn Height - Adjust this value based on your player's model")]
-        public float playerHeight = 1f; // Adjust this value based on your player's model
-        private float floorHeight = 0f; // Adjust this value if your floor is at a different height
+        [Tooltip("Offset of player spawn")]
+        public Vector2 playerSpawnOffset = Vector2.zero;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
@@ -127,26 +129,12 @@ namespace FloorGen
         {
             Grid grid = new();
             Random random = GenerateRNG();
-
-            // Start the level generation from the player's position
-            Vector2Int currPos = playerStart;
-            grid[currPos] = RoomType.BottomOpen | RoomType.LeftOpen | RoomType.RightOpen | RoomType.TopOpen;
-
-            // Generate rooms around the player's starting position
-            for (int i = 0; i < 4; i++)
-            {
-                RoomType dir = (RoomType)(1 << i); // Get each direction (BottomOpen, LeftOpen, RightOpen, TopOpen)
-                ExpandSide(grid, currPos, dir);
-            }
-
-            // Continue with the rest of the level generation...
-
             // Set the player's position based on the starting position
-            playerTransform.position = new Vector3(playerStart.x * gridSize.x, floorHeight + playerHeight, playerStart.y * gridSize.y);
+            playerTransform.position = generationStart * gridSize + playerSpawnOffset;
             
             int roomCount = random.Next(minRooms,maxRooms+1);
 
-            List<Vector2Int> toBranch = new() { Vector2Int.zero };
+            List<Vector2Int> toBranch = new() { generationStart };
             int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
             roomCount -= middleLength;
 
@@ -162,8 +150,7 @@ namespace FloorGen
                 }
                 // Swap with last element and remove last instead of removing by index.
                 int index = random.Next(0, withinIterationToBranch.Count);
-                Vector2Int start = withinIterationToBranch[index];
-                withinIterationToBranch.SwapRemove(index);
+                Vector2Int start = withinIterationToBranch.SwapRemove(index);
                 int currBranchiness = branchiness;
                 do
                 {
@@ -183,7 +170,7 @@ namespace FloorGen
             int middle = (maxRoomCount + centerRowMin) / 2;
             int roomsToGenerate = random.Next(centerRowMin, middle + 1)-1;
             int retVal = roomsToGenerate;
-            Vector2Int currVector2Int = Vector2Int.zero;
+            Vector2Int currVector2Int = generationStart;
             while (roomsToGenerate > 0)
             {
                 ExpandSide(grid, currVector2Int, RoomType.RightOpen);

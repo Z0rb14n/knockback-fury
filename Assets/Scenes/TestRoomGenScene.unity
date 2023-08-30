@@ -643,53 +643,56 @@ MonoBehaviour:
   pairs:
   - type: -1
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 34f70ff092d2e4849bf896a0dbeea9c7, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
+    - {fileID: 4983919535184341483, guid: b7f119e4435108244b8745980cf83ea4, type: 3}
+    - {fileID: 4983919535184341483, guid: 1a767f591cc8e0c48bcb2431140b468c, type: 3}
   - type: 0
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: ddf94e81040ec4947af5980ab7850a59, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 8
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: e20697fef114e35438e7a32731fe88af, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 12
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: ab5de8f7b4c376a479486deb7f1889a3, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 14
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 675093f658f9413428791034594aaeea, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 10
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: d54010154a95b4947986948d3fa13fc6, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 9
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 3b156f3af80fe4a43af46b127fc6a57c, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 13
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: c3d39847ca6959244adcc38ae592b152, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 11
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 3bc1ab326661fbe4a87da7596bb7df8b, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 1
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 0296c7b2880bbae45b94b670fd7cecb2, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 5
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 685a4cca5bb2fcb41897deb3468de896, type: 3}
-    - {fileID: 4983919535184341483, guid: 079329c9bd22c9d4193683e97c283d1b, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
+    - {fileID: 4983919535184341483, guid: b7f119e4435108244b8745980cf83ea4, type: 3}
+    - {fileID: 4983919535184341483, guid: 1a767f591cc8e0c48bcb2431140b468c, type: 3}
   - type: 7
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: ac353fe2bddc85247992a2922a974ec9, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 3
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: a37003f32d9acf9428bebe07482154f9, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 4
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 2f770dc98fdc92f4d949379cdf767aaf, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 6
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 06b4b1c882b29a54fa36cc64f512c390, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   - type: 2
     roomPrefab:
-    - {fileID: 4983919535184341483, guid: 93d3137eeac73084f9d84418e6bd35a9, type: 3}
+    - {fileID: 4983919535184341483, guid: 10858edd65254be4da845f7a064e740a, type: 3}
   seed: 0
   maxRows: 3
   minRooms: 12
@@ -698,10 +701,10 @@ MonoBehaviour:
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 914233868}
-  gridSize: {x: 38, y: 38}
-  playerStart: {x: 0, y: 0}
+  gridSize: {x: 21, y: 21}
+  generationStart: {x: -5, y: 5}
   playerTransform: {fileID: 419107792}
-  playerHeight: 1.1
+  playerSpawnOffset: {x: 0, y: 0}
 --- !u!4 &914233868
 Transform:
   m_ObjectHideFlags: 0
