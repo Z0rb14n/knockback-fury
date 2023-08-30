@@ -17,9 +17,9 @@ MonoBehaviour:
   range: 200
   projectileSpeed: 40
   projectileDamage: 40
-  roundsPerSecond: 0.75
+  roundsPerSecond: 1.3
   clipSize: 8
-  reloadTime: 2
+  reloadTime: 1.5
   spread: 10
   isHitscan: 0
   rightClickAction: 1
