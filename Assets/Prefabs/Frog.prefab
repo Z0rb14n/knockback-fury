@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3139948558526521948}
   - component: {fileID: 1470205520722727805}
   - component: {fileID: 6553265572266371507}
+  - component: {fileID: 1483776281331567196}
+  - component: {fileID: 41531042006896467}
   - component: {fileID: 9192570308432205651}
   - component: {fileID: 7310949198750745542}
   - component: {fileID: 3041133532461335286}
@@ -75,6 +77,38 @@ CapsuleCollider2D:
   m_Offset: {x: -0.03, y: -0.85}
   m_Size: {x: 1.8, y: 1.1}
   m_Direction: 1
+--- !u!70 &1483776281331567196
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.94, y: -0.2}
+  m_Size: {x: 0.95, y: 1.8}
+  m_Direction: 0
+--- !u!70 &41531042006896467
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.94, y: -0.2}
+  m_Size: {x: 0.95, y: 1.8}
+  m_Direction: 0
 --- !u!114 &9192570308432205651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +125,9 @@ MonoBehaviour:
   speed: 0
   pauseTime: 0
   jumpForce: 8
+  normalCollider: {fileID: 6553265572266371507}
+  colliderOnWall: {fileID: 1483776281331567196}
+  colliderOnRightWall: {fileID: 41531042006896467}
 --- !u!114 &7310949198750745542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +202,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d6b70b216db7e5d4e88258c5b47ae60d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.8, y: 2.8}

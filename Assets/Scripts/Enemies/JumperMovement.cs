@@ -8,6 +8,11 @@ namespace Enemies
     {
         [Tooltip("Jump force (x100)"), Min(0)]
         public float jumpForce;
+
+        [SerializeField] private Collider2D normalCollider;
+        
+        [SerializeField] private Collider2D colliderOnWall;
+        [SerializeField] private Collider2D colliderOnRightWall;
         
         private bool _canJump;
         private bool _isTouchingSurface;
@@ -89,6 +94,9 @@ namespace Enemies
                 {
                     _wasOnWall = true;
                     _animator.SetBool(AnimationWallHash, true);
+                    if (IsOnRightWall) colliderOnRightWall.enabled = true;
+                    else colliderOnWall.enabled = true;
+                    normalCollider.enabled = false;
                 }
                 _body.gravityScale = 0;
                 // safeguard against accidental calls to reset velocity after jumping off walls
@@ -101,6 +109,9 @@ namespace Enemies
                 {
                     _wasOnWall = false;
                     _animator.SetBool(AnimationWallHash, false);
+                    normalCollider.enabled = true;
+                    colliderOnWall.enabled = false;
+                    colliderOnRightWall.enabled = false;
                 }
                 _body.gravityScale = 1;
             }
