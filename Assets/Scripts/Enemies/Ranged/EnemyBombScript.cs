@@ -150,7 +150,7 @@ namespace Enemies.Ranged
         private void FixedUpdate()
         {
             Vector2 vel = rigidbody2D.velocity;
-            transform.localEulerAngles = new Vector3(0, 0,  Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg);
+            if (vel.magnitude >= 0.001f) transform.localEulerAngles = new Vector3(0, 0,  Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg);
         }
 
         public void Detonate(bool playerCaused)

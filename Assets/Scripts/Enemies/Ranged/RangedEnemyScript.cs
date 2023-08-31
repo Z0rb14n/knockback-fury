@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemies.Ranged
 {
-    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
     public class RangedEnemyScript : MonoBehaviour
     {
         [Tooltip("Prefab of bullet object")]
@@ -17,10 +17,22 @@ namespace Enemies.Ranged
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
         private AudioSource _source;
-
+        private PlayerMovementScript _playerMovement;
+        private SpriteRenderer _sprite;
+        private Animator _animator;
+        private static readonly int AnimatorThrowHash = Animator.StringToHash("Throw");
+        
         private void Awake()
         {
             _source = GetComponent<AudioSource>();
+            _sprite = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>();
+            _playerMovement = PlayerMovementScript.Instance;
+        }
+
+        private void FixedUpdate()
+        {
+            _sprite.flipX = _playerMovement.transform.position.x >= transform.position.x;
         }
 
         private IEnumerator ShootCoroutine()
@@ -28,8 +40,12 @@ namespace Enemies.Ranged
             while (_isPlayerInside)
             {
                 yield return new WaitForSeconds(fireDelay);
-                GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
-                go.GetComponent<EnemyBulletScript>().Initialize();
+                if (_animator) _animator.SetTrigger(AnimatorThrowHash);
+                else
+                {
+                    GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
+                    go.GetComponent<EnemyBulletScript>().Initialize();
+                }
                 if (_source && _source.clip) _source.Play();
             }
         }
@@ -48,6 +64,15 @@ namespace Enemies.Ranged
             _isPlayerInside = false;
             StopCoroutine(_shootCoroutine);
             _shootCoroutine = null;
+        }
+
+        /// <summary>
+        /// Called when the animator reaches the 'throw' part
+        /// </summary>
+        public void AnimatorEventReached()
+        {
+            GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
+            go.GetComponent<EnemyBulletScript>().Initialize();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Player
     [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),
          typeof(MeshTrail), 
          typeof(PlayerUpgradeManager))]
+    [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerMovementScript : MonoBehaviour
     {
         [Min(0), Tooltip("Affects the speed of the player")]
@@ -79,7 +80,8 @@ namespace Player
         private int _physicsCheckMask;
         private bool _hasKeepingInStrideDash;
         private bool _hasMomentumDash;
-        private readonly List<PlatformTileScript> _platformsOn = new List<PlatformTileScript>();
+        private SpriteRenderer _sprite;
+        private readonly List<PlatformTileScript> _platformsOn = new();
     
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -94,6 +96,7 @@ namespace Player
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
+            _sprite = GetComponent<SpriteRenderer>();
             InitializeContactFilters();
         }
 
@@ -128,6 +131,10 @@ namespace Player
 
         private void HorizontalMovementLogic(float xInput)
         {
+            if (xInput != 0)
+            {
+                _sprite.flipX = xInput < 0;
+            }
             if (!newMovementEnabled)
             {
                 if (xInput != 0)
