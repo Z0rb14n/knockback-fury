@@ -56525,9 +56525,11 @@ MonoBehaviour:
   pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
+  weaponSpawnOffset: {x: -0.5, y: -5}
+  cheeseSpawnOffset: {x: -1.5, y: -5}
+  powerupSpawnOffset: {x: -0.5, y: -5}
+  weaponUpgradeSpawnOffset: {x: -0.5, y: -5}
   layouts:
   - sockets:
-    - size: {x: 2, y: 2}
-      position: {x: -3, y: 0}
-    - size: {x: 2.5, y: 2.5}
-      position: {x: 4.75, y: -2.75}
+    - size: {x: 5.5, y: 5.5}
+      position: {x: 4.25, y: 1.25}

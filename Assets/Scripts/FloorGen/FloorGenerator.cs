@@ -310,11 +310,10 @@ namespace FloorGen
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
             if (!generateBoss)
             {
-                // TODO FIX HACKS: artificially increased x/y by 1
-                roomData.pickup = GeneratePlayerUpgradePickup(random, gridPos + Vector3.up, cellObject);
-                roomData.cheesePickup = GenerateCheesePickup(gridPos + Vector3.left + Vector3.up, cellObject, isEndRoom ? 10 : 5);
+                roomData.pickup = GeneratePlayerUpgradePickup(random, gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
+                roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
-                    roomData.weaponPickup = GenerateWeaponPickup(random, gridPos + Vector3.up, cellObject, false);
+                    roomData.weaponPickup = GenerateWeaponPickup(random, gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
                 GenerateEnemies(random, sockets, packSize, roomData, isEndRoom);
             }
             else
@@ -326,16 +325,16 @@ namespace FloorGen
         private void PopulateSocketsWeaponRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
-            // TODO FIX HACK: artificially increased y by 1
-            Vector3 weaponRoomGridPos = gridIndex * gridSize + Vector2.up;
+            RoomData roomData = cellObject.GetComponent<RoomData>();
+            Vector3 weaponRoomGridPos = gridIndex * gridSize + roomData.weaponSpawnOffset;
             GenerateWeaponPickup(random, weaponRoomGridPos, cellObject, true);
         }
 
         private void PopulateSocketsSmithingRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
-            // TODO FIX HACK: artificially increased y by 1
-            Instantiate(weaponUpgradePrefab, gridIndex * gridSize + Vector2.up,
+            RoomData roomData = cellObject.GetComponent<RoomData>();
+            Instantiate(weaponUpgradePrefab, gridIndex * gridSize + roomData.weaponUpgradeSpawnOffset,
                 Quaternion.identity, cellObject.transform);
         }
 

@@ -18,6 +18,15 @@ namespace FloorGen
         public CheesePickup cheesePickup;
         [HideInInspector]
         public WeaponPickup weaponPickup;
+
+        [Tooltip("Spawn offsets of weapon drops")]
+        public Vector2 weaponSpawnOffset = Vector2.up;
+        [Tooltip("Spawn offset of cheese drops")]
+        public Vector2 cheeseSpawnOffset = Vector2.up + Vector2.left;
+        [Tooltip("Spawn offset of player powerups")]
+        public Vector2 powerupSpawnOffset = Vector2.up;
+        [Tooltip("Spawn offset of weapon upgrades")]
+        public Vector2 weaponUpgradeSpawnOffset = Vector2.up;
         
         public Layout[] layouts;
         
