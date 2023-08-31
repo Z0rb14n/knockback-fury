@@ -15,8 +15,8 @@ namespace Enemies
             if (other.GetComponent<PlayerMovementScript>() == null) return;
             
             Destroy(gameObject);
-
-            boss.IsActive = true;
+            
+            if (boss) boss.IsActive = true;
             wallBehindPlayer.SetActive(true);
             healthBar.gameObject.SetActive(true);
         }
