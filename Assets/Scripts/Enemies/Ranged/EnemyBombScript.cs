@@ -143,7 +143,7 @@ namespace Enemies.Ranged
                 Mathf.Sqrt(Mathf.Sqrt(4 / (g*g) * diff.sqrMagnitude)),0.001f,delayBeforeDestruction);
             Vector2 numericalSolution = new(diff.x / t, diff.y / t + g * t / 2);
             Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
-            Debug.Log(numericalSolution.magnitude);
+            //Debug.Log(numericalSolution.magnitude);
             return Vector2.ClampMagnitude(numericalSolution, projectileSpeed);
         }
 
@@ -171,16 +171,23 @@ namespace Enemies.Ranged
             Destroy(gameObject);
 
             if (!playerCaused) return;
+            bool prev = Physics2D.queriesHitTriggers;
+            Physics2D.queriesHitTriggers = false;
             // ReSharper disable once Unity.PreferNonAllocApi
             Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, radius);
             foreach (Collider2D col in colliders)
             {
+                if (col.isTrigger) continue;
                 EntityHealth health = col.GetComponent<EntityHealth>();
+                Debug.DrawLine(col.ClosestPoint(pos), pos, Color.cyan, 1);
+                Debug.Log((col.transform.position - pos).magnitude);
                 if (health && health != PlayerHealth.Instance)
                 {
                     health.TakeDamage(playerDamage);
                 }
             }
+
+            Physics2D.queriesHitTriggers = prev;
         }
         
         

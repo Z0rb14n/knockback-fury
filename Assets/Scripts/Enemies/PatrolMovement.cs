@@ -83,8 +83,8 @@ namespace Enemies
         {
             if (_direction != _spriteDirection)
             {
-                transform.localScale *= new Vector2(-1, 1);
                 _spriteDirection *= -1;
+                _sprite.flipX = _spriteDirection < 0;
             }
         }
 

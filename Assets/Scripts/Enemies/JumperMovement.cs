@@ -10,9 +10,9 @@ namespace Enemies
         public float jumpForce;
 
         [SerializeField] private Collider2D normalCollider;
-        
         [SerializeField] private Collider2D colliderOnWall;
         [SerializeField] private Collider2D colliderOnRightWall;
+        [SerializeField, Tooltip("scuffed. Completely scuffed. We're completely scuffed.")] private Vector2 wallPositionOffset;
         
         private bool _canJump;
         private bool _isTouchingSurface;
@@ -22,7 +22,7 @@ namespace Enemies
         private int _physicsCheckMask;
         private bool _canResetVelocity;
         private bool _isStunned;
-        private bool _wasOnWall;
+        private State _state = State.Idle;
         private Animator _animator;
         private static readonly int AnimationJumpHash = Animator.StringToHash("Jump");
         private static readonly int AnimationWallHash = Animator.StringToHash("IsOnWall");
@@ -79,8 +79,10 @@ namespace Enemies
             StickOnWall();
             if (patrolPoints.Length > 0)
                 DoCommonUpdates();
+            if (_state == State.Jump)
+                _state = State.JumpNextTick; // due to body.IsTouching only updating in 2 ticks
             // jump if jumping cooldown is over and entity is in contact with a surface
-            if (_canJump && _isTouchingSurface)
+            if (_canJump && (_isTouchingSurface || _state == State.OnWall))
             {
                 Jump();
             }
@@ -88,33 +90,33 @@ namespace Enemies
 
         private void StickOnWall()
         {
-            if ((IsOnLeftWall || IsOnRightWall) && !_isStunned)
+            if (_isStunned || (!IsOnLeftWall && !IsOnRightWall)) return;
+            if (_state == State.JumpNextTick)
             {
-                if (!_wasOnWall)
+                _state = State.OnWall;
+                _animator.SetBool(AnimationWallHash, true);
+                if (IsOnRightWall)
                 {
-                    _wasOnWall = true;
-                    _animator.SetBool(AnimationWallHash, true);
-                    if (IsOnRightWall) colliderOnRightWall.enabled = true;
-                    else colliderOnWall.enabled = true;
-                    normalCollider.enabled = false;
+                    colliderOnRightWall.enabled = true;
+                    transform.position -= (Vector3) wallPositionOffset;
+                    _sprite.flipX = true;
                 }
-                _body.gravityScale = 0;
-                // safeguard against accidental calls to reset velocity after jumping off walls
-                if (_canResetVelocity) _body.velocity = new Vector2(0, 0);
-                _canResetVelocity = false;
+                else
+                {
+                    colliderOnWall.enabled = true;
+                    _sprite.flipX = false;
+                    transform.position += (Vector3)wallPositionOffset;
+                }
+                normalCollider.enabled = false;
             }
-            else
+            _body.gravityScale = 0;
+            // safeguard against accidental calls to reset velocity after jumping off walls
+            if (_canResetVelocity)
             {
-                if (_wasOnWall)
-                {
-                    _wasOnWall = false;
-                    _animator.SetBool(AnimationWallHash, false);
-                    normalCollider.enabled = true;
-                    colliderOnWall.enabled = false;
-                    colliderOnRightWall.enabled = false;
-                }
-                _body.gravityScale = 1;
+                _body.velocity = new Vector2(0, 0);
+                _body.constraints = RigidbodyConstraints2D.FreezeAll;
             }
+            _canResetVelocity = false;
         }
 
         // Jumping: if on ground, simply add force
@@ -122,20 +124,39 @@ namespace Enemies
         // TODO: jump directions/targeting
         private void Jump()
         {
+            _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+            bool shouldFlipSprite = false;
             if (Grounded)
             {
                 _body.AddForce(new Vector2(100f * _direction, jumpForce * 100));
+                shouldFlipSprite = _direction >= 0;
             } 
             else if (IsOnLeftWall)
             {
-                _body.AddForce(new Vector2(100f, jumpForce * 100)); 
+                _body.AddForce(new Vector2(100f, jumpForce * 100));
+                shouldFlipSprite = true;
             } 
             else
             {
                 _body.AddForce(new Vector2(-100f, jumpForce * 100));
             }
 
+            _sprite.flipX = shouldFlipSprite;
             _animator.SetTrigger(AnimationJumpHash);
+            if (_state == State.OnWall)
+            {
+                _animator.SetBool(AnimationWallHash, false);
+                normalCollider.enabled = true;
+                colliderOnWall.enabled = false;
+                colliderOnRightWall.enabled = false;
+                _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+                _body.gravityScale = 1;
+            }
+            _state = State.Jump;
+            
+            normalCollider.enabled = true;
+            colliderOnWall.enabled = false;
+            colliderOnRightWall.enabled = false;
             _canResetVelocity = true;
             StartCoroutine(JumpCooldown());
         }
@@ -161,6 +182,10 @@ namespace Enemies
             _isStunned = false;
         }
 
+        private enum State
+        {
+            OnWall, Idle, Jump, JumpNextTick
+        }
 
     }
 }
