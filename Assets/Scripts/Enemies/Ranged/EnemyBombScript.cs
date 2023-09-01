@@ -10,7 +10,6 @@ namespace Enemies.Ranged
     public class EnemyBombScript : EnemyBulletScript
     {
         public GameObject explosionVFX;
-        public float verticalDirOffset = 2;
         public float radius = 1;
         public int playerDamage = 100;
         public bool playerVelocityPrediction = true;
@@ -127,7 +126,7 @@ namespace Enemies.Ranged
                     endingPos += endingVel * approximateTime;
                     diff = endingPos - startingPos;
                 
-                    Vector2 direction = diff + new Vector2(0,verticalDirOffset);
+                    Vector2 direction = diff + new Vector2(0, 2); // arbitrary vertical offset
                     return direction.normalized * projectileSpeed;
                 }
                 */
@@ -177,10 +176,7 @@ namespace Enemies.Ranged
             Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, radius);
             foreach (Collider2D col in colliders)
             {
-                if (col.isTrigger) continue;
                 EntityHealth health = col.GetComponent<EntityHealth>();
-                Debug.DrawLine(col.ClosestPoint(pos), pos, Color.cyan, 1);
-                Debug.Log((col.transform.position - pos).magnitude);
                 if (health && health != PlayerHealth.Instance)
                 {
                     health.TakeDamage(playerDamage);
