@@ -10,7 +10,6 @@ namespace Enemies.Ranged
     public class EnemyBombScript : EnemyBulletScript
     {
         public GameObject explosionVFX;
-        public float verticalDirOffset = 2;
         public float radius = 1;
         public int playerDamage = 100;
         public bool playerVelocityPrediction = true;
@@ -127,7 +126,7 @@ namespace Enemies.Ranged
                     endingPos += endingVel * approximateTime;
                     diff = endingPos - startingPos;
                 
-                    Vector2 direction = diff + new Vector2(0,verticalDirOffset);
+                    Vector2 direction = diff + new Vector2(0, 2); // arbitrary vertical offset
                     return direction.normalized * projectileSpeed;
                 }
                 */
@@ -143,7 +142,7 @@ namespace Enemies.Ranged
                 Mathf.Sqrt(Mathf.Sqrt(4 / (g*g) * diff.sqrMagnitude)),0.001f,delayBeforeDestruction);
             Vector2 numericalSolution = new(diff.x / t, diff.y / t + g * t / 2);
             Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
-            Debug.Log(numericalSolution.magnitude);
+            //Debug.Log(numericalSolution.magnitude);
             return Vector2.ClampMagnitude(numericalSolution, projectileSpeed);
         }
 
@@ -171,6 +170,8 @@ namespace Enemies.Ranged
             Destroy(gameObject);
 
             if (!playerCaused) return;
+            bool prev = Physics2D.queriesHitTriggers;
+            Physics2D.queriesHitTriggers = false;
             // ReSharper disable once Unity.PreferNonAllocApi
             Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, radius);
             foreach (Collider2D col in colliders)
@@ -181,6 +182,8 @@ namespace Enemies.Ranged
                     health.TakeDamage(playerDamage);
                 }
             }
+
+            Physics2D.queriesHitTriggers = prev;
         }
         
         
