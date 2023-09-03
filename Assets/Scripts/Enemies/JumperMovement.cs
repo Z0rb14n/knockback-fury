@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 
 namespace Enemies
@@ -13,6 +14,7 @@ namespace Enemies
         [SerializeField] private Collider2D colliderOnWall;
         [SerializeField] private Collider2D colliderOnRightWall;
         [SerializeField, Tooltip("scuffed. Completely scuffed. We're completely scuffed.")] private Vector2 wallPositionOffset;
+        [SerializeField] private float targetDistance = 16;
         
         private bool _canJump;
         private bool _isTouchingSurface;
@@ -128,8 +130,20 @@ namespace Enemies
             bool shouldFlipSprite = false;
             if (Grounded)
             {
-                _body.AddForce(new Vector2(100f * _direction, jumpForce * 100));
-                shouldFlipSprite = _direction >= 0;
+                PlayerMovementScript player = PlayerMovementScript.Instance;
+                Vector2 diff = player.transform.position - transform.position;
+                bool direction;
+                if (player.IsWallSliding && diff.magnitude <= targetDistance)
+                {
+                    _body.AddForce(new Vector2(100f * Mathf.Sign(diff.x), jumpForce * 100));
+                    direction = Mathf.Sign(diff.x) >= 0;
+                }
+                else
+                {
+                    _body.AddForce(new Vector2(100f * _direction, jumpForce * 100));
+                    direction = _direction >= 0;
+                }
+                shouldFlipSprite = direction;
             } 
             else if (IsOnLeftWall)
             {
