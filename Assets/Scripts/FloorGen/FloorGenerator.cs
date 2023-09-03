@@ -257,26 +257,41 @@ namespace FloorGen
                 while (eligibleSpawnTypes.Count > 0)
                 {
                     int indexType = eligibleSpawnTypes.GetRandom(random, out EnemySpawnType type);
-                    List<SocketBehaviour> supportedBehaviours =
-                        sockets.Where(pair => (pair.Item2 & type) != 0)
-                            .Select(pair => pair.Item1).ToList();
-                    if (supportedBehaviours.Count == 0)
+                    if (roomData.ignoreSocketEnemySpawns)
                     {
-                        eligibleSpawnTypes.SwapRemove(indexType);
-                        continue;
-                    }
-                    SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
-                    if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
-                    {
+                        GameObject spawnedEnemy = roomData.SpawnEnemy(type, random);
+                        if (!spawnedEnemy)
+                        {
+                            eligibleSpawnTypes.SwapRemove(indexType);
+                            continue;
+                        }
+
                         packSize -= GetCost(type);
                         generatedEnemy = true;
-                        EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
-                        Debug.Assert(health, "Added enemy should have EntityHealth attached");
-                        roomData.AddEnemy(health);
                     }
                     else
                     {
-                        Debug.LogWarning("Tried to spawn enemy of type " + type + " but failed.");
+                        List<SocketBehaviour> supportedBehaviours =
+                            sockets.Where(pair => (pair.Item2 & type) != 0)
+                                .Select(pair => pair.Item1).ToList();
+                        if (supportedBehaviours.Count == 0)
+                        {
+                            eligibleSpawnTypes.SwapRemove(indexType);
+                            continue;
+                        }
+                        SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
+                        if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
+                        {
+                            packSize -= GetCost(type);
+                            generatedEnemy = true;
+                            EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
+                            Debug.Assert(health, "Added enemy should have EntityHealth attached");
+                            roomData.AddEnemy(health);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Tried to spawn enemy of type " + type + " but failed.");
+                        }
                     }
 
                     break;

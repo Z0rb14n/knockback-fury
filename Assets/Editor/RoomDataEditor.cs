@@ -13,6 +13,15 @@ namespace Editor
             if (serializedObject.targetObjects.Length != 1) return;
             RoomData roomData = (RoomData)target;
             roomData.ToPreview = EditorGUILayout.IntField("Layout To Preview", roomData.ToPreview);
+            GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode;
+            if (GUILayout.Button("Create Spawn Point"))
+            {
+                Object o = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Rooms/Socket/SpawnPointPrefab.prefab", typeof(GameObject));
+                Object instantiatedPoint = PrefabUtility.InstantiatePrefab(o, roomData.transform);
+                Selection.activeObject = instantiatedPoint;
+            }
+
+            GUI.enabled = true;
         }
 
         private void OnSceneGUI()
