@@ -9037,6 +9037,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9005711590793679263, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
     - target: {fileID: 3725231272355297958, guid: cf25d7d1257d52b4694ec6c46b75d375, type: 3}
+      propertyPath: summonsUseWorld
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3725231272355297958, guid: cf25d7d1257d52b4694ec6c46b75d375, type: 3}
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 1434700171}

@@ -16,6 +16,7 @@ namespace Player
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                 if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>();
+                if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
         }
@@ -55,13 +56,21 @@ namespace Player
 
         public bool HasNoUpgradedWeapons => _weapon.weaponInventory.All(data => !data || data.numUpgrades == 0);
 
-        private void Awake()
+        private bool _initialized = false;
+
+        private void Initialize()
         {
             _instance = this;
             _weapon = GetComponentInChildren<Weapon>();
             _cam = Camera.main;
             _body = GetComponent<Rigidbody2D>();
             _playerMovement = GetComponent<PlayerMovementScript>();
+            _initialized = true;
+        }
+
+        private void Awake()
+        {
+            Initialize();
         }
 
         private void Update()
@@ -81,7 +90,7 @@ namespace Player
                 if (fireResult)
                 {
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.WeaponData.knockbackStrength);
+                        _weapon.WeaponData.actualKnockbackStrength);
                     _isFirstStrikeActive = false;
                 }
             }

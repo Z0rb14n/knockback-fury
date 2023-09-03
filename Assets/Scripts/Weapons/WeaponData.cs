@@ -4,21 +4,26 @@ using UnityEngine;
 namespace Weapons
 {
     [CreateAssetMenu(fileName = "NewWeaponData", menuName = "WeaponData")]
-    public class WeaponData : ScriptableObject
+    public class WeaponData : ScriptableObject, ISerializationCallbackReceiver
     {
         public string weaponName;
         [Min(0)]
         public int numProjectiles = 1;
-        [Min(0)]
-        public float range = 10;
+        [SerializeField, Min(0)]
+        private float range = 10;
+
+        [NonSerialized]
+        public float actualRange = 10;
         [Min(0)]
         public float projectileSpeed = 1;
         [Min(0)]
         public int projectileDamage = 1;
         [Min(0)]
         public float roundsPerSecond = 1;
-        [Min(0)]
-        public int clipSize = 1;
+        [SerializeField, Min(0)]
+        private int clipSize = 1;
+        [NonSerialized]
+        public int actualClipSize = 1;
         [Min(0), Tooltip("Reload time (seconds)")]
         public float reloadTime = 1.5f;
         [Min(0), Tooltip("Spread of the weapon in degrees")]
@@ -27,7 +32,10 @@ namespace Weapons
         public bool isHitscan;
         [Tooltip("What action is the right click action")]
         public WeaponRightClickAction rightClickAction = WeaponRightClickAction.None;
-        public float knockbackStrength = 12;
+        [SerializeField]
+        private float knockbackStrength = 12;
+        [NonSerialized]
+        public float actualKnockbackStrength;
         public float recoilAnimationDuration = 0.2f;
         public FireMode fireMode = FireMode.SemiAuto;
         public BurstInfo burstInfo;
@@ -38,11 +46,22 @@ namespace Weapons
         public GameObject customProjectile;
 
         public AudioClip fireEffect;
+        [NonSerialized]
         public int numUpgrades;
 
         public int Clip { get; private set; }
 
         public bool IsClipEmpty => Clip <= 0;
+        
+        public void OnBeforeSerialize() {}
+
+        public void OnAfterDeserialize()
+        {
+            actualKnockbackStrength = knockbackStrength;
+            actualRange = range;
+            actualClipSize = clipSize;
+            numUpgrades = 0;
+        }
 
         public void DecrementClip()
         {
@@ -51,7 +70,7 @@ namespace Weapons
 
         public void Reload()
         {
-            Clip = clipSize;
+            Clip = actualClipSize;
         }
 
         /// <summary>
@@ -61,8 +80,8 @@ namespace Weapons
 
         public void UpgradeAmmoCapacity()
         {
-            if (clipSize <= 3) clipSize++;
-            else clipSize = Mathf.RoundToInt(clipSize * 1.5f);
+            if (actualClipSize <= 3) actualClipSize++;
+            else actualClipSize = Mathf.RoundToInt(actualClipSize * 1.5f);
             numUpgrades++;
         }
 
@@ -74,13 +93,13 @@ namespace Weapons
 
         public void UpgradeKnockback()
         {
-            knockbackStrength *= 1.5f;
+            actualKnockbackStrength *= 1.5f;
             numUpgrades++;
         }
 
         public void UpgradeRange()
         {
-            range *= 1.5f;
+            actualRange *= 1.5f;
             numUpgrades++;
         }
     }

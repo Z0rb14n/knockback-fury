@@ -17,6 +17,7 @@ namespace Upgrades
             get
             {
                 if (_instance == null) _instance = FindObjectOfType<UpgradeManager>();
+                if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
         }
@@ -32,8 +33,11 @@ namespace Upgrades
         /// </summary>
         public HashSet<UpgradeType> ImplementedUpgrades { get; } = new();
 
-        private void Awake()
+        private bool _initialized = false;
+
+        private void Initialize()
         {
+            if (_initialized) return;
             foreach (UpgradePickupData data in allData)
             {
                 if (UpgradeMapping.ContainsKey(data.upgradeType))
@@ -44,6 +48,13 @@ namespace Upgrades
                 UpgradeMapping[data.upgradeType] = data;
                 if (data.implemented) ImplementedUpgrades.Add(data.upgradeType);
             }
+
+            _initialized = true;
+        }
+        
+        private void Awake()
+        {
+            Initialize();
         }
     }
 }

@@ -49,6 +49,7 @@ namespace FloorGen
         public GameObject weaponPickupPrefab;
         public GameObject weaponUpgradePrefab;
         [Header("Room/Cell Generation")]
+        public GameObject bossRoomPrefab;
         public Pair[] pairs;
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
@@ -250,6 +251,7 @@ namespace FloorGen
                 _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             }
             pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(random);
+            UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
             _validUpgradeTypes.Remove(pickup.upgrade);
             return pickup;
         }
@@ -396,8 +398,10 @@ namespace FloorGen
             Vector2Int smithTwo = hasSecondSmithingRoom ? RandomPosExcept(random, grid, finalRoomPos, weaponRoomPos, smithOne) : Vector2Int.zero;
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
+                bool isEndRoom = gridIndex == finalRoomPos;
+                bool isBossRoom = floorEnemyPacks[floorNumber].endingHasBoss && isEndRoom;
                 GameObject[] objects = _pairsDict[type];
-                GameObject randomCellPrefab = objects.GetRandom(random);
+                GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(random);
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
                 roomData.EnsureType(type);
@@ -412,7 +416,7 @@ namespace FloorGen
                 }
                 else
                 {
-                    PopulateSocketsNormal(random, gridIndex, cellObject, gridIndex == finalRoomPos, sockets);
+                    PopulateSocketsNormal(random, gridIndex, cellObject, isEndRoom, sockets);
                 }
                 
                 
