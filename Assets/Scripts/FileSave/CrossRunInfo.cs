@@ -22,9 +22,17 @@ namespace FileSave
         }
         private static CrossRunInfo _instance;
         #endregion
-        
 
-        public void ReadFromSave() => data = SaveIO.Read();
+        public delegate void CheeseEventHandler(int change);
+
+        public event CheeseEventHandler OnCheeseCountChange;
+
+        public void ReadFromSave()
+        {
+            data = SaveIO.Read();
+            OnCheeseCountChange?.Invoke(data.cheese);
+        }
+
         public void WriteToSave() => SaveIO.Save(data);
         
         private void Awake()
@@ -44,6 +52,12 @@ namespace FileSave
         {
             Debug.Log("[CrossRunInfo::OnApplicationQuit] Writing Save Data to " + SaveIO.saveLocation);
             WriteToSave();
+        }
+
+        public void AddCheese(int cheese)
+        {
+            data.cheese += cheese;
+            OnCheeseCountChange?.Invoke(cheese);
         }
     }
 }

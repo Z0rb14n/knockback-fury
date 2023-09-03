@@ -250,6 +250,7 @@ namespace FloorGen
                 _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             }
             pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(random);
+            UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
             _validUpgradeTypes.Remove(pickup.upgrade);
             return pickup;
         }
