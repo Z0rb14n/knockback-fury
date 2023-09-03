@@ -129,7 +129,7 @@ MonoBehaviour:
   maxSpeed: 8
   speedSmoothness: 0.01
   jumpForce: 10
-  wallJumpForce: {x: 10, y: 5}
+  wallJumpForce: {x: 10, y: 10}
   dashSpeed: 0.3
   dashTime: 0.06
   maxDashes: 1
