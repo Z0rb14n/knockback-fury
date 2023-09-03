@@ -13,6 +13,15 @@ namespace Editor
             if (serializedObject.targetObjects.Length != 1) return;
             RoomData roomData = (RoomData)target;
             roomData.ToPreview = EditorGUILayout.IntField("Layout To Preview", roomData.ToPreview);
+            GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode;
+            if (GUILayout.Button("Create Spawn Point"))
+            {
+                Object o = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Rooms/Socket/SpawnPointPrefab.prefab", typeof(GameObject));
+                Object instantiatedPoint = PrefabUtility.InstantiatePrefab(o, roomData.transform);
+                Selection.activeObject = instantiatedPoint;
+            }
+
+            GUI.enabled = true;
         }
 
         private void OnSceneGUI()
@@ -22,6 +31,7 @@ namespace Editor
             roomData.weaponSpawnOffset = DrawSocketFor(roomData.weaponSpawnOffset, "Weapon Spawn Offset");
             roomData.powerupSpawnOffset = DrawSocketFor(roomData.powerupSpawnOffset, "Powerup Spawn Offset");
             roomData.weaponUpgradeSpawnOffset = DrawSocketFor(roomData.weaponUpgradeSpawnOffset, "Upgrade Spawn Offset");
+            roomData.playerSpawnOffset = DrawSocketFor(roomData.playerSpawnOffset, "Upgrade Spawn Offset");
             if (roomData.layouts == null || roomData.ToPreview >= roomData.layouts.Length || roomData.ToPreview < 0) return;
             Vector3 initialPos = roomData.transform.position;
             Layout layout = roomData.layouts[roomData.ToPreview];

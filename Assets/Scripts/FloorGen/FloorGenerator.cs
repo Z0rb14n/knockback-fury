@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Enemies;
+using Enemies.Ranged;
 using FileSave;
 using Player;
 using UnityEngine;
@@ -72,15 +73,15 @@ namespace FloorGen
         public Vector2Int generationStart = Vector2Int.zero;
         [Tooltip("Transform to forcibly set position of")]
         public Transform playerTransform;
-        [Tooltip("Offset of player spawn")]
-        public Vector2 playerSpawnOffset = Vector2.zero;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
+        private HashSet<UpgradeType> _validUpgradeTypes = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
 
         private void Awake()
         {
+            _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             _socketPrefabSizes.Clear();
             GeneratePrefabSizes();
             _pairsDict.Clear();
@@ -130,7 +131,8 @@ namespace FloorGen
             Grid grid = new();
             Random random = GenerateRNG();
             // Set the player's position based on the starting position
-            playerTransform.position = generationStart * gridSize + playerSpawnOffset;
+            // (we modify this later, this is just in case it bugs)
+            playerTransform.position = generationStart * gridSize;
             
             int roomCount = random.Next(minRooms,maxRooms+1);
 
@@ -242,7 +244,13 @@ namespace FloorGen
             GameObject playerUpgrade = Instantiate(playerUpgradePrefab, position, Quaternion.identity, parent.transform);
             playerUpgrade.SetActive(false);
             UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
-            pickup.upgrade = Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().ToList().GetRandom(random);
+            if (_validUpgradeTypes.Count == 0)
+            {
+                Debug.LogWarning("Empty valid upgrade types - regenerating.");
+                _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
+            }
+            pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(random);
+            _validUpgradeTypes.Remove(pickup.upgrade);
             return pickup;
         }
         
@@ -257,26 +265,41 @@ namespace FloorGen
                 while (eligibleSpawnTypes.Count > 0)
                 {
                     int indexType = eligibleSpawnTypes.GetRandom(random, out EnemySpawnType type);
-                    List<SocketBehaviour> supportedBehaviours =
-                        sockets.Where(pair => (pair.Item2 & type) != 0)
-                            .Select(pair => pair.Item1).ToList();
-                    if (supportedBehaviours.Count == 0)
+                    if (roomData.ignoreSocketEnemySpawns)
                     {
-                        eligibleSpawnTypes.SwapRemove(indexType);
-                        continue;
-                    }
-                    SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
-                    if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
-                    {
+                        GameObject spawnedEnemy = roomData.SpawnEnemy(type, random);
+                        if (!spawnedEnemy)
+                        {
+                            eligibleSpawnTypes.SwapRemove(indexType);
+                            continue;
+                        }
+
                         packSize -= GetCost(type);
                         generatedEnemy = true;
-                        EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
-                        Debug.Assert(health, "Added enemy should have EntityHealth attached");
-                        roomData.AddEnemy(health);
                     }
                     else
                     {
-                        Debug.LogWarning("Tried to spawn enemy of type " + type + " but failed.");
+                        List<SocketBehaviour> supportedBehaviours =
+                            sockets.Where(pair => (pair.Item2 & type) != 0)
+                                .Select(pair => pair.Item1).ToList();
+                        if (supportedBehaviours.Count == 0)
+                        {
+                            eligibleSpawnTypes.SwapRemove(indexType);
+                            continue;
+                        }
+                        SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
+                        if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
+                        {
+                            packSize -= GetCost(type);
+                            generatedEnemy = true;
+                            EntityHealth health = spawnedEnemy.GetComponent<EntityHealth>();
+                            Debug.Assert(health, "Added enemy should have EntityHealth attached");
+                            roomData.AddEnemy(health);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("Tried to spawn enemy of type " + type + " but failed.");
+                        }
                     }
 
                     break;
@@ -296,8 +319,27 @@ namespace FloorGen
             EntityHealth randomEnemy = enemies.GetRandom(random);
             randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
             ContactDamage attack = randomEnemy.GetComponent<ContactDamage>();
-            Debug.Assert(attack, "Random enemy should have damage dealing capabilities");
-            attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
+            if (attack)
+            {
+                attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
+            }
+
+            HeavyAttack heavyAttack = randomEnemy.GetComponent<HeavyAttack>();
+            if (heavyAttack)
+            {
+                heavyAttack.attackDamage = Mathf.RoundToInt(heavyAttack.attackDamage * eliteDamageModifier);
+            }
+
+            RangedEnemyScript rangedEnemy = randomEnemy.GetComponent<RangedEnemyScript>();
+            if (rangedEnemy)
+            {
+                rangedEnemy.damageMultiplier = eliteDamageModifier;
+            }
+
+            if (!attack && !heavyAttack && !rangedEnemy)
+            {
+                Debug.LogError("Elite enemy doesn't have any damage dealing capabilities.");
+            }
         }
         
         private void PopulateSocketsNormal(Random random, Vector2Int gridIndex, GameObject cellObject, bool isEndRoom,
@@ -346,7 +388,7 @@ namespace FloorGen
         
         private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
-            Vector2Int finalRoomPos = new(middleLength, 0);
+            Vector2Int finalRoomPos = new Vector2Int(middleLength, 0) + generationStart;
             bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
             Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept(random, grid, finalRoomPos) : Vector2Int.zero;
             bool hasSecondSmithingRoom = random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
@@ -358,6 +400,7 @@ namespace FloorGen
                 GameObject randomCellPrefab = objects.GetRandom(random);
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
+                roomData.EnsureType(type);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)
                 {
@@ -370,6 +413,13 @@ namespace FloorGen
                 else
                 {
                     PopulateSocketsNormal(random, gridIndex, cellObject, gridIndex == finalRoomPos, sockets);
+                }
+                
+                
+                // Set the player's position based on the starting position
+                if (generationStart == gridIndex)
+                {
+                    playerTransform.position = generationStart * gridSize + roomData.playerSpawnOffset;
                 }
             }
         }

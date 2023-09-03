@@ -13,6 +13,7 @@ namespace Enemies.Ranged
         public float verticalKnockback = 0.04f;
         public float knockbackStrength = 0.1f;
 
+        protected float damageMultiplier;
         protected new Rigidbody2D rigidbody2D;
         private float _timer;
 
@@ -21,8 +22,9 @@ namespace Enemies.Ranged
             rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        public virtual void Initialize()
+        public virtual void Initialize(float damageMult)
         {
+            damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
             
             Vector3 direction = PlayerMovementScript.Instance.transform.position - transform.position;
@@ -38,7 +40,7 @@ namespace Enemies.Ranged
             if (!playerMovement) return;
             EntityHealth playerHealth = other.gameObject.GetComponent<EntityHealth>();
 
-            playerHealth.TakeDamage(bulletDamage);
+            playerHealth.TakeDamage(Mathf.RoundToInt(bulletDamage * damageMultiplier));
             Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * knockbackStrength, verticalKnockback);
             playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
 
