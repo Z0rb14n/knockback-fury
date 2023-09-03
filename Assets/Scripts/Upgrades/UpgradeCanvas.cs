@@ -41,6 +41,8 @@ namespace Upgrades
             title.text = UpgradeManager.Instance.UpgradeMapping[type].displayName;
             body.text = UpgradeManager.Instance.UpgradeMapping[type].infoText;
             transform.GetChild(0).gameObject.SetActive(true);
+            animator.Rebind();
+            animator.Update(0);
         }
 
         /// <summary>
