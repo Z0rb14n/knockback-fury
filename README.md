@@ -26,6 +26,7 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - Tilemap: https://adamatomic.itch.io/cavernas
  - Rat: https://opengameart.org/content/rat
  - Cheese: https://opengameart.org/content/cartoon-food
+ - Shield: https://opengameart.org/content/shield-2
 
 ### Sounds
  - https://opengameart.org/content/hollywood-style-pistol-silencer-sound-effect

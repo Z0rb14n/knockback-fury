@@ -18,12 +18,19 @@ namespace Player
         }
         private static PlayerHealth _instance;
         private PlayerUpgradeManager _upgradeManager;
+        
+        
+        public delegate void TargetAnalysisUpdateHandler();
+
+        public event TargetAnalysisUpdateHandler OnTargetAnalysisUpdate;
 
         [SerializeField] private int sneakyJumperCooldown = 3;
         [SerializeField] private int sneakyJumperInvulnTime = 1;
 
-        private bool _isTargetAnalysisShieldActive;
-        private int _sumTargetAnalysis;
+        public int TargetAnalysisDamage { get; private set; }
+
+        public bool IsTargetAnalysisShieldActive { get; private set; }
+
         private int _currSneakyJumpCooldown;
 
         protected override void Awake()
@@ -38,14 +45,15 @@ namespace Player
         /// </summary>
         protected override void DoTakeDamage(int dmg)
         {
-            if (!_isTargetAnalysisShieldActive)
+            if (!IsTargetAnalysisShieldActive)
             {
                 health -= dmg;
                 _iFrameTimer = iFrameLength;
             }
             else
             {
-                _isTargetAnalysisShieldActive = false;
+                IsTargetAnalysisShieldActive = false;
+                OnTargetAnalysisUpdate?.Invoke();
             }
             StartCoroutine(DisableCollision());
             
@@ -75,15 +83,16 @@ namespace Player
 
         public void OnDamageDealtToOther(int amount)
         {
-            if (_isTargetAnalysisShieldActive) return;
+            if (IsTargetAnalysisShieldActive) return;
             if (_upgradeManager[UpgradeType.TargetAnalysis] > 0)
             {
-                _sumTargetAnalysis += amount;
-                if (_sumTargetAnalysis >= _upgradeManager.GetData(UpgradeType.TargetAnalysis))
+                TargetAnalysisDamage += amount;
+                if (TargetAnalysisDamage >= _upgradeManager.GetData(UpgradeType.TargetAnalysis))
                 {
-                    _sumTargetAnalysis = 0;
-                    _isTargetAnalysisShieldActive = true;
+                    TargetAnalysisDamage = 0;
+                    IsTargetAnalysisShieldActive = true;
                 }
+                OnTargetAnalysisUpdate?.Invoke();
             }
         }
 
