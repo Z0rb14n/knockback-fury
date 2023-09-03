@@ -9,7 +9,7 @@ using Weapons;
 namespace Player
 {
     [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),
-         typeof(MeshTrail), 
+         typeof(MeshTrail),
          typeof(PlayerUpgradeManager))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerMovementScript : MonoBehaviour
@@ -21,7 +21,7 @@ namespace Player
         [Min(0), Tooltip("Jump Impulse")]
         public float jumpForce = 10;
         [Tooltip("Wall Jump Impulse")]
-        public Vector2 wallJumpForce = new(10,5);
+        public Vector2 wallJumpForce = new(10, 5);
         [Min(0), Tooltip("Dash movement per physics update")]
         public float dashSpeed = 1;
         [Min(0), Tooltip("Time in Air Dash")]
@@ -46,7 +46,7 @@ namespace Player
         public float decelWhenAbove = 5;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
-        
+
         public static PlayerMovementScript Instance
         {
             get
@@ -56,7 +56,7 @@ namespace Player
             }
         }
         private static PlayerMovementScript _instance;
-        
+
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
 
@@ -82,7 +82,7 @@ namespace Player
         private bool _hasMomentumDash;
         private SpriteRenderer _sprite;
         private readonly List<PlatformTileScript> _platformsOn = new();
-    
+
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
@@ -196,10 +196,11 @@ namespace Player
                     xInput = 0;
                     break;
             }
-            
+
             HorizontalMovementLogic(xInput);
 
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) _jumpRequest = true;
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)
+                || Input.GetKeyDown(KeyCode.UpArrow)) _jumpRequest = true;
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -215,7 +216,7 @@ namespace Player
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
             }
