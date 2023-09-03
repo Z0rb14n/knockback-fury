@@ -29,6 +29,10 @@ namespace FloorGen
         public Vector2 powerupSpawnOffset = Vector2.up;
         [Tooltip("Spawn offset of weapon upgrades")]
         public Vector2 weaponUpgradeSpawnOffset = Vector2.up;
+        [Tooltip("Player spawn offset")]
+        public Vector2 playerSpawnOffset = Vector2.zero;
+
+        public ExitHider[] hiders;
         
         public Layout[] layouts;
 
@@ -61,6 +65,14 @@ namespace FloorGen
                     if (_spawnTypeMapping.ContainsKey(t)) _spawnTypeMapping[t].Add(point);
                     else _spawnTypeMapping[t] = new List<EnemySpawnPoint>(new []{point});
                 }
+            }
+        }
+
+        public void EnsureType(RoomType type)
+        {
+            foreach (ExitHider hider in hiders)
+            {
+                if ((type & hider.hidingType) == 0) hider.toEnable.SetActive(true);
             }
         }
 
@@ -121,6 +133,13 @@ namespace FloorGen
             if (pickup) pickup.gameObject.SetActive(true);
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
+        }
+
+        [Serializable]
+        public struct ExitHider
+        {
+            public RoomType hidingType;
+            public GameObject toEnable;
         }
     }
 }

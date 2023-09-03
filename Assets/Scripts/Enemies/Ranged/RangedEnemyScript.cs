@@ -13,6 +13,8 @@ namespace Enemies.Ranged
         public Transform bulletPos;
         [Min(0), Tooltip("Time (seconds) between firing")]
         public float fireDelay = 2;
+        [HideInInspector]
+        public float damageMultiplier = 1;
 
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
@@ -44,7 +46,7 @@ namespace Enemies.Ranged
                 else
                 {
                     GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
-                    go.GetComponent<EnemyBulletScript>().Initialize();
+                    go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
                 }
                 if (_source && _source.clip) _source.Play();
             }
@@ -72,7 +74,7 @@ namespace Enemies.Ranged
         public void AnimatorEventReached()
         {
             GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
-            go.GetComponent<EnemyBulletScript>().Initialize();
+            go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
         }
     }
 }

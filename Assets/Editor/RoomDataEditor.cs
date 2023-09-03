@@ -31,6 +31,7 @@ namespace Editor
             roomData.weaponSpawnOffset = DrawSocketFor(roomData.weaponSpawnOffset, "Weapon Spawn Offset");
             roomData.powerupSpawnOffset = DrawSocketFor(roomData.powerupSpawnOffset, "Powerup Spawn Offset");
             roomData.weaponUpgradeSpawnOffset = DrawSocketFor(roomData.weaponUpgradeSpawnOffset, "Upgrade Spawn Offset");
+            roomData.playerSpawnOffset = DrawSocketFor(roomData.playerSpawnOffset, "Upgrade Spawn Offset");
             if (roomData.layouts == null || roomData.ToPreview >= roomData.layouts.Length || roomData.ToPreview < 0) return;
             Vector3 initialPos = roomData.transform.position;
             Layout layout = roomData.layouts[roomData.ToPreview];

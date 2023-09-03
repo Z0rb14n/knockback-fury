@@ -16,8 +16,9 @@ namespace Enemies.Ranged
 
         private LayerMask _playerLayerMask;
 
-        public override void Initialize()
+        public override void Initialize(float damageMult)
         {
+            damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
@@ -163,7 +164,7 @@ namespace Enemies.Ranged
             {
                 PlayerMovementScript playerMovement = PlayerMovementScript.Instance;
                 EntityHealth playerHealth = PlayerHealth.Instance;
-                playerHealth.TakeDamage(bulletDamage);
+                playerHealth.TakeDamage(Mathf.RoundToInt(bulletDamage * damageMultiplier));
                 Vector2 knockbackDirection = new((playerMovement.transform.position - pos).normalized.x * 0.1f, 0.04f);
                 playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }

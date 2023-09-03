@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Enemies;
+using Enemies.Ranged;
 using FileSave;
 using Player;
 using UnityEngine;
@@ -72,8 +73,6 @@ namespace FloorGen
         public Vector2Int generationStart = Vector2Int.zero;
         [Tooltip("Transform to forcibly set position of")]
         public Transform playerTransform;
-        [Tooltip("Offset of player spawn")]
-        public Vector2 playerSpawnOffset = Vector2.zero;
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
@@ -132,7 +131,8 @@ namespace FloorGen
             Grid grid = new();
             Random random = GenerateRNG();
             // Set the player's position based on the starting position
-            playerTransform.position = generationStart * gridSize + playerSpawnOffset;
+            // (we modify this later, this is just in case it bugs)
+            playerTransform.position = generationStart * gridSize;
             
             int roomCount = random.Next(minRooms,maxRooms+1);
 
@@ -319,8 +319,27 @@ namespace FloorGen
             EntityHealth randomEnemy = enemies.GetRandom(random);
             randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
             ContactDamage attack = randomEnemy.GetComponent<ContactDamage>();
-            Debug.Assert(attack, "Random enemy should have damage dealing capabilities");
-            attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
+            if (attack)
+            {
+                attack.damage = Mathf.RoundToInt(attack.damage * eliteDamageModifier);
+            }
+
+            HeavyAttack heavyAttack = randomEnemy.GetComponent<HeavyAttack>();
+            if (heavyAttack)
+            {
+                heavyAttack.attackDamage = Mathf.RoundToInt(heavyAttack.attackDamage * eliteDamageModifier);
+            }
+
+            RangedEnemyScript rangedEnemy = randomEnemy.GetComponent<RangedEnemyScript>();
+            if (rangedEnemy)
+            {
+                rangedEnemy.damageMultiplier = eliteDamageModifier;
+            }
+
+            if (!attack && !heavyAttack && !rangedEnemy)
+            {
+                Debug.LogError("Elite enemy doesn't have any damage dealing capabilities.");
+            }
         }
         
         private void PopulateSocketsNormal(Random random, Vector2Int gridIndex, GameObject cellObject, bool isEndRoom,
@@ -369,7 +388,7 @@ namespace FloorGen
         
         private void GenerateFromGrid(Random random, Grid grid, int middleLength)
         {
-            Vector2Int finalRoomPos = new(middleLength, 0);
+            Vector2Int finalRoomPos = new Vector2Int(middleLength, 0) + generationStart;
             bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
             Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept(random, grid, finalRoomPos) : Vector2Int.zero;
             bool hasSecondSmithingRoom = random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
@@ -381,6 +400,7 @@ namespace FloorGen
                 GameObject randomCellPrefab = objects.GetRandom(random);
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
+                roomData.EnsureType(type);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)
                 {
@@ -393,6 +413,13 @@ namespace FloorGen
                 else
                 {
                     PopulateSocketsNormal(random, gridIndex, cellObject, gridIndex == finalRoomPos, sockets);
+                }
+                
+                
+                // Set the player's position based on the starting position
+                if (generationStart == gridIndex)
+                {
+                    playerTransform.position = generationStart * gridSize + roomData.playerSpawnOffset;
                 }
             }
         }
