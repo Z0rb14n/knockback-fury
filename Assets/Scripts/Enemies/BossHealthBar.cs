@@ -13,6 +13,13 @@ namespace Enemies
         private void Awake()
         {
             _healthBarRect = healthBar.GetComponent<RectTransform>();
+            if (!health)
+            {
+                BossEnemy boss = FindObjectOfType<BossEnemy>(true);
+                Debug.Assert(boss);
+                health = boss.GetComponent<EntityHealth>();
+                Debug.Assert(health);
+            }
             SetValues();
         }
 

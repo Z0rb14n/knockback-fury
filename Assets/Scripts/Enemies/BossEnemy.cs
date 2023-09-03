@@ -35,6 +35,7 @@ namespace Enemies
         [SerializeField, Min(0)] private float delayBetweenSummons = 5f;
         [SerializeField, Min(0)] private int numberOfSummons = 3;
         [SerializeField] private Vector3[] summonLocations;
+        [SerializeField] private bool summonsUseWorld = true;
         
         private PlayerMovementScript _playerMovement;
         private PlayerHealth _playerHealth;
@@ -78,9 +79,12 @@ namespace Enemies
             {
                 yield return new WaitForSeconds(delayBetweenSummons);
                 List<int> randVals = RandValues(numberOfSummons, summonLocations.Length);
+                Transform parent = transform.parent;
                 for (int i = 0; i < numberOfSummons; i++)
                 {
-                    Instantiate(minionPrefab, summonLocations[randVals[i]], Quaternion.identity);
+                    Vector3 position = summonLocations[randVals[i]];
+                    if (!summonsUseWorld) position = parent.TransformPoint(position);
+                    Instantiate(minionPrefab, position, Quaternion.identity, parent);
                 }
             }
         }
