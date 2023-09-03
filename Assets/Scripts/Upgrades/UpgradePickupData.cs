@@ -18,6 +18,9 @@ namespace Upgrades
         public string infoText;
         [Tooltip("Whether this is implemented (i.e. generated in game)")]
         public bool implemented;
+        [TextArea, Tooltip("Unused: indicate optional comment")]
+        // ReSharper disable once NotAccessedField.Global
+        public string comment;
 
         /// <summary>
         /// Sets the UpgradePickup using the data in this scriptable object.

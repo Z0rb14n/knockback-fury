@@ -317,7 +317,7 @@ namespace Player
 
         private IEnumerator DashCoroutine()
         {
-            _meshTrail.StartDash();
+            _meshTrail.StartDash(_sprite.flipX);
             _body.velocity = Vector2.zero;
             float thisDashTime = ActualDashTime;
             if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();

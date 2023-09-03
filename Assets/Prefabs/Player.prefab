@@ -129,13 +129,12 @@ MonoBehaviour:
   maxSpeed: 8
   speedSmoothness: 0.01
   jumpForce: 10
-  wallJumpForce: {x: 10, y: 5}
+  wallJumpForce: {x: 10, y: 10}
   dashSpeed: 0.3
   dashTime: 0.06
   maxDashes: 1
   slideSpeed: 0.05
   newMovementEnabled: 1
-  newMaxSpeed: 8
   accel: 50
   turnAroundMultiplier: 2
   decel: 20
@@ -174,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e86b1837bd62e48b7995c5ea1b052f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 21300000, guid: 77f2427627b56a3489f25041b1f85fa3, type: 3}
+  playerSprite: {fileID: 21300000, guid: 58a26765089c0704db6fb8815145f1ce, type: 3}
   fadeSpeed: 0.6
   maxTimeInterval: 1
 --- !u!114 &1994587395661662118
