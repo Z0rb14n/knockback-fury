@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Upgrades
@@ -12,16 +13,15 @@ namespace Upgrades
 
         public void Generate()
         {
-            Array array = Enum.GetValues(typeof(UpgradeType));
-            int count = array.Length;
-            int cloakAndDaggerDamage = 500;
-            for (int i = 0; i < count; i++)
+            Debug.Assert(UpgradeManager.Instance.UpgradeMapping.Count == Enum.GetValues(typeof(UpgradeType)).Length);
+            (UpgradeType, UpgradePickupData)[] upgrades = UpgradeManager.Instance.UpgradeMapping
+                .Select(pair => (pair.Key, pair.Value)).ToArray();
+            for (int i = 0; i < upgrades.Length; i++)
             {
-                Vector3 pos = Vector3.Lerp(left, right, (float)i / (count-1));
+                Vector3 pos = Vector3.Lerp(left, right, (float)i / (upgrades.Length-1));
                 GameObject go = Instantiate(upgradePrefab, pos, Quaternion.identity, transform);
                 UpgradePickup pickup = go.GetComponent<UpgradePickup>();
-                pickup.upgrade = (UpgradeType) array.GetValue(i);
-                if (pickup.upgrade == UpgradeType.CloakAndDagger) pickup.upgradeData = cloakAndDaggerDamage;
+                upgrades[i].Item2.Set(pickup, false);
             }
         }
 

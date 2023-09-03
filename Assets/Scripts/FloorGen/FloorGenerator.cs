@@ -77,10 +77,12 @@ namespace FloorGen
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
+        private HashSet<UpgradeType> _validUpgradeTypes = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
 
         private void Awake()
         {
+            _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             _socketPrefabSizes.Clear();
             GeneratePrefabSizes();
             _pairsDict.Clear();
@@ -242,7 +244,13 @@ namespace FloorGen
             GameObject playerUpgrade = Instantiate(playerUpgradePrefab, position, Quaternion.identity, parent.transform);
             playerUpgrade.SetActive(false);
             UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
-            pickup.upgrade = Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>().ToList().GetRandom(random);
+            if (_validUpgradeTypes.Count == 0)
+            {
+                Debug.LogWarning("Empty valid upgrade types - regenerating.");
+                _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
+            }
+            pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(random);
+            _validUpgradeTypes.Remove(pickup.upgrade);
             return pickup;
         }
         
