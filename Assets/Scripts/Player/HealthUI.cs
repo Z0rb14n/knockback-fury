@@ -53,7 +53,6 @@ namespace Player
                 bool isShieldActive = playerHealth.IsTargetAnalysisShieldActive;
                 ratio = isShieldActive ? 1 : ((float)playerHealth.TargetAnalysisDamage /
                         PlayerUpgradeManager.Instance.GetData(UpgradeType.TargetAnalysis));
-                Debug.Log(isShieldActive + "," + playerHealth.TargetAnalysisDamage);
                 targetAnalysisObject.color = isShieldActive ? Color.white : targetAnalysisUnavailableColor;
                 _targetAnalysisBackRect.anchorMin = new Vector2(ratio, 0);
             }
