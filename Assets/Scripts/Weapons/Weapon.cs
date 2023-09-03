@@ -130,7 +130,7 @@ namespace Weapons
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.range;
+            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.actualRange;
             // literally hitscan
             int count = isMelee ? 1 : WeaponData.numProjectiles;
             Physics2D.queriesHitTriggers = false;
@@ -244,7 +244,7 @@ namespace Weapons
         {
             if (IsOneYearOfReloadPossible) ImmediateReload();
             if (ReloadTime > 0) return;
-            if (WeaponData.Clip == WeaponData.clipSize) return;
+            if (WeaponData.Clip == WeaponData.actualClipSize) return;
             ReloadTime = WeaponData.reloadTime;
             if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
             {
