@@ -27,6 +27,8 @@ namespace Player
         [Min(0), Tooltip("Time in Air Dash")]
         public float dashTime = 1;
         [Min(0), Tooltip("Max number of dashes upon landing")]
+        public float dashStartDelay = 1;
+        [Min(0), Tooltip("Seconds you freeze in the air when initiating a dash")]
         public int maxDashes = 1;
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
@@ -318,20 +320,30 @@ namespace Player
 
         private IEnumerator DashCoroutine()
         {
+            _body.constraints = RigidbodyConstraints2D.FreezeAll;
+            yield return new WaitForSeconds(dashStartDelay);
+            _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
             _meshTrail.StartDash(_sprite.flipX);
-            _body.velocity = Vector2.zero;
-            float thisDashTime = ActualDashTime;
+            //_body.velocity = Vector2.zero;
+            //float thisDashTime = ActualDashTime;
             if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
-            for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
-            {
-                if (_body.IsTouchingLayers(_physicsCheckMask)) break;
-                Vector2 pos = _body.position;
-                _body.MovePosition(pos + (_dashDirection * dashSpeed));
-                yield return new WaitForFixedUpdate();
-            }
+            //for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
+            //{
+            //    if (_body.IsTouchingLayers(_physicsCheckMask)) break;
+            //    Vector2 pos = _body.position;
+            //    _body.MovePosition(pos + (_dashDirection * dashSpeed));
+            //    yield return new WaitForFixedUpdate();
+            //}
+
+            float gravity = _body.gravityScale;
+            _body.gravityScale = 0;
+            _body.velocity = _dashDirection * dashSpeed;
+            yield return new WaitForSeconds(dashTime);
+            _body.gravityScale = gravity;
 
             _dashing = false;
-            _body.velocity = Vector2.zero;
+            // _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
         }
 
