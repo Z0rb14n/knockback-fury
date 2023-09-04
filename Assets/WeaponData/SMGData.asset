@@ -16,11 +16,11 @@ MonoBehaviour:
   numProjectiles: 1
   range: 10
   projectileSpeed: 15
-  projectileDamage: 14
-  roundsPerSecond: 9
+  projectileDamage: 8
+  roundsPerSecond: 8
   clipSize: 50
   reloadTime: 1.5
-  spread: 20
+  spread: 40
   isHitscan: 0
   rightClickAction: 0
   knockbackStrength: 3
