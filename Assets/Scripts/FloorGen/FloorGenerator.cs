@@ -139,6 +139,7 @@ namespace FloorGen
 
             List<Vector2Int> toBranch = new() { generationStart };
             int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
+            toBranch.Remove(new Vector2Int(middleLength, 0) + generationStart);
             roomCount -= middleLength;
 
             List<Vector2Int> withinIterationToBranch = new(toBranch);
@@ -222,7 +223,7 @@ namespace FloorGen
             GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, pos, Quaternion.identity, parent.transform);
             WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
             HashSet<string> playerCurrInventory =
-                PlayerWeaponControl.Instance.GetInventory.Select(data => data.weaponName).ToHashSet();
+                PlayerWeaponControl.Instance.GetInventory.Where(data => data).Select(data => data.weaponName).ToHashSet();
             List<WeaponData> eligibleWeapons =
                 weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName)).ToList();
             weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(random));

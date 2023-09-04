@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Upgrades;
 
 namespace Player
@@ -62,7 +63,23 @@ namespace Player
         protected override void Die()
         {
             Debug.Log("Player death");
-            // TODO: player death
+            StartCoroutine(OnDeathCoroutine());
+        }
+
+        private static IEnumerator OnDeathCoroutine()
+        {
+            PlayerMovementScript.Instance.CanMove = false;
+            PlayerWeaponControl.Instance.enabled = false;
+            Time.timeScale = 0;
+            yield return new WaitForSecondsRealtime(1);
+            Time.timeScale = 1;
+            PlayerMovementScript.Instance.CanMove = true;
+            PlayerWeaponControl.Instance.enabled = true;
+            int _playerLayerID = LayerMask.NameToLayer("Player");
+            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+            // TODO PROPER LOGIC
+            SceneManager.LoadScene("MainMenuScene");
         }
 
         private IEnumerator DisableCollision()

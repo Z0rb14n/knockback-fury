@@ -114,7 +114,13 @@ namespace Weapons
                 if (_weaponBurstTimer <= 0)
                 {
                     if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
-                    else FireWeaponUnchecked();
+                    else
+                    {
+                        Vector3 mousePos = GetMousePos();
+                        PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
+                            WeaponData.actualKnockbackStrength);
+                        FireWeaponUnchecked();
+                    }
                 }
             }
         }

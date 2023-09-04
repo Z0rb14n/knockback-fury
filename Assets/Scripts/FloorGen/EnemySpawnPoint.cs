@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Enemies;
+using UnityEngine;
 
 namespace FloorGen
 {
@@ -15,6 +17,9 @@ namespace FloorGen
         private GameObject rangedPrefab;
         [SerializeField, Tooltip("Chaser enemy prefab")]
         private GameObject chaserPrefab;
+
+        [SerializeField, Tooltip("Spawn Points")]
+        private Transform[] patrolPoints;
         [Tooltip("Types of enemies that can spawn here.")]
         public EnemySpawnType types;
 
@@ -55,6 +60,7 @@ namespace FloorGen
             go = Instantiate(jumperPrefab, transform);
             // TODO FIX FROG UNCENTERED
             go.transform.position = transform.position + new Vector3(0,0.75f,0);
+            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
             return true;
         }
 
@@ -69,6 +75,7 @@ namespace FloorGen
             if ((types & EnemySpawnType.Heavy) == 0) return false;
             go = Instantiate(heavyPrefab, transform);
             go.transform.position = transform.position;
+            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
             return true;
         }
 
