@@ -190,14 +190,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daec85cff96e4fe0b3ba016a72f63c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 18
-  bulletDamage: 4
+  projectileSpeed: 15
+  bulletDamage: 1
   knockbackForce: 100
-  delayBeforeDestruction: 2
+  delayBeforeDestruction: 3
   verticalKnockback: 0.04
   knockbackStrength: 0.1
   explosionVFX: {fileID: 4706453752192310371, guid: e637501e229697e469289c858ff2d237, type: 3}
-  verticalDirOffset: 2
   radius: 1
   playerDamage: 100
   playerVelocityPrediction: 1

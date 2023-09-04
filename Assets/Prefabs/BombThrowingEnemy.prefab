@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: fireDelay
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 4488847752800442320, guid: fa90e8493a384014194673dde3e28bbd, type: 3}
@@ -15,6 +19,14 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
+    - target: {fileID: 3140844653701895980, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140844653701895980, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: maxHealth
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3628323996390703106, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_Radius
       value: 16
