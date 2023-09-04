@@ -27,9 +27,9 @@ namespace Player
         public float dashSpeed = 1;
         [Min(0), Tooltip("Time in Air Dash")]
         public float dashTime = 1;
-        [Min(0), Tooltip("Max number of dashes upon landing")]
-        public float dashStartDelay = 1;
         [Min(0), Tooltip("Seconds you freeze in the air when initiating a dash")]
+        public float dashStartDelay = 1;
+        [Min(0), Tooltip("Max number of dashes upon landing")]
         public int maxDashes = 1;
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
@@ -50,9 +50,11 @@ namespace Player
         [Min(0), Tooltip("The height of the short jump compared to the high jump")]
         public float shortJumpPercentage = 0.75f;
         [Min(0), Tooltip("How much earlier jump can be pressed")]
-        public int earlyJumpLeeway = 10;
+        public float earlyJumpLeeway = 10;
         [Min(0), Tooltip("How much later jump can be pressed")]
-        public int lateJumpLeeway = 3;
+        public float lateJumpLeeway = 3;
+        [Min(0), Tooltip("How long jump needs to be held to jump higher")]
+        public float highJumpTime = 3;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -91,9 +93,9 @@ namespace Player
         private bool _hasMomentumDash;
         private SpriteRenderer _sprite;
         private readonly List<PlatformTileScript> _platformsOn = new();
-        private int _earlyJumpFrames = 0;
-        private int _lateJumpFrames = 0;
-        private int _jumpFrames = 0;
+        private float _earlyJumpTime = 0;
+        private float _lateJumpTime = 0;
+        private float _jumpTime = 0;
         private bool _isHoldingJump = false;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
@@ -195,45 +197,50 @@ namespace Player
         private void JumpLogic()
         {
             //jump
-            if (Grounded || _lateJumpFrames > 0)
+            if (Grounded || _lateJumpTime > 0)
             {
-                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || _earlyJumpFrames > 0))
+                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                    || Input.GetKeyDown(KeyCode.Space) || _earlyJumpTime > 0))
                 {
                     _body.velocity = new Vector2(_body.velocity.x, jumpForce * shortJumpPercentage);
-                    _isHoldingJump = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W));
-                    _earlyJumpFrames = 0;
+                    _isHoldingJump = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)
+                        || Input.GetKey(KeyCode.Space));
+                    _earlyJumpTime = 0;
                 }
             }
             //pressing jump early
             else
             {
-                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                    || Input.GetKeyDown(KeyCode.Space))
                 {
-                    _earlyJumpFrames = earlyJumpLeeway;
+                    _earlyJumpTime = earlyJumpLeeway;
                 }
             }
             //let go of jump
-            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W))
+            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W)
+                || Input.GetKeyUp(KeyCode.Space))
             {
                 _isHoldingJump = false;
-                _jumpFrames = 0;
+                _jumpTime = 0;
             }
         }
 
         private void AdditionalJumpLogic()
         {
-            if (!(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
+            if (!(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                || Input.GetKeyDown(KeyCode.Space)))
             {
-                _earlyJumpFrames--;
-                _lateJumpFrames--;
+                _earlyJumpTime -= Time.deltaTime;
+                _lateJumpTime -= Time.deltaTime;
             }
             //holding jump
             if (_isHoldingJump)
             {
-                _jumpFrames++;
+                _jumpTime += Time.deltaTime;
             }
             //small or big jump
-            if (_isHoldingJump && _jumpFrames > 3)
+            if (_isHoldingJump && _jumpTime > highJumpTime)
             {
                 _body.velocity = new Vector2(_body.velocity.x, jumpForce * 0.9f);
                 _isHoldingJump = false;
@@ -395,16 +402,8 @@ namespace Player
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             _meshTrail.StartDash(_sprite.flipX);
-            //_body.velocity = Vector2.zero;
-            //float thisDashTime = ActualDashTime;
+
             if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
-            //for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
-            //{
-            //    if (_body.IsTouchingLayers(_physicsCheckMask)) break;
-            //    Vector2 pos = _body.position;
-            //    _body.MovePosition(pos + (_dashDirection * dashSpeed));
-            //    yield return new WaitForFixedUpdate();
-            //}
 
             float gravity = _body.gravityScale;
             _body.gravityScale = 0;
@@ -413,7 +412,6 @@ namespace Player
             _body.gravityScale = gravity;
 
             _dashing = false;
-            // _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
         }
 
@@ -431,7 +429,7 @@ namespace Player
         {
             if (_body.velocity.y < 0)
             {
-                _lateJumpFrames = lateJumpLeeway;
+                _lateJumpTime = lateJumpLeeway;
             }
         }
     }

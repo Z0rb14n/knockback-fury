@@ -142,8 +142,9 @@ MonoBehaviour:
   decelAirborne: 15
   decelWhenAbove: 5
   shortJumpPercentage: 0.75
-  earlyJumpLeeway: 10
-  lateJumpLeeway: 4
+  earlyJumpLeeway: 0.2
+  lateJumpLeeway: 0.08
+  highJumpTime: 0.06
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
