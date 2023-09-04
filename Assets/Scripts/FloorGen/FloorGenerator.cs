@@ -139,6 +139,7 @@ namespace FloorGen
 
             List<Vector2Int> toBranch = new() { generationStart };
             int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
+            toBranch.Remove(new Vector2Int(middleLength, 0) + generationStart);
             roomCount -= middleLength;
 
             List<Vector2Int> withinIterationToBranch = new(toBranch);

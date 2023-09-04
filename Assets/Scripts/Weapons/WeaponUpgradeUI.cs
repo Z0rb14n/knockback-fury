@@ -16,7 +16,16 @@ namespace Weapons
 
         private void EnsureLength(int len)
         {
-            if (weaponsArea.childCount == len) return;
+            if (weaponsArea.childCount == len)
+            {
+                if (_weaponButtons != null) return;
+                _weaponButtons = new WeaponButton[len];
+                for (int i = 0; i < len; i++)
+                {
+                    _weaponButtons[i] = weaponsArea.GetChild(i).GetComponent<WeaponButton>();
+                }
+                return;
+            }
             for (int i = weaponsArea.childCount; i < len; i++)
             {
                 Instantiate(weaponButtonPrefab, weaponsArea);
