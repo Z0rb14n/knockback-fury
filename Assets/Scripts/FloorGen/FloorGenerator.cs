@@ -50,6 +50,7 @@ namespace FloorGen
         public GameObject weaponUpgradePrefab;
         [Header("Room/Cell Generation")]
         public GameObject bossRoomPrefab;
+        public GameObject lootRoomPrefab;
         public Pair[] pairs;
         public int seed;
         [Min(0), Tooltip("Number of rows for generation")]
@@ -401,8 +402,10 @@ namespace FloorGen
             {
                 bool isEndRoom = gridIndex == finalRoomPos;
                 bool isBossRoom = floorEnemyPacks[floorNumber].endingHasBoss && isEndRoom;
+                bool isWeaponRoom = hasWeaponRoom && gridIndex == weaponRoomPos;
                 GameObject[] objects = _pairsDict[type];
                 GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(random);
+                randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
                 roomData.EnsureType(type);
