@@ -58,9 +58,10 @@ public class EntityHealth : MonoBehaviour
 
     protected virtual void DoTakeDamage(int dmg)
     {
+        int actualDamage = Mathf.Min(health, dmg);
         health -= dmg;
         _iFrameTimer = iFrameLength;
-        PlayerHealth.Instance.OnDamageDealtToOther(dmg);
+        PlayerHealth.Instance.OnDamageDealtToOther(actualDamage);
     }
 
     protected virtual void Die()

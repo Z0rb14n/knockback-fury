@@ -1,6 +1,6 @@
 using System.Collections;
+using GameEnd;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Upgrades;
 
 namespace Player
@@ -46,8 +46,16 @@ namespace Player
         /// </summary>
         protected override void DoTakeDamage(int dmg)
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.hitsTaken++;
+            }
             if (!IsTargetAnalysisShieldActive)
             {
+                if (GameEndCanvas.Instance)
+                {
+                    GameEndCanvas.Instance.endData.damageTaken += Mathf.Min(health, dmg);
+                }
                 health -= dmg;
                 _iFrameTimer = iFrameLength;
             }
@@ -70,16 +78,10 @@ namespace Player
         {
             PlayerMovementScript.Instance.CanMove = false;
             PlayerWeaponControl.Instance.enabled = false;
+            CameraScript.Instance.enabled = false;
             Time.timeScale = 0;
+            GameEndCanvas.Instance.DisplayAfterDelay(1, false);
             yield return new WaitForSecondsRealtime(1);
-            Time.timeScale = 1;
-            PlayerMovementScript.Instance.CanMove = true;
-            PlayerWeaponControl.Instance.enabled = true;
-            int _playerLayerID = LayerMask.NameToLayer("Player");
-            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
-            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
-            // TODO PROPER LOGIC
-            SceneManager.LoadScene("MainMenuScene");
         }
 
         private IEnumerator DisableCollision()
@@ -100,6 +102,10 @@ namespace Player
 
         public void OnDamageDealtToOther(int amount)
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.damageDealt += amount;
+            }
             if (IsTargetAnalysisShieldActive) return;
             if (_upgradeManager[UpgradeType.TargetAnalysis] > 0)
             {
