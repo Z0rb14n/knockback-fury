@@ -1,5 +1,6 @@
 using System.Linq;
 using Enemies.Ranged;
+using GameEnd;
 using Player;
 using UnityEngine;
 using Upgrades;
@@ -177,6 +178,10 @@ namespace Weapons
         /// </summary>
         private void FireWeaponUnchecked()
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.shotsFired++;
+            }
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
@@ -400,9 +405,12 @@ namespace Weapons
                         finalDamage += Mathf.RoundToInt(damage * boost);
                     }
                 }
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
+                if (PlayerUpgradeManager.Instance[UpgradeType.Adrenaline] > 0)
+                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
+                if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
+                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
+                if (PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] > 0)
+                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
             }
             // ReSharper disable once UseNullPropagation
             if (!ReferenceEquals(health,null))

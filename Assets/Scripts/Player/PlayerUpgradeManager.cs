@@ -31,6 +31,8 @@ namespace Player
         private readonly Dictionary<UpgradeType, int> _upgradesDict = new();
         private readonly Dictionary<UpgradeType, int> _upgradesData = new();
 
+        public int TotalUpgradeCount => _upgradesDict.Select(pair => pair.Value).Sum();
+        
         public int this[UpgradeType arg] => _upgradesDict.TryGetValue(arg, out int val) ? val : 0;
 
         public int GetData(UpgradeType arg) => _upgradesData[arg];

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomTiles;
 using DashVFX;
+using GameEnd;
 using UnityEngine;
 using Upgrades;
 using Weapons;
@@ -283,6 +284,10 @@ namespace Player
 
         public void OnEnemyKill()
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.enemiesKilled++;
+            }
             if (!Grounded) return;
             if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
