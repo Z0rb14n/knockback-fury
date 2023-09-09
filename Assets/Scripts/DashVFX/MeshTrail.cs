@@ -8,15 +8,17 @@ namespace DashVFX
         public Sprite playerSprite;
 
         [Range(0,1),Tooltip("Affects time it takes to fade (higher = faster)")]
-        public float fadeSpeed = 0.5f;
+        public float fadeSpeed = 0.6f;
         [Tooltip("Maximum Time between generating VFX (seconds)")]
-        public float maxTimeInterval = 0.05f;
+        public float maxTimeInterval = 1;
 
         private bool _shouldShowVFX;
+        private bool _isFlipped;
 
-        public void StartDash()
+        public void StartDash(bool flipped)
         {
             _shouldShowVFX = true;
+            _isFlipped = flipped;
             StartCoroutine(DashCoroutine());
         }
 
@@ -46,6 +48,7 @@ namespace DashVFX
             };
             SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = playerSprite;
+            spriteRenderer.flipX = _isFlipped;
 
 
             while (spriteRenderer.color.a >= 0f)

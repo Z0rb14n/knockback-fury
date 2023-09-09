@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Bayonet Rifle
   numProjectiles: 1
-  range: 200
+  range: 100
   projectileSpeed: 40
   projectileDamage: 40
-  roundsPerSecond: 0.75
+  roundsPerSecond: 1.3
   clipSize: 8
-  reloadTime: 3
-  spread: 10
+  reloadTime: 1.5
+  spread: 5
   isHitscan: 0
-  hasMelee: 1
+  rightClickAction: 1
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
   fireMode: 0
@@ -30,7 +30,10 @@ MonoBehaviour:
     burstAmount: 0
     withinBurstFirerate: 0
   meleeInfo:
-    baseDamage: 10
+    baseDamage: 20
     velMultiplier: 15
     meleeRange: 2
+  altFireMode: 0
   sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+  customProjectile: {fileID: 0}
+  fireEffect: {fileID: 8300000, guid: 6d61d766a8013bb40a059c55a1b06b71, type: 3}

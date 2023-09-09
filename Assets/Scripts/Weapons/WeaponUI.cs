@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using FileSave;
+using TMPro;
 using UnityEngine;
 
 namespace Weapons
@@ -10,9 +11,9 @@ namespace Weapons
 
         public void Update()
         {
-            textObject.text = $"{weapon.weaponData.weaponName}: {weapon.weaponData.Clip}/{weapon.weaponData.clipSize}" + (weapon.ReloadTime <= 0
+            textObject.text = $"{weapon.WeaponData.weaponName}: {weapon.WeaponData.Clip}/{weapon.WeaponData.actualClipSize}" + (weapon.ReloadTime <= 0
                 ? ""
-                : $" Reload Time: {weapon.ReloadTime:F2}");
+                : $" Reload Time: {weapon.ReloadTime:F2}") + (weapon.IsOneYearOfReloadPossible ? " OneYearOfReload Possible" : "");
         }
     }
 }

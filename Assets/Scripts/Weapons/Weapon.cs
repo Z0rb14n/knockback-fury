@@ -1,8 +1,14 @@
+using System.Linq;
+using Enemies.Ranged;
+using GameEnd;
+using Player;
 using UnityEngine;
+using Upgrades;
 using Random = UnityEngine.Random;
 
 namespace Weapons
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Weapon : MonoBehaviour
     {
         // CONSTANT
@@ -11,8 +17,50 @@ namespace Weapons
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
+        public WeaponData[] weaponInventory;
+        [SerializeField] private int weaponIndex;
+        [SerializeField] private LayerMask raycastMask;
+        
+        public bool IsOneYearOfReloadPossible {
+            get
+            {
+                float max = WeaponData.reloadTime * (1-PlayerUpgradeManager.Instance.oneYearOfReloadPercent);
+                float min = max - PlayerUpgradeManager.Instance.oneYearOfReloadTiming;
+                return ReloadTime > 0 && PlayerUpgradeManager.Instance[UpgradeType.OneYearOfReload] > 0 && ReloadTime >= min &&
+                       ReloadTime < max;
+            }
+        }
 
-        public WeaponData weaponData;
+        public int FirstAvailableInventorySpace
+        {
+            get
+            {
+                for (int i = 0; i < weaponInventory.Length; i++)
+                {
+                    if (weaponInventory[i] == null) return i;
+                }
+
+                return -1;
+            }
+        }
+
+        public int NumWeapons => weaponInventory.Count(t => t);
+
+        private Vector2 RandomizedLookDirection
+        {
+            get
+            {
+                Vector2 normalizedLookDirection = LookDirection.normalized;
+                float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
+                angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
+                return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+        }
+
+        private const int BogglingEyesMaxDistance = 30;
+        private const int BogglingEyesMinDistance = 10;
+
+        public WeaponData WeaponData => weaponInventory[weaponIndex];
         private Camera _mainCam;
         private Vector2 _spriteStartPosition;
         private Vector2 _recoilAnimDisplacement;
@@ -22,19 +70,28 @@ namespace Weapons
         private float _weaponDelayTimer;
         private float _weaponBurstTimer;
         private int _weaponBurstCount;
+        private AudioSource _source;
 
         public float ReloadTime { get; private set; }
 
         private Vector2 LookDirection => spritePivot.right;
-
-
+        
         private void Awake()
         {
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
-            weaponData.Reload();
+            _source = GetComponent<AudioSource>();
+            WeaponData.Reload();
             UpdateFromWeaponData();
+            EnsureInventoryHasSpace();
+        }
+
+        private void EnsureInventoryHasSpace()
+        {
+            if (weaponInventory != null && weaponInventory.Length != 0) return;
+            weaponInventory = new WeaponData[2];
+            weaponIndex = 0;
         }
 
         private void Update()
@@ -48,87 +105,117 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) weaponData.Reload();
+                if (ReloadTime <= 0) ImmediateReload();
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
             if (_weaponBurstCount > 0 && _weaponBurstTimer > 0)
             {
                 _weaponBurstTimer -= dt;
-                if (_weaponBurstTimer <= 0) FireWeaponUnchecked();
+                if (_weaponBurstTimer <= 0)
+                {
+                    if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+                    else
+                    {
+                        Vector3 mousePos = GetMousePos();
+                        PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
+                            WeaponData.actualKnockbackStrength);
+                        FireWeaponUnchecked(PlayerWeaponControl.Instance.TotalDamageMult);
+                    }
+                }
             }
         }
 
         private void UpdateFromWeaponData()
         {
-            if (weaponData != null)
-                sprite.sprite = weaponData.sprite;
+            if (WeaponData == null) return;
+            sprite.sprite = WeaponData.sprite;
+            if (_source == null) _source = GetComponent<AudioSource>();
+            _source.clip = WeaponData.fireEffect;
         }
 
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            Vector2 normalizedLookDirection = LookDirection.normalized;
-            float range = isMelee ? weaponData.meleeInfo.meleeRange : weaponData.range;
+            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.actualRange;
             // literally hitscan
-            // TODO LAYERMASK FOR ENEMIES/PLAYERS
-            RaycastHit2D hit = Physics2D.Raycast(origin, normalizedLookDirection, range);
-            Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (normalizedLookDirection * range) : hit.point;
-            int damage = isMelee
-                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, normalizedLookDirection)) * weaponData.meleeInfo.velMultiplier +
-                  weaponData.meleeInfo.baseDamage)
-                : weaponData.projectileDamage;
-            // TODO DEAL DAMAGE
-            Debug.Log(damage);
-            if (!isMelee)
+            int count = isMelee ? 1 : WeaponData.numProjectiles;
+            Physics2D.queriesHitTriggers = false;
+            for (int i = 0; i < count; i++)
             {
-                GameObject go = ReferenceEquals(projectileParent, null)
-                    ? Instantiate(linePrefab)
-                    : Instantiate(linePrefab, projectileParent);
-                // expensive but required; Fire isn't called every frame(?)
-                WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
-                line.Initialize(origin, finalPos, 1);
+                Vector2 dir = RandomizedLookDirection;
+                RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, raycastMask);
+                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (dir * range) : hit.point;
+                int damage = isMelee
+                    ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
+                                       WeaponData.meleeInfo.baseDamage)
+                    : WeaponData.projectileDamage;
+                damage += isMelee
+                    ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
+                    : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
+                if (!ReferenceEquals(hit.collider, null))
+                {
+                    HitEntity(hit.collider, damage);
+                }
+                if (!isMelee)
+                {
+                    GameObject go = ReferenceEquals(projectileParent, null)
+                        ? Instantiate(linePrefab)
+                        : Instantiate(linePrefab, projectileParent);
+                    // expensive but required; Fire isn't called every frame(?)
+                    WeaponRaycastLine line = go.GetComponent<WeaponRaycastLine>();
+                    line.Initialize(origin, finalPos, 1);
+                }
+                else
+                {
+                    Debug.DrawLine(origin,origin + (dir*range),Color.red,1,false);
+                }
             }
-            else
-            {
-                Debug.DrawLine(origin,origin + (normalizedLookDirection*range),Color.red,1,false);
-            }
+            
+            Physics2D.queriesHitTriggers = true;
 
         }
 
         /// <summary>
         /// Fire weapon: create projectiles and reset timers.
         /// </summary>
-        private void FireWeaponUnchecked()
+        private void FireWeaponUnchecked(float mult)
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.shotsFired++;
+            }
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            Vector2 normalizedLookDirection = LookDirection.normalized;
-            if (weaponData.isHitscan)
+            if (WeaponData.fireEffect != null)
+            {
+                _source.PlayOneShot(WeaponData.fireEffect);
+            }
+            if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else
             {
-                for (int i = 0; i < weaponData.numProjectiles; i++)
+                // ReSharper disable once MergeConditionalExpression
+                GameObject projectile = WeaponData.customProjectile == null ? projectilePrefab : WeaponData.customProjectile;
+                for (int i = 0; i < WeaponData.numProjectiles; i++)
                 {
                     GameObject go = ReferenceEquals(projectileParent, null)
-                        ? Instantiate(projectilePrefab, origin, Quaternion.identity)
-                        : Instantiate(projectilePrefab, origin, Quaternion.identity, projectileParent);
-                    float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                    angle += Random.Range(-weaponData.spread/2, weaponData.spread/2) * Mathf.Deg2Rad;
-                    Vector2 finalDir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                        ? Instantiate(projectile, origin, Quaternion.identity)
+                        : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(weaponData.projectileDamage, weaponData.range, weaponData.projectileSpeed, finalDir);
+                    proj.Initialize(WeaponData, RandomizedLookDirection);
+                    proj.ModifyDamage(mult);
                 }
             }
 
-            weaponData.DecrementClip();
-            if (weaponData.IsClipEmpty) ReloadTime = weaponData.reloadTime;
-            _weaponDelayTimer = 1/weaponData.roundsPerSecond;
-            if (weaponData.fireMode == FireMode.Burst)
+            WeaponData.DecrementClip();
+            if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+            _weaponDelayTimer = 1/WeaponData.roundsPerSecond;
+            if (WeaponData.fireMode == FireMode.Burst)
             {
                 _weaponBurstCount--;
-                _weaponBurstTimer = 1/weaponData.burstInfo.withinBurstFirerate;
+                _weaponBurstTimer = 1/WeaponData.burstInfo.withinBurstFirerate;
             }
         }
 
@@ -136,36 +223,111 @@ namespace Weapons
         /// Fire weapon
         /// </summary>
         /// <param name="isFirstDown">Whether the mouse was pressed this frame</param>
+        /// <param name="mult">Additional damage multiplier, 1 if none</param>
         /// <returns>Whether or not a shot was actually fired</returns>
-        public bool Fire(bool isFirstDown)
+        public bool Fire(bool isFirstDown, float mult)
         {
             if (ReloadTime > 0) return false;
             if (_weaponDelayTimer > 0) return false;
-            if (!isFirstDown && weaponData.fireMode != FireMode.Auto) return false;
-            if (weaponData.IsClipEmpty)
+            if (!isFirstDown && WeaponData.fireMode != FireMode.Auto) return false;
+            if (WeaponData.IsClipEmpty)
             {
-                ReloadTime = weaponData.reloadTime;
+                ReloadTime = WeaponData.reloadTime;
                 return false;
             }
-            if (weaponData.fireMode == FireMode.Burst) _weaponBurstCount = weaponData.burstInfo.burstAmount;
-            FireWeaponUnchecked();
+            if (WeaponData.fireMode == FireMode.Burst) _weaponBurstCount = WeaponData.burstInfo.burstAmount;
+            FireWeaponUnchecked(mult);
             return true;
         }
 
-        public void UseMelee(Vector2 vel)
+        public void UseRightClick(Vector2 vel)
         {
-            if (!weaponData.hasMelee) return;
-            HitscanLogic(true, vel);
+            switch (WeaponData.rightClickAction)
+            {
+                case WeaponRightClickAction.FireModeToggle:
+                    (WeaponData.fireMode, WeaponData.altFireMode) = (WeaponData.altFireMode, WeaponData.fireMode);
+                    break;
+                case WeaponRightClickAction.Melee:
+                    HitscanLogic(true, vel);
+                    break;
+                case WeaponRightClickAction.None:
+                default:
+                    break;
+            }
         }
 
         public void Reload()
         {
+            if (IsOneYearOfReloadPossible) ImmediateReload();
             if (ReloadTime > 0) return;
-            ReloadTime = weaponData.reloadTime;
+            if (WeaponData.Clip == WeaponData.actualClipSize) return;
+            ReloadTime = WeaponData.reloadTime;
+            if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
+            {
+                ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
+            }
+        }
+
+        public void ImmediateReload()
+        {
+            WeaponData.Reload();
+            ReloadTime = 0;
+            _weaponDelayTimer = 0;
+            PlayerWeaponControl.Instance.OnFinishReload();
+        }
+
+        public void SwitchWeapon(bool up)
+        {
+            ReloadTime = 0;
+            int newIndex = weaponIndex + (up ? 1 : -1);
+            bool shouldDecrement = up || newIndex < 0;
+            if (newIndex < 0) newIndex = weaponInventory.Length - 1;
+            if (newIndex >= weaponInventory.Length) newIndex = 0;
+            if (shouldDecrement)
+            {
+                for (; newIndex > 0; newIndex--)
+                {
+                    if (!ReferenceEquals(null, weaponInventory[newIndex])) break;
+                }
+            }
+
+            weaponIndex = newIndex;
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
+            UpdateFromWeaponData();
+        }
+
+        public bool Pickup(WeaponData data)
+        {
+            int firstAvailableSpace = FirstAvailableInventorySpace;
+            if (firstAvailableSpace == -1) return false;
+            weaponInventory[firstAvailableSpace] = data;
+            return true;
+        }
+
+        public WeaponData DropWeapon()
+        {
+            if (FirstAvailableInventorySpace == 1) return null; // only one weapon; don't drop
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            for (int i = weaponIndex; i < weaponInventory.Length; i++)
+            {
+                weaponInventory[i] = i == weaponInventory.Length - 1 ? null : weaponInventory[i + 1];
+            }
+            SwitchWeapon(false);
+            return toDrop;
+        }
+
+        public WeaponData SwapWeapon(WeaponData to)
+        {
+            WeaponData toDrop = weaponInventory[weaponIndex];
+            weaponInventory[weaponIndex] = to;
+            _weaponDelayTimer = Mathf.Min(_weaponDelayTimer, 1 / WeaponData.roundsPerSecond);
+            UpdateFromWeaponData();
+            return toDrop;
         }
 
         private void OnValidate()
         {
+            EnsureInventoryHasSpace();
             UpdateFromWeaponData();
         }
 
@@ -174,7 +336,7 @@ namespace Weapons
         /// </summary>
         private void StartFireAnimation()
         {
-            _recoilAnimTimer = weaponData.recoilAnimationDuration;
+            _recoilAnimTimer = WeaponData.recoilAnimationDuration;
         }
 
         /// <summary>
@@ -184,7 +346,7 @@ namespace Weapons
         private void FireAnimation(float dt)
         {
             // can be null but cba
-            float weight = _recoilAnimTimer / weaponData.recoilAnimationDuration;
+            float weight = _recoilAnimTimer / WeaponData.recoilAnimationDuration;
             if (weight <= 0.5)
             {
                 weight = 1 - weight;
@@ -218,6 +380,43 @@ namespace Weapons
             Vector2 mousePos = GetMousePos();
             spritePivot.right = mousePos - pivotPoint;
             sprite.flipY = mousePos.x < pivotPoint.x;
+        }
+
+        public static bool HitEntity(Collider2D collider, int damage)
+        {
+            EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
+            if (enemyBomb) enemyBomb.OnHitByPlayer();
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+        }
+
+        private static bool HitEntityHealth(EntityHealth health, int damage)
+        {
+            int finalDamage = damage;
+            if (health is PlayerHealth)
+            {
+                Debug.Log($"[Raycast] Hit player for {damage}");
+            }
+            else if (!ReferenceEquals(health,null))
+            {
+                if (PlayerUpgradeManager.Instance[UpgradeType.BogglingEyes] > 0)
+                {
+                    float dist = ((Vector2)(PlayerUpgradeManager.Instance.transform.position - health.transform.position)).magnitude;
+                    if (dist >= BogglingEyesMaxDistance)
+                        finalDamage += damage;
+                    else if (dist >= BogglingEyesMinDistance)
+                    {
+                        float boost = (dist - BogglingEyesMinDistance) /
+                                      (BogglingEyesMaxDistance - BogglingEyesMinDistance);
+                        finalDamage += Mathf.RoundToInt(damage * boost);
+                    }
+                }
+                Debug.Log(finalDamage);
+            }
+            // ReSharper disable once UseNullPropagation
+            if (ReferenceEquals(health, null)) return false;
+            health.TakeDamage(finalDamage);
+            return true;
+
         }
     }
 }

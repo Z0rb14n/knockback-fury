@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
+  m_Name: CrossbowData
+  m_EditorClassIdentifier: 
+  weaponName: Crossbow
+  numProjectiles: 1
+  range: 100
+  projectileSpeed: 30
+  projectileDamage: 150
+  roundsPerSecond: 0.5
+  clipSize: 1
+  reloadTime: 1.5
+  spread: 0
+  isHitscan: 0
+  rightClickAction: 0
+  knockbackStrength: 19
+  recoilAnimationDuration: 0.2
+  fireMode: 0
+  burstInfo:
+    burstAmount: 0
+    withinBurstFirerate: 0
+  meleeInfo:
+    baseDamage: 0
+    velMultiplier: 0
+    meleeRange: 0
+  altFireMode: 0
+  sprite: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
+  customProjectile: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed, type: 3}
+  fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}

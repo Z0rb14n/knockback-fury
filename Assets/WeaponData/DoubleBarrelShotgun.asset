@@ -14,15 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Double-Barrel Shotgun
   numProjectiles: 10
-  range: 10
+  range: 15
   projectileSpeed: 20
-  projectileDamage: 20
+  projectileDamage: 7
   roundsPerSecond: 1.83
   clipSize: 2
-  reloadTime: 2.5
+  reloadTime: 1.5
   spread: 45
   isHitscan: 0
-  knockbackStrength: 12
+  rightClickAction: 0
+  knockbackStrength: 17
   recoilAnimationDuration: 0.2
   fireMode: 0
+  burstInfo:
+    burstAmount: 0
+    withinBurstFirerate: 0
+  meleeInfo:
+    baseDamage: 0
+    velMultiplier: 0
+    meleeRange: 0
+  altFireMode: 0
   sprite: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
+  customProjectile: {fileID: 0}
+  fireEffect: {fileID: 8300000, guid: 83e7b65f9e184e542b7c9fda045dc653, type: 3}

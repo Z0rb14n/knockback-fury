@@ -16,13 +16,24 @@ MonoBehaviour:
   numProjectiles: 1
   range: 10
   projectileSpeed: 15
-  projectileDamage: 14
-  roundsPerSecond: 9
+  projectileDamage: 8
+  roundsPerSecond: 8
   clipSize: 50
-  reloadTime: 2
-  spread: 20
+  reloadTime: 1.5
+  spread: 40
   isHitscan: 0
-  knockbackStrength: 2
+  rightClickAction: 0
+  knockbackStrength: 3
   recoilAnimationDuration: 0.2
   fireMode: 1
+  burstInfo:
+    burstAmount: 0
+    withinBurstFirerate: 0
+  meleeInfo:
+    baseDamage: 0
+    velMultiplier: 0
+    meleeRange: 0
+  altFireMode: 0
   sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
+  customProjectile: {fileID: 0}
+  fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
