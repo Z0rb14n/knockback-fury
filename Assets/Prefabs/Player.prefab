@@ -128,18 +128,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 8
   speedSmoothness: 0.01
-  jumpForce: 10
-  wallJumpForce: {x: 10, y: 10}
-  dashSpeed: 0.3
-  dashTime: 0.06
+  jumpForce: 11
+  wallJumpForce: {x: 12, y: 10.5}
+  dashSpeed: 10
+  dashTime: 0.2
+  dashStartDelay: 0.07
   maxDashes: 1
-  slideSpeed: 0.05
+  slideSpeed: 0.7
   newMovementEnabled: 1
   accel: 50
   turnAroundMultiplier: 2
-  decel: 20
-  decelAirborne: 5
+  decel: 30
+  decelAirborne: 15
   decelWhenAbove: 5
+  shortJumpPercentage: 0.75
+  earlyJumpLeeway: 0.2
+  lateJumpLeeway: 0.08
+  highJumpTime: 0.06
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
