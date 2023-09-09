@@ -843,7 +843,7 @@ MonoBehaviour:
   branchinessDecrease: 4
   worldParent: {fileID: 914233868}
   gridSize: {x: 21, y: 21}
-  generationStart: {x: -5, y: 5}
+  generationStart: {x: -15, y: 5}
   playerTransform: {fileID: 419107792}
 --- !u!4 &914233868
 Transform:

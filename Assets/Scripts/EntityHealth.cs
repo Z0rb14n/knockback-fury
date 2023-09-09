@@ -28,7 +28,7 @@ public class EntityHealth : MonoBehaviour
         normalColor = _sprite.color;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_iFrameTimer > 0f)
         {
