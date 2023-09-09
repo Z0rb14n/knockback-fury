@@ -24,9 +24,15 @@ namespace Player
         [Range(0,1)]public float oneYearOfReloadPercent = 0.6f;
         [Min(0)] public float oneYearOfReloadTiming = 0.75f;
 
+        public delegate void UpgradePickupHandler(UpgradeType type, int data);
+
+        public event UpgradePickupHandler OnUpgradePickup;
+
         private readonly Dictionary<UpgradeType, int> _upgradesDict = new();
         private readonly Dictionary<UpgradeType, int> _upgradesData = new();
 
+        public int TotalUpgradeCount => _upgradesDict.Select(pair => pair.Value).Sum();
+        
         public int this[UpgradeType arg] => _upgradesDict.TryGetValue(arg, out int val) ? val : 0;
 
         public int GetData(UpgradeType arg) => _upgradesData[arg];
@@ -48,6 +54,8 @@ namespace Player
                 _upgradesDict[upgrade] = 1;
                 _upgradesData[upgrade] = upgradeData;
             }
+
+            OnUpgradePickup?.Invoke(upgrade, upgradeData);
             UpdateEditorArray();
         }
 
@@ -93,8 +101,6 @@ namespace Player
     {
         public UpgradeType type;
         [Min(0), Tooltip("Number of this upgrade presently equipped")] public int count;
-        [Tooltip("Unused: indicate optional comment")]
-        public string comment;
         public int integerData;
     }
 }

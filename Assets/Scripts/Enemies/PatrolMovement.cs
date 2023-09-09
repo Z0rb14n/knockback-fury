@@ -19,6 +19,7 @@ namespace Enemies
         protected int _spriteDirection;
         protected float _switchTargetDistance;
         protected bool _canMove;
+        private Collider2D _collider2D;
 
         private float _originalSpeed;
         
@@ -37,6 +38,7 @@ namespace Enemies
         {
             _body = GetComponent<Rigidbody2D>();
             _sprite = GetComponent<SpriteRenderer>();
+            _collider2D = GetComponent<Collider2D>();
             if (patrolPoints.Length > 0)
             {
                 _target = 0;
@@ -83,8 +85,9 @@ namespace Enemies
         {
             if (_direction != _spriteDirection)
             {
-                transform.localScale *= new Vector2(-1, 1);
                 _spriteDirection *= -1;
+                _sprite.flipX = _spriteDirection < 0;
+                if (_collider2D) _collider2D.offset *= new Vector2(-1, 1);
             }
         }
 

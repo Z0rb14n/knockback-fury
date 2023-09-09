@@ -31,7 +31,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244737822807091051}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,6 +39,7 @@ Transform:
   - {fileID: 1642441135221724550}
   - {fileID: 2822636950415209034}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &871210707627827411
 SpriteRenderer:
@@ -110,12 +110,6 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -134,12 +128,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 8
   speedSmoothness: 0.01
-  jumpForce: 10
-  wallJumpForce: {x: 10, y: 5}
-  dashSpeed: 0.3
-  dashTime: 0.06
+  jumpForce: 11
+  wallJumpForce: {x: 12, y: 10.5}
+  dashSpeed: 10
+  dashTime: 0.2
+  dashStartDelay: 0.07
   maxDashes: 1
-  slideSpeed: 0.05
+  slideSpeed: 0.7
+  newMovementEnabled: 1
+  accel: 50
+  turnAroundMultiplier: 2
+  decel: 30
+  decelAirborne: 15
+  decelWhenAbove: 5
+  shortJumpPercentage: 0.75
+  earlyJumpLeeway: 0.2
+  lateJumpLeeway: 0.08
+  highJumpTime: 0.06
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e86b1837bd62e48b7995c5ea1b052f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 21300000, guid: 77f2427627b56a3489f25041b1f85fa3, type: 3}
+  playerSprite: {fileID: 21300000, guid: 58a26765089c0704db6fb8815145f1ce, type: 3}
   fadeSpeed: 0.6
   maxTimeInterval: 1
 --- !u!114 &1994587395661662118
@@ -220,25 +225,6 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -281,13 +267,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8051101738936216417}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.06, y: -1.29, z: -9.975838}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 580788121172045447}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &4827857991612812766
 Camera:
@@ -303,17 +289,9 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -366,7 +344,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 580788121172045447}
     m_Modifications:
     - target: {fileID: 3054874150355908560, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
@@ -466,9 +443,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
 --- !u!4 &1642441135221724550 stripped
 Transform:

@@ -46,11 +46,13 @@ namespace Util
         /// <param name="list">List (of random elements) to remove from</param>
         /// <param name="index">Index to remove</param>
         /// <typeparam name="T">Type of elements in list</typeparam>
-        public static void SwapRemove<T>(this List<T> list, int index)
+        public static T SwapRemove<T>(this List<T> list, int index)
         {
             int last = list.Count - 1;
+            T val = list[index];
             list[index] = list[last];
             list.RemoveAt(last);
+            return val;
         }
     }
 }

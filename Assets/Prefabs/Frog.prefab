@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3139948558526521948}
   - component: {fileID: 1470205520722727805}
   - component: {fileID: 6553265572266371507}
+  - component: {fileID: 1483776281331567196}
+  - component: {fileID: 41531042006896467}
   - component: {fileID: 9192570308432205651}
   - component: {fileID: 7310949198750745542}
   - component: {fileID: 3041133532461335286}
@@ -31,8 +33,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3541920492468595845}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.29, y: 0.94, z: 6.1589217}
-  m_LocalScale: {x: 0.0555755, y: 0.0555755, z: 0.0555755}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -72,9 +74,41 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.01757061, y: -0.931491}
-  m_Size: {x: 15.263416, y: 9.253117}
+  m_Offset: {x: -0.03, y: -0.85}
+  m_Size: {x: 1.8, y: 1.1}
   m_Direction: 1
+--- !u!70 &1483776281331567196
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.94, y: -0.2}
+  m_Size: {x: 0.95, y: 1.8}
+  m_Direction: 0
+--- !u!70 &41531042006896467
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.94, y: -0.2}
+  m_Size: {x: 0.95, y: 1.8}
+  m_Direction: 0
 --- !u!114 &9192570308432205651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +125,11 @@ MonoBehaviour:
   speed: 0
   pauseTime: 0
   jumpForce: 8
+  normalCollider: {fileID: 6553265572266371507}
+  colliderOnWall: {fileID: 1483776281331567196}
+  colliderOnRightWall: {fileID: 41531042006896467}
+  wallPositionOffset: {x: 0.5, y: 0}
+  targetDistance: 16
 --- !u!114 &7310949198750745542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c27319a8b03fd4593697dbcfc77416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 10
+  maxHealth: 70
+  health: 70
   iFrameLength: 0
   canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
@@ -163,12 +202,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f06cb63c091e52645b8837c2241776d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6b70b216db7e5d4e88258c5b47ae60d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.2, y: 2.7}
+  m_Size: {x: 2.8, y: 2.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

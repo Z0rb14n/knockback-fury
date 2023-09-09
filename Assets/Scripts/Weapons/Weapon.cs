@@ -1,4 +1,6 @@
 using System.Linq;
+using Enemies.Ranged;
+using GameEnd;
 using Player;
 using UnityEngine;
 using Upgrades;
@@ -16,7 +18,7 @@ namespace Weapons
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
         public WeaponData[] weaponInventory;
-        [SerializeField] private int weaponIndex = 0;
+        [SerializeField] private int weaponIndex;
         [SerializeField] private LayerMask raycastMask;
         
         public bool IsOneYearOfReloadPossible {
@@ -113,7 +115,13 @@ namespace Weapons
                 if (_weaponBurstTimer <= 0)
                 {
                     if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
-                    else FireWeaponUnchecked();
+                    else
+                    {
+                        Vector3 mousePos = GetMousePos();
+                        PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
+                            WeaponData.actualKnockbackStrength);
+                        FireWeaponUnchecked(PlayerWeaponControl.Instance.TotalDamageMult);
+                    }
                 }
             }
         }
@@ -129,7 +137,7 @@ namespace Weapons
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.range;
+            float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.actualRange;
             // literally hitscan
             int count = isMelee ? 1 : WeaponData.numProjectiles;
             Physics2D.queriesHitTriggers = false;
@@ -142,7 +150,13 @@ namespace Weapons
                     ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
                                        WeaponData.meleeInfo.baseDamage)
                     : WeaponData.projectileDamage;
-                if (!ReferenceEquals(hit.collider,null)) HitEntityHealth(hit.collider.GetComponent<EntityHealth>(), damage);
+                damage += isMelee
+                    ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
+                    : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
+                if (!ReferenceEquals(hit.collider, null))
+                {
+                    HitEntity(hit.collider, damage);
+                }
                 if (!isMelee)
                 {
                     GameObject go = ReferenceEquals(projectileParent, null)
@@ -165,8 +179,12 @@ namespace Weapons
         /// <summary>
         /// Fire weapon: create projectiles and reset timers.
         /// </summary>
-        private void FireWeaponUnchecked()
+        private void FireWeaponUnchecked(float mult)
         {
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.shotsFired++;
+            }
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
@@ -187,6 +205,7 @@ namespace Weapons
                         : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
                     proj.Initialize(WeaponData, RandomizedLookDirection);
+                    proj.ModifyDamage(mult);
                 }
             }
 
@@ -204,8 +223,9 @@ namespace Weapons
         /// Fire weapon
         /// </summary>
         /// <param name="isFirstDown">Whether the mouse was pressed this frame</param>
+        /// <param name="mult">Additional damage multiplier, 1 if none</param>
         /// <returns>Whether or not a shot was actually fired</returns>
-        public bool Fire(bool isFirstDown)
+        public bool Fire(bool isFirstDown, float mult)
         {
             if (ReloadTime > 0) return false;
             if (_weaponDelayTimer > 0) return false;
@@ -216,7 +236,7 @@ namespace Weapons
                 return false;
             }
             if (WeaponData.fireMode == FireMode.Burst) _weaponBurstCount = WeaponData.burstInfo.burstAmount;
-            FireWeaponUnchecked();
+            FireWeaponUnchecked(mult);
             return true;
         }
 
@@ -240,7 +260,7 @@ namespace Weapons
         {
             if (IsOneYearOfReloadPossible) ImmediateReload();
             if (ReloadTime > 0) return;
-            if (WeaponData.Clip == WeaponData.clipSize) return;
+            if (WeaponData.Clip == WeaponData.actualClipSize) return;
             ReloadTime = WeaponData.reloadTime;
             if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
             {
@@ -362,7 +382,14 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static void HitEntityHealth(EntityHealth health, int damage)
+        public static bool HitEntity(Collider2D collider, int damage)
+        {
+            EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
+            if (enemyBomb) enemyBomb.OnHitByPlayer();
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+        }
+
+        private static bool HitEntityHealth(EntityHealth health, int damage)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
@@ -383,13 +410,13 @@ namespace Weapons
                         finalDamage += Mathf.RoundToInt(damage * boost);
                     }
                 }
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
-                finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
+                Debug.Log(finalDamage);
             }
             // ReSharper disable once UseNullPropagation
-            if (!ReferenceEquals(health,null))
-                health.TakeDamage(finalDamage);
+            if (ReferenceEquals(health, null)) return false;
+            health.TakeDamage(finalDamage);
+            return true;
+
         }
     }
 }

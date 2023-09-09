@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Crossbow
   numProjectiles: 1
-  range: 500
-  projectileSpeed: 5
+  range: 100
+  projectileSpeed: 30
   projectileDamage: 150
-  roundsPerSecond: 0.33
+  roundsPerSecond: 0.5
   clipSize: 1
-  reloadTime: 4
+  reloadTime: 1.5
   spread: 0
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 12
+  knockbackStrength: 19
   recoilAnimationDuration: 0.2
   fireMode: 0
   burstInfo:

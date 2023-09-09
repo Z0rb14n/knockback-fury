@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FileSave;
 using UnityEngine;
 using Upgrades;
@@ -18,15 +20,62 @@ namespace FloorGen
         public CheesePickup cheesePickup;
         [HideInInspector]
         public WeaponPickup weaponPickup;
+
+        [Tooltip("Spawn offsets of weapon drops")]
+        public Vector2 weaponSpawnOffset = Vector2.up;
+        [Tooltip("Spawn offset of cheese drops")]
+        public Vector2 cheeseSpawnOffset = Vector2.up + Vector2.left;
+        [Tooltip("Spawn offset of player powerups")]
+        public Vector2 powerupSpawnOffset = Vector2.up;
+        [Tooltip("Spawn offset of weapon upgrades")]
+        public Vector2 weaponUpgradeSpawnOffset = Vector2.up;
+        [Tooltip("Player spawn offset")]
+        public Vector2 playerSpawnOffset = Vector2.zero;
+
+        public ExitHider[] hiders;
         
         public Layout[] layouts;
+
+        public bool ignoreSocketEnemySpawns = true;
+        
         
         public int ToPreview { get; set; } = -1;
 
         private readonly HashSet<EntityHealth> _enemies = new();
 
         public List<EntityHealth> Enemies => new(_enemies);
-        
+
+        private EnemySpawnPoint[] _spawnPoints;
+        private Dictionary<EnemySpawnType, List<EnemySpawnPoint>> _spawnTypeMapping;
+
+        private void Awake()
+        {
+            InitializePointsAndMappings();
+        }
+
+        private void InitializePointsAndMappings()
+        {
+            _spawnPoints = GetComponentsInChildren<EnemySpawnPoint>();
+            _spawnTypeMapping = new Dictionary<EnemySpawnType, List<EnemySpawnPoint>>();
+            foreach (EnemySpawnType t in Enum.GetValues(typeof(EnemySpawnType)).Cast<EnemySpawnType>())
+            {
+                foreach (EnemySpawnPoint point in _spawnPoints)
+                {
+                    if ((point.types & t) == 0) continue;
+                    if (_spawnTypeMapping.ContainsKey(t)) _spawnTypeMapping[t].Add(point);
+                    else _spawnTypeMapping[t] = new List<EnemySpawnPoint>(new []{point});
+                }
+            }
+        }
+
+        public void EnsureType(RoomType type)
+        {
+            foreach (ExitHider hider in hiders)
+            {
+                if ((type & hider.hidingType) == 0) hider.toEnable.SetActive(true);
+            }
+        }
+
         public List<(SocketBehaviour, EnemySpawnType)> GenerateSockets(Random random, Dictionary<Vector2, List<GameObject>> socketPrefabSizes)
         {
             List<(SocketBehaviour, EnemySpawnType)> socketBehaviours = new();
@@ -55,6 +104,21 @@ namespace FloorGen
             return socketBehaviours;
         }
 
+        public GameObject SpawnEnemy(EnemySpawnType type, Random random)
+        {
+            if (_spawnPoints == null) InitializePointsAndMappings();
+            Debug.Assert(type.GetParts().Count == 1, "Room Data Spawn Enemy requires singular type");
+            List<EnemySpawnPoint> points = _spawnTypeMapping[type];
+            if (points.Count == 0) return null;
+            EnemySpawnPoint point = points.GetRandom(random);
+            bool didSpawn = point.SpawnEnemy(type, out GameObject go);
+            Debug.Assert(didSpawn);
+            EntityHealth health = go.GetComponent<EntityHealth>();
+            Debug.Assert(health, "Added enemy should have EntityHealth attached");
+            AddEnemy(health);
+            return go;
+        }
+
         public void AddEnemy(EntityHealth health)
         {
             _enemies.Add(health);
@@ -69,6 +133,13 @@ namespace FloorGen
             if (pickup) pickup.gameObject.SetActive(true);
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
+        }
+
+        [Serializable]
+        public struct ExitHider
+        {
+            public RoomType hidingType;
+            public GameObject toEnable;
         }
     }
 }

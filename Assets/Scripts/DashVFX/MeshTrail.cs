@@ -13,10 +13,12 @@ namespace DashVFX
         public float maxTimeInterval = 1;
 
         private bool _shouldShowVFX;
+        private bool _isFlipped;
 
-        public void StartDash()
+        public void StartDash(bool flipped)
         {
             _shouldShowVFX = true;
+            _isFlipped = flipped;
             StartCoroutine(DashCoroutine());
         }
 
@@ -46,6 +48,7 @@ namespace DashVFX
             };
             SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();
             spriteRenderer.sprite = playerSprite;
+            spriteRenderer.flipX = _isFlipped;
 
 
             while (spriteRenderer.color.a >= 0f)

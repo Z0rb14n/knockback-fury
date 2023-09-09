@@ -22,17 +22,42 @@ namespace FileSave
         }
         private static CrossRunInfo _instance;
         #endregion
+
+        public delegate void CheeseEventHandler(int change);
+
+        public event CheeseEventHandler OnCheeseCountChange;
+
+        public void ReadFromSave()
+        {
+            data = SaveIO.Read();
+            OnCheeseCountChange?.Invoke(data.cheese);
+        }
+
+        public void WriteToSave() => SaveIO.Save(data);
         
         private void Awake()
         {
+            if (_instance && _instance != this)
+            {
+                Debug.LogWarning("Found two copies of CrossRunInfo: deleting this.");
+                Destroy(gameObject);
+                return;
+            }
+            DontDestroyOnLoad(gameObject);
             Debug.Log("[CrossRunInfo::Awake] Reading save data from " + SaveIO.saveLocation);
-            data = SaveIO.Read();
+            ReadFromSave();
         }
 
         private void OnApplicationQuit()
         {
             Debug.Log("[CrossRunInfo::OnApplicationQuit] Writing Save Data to " + SaveIO.saveLocation);
-            SaveIO.Save(data);
+            WriteToSave();
+        }
+
+        public void AddCheese(int cheese)
+        {
+            data.cheese += cheese;
+            OnCheeseCountChange?.Invoke(cheese);
         }
     }
 }

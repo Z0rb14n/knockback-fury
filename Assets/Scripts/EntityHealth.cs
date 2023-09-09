@@ -18,15 +18,17 @@ public class EntityHealth : MonoBehaviour
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
     protected bool isDead;
+    protected Color normalColor;
 
 
     protected virtual void Awake()
     {
         health = maxHealth;
         _sprite = GetComponent<SpriteRenderer>();
+        normalColor = _sprite.color;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (_iFrameTimer > 0f)
         {
@@ -50,14 +52,16 @@ public class EntityHealth : MonoBehaviour
     {
         _sprite.color = new Color(1, 0, 0, 0.5f);
         yield return new WaitForSeconds(0.1f);
-        _sprite.color = Color.white;
+        // ReSharper disable once Unity.InefficientPropertyAccess
+        _sprite.color = normalColor;
     }
 
     protected virtual void DoTakeDamage(int dmg)
     {
+        int actualDamage = Mathf.Min(health, dmg);
         health -= dmg;
         _iFrameTimer = iFrameLength;
-        PlayerHealth.Instance.OnDamageDealtToOther(dmg);
+        PlayerHealth.Instance.OnDamageDealtToOther(actualDamage);
     }
 
     protected virtual void Die()

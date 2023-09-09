@@ -15,7 +15,7 @@ namespace FileSave
         {
             if (!other.GetComponent<PlayerMovementScript>()) return;
             if (CrossRunInfo.Instance)
-                CrossRunInfo.Instance.data.cheese += amount;
+                CrossRunInfo.Instance.AddCheese(amount);
             Destroy(gameObject);
         }
     }

@@ -15,6 +15,7 @@ namespace Editor
             for (int i = 0; i < movement.patrolPoints.Length; i++)
             {
                 EditorGUI.BeginChangeCheck();
+                if (!movement.patrolPoints[i]) continue;
                 Vector3 oldPos = movement.patrolPoints[i].position;
                 Vector3 newTargetPosition = Handles.PositionHandle(oldPos, Quaternion.identity);
                 if (EditorGUI.EndChangeCheck())

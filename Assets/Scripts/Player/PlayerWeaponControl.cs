@@ -16,14 +16,29 @@ namespace Player
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
                 if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>();
+                if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
         }
         private static PlayerWeaponControl _instance;
 
-        public float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(_currAdrenalineStacks, maxAdrenalineStacks);
-        public float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(_stabilizedAimStacks, maxStabilizedAimStacks);
-        public float FirstStrikeDamageBoost => _isFirstStrikeActive ? 0 : firstStrikeBoost;
+        private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(_currAdrenalineStacks, maxAdrenalineStacks);
+        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(_stabilizedAimStacks, maxStabilizedAimStacks);
+        private float FirstStrikeDamageBoost => _isFirstStrikeActive ? firstStrikeBoost : 0;
+
+        public float NonMeleeDamageBoost => AdrenalineDamageBoost + StabilizedAimDamageBoost;
+        
+        public float TotalDamageMult
+        {
+            get
+            {
+                float ret = 1;
+                ret += PlayerUpgradeManager.Instance[UpgradeType.Adrenaline] * AdrenalineDamageBoost;
+                ret += PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] * StabilizedAimDamageBoost;
+                ret += PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] * FirstStrikeDamageBoost;
+                return ret;
+            }
+        }
         
         [SerializeField] private int maxAdrenalineStacks = 4;
         [SerializeField] private float adrenalineLength = 4;
@@ -55,13 +70,21 @@ namespace Player
 
         public bool HasNoUpgradedWeapons => _weapon.weaponInventory.All(data => !data || data.numUpgrades == 0);
 
-        private void Awake()
+        private bool _initialized;
+
+        private void Initialize()
         {
             _instance = this;
             _weapon = GetComponentInChildren<Weapon>();
             _cam = Camera.main;
             _body = GetComponent<Rigidbody2D>();
             _playerMovement = GetComponent<PlayerMovementScript>();
+            _initialized = true;
+        }
+
+        private void Awake()
+        {
+            Initialize();
         }
 
         private void Update()
@@ -77,11 +100,11 @@ namespace Player
             if (Input.GetMouseButton(0))
             {
                 Vector3 worldMousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
-                bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0));
+                bool fireResult = _weapon.Fire(Input.GetMouseButtonDown(0), TotalDamageMult);
                 if (fireResult)
                 {
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.WeaponData.knockbackStrength);
+                        _weapon.WeaponData.actualKnockbackStrength);
                     _isFirstStrikeActive = false;
                 }
             }

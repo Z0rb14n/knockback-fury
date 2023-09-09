@@ -1,4 +1,5 @@
 using System.Collections;
+using GameEnd;
 using UnityEngine;
 using Upgrades;
 
@@ -17,22 +18,35 @@ namespace Player
             }
         }
         private static PlayerHealth _instance;
-        private PlayerMovementScript _playerMovement;
         private PlayerUpgradeManager _upgradeManager;
+        
+        
+        public delegate void TargetAnalysisUpdateHandler();
+
+        public event TargetAnalysisUpdateHandler OnTargetAnalysisUpdate;
 
         [SerializeField] private int sneakyJumperCooldown = 3;
         [SerializeField] private int sneakyJumperInvulnTime = 1;
 
-        private bool _isTargetAnalysisShieldActive;
-        private int _sumTargetAnalysis;
-        private int _currSneakyJumpCooldown;
+        public int TargetAnalysisDamage { get; private set; }
+
+        public bool IsTargetAnalysisShieldActive { get; private set; }
+
+        private float _currSneakyJumpCooldown;
+        private float _currSneakyJumpTime;
 
         protected override void Awake()
         {
             base.Awake();
             _instance = this;
-            _playerMovement = GetComponent<PlayerMovementScript>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            _currSneakyJumpCooldown -= Time.deltaTime;
+            _currSneakyJumpTime -= Time.deltaTime;
         }
 
         /// <summary>
@@ -40,16 +54,27 @@ namespace Player
         /// </summary>
         protected override void DoTakeDamage(int dmg)
         {
-            if (!_isTargetAnalysisShieldActive)
+            if (GameEndCanvas.Instance)
             {
-                health -= dmg;
-                _iFrameTimer = iFrameLength;
-                _playerMovement.StopMovement();
-                StartCoroutine(AllowMovementAfterDelay());
+                GameEndCanvas.Instance.endData.hitsTaken++;
+            }
+
+            if (_currSneakyJumpTime > 0)
+            {
+            }
+            else if (IsTargetAnalysisShieldActive)
+            {
+                IsTargetAnalysisShieldActive = false;
+                OnTargetAnalysisUpdate?.Invoke();
             }
             else
             {
-                _isTargetAnalysisShieldActive = false;
+                if (GameEndCanvas.Instance)
+                {
+                    GameEndCanvas.Instance.endData.damageTaken += Mathf.Min(health, dmg);
+                }
+                health -= dmg;
+                _iFrameTimer = iFrameLength;
             }
             StartCoroutine(DisableCollision());
             
@@ -58,13 +83,17 @@ namespace Player
         protected override void Die()
         {
             Debug.Log("Player death");
-            // TODO: player death
+            StartCoroutine(OnDeathCoroutine());
         }
 
-        private IEnumerator AllowMovementAfterDelay()
+        private static IEnumerator OnDeathCoroutine()
         {
-            yield return new WaitForSeconds(iFrameLength * 0.5f);
-            _playerMovement.AllowMovement();
+            PlayerMovementScript.Instance.CanMove = false;
+            PlayerWeaponControl.Instance.enabled = false;
+            CameraScript.Instance.enabled = false;
+            Time.timeScale = 0;
+            GameEndCanvas.Instance.DisplayAfterDelay(1, false);
+            yield return new WaitForSecondsRealtime(1);
         }
 
         private IEnumerator DisableCollision()
@@ -85,15 +114,20 @@ namespace Player
 
         public void OnDamageDealtToOther(int amount)
         {
-            if (_isTargetAnalysisShieldActive) return;
+            if (GameEndCanvas.Instance)
+            {
+                GameEndCanvas.Instance.endData.damageDealt += amount;
+            }
+            if (IsTargetAnalysisShieldActive) return;
             if (_upgradeManager[UpgradeType.TargetAnalysis] > 0)
             {
-                _sumTargetAnalysis += amount;
-                if (_sumTargetAnalysis >= _upgradeManager.GetData(UpgradeType.TargetAnalysis))
+                TargetAnalysisDamage += amount;
+                if (TargetAnalysisDamage >= _upgradeManager.GetData(UpgradeType.TargetAnalysis))
                 {
-                    _sumTargetAnalysis = 0;
-                    _isTargetAnalysisShieldActive = true;
+                    TargetAnalysisDamage = 0;
+                    IsTargetAnalysisShieldActive = true;
                 }
+                OnTargetAnalysisUpdate?.Invoke();
             }
         }
 
@@ -102,7 +136,7 @@ namespace Player
             if (_upgradeManager[UpgradeType.SneakyJumper] > 0)
             {
                 if (_currSneakyJumpCooldown > 0) return;
-                _iFrameTimer = sneakyJumperInvulnTime;
+                _currSneakyJumpTime = sneakyJumperInvulnTime;
                 _currSneakyJumpCooldown = sneakyJumperCooldown;
             }
         }
