@@ -42,6 +42,11 @@ namespace Weapons
             _hitPlayer = hitPlayer;
         }
 
+        public void ModifyDamage(float multiplier)
+        {
+            _damage = Mathf.RoundToInt(_damage * multiplier);
+        }
+
         private void FixedUpdate()
         {
             Vector3 currPos = transform.position;
