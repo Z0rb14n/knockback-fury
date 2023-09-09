@@ -380,7 +380,7 @@ namespace Weapons
         public static void HitEntity(Collider2D collider, int damage)
         {
             EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
-            if (enemyBomb) enemyBomb.Detonate(true);
+            if (enemyBomb) enemyBomb.OnHitByPlayer();
             HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
         }
 
