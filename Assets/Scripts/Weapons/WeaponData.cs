@@ -63,6 +63,11 @@ namespace Weapons
             numUpgrades = 0;
         }
 
+        public void IncrementClip()
+        {
+            if (Clip != 0) Clip++;
+        }
+
         public void DecrementClip()
         {
             Clip -= 1;

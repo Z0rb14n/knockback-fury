@@ -382,14 +382,14 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static void HitEntity(Collider2D collider, int damage)
+        public static bool HitEntity(Collider2D collider, int damage)
         {
             EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
             if (enemyBomb) enemyBomb.OnHitByPlayer();
-            HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
         }
 
-        private static void HitEntityHealth(EntityHealth health, int damage)
+        private static bool HitEntityHealth(EntityHealth health, int damage)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
@@ -413,8 +413,10 @@ namespace Weapons
                 Debug.Log(finalDamage);
             }
             // ReSharper disable once UseNullPropagation
-            if (!ReferenceEquals(health,null))
-                health.TakeDamage(finalDamage);
+            if (ReferenceEquals(health, null)) return false;
+            health.TakeDamage(finalDamage);
+            return true;
+
         }
     }
 }
