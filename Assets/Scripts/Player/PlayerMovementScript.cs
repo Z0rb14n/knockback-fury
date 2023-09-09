@@ -303,8 +303,6 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                //if (Grounded)
-                //    _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 if (IsOnLeftWall)
                 {
                     _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
@@ -408,7 +406,7 @@ namespace Player
             float gravity = _body.gravityScale;
             _body.gravityScale = 0;
             _body.velocity = _dashDirection * dashSpeed;
-            yield return new WaitForSeconds(dashTime);
+            yield return new WaitForSeconds(ActualDashTime);
             _body.gravityScale = gravity;
 
             _dashing = false;
