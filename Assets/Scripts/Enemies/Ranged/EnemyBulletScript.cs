@@ -15,7 +15,6 @@ namespace Enemies.Ranged
 
         protected float damageMultiplier;
         protected new Rigidbody2D rigidbody2D;
-        private float _timer;
 
         protected virtual void Awake()
         {
