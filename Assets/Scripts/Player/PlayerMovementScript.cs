@@ -292,7 +292,7 @@ namespace Player
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
             }

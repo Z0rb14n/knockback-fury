@@ -50,7 +50,7 @@ public class EntityHealth : MonoBehaviour
 
     private IEnumerator DamageFlash()
     {
-        _sprite.color = new Color(1, 0, 0, 0.5f);
+        _sprite.color = new Color(1, 0.5f, 0.5f, 1f);
         yield return new WaitForSeconds(0.1f);
         // ReSharper disable once Unity.InefficientPropertyAccess
         _sprite.color = normalColor;

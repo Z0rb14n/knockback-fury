@@ -82,7 +82,10 @@ namespace Weapons
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
             _source = GetComponent<AudioSource>();
-            WeaponData.Reload();
+            foreach (WeaponData data in weaponInventory)
+            {
+                if (data) data.OnAfterDeserialize();
+            }
             UpdateFromWeaponData();
             EnsureInventoryHasSpace();
         }
