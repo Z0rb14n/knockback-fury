@@ -56,6 +56,8 @@ namespace Player
         public float lateJumpLeeway = 3;
         [Min(0), Tooltip("How long jump needs to be held to jump higher")]
         public float highJumpTime = 3;
+        [Min(0), Tooltip("Time on a wall before walljump is enabled")]
+        public float minTimeBeforeWallJump = 0.15f;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -98,6 +100,7 @@ namespace Player
         private float _lateJumpTime = 0;
         private float _jumpTime = 0;
         private bool _isHoldingJump = false;
+        private float _timeOnWall = 0;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -304,7 +307,8 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                if (!Grounded)
+                Debug.Log(_timeOnWall);
+                if (!Grounded && _timeOnWall > minTimeBeforeWallJump)
                 {
                     if (IsOnLeftWall)
                     {
@@ -384,6 +388,8 @@ namespace Player
             }
 
             IsWallSliding = true;
+
+            _timeOnWall += Time.fixedDeltaTime;
         }
 
         private void OnWallLaunch()
@@ -446,6 +452,7 @@ namespace Player
             {
                 _lateJumpTime = lateJumpLeeway;
             }
+            _timeOnWall = 0;
         }
     }
 }
