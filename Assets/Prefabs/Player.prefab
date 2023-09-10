@@ -128,10 +128,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 8
   speedSmoothness: 0.01
-  jumpForce: 11
-  wallJumpForce: {x: 12, y: 10.5}
-  dashSpeed: 10
-  dashTime: 0.2
+  jumpForce: 11.5
+  wallJumpForce: {x: 12, y: 13}
+  dashSpeed: 15
+  dashTime: 0.15
   dashStartDelay: 0.07
   maxDashes: 1
   slideSpeed: 0.7
