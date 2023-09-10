@@ -122,7 +122,7 @@ namespace Weapons
                     {
                         Vector3 mousePos = GetMousePos();
                         PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
-                            WeaponData.actualKnockbackStrength);
+                            WeaponData.actualKnockbackStrength, true);
                         FireWeaponUnchecked(PlayerWeaponControl.Instance.TotalDamageMult);
                     }
                 }

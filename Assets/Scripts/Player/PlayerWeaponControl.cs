@@ -104,7 +104,7 @@ namespace Player
                 if (fireResult)
                 {
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.WeaponData.actualKnockbackStrength);
+                        _weapon.WeaponData.actualKnockbackStrength, true);
                     _isFirstStrikeActive = false;
                 }
             }

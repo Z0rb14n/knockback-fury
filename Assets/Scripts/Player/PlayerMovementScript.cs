@@ -346,10 +346,11 @@ namespace Player
             }
         }
 
-        public void RequestKnockback(Vector2 dir, float str) => RequestKnockback(dir * str);
+        public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
 
-        public void RequestKnockback(Vector2 vec)
+        public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
+            if (isWeapon && Grounded) return;
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
