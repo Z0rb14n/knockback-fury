@@ -52,7 +52,7 @@ namespace Weapons
             {
                 Vector2 normalizedLookDirection = LookDirection.normalized;
                 float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
+                angle += Random.Range(-WeaponData.actualSpread/2, WeaponData.actualSpread/2) * Mathf.Deg2Rad;
                 return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
             }
         }
@@ -152,7 +152,7 @@ namespace Weapons
                 int damage = isMelee
                     ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
                                        WeaponData.meleeInfo.baseDamage)
-                    : WeaponData.projectileDamage;
+                    : WeaponData.actualDamage;
                 damage += isMelee
                     ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
                     : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));

@@ -38,7 +38,7 @@ namespace Weapons
         public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
         {
             _weaponData = data;
-            _damage = data.projectileDamage;
+            _damage = data.actualDamage;
             _remainingDistance = data.actualRange;
 
             _body.velocity = direction * data.projectileSpeed;

@@ -18,6 +18,8 @@ namespace Weapons
         public float projectileSpeed = 1;
         [Min(0)]
         public int projectileDamage = 1;
+
+        [NonSerialized] public int actualDamage = 1;
         [Min(0)]
         public float roundsPerSecond = 1;
         [SerializeField, Min(0)]
@@ -28,6 +30,7 @@ namespace Weapons
         public float reloadTime = 1.5f;
         [Min(0), Tooltip("Spread of the weapon in degrees")]
         public float spread = 15;
+        [NonSerialized] public float actualSpread = 15;
         [Tooltip("Whether the gun is Hitscan")]
         public bool isHitscan;
         [Tooltip("What action is the right click action")]
@@ -60,6 +63,8 @@ namespace Weapons
             actualKnockbackStrength = knockbackStrength;
             actualRange = range;
             actualClipSize = clipSize;
+            actualSpread = spread;
+            actualDamage = projectileDamage;
             Clip = actualClipSize;
             numUpgrades = 0;
         }
@@ -112,6 +117,18 @@ namespace Weapons
         public void UpgradeRange()
         {
             actualRange *= 1.5f;
+            numUpgrades++;
+        }
+
+        public void UpgradeAccuracy()
+        {
+            spread /= 2;
+            numUpgrades++;
+        }
+
+        public void UpgradeDamage()
+        {
+            actualDamage = Mathf.RoundToInt(1.5f * actualDamage);
             numUpgrades++;
         }
     }
