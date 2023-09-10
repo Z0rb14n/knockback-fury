@@ -72,11 +72,6 @@ namespace Pause
             Hide();
         }
 
-        public void OnUpgradesButtonClicked()
-        {
-            
-        }
-
         public void OnRestartButtonClicked()
         {
             EnablePlayerCollision();
