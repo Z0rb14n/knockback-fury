@@ -60,6 +60,7 @@ namespace Weapons
             actualKnockbackStrength = knockbackStrength;
             actualRange = range;
             actualClipSize = clipSize;
+            Clip = actualClipSize;
             numUpgrades = 0;
         }
 
