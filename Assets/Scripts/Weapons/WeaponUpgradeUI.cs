@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using Util;
 
 namespace Weapons
 {
@@ -16,29 +17,8 @@ namespace Weapons
 
         private void EnsureLength(int len)
         {
-            if (weaponsArea.childCount == len)
-            {
-                if (_weaponButtons != null) return;
-                _weaponButtons = new WeaponButton[len];
-                for (int i = 0; i < len; i++)
-                {
-                    _weaponButtons[i] = weaponsArea.GetChild(i).GetComponent<WeaponButton>();
-                }
-                return;
-            }
-            for (int i = weaponsArea.childCount; i < len; i++)
-            {
-                Instantiate(weaponButtonPrefab, weaponsArea);
-            }
-
-            for (int i = weaponsArea.childCount; i > len; i--)
-            {
-                Destroy(weaponsArea.GetChild(i).gameObject);
-            }
-
-            // since GetComponentsInChildren bugs fsr
+            ObjectUtil.EnsureLength(weaponsArea, len, weaponButtonPrefab);
             _weaponButtons = new WeaponButton[len];
-
             for (int i = 0; i < len; i++)
             {
                 _weaponButtons[i] = weaponsArea.GetChild(i).GetComponent<WeaponButton>();

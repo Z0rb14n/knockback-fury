@@ -1,13 +1,21 @@
-﻿using Player;
+﻿using System.Linq;
+using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Upgrades;
+using Util;
 
 namespace Pause
 {
+    /// <summary>
+    /// Script for the pause canvas.
+    /// </summary>
     [DisallowMultipleComponent]
     public class PauseCanvas : MonoBehaviour
     {
         [SerializeField] private RectTransform actualPauseMenu;
+        [SerializeField] private RectTransform upgradeList;
+        [SerializeField] private GameObject upgradePrefab;
         
         private void Awake()
         {
@@ -28,6 +36,19 @@ namespace Pause
             CameraScript.Instance.enabled = false;
             Time.timeScale = 0;
             actualPauseMenu.gameObject.SetActive(true);
+            UpgradePickupData[] types = PlayerUpgradeManager.Instance.upgrades.Where(upgradeCount => upgradeCount.count > 0)
+                .Select(count => count.type)
+                .Distinct()
+                .Select(type => UpgradeManager.Instance.UpgradeMapping[type])
+                .OrderBy(type => type.displayName)
+                .ToArray();
+            ObjectUtil.EnsureLength(upgradeList, types.Length, upgradePrefab);
+            for (int i = 0; i < types.Length; i++)
+            {
+                PauseUpgradeObject pauseUpgradeObject = upgradeList.GetChild(i).GetComponent<PauseUpgradeObject>();
+                pauseUpgradeObject.title.text = types[i].displayName;
+                pauseUpgradeObject.body.text = types[i].infoText;
+            }
         }
 
         private void Hide()
