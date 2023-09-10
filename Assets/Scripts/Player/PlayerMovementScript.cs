@@ -335,14 +335,11 @@ namespace Player
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool isSlidingThisFrame = false;
-            if (!Grounded && _body.velocity.y < 0 && xInput != 0)
+
+            bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+            if (!Grounded && _body.velocity.y < 0 && !holdingDown)
             {
-                if (IsOnLeftWall && xInput < 0)
-                {
-                    isSlidingThisFrame = true;
-                    WallSlideLogic();
-                }
-                else if (IsOnRightWall && xInput > 0)
+                if (IsOnLeftWall || IsOnRightWall)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();
