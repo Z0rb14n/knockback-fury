@@ -12,7 +12,7 @@ namespace Weapons
 
         private WeaponButton[] _weaponButtons;
         private WeaponUpgradeTrigger _upgradeTrigger;
-        private int _selectedWeaponIndex = 0;
+        private int _selectedWeaponIndex;
 
         private void EnsureLength(int len)
         {
@@ -73,7 +73,7 @@ namespace Weapons
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) Close();
+            if (Input.GetKeyDown(KeyCode.Escape) && visibleUI.activeSelf) Close();
         }
 
         public void Close()

@@ -250,13 +250,6 @@ namespace Player
 
         private void Update()
         {
-            // just for convenience during testing
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-
-
             if (Grounded)
             {
                 _dashesRemaining = maxDashes;

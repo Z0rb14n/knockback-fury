@@ -15,7 +15,7 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>();
+                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>(true);
                 if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
