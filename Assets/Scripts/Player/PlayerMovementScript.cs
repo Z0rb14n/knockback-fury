@@ -300,7 +300,6 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                Debug.Log(_timeOnWall);
                 if (!Grounded && _timeOnWall > minTimeBeforeWallJump)
                 {
                     if (IsOnLeftWall)

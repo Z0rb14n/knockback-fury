@@ -36,9 +36,7 @@ namespace Pause
             CameraScript.Instance.enabled = false;
             Time.timeScale = 0;
             actualPauseMenu.gameObject.SetActive(true);
-            UpgradePickupData[] types = PlayerUpgradeManager.Instance.upgrades.Where(upgradeCount => upgradeCount.count > 0)
-                .Select(count => count.type)
-                .Distinct()
+            UpgradePickupData[] types = PlayerUpgradeManager.Instance.GetUniqueUpgrades
                 .Select(type => UpgradeManager.Instance.UpgradeMapping[type])
                 .OrderBy(type => type.displayName)
                 .ToArray();
