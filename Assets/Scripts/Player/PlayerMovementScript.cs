@@ -56,6 +56,8 @@ namespace Player
         public float lateJumpLeeway = 3;
         [Min(0), Tooltip("How long jump needs to be held to jump higher")]
         public float highJumpTime = 3;
+        [Min(0), Tooltip("Time on a wall before walljump is enabled")]
+        public float minTimeBeforeWallJump = 0.15f;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -98,6 +100,7 @@ namespace Player
         private float _lateJumpTime = 0;
         private float _jumpTime = 0;
         private bool _isHoldingJump = false;
+        private float _timeOnWall = 0;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -297,15 +300,19 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                if (IsOnLeftWall)
+                Debug.Log(_timeOnWall);
+                if (!Grounded && _timeOnWall > minTimeBeforeWallJump)
                 {
-                    _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
-                }
-                else if (IsOnRightWall)
-                {
-                    _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
+                    if (IsOnLeftWall)
+                    {
+                        _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
+                    else if (IsOnRightWall)
+                    {
+                        _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
                 }
                 _jumpRequest = false;
             }
@@ -321,14 +328,11 @@ namespace Player
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool isSlidingThisFrame = false;
-            if (!Grounded && _body.velocity.y < 0 && xInput != 0)
+
+            bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+            if (!Grounded && _body.velocity.y < 0 && !holdingDown)
             {
-                if (IsOnLeftWall && xInput < 0)
-                {
-                    isSlidingThisFrame = true;
-                    WallSlideLogic();
-                }
-                else if (IsOnRightWall && xInput > 0)
+                if (IsOnLeftWall || IsOnRightWall)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();
@@ -374,6 +378,8 @@ namespace Player
             }
 
             IsWallSliding = true;
+
+            _timeOnWall += Time.fixedDeltaTime;
         }
 
         private void OnWallLaunch()
@@ -381,6 +387,15 @@ namespace Player
             if (PlayerUpgradeManager.Instance[UpgradeType.Momentum] > 0) _hasMomentumDash = true;
             PlayerHealth.Instance.OnWallLaunch();
             PlayerWeaponControl.Instance.OnWallLaunch();
+            ResetDash();
+        }
+
+        private void ResetDash()
+        {
+            if (_dashesRemaining == 0)
+            {
+                _dashesRemaining = 1;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -427,6 +442,7 @@ namespace Player
             {
                 _lateJumpTime = lateJumpLeeway;
             }
+            _timeOnWall = 0;
         }
     }
 }
