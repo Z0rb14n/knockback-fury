@@ -304,15 +304,18 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                if (IsOnLeftWall)
+                if (!Grounded)
                 {
-                    _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
-                }
-                else if (IsOnRightWall)
-                {
-                    _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
+                    if (IsOnLeftWall)
+                    {
+                        _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
+                    else if (IsOnRightWall)
+                    {
+                        _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
                 }
                 _jumpRequest = false;
             }
