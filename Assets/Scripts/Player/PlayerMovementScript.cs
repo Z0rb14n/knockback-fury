@@ -388,6 +388,15 @@ namespace Player
             if (PlayerUpgradeManager.Instance[UpgradeType.Momentum] > 0) _hasMomentumDash = true;
             PlayerHealth.Instance.OnWallLaunch();
             PlayerWeaponControl.Instance.OnWallLaunch();
+            ResetDash();
+        }
+
+        private void ResetDash()
+        {
+            if (_dashesRemaining == 0)
+            {
+                _dashesRemaining = 1;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
