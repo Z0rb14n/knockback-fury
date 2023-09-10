@@ -159,7 +159,7 @@ namespace FloorGen
                 int currBranchiness = branchiness;
                 do
                 {
-                    RoomType dir = RandomDirUnweighted(random, AllowedBranchMovements(start, middleLength - 1));
+                    RoomType dir = RandomDirUnweighted(random, AllowedBranchMovements(start, middleLength));
                     Vector2Int movedStart = dir.Move(start);
                     if (!grid.ContainsKey(movedStart)) roomCount--;
                     ExpandSide(grid, start, dir);
@@ -449,18 +449,19 @@ namespace FloorGen
             return random.Next(0, 100) < prob * 100;
         }
 
-        private RoomType[] AllowedBranchMovements(Vector2Int pos, int finalRoomX)
+        private RoomType[] AllowedBranchMovements(Vector2Int pos, int middleLen)
         {
             List<RoomType> rooms = Enum.GetValues(typeof(RoomType)).Cast<RoomType>().ToList();
-            if (pos.x >= finalRoomX) rooms.Remove(RoomType.RightOpen);
-            if (pos.y == 0)
+            if (pos.x >= generationStart.x + middleLen - 1) rooms.Remove(RoomType.RightOpen);
+            
+            if (pos.y == generationStart.y)
             {
-                if (pos.x > 0) rooms.Remove(RoomType.LeftOpen);
+                if (pos.x > generationStart.x) rooms.Remove(RoomType.LeftOpen);
                 rooms.Remove(RoomType.RightOpen);
             }
 
-            int minY = -maxRows / 2;
-            int maxY = maxRows + minY + 1;
+            int minY = generationStart.y -1;
+            int maxY = generationStart.y + 1;
             if (pos.y >= maxY) rooms.Remove(RoomType.TopOpen);
             if (pos.y <= minY) rooms.Remove(RoomType.BottomOpen);
             return rooms.ToArray();
