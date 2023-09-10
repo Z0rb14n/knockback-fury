@@ -360,7 +360,7 @@ namespace FloorGen
                 roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
                     roomData.weaponPickup = GenerateWeaponPickup(random, gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
-                GenerateEnemies(random, sockets, packSize, roomData, isEndRoom);
+                if (gridIndex != generationStart) GenerateEnemies(random, sockets, packSize, roomData, isEndRoom);
             }
             else
             {

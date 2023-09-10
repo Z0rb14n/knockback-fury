@@ -413,7 +413,6 @@ namespace Weapons
                         finalDamage += Mathf.RoundToInt(damage * boost);
                     }
                 }
-                Debug.Log(finalDamage);
             }
             // ReSharper disable once UseNullPropagation
             if (ReferenceEquals(health, null)) return false;
