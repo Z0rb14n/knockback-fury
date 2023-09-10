@@ -253,13 +253,6 @@ namespace Player
 
         private void Update()
         {
-            // just for convenience during testing
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-
-
             if (Grounded)
             {
                 _dashesRemaining = maxDashes;
@@ -307,7 +300,6 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                Debug.Log(_timeOnWall);
                 if (!Grounded && _timeOnWall > minTimeBeforeWallJump)
                 {
                     if (IsOnLeftWall)
@@ -353,10 +345,11 @@ namespace Player
             }
         }
 
-        public void RequestKnockback(Vector2 dir, float str) => RequestKnockback(dir * str);
+        public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
 
-        public void RequestKnockback(Vector2 vec)
+        public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
+            if (isWeapon && Grounded) return;
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;

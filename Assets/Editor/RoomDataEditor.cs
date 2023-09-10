@@ -68,9 +68,10 @@ namespace Editor
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RecordObject(roomData, $"Change Room Data {thingChanged}");
+                return retVal;
             }
 
-            return retVal;
+            return offset;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>();
+                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>(true);
                 if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
@@ -104,7 +104,7 @@ namespace Player
                 if (fireResult)
                 {
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.WeaponData.actualKnockbackStrength);
+                        _weapon.WeaponData.actualKnockbackStrength, true);
                     _isFirstStrikeActive = false;
                 }
             }

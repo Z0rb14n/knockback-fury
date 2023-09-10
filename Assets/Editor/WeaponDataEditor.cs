@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 using Weapons;
 
 namespace Editor
@@ -9,9 +10,11 @@ namespace Editor
     {
         public override void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
-
             WeaponData script = (WeaponData)target;
+            GUI.enabled = false;
+            GUILayout.Label("Current DPS: " + script.DPS);
+            GUI.enabled = true;
+            EditorGUI.BeginChangeCheck();
 
             List<string> excluded = new() { "m_Script" };
             if (script.rightClickAction != WeaponRightClickAction.Melee) excluded.Add("meleeInfo");
