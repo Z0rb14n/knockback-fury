@@ -71,6 +71,11 @@ namespace Weapons
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) Close();
+        }
+
         public void Close()
         {
             Time.timeScale = 1;

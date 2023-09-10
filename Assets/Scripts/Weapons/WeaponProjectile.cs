@@ -1,5 +1,6 @@
 ﻿using Player;
 using UnityEngine;
+using Upgrades;
 
 namespace Weapons
 {
@@ -19,6 +20,7 @@ namespace Weapons
         private Vector3 _prevPosition;
         private Rigidbody2D _body;
         private bool _hitPlayer;
+        private WeaponData _weaponData;
         private Collider2D[] _colliderTest = new Collider2D[20];
         
         private void Awake()
@@ -35,11 +37,17 @@ namespace Weapons
         /// <param name="hitPlayer">Whether to hit the player or not</param>
         public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
         {
+            _weaponData = data;
             _damage = data.projectileDamage;
             _remainingDistance = data.actualRange;
 
             _body.velocity = direction * data.projectileSpeed;
             _hitPlayer = hitPlayer;
+        }
+
+        public void ModifyDamage(float multiplier)
+        {
+            _damage = Mathf.RoundToInt(_damage * multiplier);
         }
 
         private void FixedUpdate()
@@ -57,8 +65,19 @@ namespace Weapons
 
             if (_remainingDistance <= 0)
             {
+                RefundAmmoLogic(false);
                 Detonation();
                 Destroy(gameObject);
+            }
+        }
+
+        private void RefundAmmoLogic(bool hitEntity)
+        {
+            if (hitEntity) return;
+            if (_weaponData.numProjectiles != 1 || PlayerUpgradeManager.Instance[UpgradeType.EfficientScurry] <= 0) return;
+            if (Random.Range(0f, 1f) > 0.5f)
+            {
+                _weaponData.IncrementClip();
             }
         }
 
@@ -67,7 +86,8 @@ namespace Weapons
         {
             EntityHealth health = other.collider.GetComponent<EntityHealth>();
             if (!_hitPlayer && health is PlayerHealth) return;
-            Weapon.HitEntity(other.collider, _damage);
+            bool hitEntity = Weapon.HitEntity(other.collider, _damage);
+            RefundAmmoLogic(hitEntity);
             Detonation();
             Destroy(gameObject);
         }

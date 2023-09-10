@@ -82,7 +82,10 @@ namespace Weapons
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
             _source = GetComponent<AudioSource>();
-            WeaponData.Reload();
+            foreach (WeaponData data in weaponInventory)
+            {
+                if (data) data.OnAfterDeserialize();
+            }
             UpdateFromWeaponData();
             EnsureInventoryHasSpace();
         }
@@ -120,7 +123,7 @@ namespace Weapons
                         Vector3 mousePos = GetMousePos();
                         PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
                             WeaponData.actualKnockbackStrength);
-                        FireWeaponUnchecked();
+                        FireWeaponUnchecked(PlayerWeaponControl.Instance.TotalDamageMult);
                     }
                 }
             }
@@ -150,6 +153,9 @@ namespace Weapons
                     ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
                                        WeaponData.meleeInfo.baseDamage)
                     : WeaponData.projectileDamage;
+                damage += isMelee
+                    ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
+                    : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
                 if (!ReferenceEquals(hit.collider, null))
                 {
                     HitEntity(hit.collider, damage);
@@ -176,7 +182,7 @@ namespace Weapons
         /// <summary>
         /// Fire weapon: create projectiles and reset timers.
         /// </summary>
-        private void FireWeaponUnchecked()
+        private void FireWeaponUnchecked(float mult)
         {
             if (GameEndCanvas.Instance)
             {
@@ -202,6 +208,7 @@ namespace Weapons
                         : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
                     proj.Initialize(WeaponData, RandomizedLookDirection);
+                    proj.ModifyDamage(mult);
                 }
             }
 
@@ -219,8 +226,9 @@ namespace Weapons
         /// Fire weapon
         /// </summary>
         /// <param name="isFirstDown">Whether the mouse was pressed this frame</param>
+        /// <param name="mult">Additional damage multiplier, 1 if none</param>
         /// <returns>Whether or not a shot was actually fired</returns>
-        public bool Fire(bool isFirstDown)
+        public bool Fire(bool isFirstDown, float mult)
         {
             if (ReloadTime > 0) return false;
             if (_weaponDelayTimer > 0) return false;
@@ -231,7 +239,7 @@ namespace Weapons
                 return false;
             }
             if (WeaponData.fireMode == FireMode.Burst) _weaponBurstCount = WeaponData.burstInfo.burstAmount;
-            FireWeaponUnchecked();
+            FireWeaponUnchecked(mult);
             return true;
         }
 
@@ -377,14 +385,14 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static void HitEntity(Collider2D collider, int damage)
+        public static bool HitEntity(Collider2D collider, int damage)
         {
             EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
-            if (enemyBomb) enemyBomb.Detonate(true);
-            HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+            if (enemyBomb) enemyBomb.OnHitByPlayer();
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
         }
 
-        private static void HitEntityHealth(EntityHealth health, int damage)
+        private static bool HitEntityHealth(EntityHealth health, int damage)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
@@ -405,16 +413,13 @@ namespace Weapons
                         finalDamage += Mathf.RoundToInt(damage * boost);
                     }
                 }
-                if (PlayerUpgradeManager.Instance[UpgradeType.Adrenaline] > 0)
-                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.AdrenalineDamageBoost);
-                if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
-                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.StabilizedAimDamageBoost);
-                if (PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] > 0)
-                    finalDamage += Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.FirstStrikeDamageBoost);
+                Debug.Log(finalDamage);
             }
             // ReSharper disable once UseNullPropagation
-            if (!ReferenceEquals(health,null))
-                health.TakeDamage(finalDamage);
+            if (ReferenceEquals(health, null)) return false;
+            health.TakeDamage(finalDamage);
+            return true;
+
         }
     }
 }

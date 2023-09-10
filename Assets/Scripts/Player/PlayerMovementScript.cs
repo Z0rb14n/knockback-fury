@@ -6,6 +6,7 @@ using GameEnd;
 using UnityEngine;
 using Upgrades;
 using Weapons;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -27,6 +28,8 @@ namespace Player
         public float dashSpeed = 1;
         [Min(0), Tooltip("Time in Air Dash")]
         public float dashTime = 1;
+        [Min(0), Tooltip("Seconds you freeze in the air when initiating a dash")]
+        public float dashStartDelay = 1;
         [Min(0), Tooltip("Max number of dashes upon landing")]
         public int maxDashes = 1;
         [Min(0), Tooltip("Slide speed when on a wall")]
@@ -45,6 +48,14 @@ namespace Player
         public float decelAirborne = 5;
         [Min(0), Tooltip("Deceleration (scaled by time) when above max speed")]
         public float decelWhenAbove = 5;
+        [Min(0), Tooltip("The height of the short jump compared to the high jump")]
+        public float shortJumpPercentage = 0.75f;
+        [Min(0), Tooltip("How much earlier jump can be pressed")]
+        public float earlyJumpLeeway = 10;
+        [Min(0), Tooltip("How much later jump can be pressed")]
+        public float lateJumpLeeway = 3;
+        [Min(0), Tooltip("How long jump needs to be held to jump higher")]
+        public float highJumpTime = 3;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -83,6 +94,10 @@ namespace Player
         private bool _hasMomentumDash;
         private SpriteRenderer _sprite;
         private readonly List<PlatformTileScript> _platformsOn = new();
+        private float _earlyJumpTime = 0;
+        private float _lateJumpTime = 0;
+        private float _jumpTime = 0;
+        private bool _isHoldingJump = false;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -180,8 +195,68 @@ namespace Player
             }
         }
 
+        private void JumpLogic()
+        {
+            //jump
+            if (Grounded || _lateJumpTime > 0)
+            {
+                if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                    || Input.GetKeyDown(KeyCode.Space) || _earlyJumpTime > 0))
+                {
+                    _body.velocity = new Vector2(_body.velocity.x, jumpForce * shortJumpPercentage);
+                    _isHoldingJump = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)
+                        || Input.GetKey(KeyCode.Space));
+                    _earlyJumpTime = 0;
+                }
+            }
+            //pressing jump early
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                    || Input.GetKeyDown(KeyCode.Space))
+                {
+                    _earlyJumpTime = earlyJumpLeeway;
+                }
+            }
+            //let go of jump
+            if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.W)
+                || Input.GetKeyUp(KeyCode.Space))
+            {
+                _isHoldingJump = false;
+                _jumpTime = 0;
+            }
+        }
+
+        private void AdditionalJumpLogic()
+        {
+            if (!(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
+                || Input.GetKeyDown(KeyCode.Space)))
+            {
+                _earlyJumpTime -= Time.deltaTime;
+                _lateJumpTime -= Time.deltaTime;
+            }
+            //holding jump
+            if (_isHoldingJump)
+            {
+                _jumpTime += Time.deltaTime;
+            }
+            //small or big jump
+            if (_isHoldingJump && _jumpTime > highJumpTime)
+            {
+                _body.velocity = new Vector2(_body.velocity.x, jumpForce * 0.9f);
+                _isHoldingJump = false;
+            }
+        }
+
         private void Update()
         {
+            // just for convenience during testing
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+
+
             if (Grounded)
             {
                 _dashesRemaining = maxDashes;
@@ -217,30 +292,33 @@ namespace Player
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
             }
+
+            JumpLogic();
         }
 
         private void FixedUpdate()
         {
             if (_jumpRequest)
             {
-                if (Grounded)
-                    _body.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-                else if (IsOnLeftWall)
+                if (IsOnLeftWall)
                 {
                     _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
                     OnWallLaunch();
                 }
                 else if (IsOnRightWall)
                 {
-                    _body.AddForce(new Vector2(-wallJumpForce.x,wallJumpForce.y),ForceMode2D.Impulse);
+                    _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
                     OnWallLaunch();
                 }
                 _jumpRequest = false;
             }
+
+            //pressed jump early or late or short
+            AdditionalJumpLogic();
 
             if (_knockbackRequest)
             {
@@ -248,7 +326,6 @@ namespace Player
                 _knockbackVector = Vector2.zero;
                 _knockbackRequest = false;
             }
-            
             float xInput = Input.GetAxisRaw("Horizontal");
             bool isSlidingThisFrame = false;
             if (!Grounded && _body.velocity.y < 0 && xInput != 0)
@@ -323,20 +400,21 @@ namespace Player
 
         private IEnumerator DashCoroutine()
         {
+            _body.constraints = RigidbodyConstraints2D.FreezeAll;
+            yield return new WaitForSeconds(dashStartDelay);
+            _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
             _meshTrail.StartDash(_sprite.flipX);
-            _body.velocity = Vector2.zero;
-            float thisDashTime = ActualDashTime;
+
             if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
-            for (float timePassed = 0; timePassed < thisDashTime; timePassed += Time.fixedDeltaTime)
-            {
-                if (_body.IsTouchingLayers(_physicsCheckMask)) break;
-                Vector2 pos = _body.position;
-                _body.MovePosition(pos + (_dashDirection * dashSpeed));
-                yield return new WaitForFixedUpdate();
-            }
+
+            float gravity = _body.gravityScale;
+            _body.gravityScale = 0;
+            _body.velocity = _dashDirection * dashSpeed;
+            yield return new WaitForSeconds(ActualDashTime);
+            _body.gravityScale = gravity;
 
             _dashing = false;
-            _body.velocity = Vector2.zero;
             _meshTrail.StopDash();
         }
 
@@ -348,6 +426,14 @@ namespace Player
         public void RemovePlatformOn(PlatformTileScript platform)
         {
             _platformsOn.Remove(platform);
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (_body.velocity.y < 0)
+            {
+                _lateJumpTime = lateJumpLeeway;
+            }
         }
     }
 }

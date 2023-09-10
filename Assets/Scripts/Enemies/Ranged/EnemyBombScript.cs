@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
+using Upgrades;
 using Weapons;
 
 namespace Enemies.Ranged
@@ -14,7 +15,10 @@ namespace Enemies.Ranged
         public int playerDamage = 100;
         public bool playerVelocityPrediction = true;
 
+        private bool _hitByPlayer;
         private LayerMask _playerLayerMask;
+        private int _projectileLayer;
+        private IEnumerator _detonationCoroutine;
 
         public override void Initialize(float damageMult)
         {
@@ -23,8 +27,10 @@ namespace Enemies.Ranged
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position, playerMovementScript.Velocity);
-            StartCoroutine(DelayedExplosion());
+            _detonationCoroutine = DelayedExplosion();
+            StartCoroutine(_detonationCoroutine);
             _playerLayerMask = LayerMask.GetMask("Player");
+            _projectileLayer = LayerMask.NameToLayer("Projectile");
         }
 
         /// <summary>
@@ -153,7 +159,22 @@ namespace Enemies.Ranged
             if (vel.magnitude >= 0.001f) transform.localEulerAngles = new Vector3(0, 0,  Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg);
         }
 
-        public void Detonate(bool playerCaused)
+        public void OnHitByPlayer()
+        {
+            if (!_hitByPlayer && PlayerUpgradeManager.Instance[UpgradeType.TossBack] > 0)
+            {
+                rigidbody2D.velocity *= -1;
+                gameObject.layer = _projectileLayer;
+                StopCoroutine(_detonationCoroutine);
+                _detonationCoroutine = DelayedExplosion();
+                StartCoroutine(_detonationCoroutine);
+            }
+            _hitByPlayer = true;
+            
+            if (PlayerUpgradeManager.Instance[UpgradeType.TossBack] <= 0) Detonate(true);
+        }
+
+        private void Detonate(bool playerCaused)
         {
             Vector3 pos = transform.position;
             GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
@@ -190,16 +211,16 @@ namespace Enemies.Ranged
         
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.GetComponent<PlayerMovementScript>())
+            if (other.collider.GetComponent<PlayerMovementScript>() || (_hitByPlayer && other.collider.GetComponent<EntityHealth>()))
             {
-                Detonate(false);
+                Detonate(_hitByPlayer);
             }
         }
 
         private IEnumerator DelayedExplosion()
         {
             yield return new WaitForSeconds(delayBeforeDestruction);
-            Detonate(false);
+            Detonate(_hitByPlayer);
         }
     }
 }

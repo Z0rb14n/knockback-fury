@@ -60,7 +60,19 @@ namespace Weapons
             actualKnockbackStrength = knockbackStrength;
             actualRange = range;
             actualClipSize = clipSize;
+            Clip = actualClipSize;
             numUpgrades = 0;
+        }
+
+        /// <summary>
+        /// Increments the clip.
+        /// </summary>
+        /// <remarks>
+        /// Does not increment if empty.
+        /// </remarks>
+        public void IncrementClip()
+        {
+            if (Clip != 0) Clip++;
         }
 
         public void DecrementClip()

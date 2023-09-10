@@ -16,4 +16,6 @@ MonoBehaviour:
   upgradeData: 0
   displayName: Efficient Scurry
   infoText: Shots that don't deal damage have a 50% chance of refunding ammo.
-  implemented: 0
+  implemented: 1
+  comment: "Implementation Note - currently it doesn't:\n - does not apply to multishot
+    weapons\n - does not apply to weapons that are out of ammo"

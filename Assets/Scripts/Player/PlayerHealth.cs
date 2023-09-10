@@ -32,13 +32,21 @@ namespace Player
 
         public bool IsTargetAnalysisShieldActive { get; private set; }
 
-        private int _currSneakyJumpCooldown;
+        private float _currSneakyJumpCooldown;
+        private float _currSneakyJumpTime;
 
         protected override void Awake()
         {
             base.Awake();
             _instance = this;
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            _currSneakyJumpCooldown -= Time.deltaTime;
+            _currSneakyJumpTime -= Time.deltaTime;
         }
 
         /// <summary>
@@ -50,7 +58,16 @@ namespace Player
             {
                 GameEndCanvas.Instance.endData.hitsTaken++;
             }
-            if (!IsTargetAnalysisShieldActive)
+
+            if (_currSneakyJumpTime > 0)
+            {
+            }
+            else if (IsTargetAnalysisShieldActive)
+            {
+                IsTargetAnalysisShieldActive = false;
+                OnTargetAnalysisUpdate?.Invoke();
+            }
+            else
             {
                 if (GameEndCanvas.Instance)
                 {
@@ -58,11 +75,6 @@ namespace Player
                 }
                 health -= dmg;
                 _iFrameTimer = iFrameLength;
-            }
-            else
-            {
-                IsTargetAnalysisShieldActive = false;
-                OnTargetAnalysisUpdate?.Invoke();
             }
             StartCoroutine(DisableCollision());
             
@@ -124,7 +136,7 @@ namespace Player
             if (_upgradeManager[UpgradeType.SneakyJumper] > 0)
             {
                 if (_currSneakyJumpCooldown > 0) return;
-                _iFrameTimer = sneakyJumperInvulnTime;
+                _currSneakyJumpTime = sneakyJumperInvulnTime;
                 _currSneakyJumpCooldown = sneakyJumperCooldown;
             }
         }
