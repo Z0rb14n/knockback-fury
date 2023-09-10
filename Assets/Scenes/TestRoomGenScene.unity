@@ -714,15 +714,7 @@ MonoBehaviour:
   eliteDamageModifier: 2
   playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
   cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
-  socketObjects:
-  - size: {x: 6, y: 6}
-    prefab: {fileID: 5611468861318173077, guid: fb372b720caf7944bb892dcc4b7ef441, type: 3}
-  - size: {x: 12, y: 3}
-    prefab: {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
-  - size: {x: 2.5, y: 2.5}
-    prefab: {fileID: 461541005378355308, guid: d8027a8a4594f664e8d5bc9c909e898a, type: 3}
-  - size: {x: 2, y: 2}
-    prefab: {fileID: 4214757178654429746, guid: 59b38ea7172f9a44589fc09c183edbc3, type: 3}
+  socketObjects: []
   weaponsList:
   - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
   - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
