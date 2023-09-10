@@ -453,6 +453,7 @@ namespace FloorGen
         {
             List<RoomType> rooms = Enum.GetValues(typeof(RoomType)).Cast<RoomType>().ToList();
             if (pos.x >= generationStart.x + middleLen - 1) rooms.Remove(RoomType.RightOpen);
+            else if (pos.x <= generationStart.x) rooms.Remove(RoomType.LeftOpen);
             
             if (pos.y == generationStart.y)
             {
