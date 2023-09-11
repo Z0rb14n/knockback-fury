@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 036dc8d9ef2d04d40a83d678a26b6dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 3
   knockbackForce: 100
 --- !u!212 &3725231272355297957
 SpriteRenderer:

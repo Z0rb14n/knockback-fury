@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: SemiAutoShotgun
   m_EditorClassIdentifier: 
   weaponName: Semi-Auto Shotgun
-  numProjectiles: 7
+  numProjectiles: 4
   range: 10
   projectileSpeed: 20
-  projectileDamage: 4
+  projectileDamage: 7
   roundsPerSecond: 3
   clipSize: 10
-  reloadTime: 1.5
+  reloadTime: 1.4
   spread: 70
   isHitscan: 0
   rightClickAction: 0
   knockbackStrength: 12
   recoilAnimationDuration: 0.2
-  fireMode: 0
+  fireMode: 1
   burstInfo:
     burstAmount: 0
     withinBurstFirerate: 0

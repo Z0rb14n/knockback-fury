@@ -262,7 +262,7 @@ PrefabInstance:
     - target: {fileID: 1367610322427148548, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
+      objectReference: {fileID: 8300000, guid: 83e7b65f9e184e542b7c9fda045dc653, type: 3}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponData
       value: 
@@ -274,7 +274,7 @@ PrefabInstance:
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
+      objectReference: {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
@@ -282,7 +282,7 @@ PrefabInstance:
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+      objectReference: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.24705882
