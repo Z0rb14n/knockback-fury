@@ -141,10 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fee897cf95b1b7e4db6519d61fb9112e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDistance: 1
-  attackWidth: 1.8
-  attackDelay: 2
-  attackDamage: 5
+  attackDistance: 2
+  attackWidth: 3
+  attackDelay: 1.5
+  attackDamage: 2
   knockbackForce: 150
   _collider: {fileID: 6502981059598909017}
   _playerLayer:
@@ -178,8 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 175
-  health: 175
+  maxHealth: 125
+  health: 125
   iFrameLength: 0
   canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
