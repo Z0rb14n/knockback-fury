@@ -73,9 +73,25 @@ namespace Weapons
             Close();
         }
 
+        public void UpgradeDamage()
+        {
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeDamage();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+        
+        public void UpgradeAccuracy()
+        {
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAccuracy();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+
         public void UpgradeRecoil()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeRecoil();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
