@@ -47,6 +47,8 @@ namespace FloorGen
         public GameObject playerUpgradePrefab;
         [Tooltip("Cheese prefab")]
         public GameObject cheesePrefab;
+        [Tooltip("Room Changer Prefab")]
+        public GameObject roomChangePrefab;
         
         public SocketObject[] socketObjects;
         [Header("Weapon Generation")]
@@ -130,8 +132,11 @@ namespace FloorGen
                 Debug.Log($"Random seed: {guidHash}");
                 _random = new Random(guidHash);
             }
-            Debug.Log($"Reusing old seed: {seed}");
-            _random = new Random(seed);
+            else
+            {
+                Debug.Log($"Reusing old seed: {seed}");
+                _random = new Random(seed);
+            } 
         }
 
         private void Generate()
@@ -224,9 +229,9 @@ namespace FloorGen
         public void Transition()
         {
             playerTransform.position = playerHoldingPosition;
-            foreach (Transform t in transform)
+            while (transform.childCount > 0)
             {
-                Destroy(t.gameObject);
+                DestroyImmediate(transform.GetChild(0).gameObject);
             }
 
             generationStart += generationStartOffset;
@@ -239,6 +244,16 @@ namespace FloorGen
         private Vector2Int RandomPosExcept(Grid grid, params Vector2Int[] disallowedRooms)
         {
             return grid.Keys.Except(disallowedRooms).ToList().GetRandom(_random);
+        }
+
+        private RoomTransitionInteractable GenerateRoomTransitionInteractable(Vector3 pos, GameObject parent)
+        {
+            GameObject roomChanger = Instantiate(roomChangePrefab, pos, Quaternion.identity, parent.transform);
+            roomChanger.SetActive(false);
+            
+            RoomTransitionInteractable rti = roomChanger.GetComponent<RoomTransitionInteractable>();
+            rti.floorGenerator = this;
+            return rti;
         }
 
         private WeaponPickup GenerateWeaponPickup(Vector3 pos, GameObject parent, bool startsActive)
@@ -381,7 +396,10 @@ namespace FloorGen
                 roomData.pickup = GeneratePlayerUpgradePickup(gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
                 roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
+                {
                     roomData.weaponPickup = GenerateWeaponPickup( gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
+                    roomData.roomTransitionInteractable = GenerateRoomTransitionInteractable(gridPos + (Vector3)roomData.roomChangeSpawnOffset, cellObject);
+                }
                 if (gridIndex != generationStart) GenerateEnemies( sockets, packSize, roomData, isEndRoom);
             }
             else

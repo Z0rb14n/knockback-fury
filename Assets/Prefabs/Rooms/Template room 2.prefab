@@ -2420,11 +2420,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.125
       objectReference: {fileID: 0}
     - target: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_LocalPosition.z
@@ -60880,10 +60880,12 @@ MonoBehaviour:
   pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
+  roomTransitionInteractable: {fileID: 0}
   weaponSpawnOffset: {x: 0.5, y: -6.5}
   cheeseSpawnOffset: {x: -0.5, y: -6.5}
   powerupSpawnOffset: {x: 0.5, y: -6.5}
   weaponUpgradeSpawnOffset: {x: 0.5, y: -6.5}
+  roomChangeSpawnOffset: {x: 1.5, y: -6.5}
   playerSpawnOffset: {x: -7, y: -4}
   hiders:
   - hidingType: 1

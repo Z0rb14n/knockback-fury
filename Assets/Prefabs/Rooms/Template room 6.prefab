@@ -62598,10 +62598,12 @@ MonoBehaviour:
   pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
+  roomTransitionInteractable: {fileID: 0}
   weaponSpawnOffset: {x: 0.5, y: -2.5}
   cheeseSpawnOffset: {x: -0.5, y: -2.5}
   powerupSpawnOffset: {x: 0.5, y: -2.5}
   weaponUpgradeSpawnOffset: {x: 0.5, y: -2.5}
+  roomChangeSpawnOffset: {x: 1.5, y: -2.5}
   playerSpawnOffset: {x: -7, y: -2.5}
   hiders:
   - hidingType: 1
