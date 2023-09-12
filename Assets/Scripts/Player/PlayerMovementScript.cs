@@ -364,7 +364,7 @@ namespace Player
             {
                 GameEndCanvas.Instance.endData.enemiesKilled++;
             }
-            if (!Grounded) return;
+            if (Grounded) return;
             if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;
