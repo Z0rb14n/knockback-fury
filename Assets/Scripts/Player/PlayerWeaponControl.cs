@@ -22,8 +22,8 @@ namespace Player
         }
         private static PlayerWeaponControl _instance;
 
-        private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(_currAdrenalineStacks, maxAdrenalineStacks);
-        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(_stabilizedAimStacks, maxStabilizedAimStacks);
+        private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(AdrenalineStacks, maxAdrenalineStacks);
+        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(StabilizedAimStacks, maxStabilizedAimStacks);
         private float FirstStrikeDamageBoost => _isFirstStrikeActive ? firstStrikeBoost : 0;
 
         public float NonMeleeDamageBoost => AdrenalineDamageBoost + StabilizedAimDamageBoost;
@@ -54,12 +54,14 @@ namespace Player
         private Weapon _weapon;
         private Camera _cam;
         private Rigidbody2D _body;
-        private int _currAdrenalineStacks;
-        private int _stabilizedAimStacks;
         private IEnumerator _stabilizedAimCoroutine;
         private bool _isFirstStrikeActive;
 
         public readonly List<WeaponPickup> weaponsOn = new();
+
+        public int StabilizedAimStacks { get; private set; }
+
+        public int AdrenalineStacks { get; private set; }
 
         public bool HasWeaponSpace => _weapon.FirstAvailableInventorySpace != -1;
 
@@ -187,16 +189,16 @@ namespace Player
 
         private IEnumerator StabilizedAimBoostCoroutine()
         {
-            _stabilizedAimStacks++;
+            StabilizedAimStacks++;
             yield return new WaitForSeconds(stabilizedAimLength);
-            _stabilizedAimStacks--;
+            StabilizedAimStacks--;
         }
 
         private IEnumerator AdrenalineCoroutine()
         {
-            _currAdrenalineStacks++;
+            AdrenalineStacks++;
             yield return new WaitForSeconds(adrenalineLength);
-            _currAdrenalineStacks--;
+            AdrenalineStacks--;
         }
     }
 }
