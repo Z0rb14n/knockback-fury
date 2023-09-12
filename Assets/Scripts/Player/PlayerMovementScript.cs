@@ -65,7 +65,7 @@ namespace Player
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>();
+                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>(true);
                 return _instance;
             }
         }
