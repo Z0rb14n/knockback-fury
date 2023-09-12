@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Player;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace Weapons
     {
         public WeaponUpgradeUI weaponUpgradeUI;
         public GameObject notificationOnEnter;
+
+        public HashSet<int> allowedButtons;
         
         private bool _isPlayerInside;
 

@@ -164,9 +164,7 @@ namespace FloorGen
                     Debug.LogWarning("Ran out of rooms to branch from - re-adding initial list.");
                     withinIterationToBranch.AddRange(toBranch);
                 }
-                // Swap with last element and remove last instead of removing by index.
-                int index =_random.Next(0, withinIterationToBranch.Count);
-                Vector2Int start = withinIterationToBranch.SwapRemove(index);
+                Vector2Int start = withinIterationToBranch.RemoveRandom(_random);
                 int currBranchiness = branchiness;
                 do
                 {
@@ -420,8 +418,15 @@ namespace FloorGen
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             RoomData roomData = cellObject.GetComponent<RoomData>();
-            Instantiate(weaponUpgradePrefab, gridIndex * gridSize + roomData.weaponUpgradeSpawnOffset,
+            GameObject upgrade = Instantiate(weaponUpgradePrefab, gridIndex * gridSize + roomData.weaponUpgradeSpawnOffset,
                 Quaternion.identity, cellObject.transform);
+            List<int> buttons = new(new[] { 0, 1, 2, 3, 4 });
+            HashSet<int> result = new()
+            {
+                buttons.RemoveRandom(_random),
+                buttons.RemoveRandom(_random)
+            };
+            upgrade.GetComponent<WeaponUpgradeTrigger>().allowedButtons = result;
         }
 
         private void PopulateSocketsBossRoom(Vector2Int gridIndex, GameObject cellObject,
