@@ -556,6 +556,26 @@ Tilemap:
   m_GameObject: {fileID: 3730024071377790314}
   m_Enabled: 1
   m_Tiles:
+  - first: {x: -16, y: -9, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 5
+      m_TileMatrixIndex: 2
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: -16, y: -8, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 5
+      m_TileMatrixIndex: 2
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: -19, y: -7, z: 0}
     second:
       serializedVersion: 2
@@ -589,8 +609,8 @@ Tilemap:
   - first: {x: -16, y: -7, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 4
-      m_TileSpriteIndex: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 5
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -832,24 +852,24 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 13fe019eb1f32c942b4c542103fd3b70, type: 2}
   - m_RefCount: 9
     m_Data: {fileID: 11400000, guid: 31c46ec6896ed174a8f2304a1168e0ca, type: 2}
-  - m_RefCount: 16
+  - m_RefCount: 19
     m_Data: {fileID: 11400000, guid: 5713d4a05ca6f1b4bb52cfb55187c63b, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 0b8c42198d98bfc48b6a948a6a3f0b49, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 2092686340, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -1237115048, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
   - m_RefCount: 9
     m_Data: {fileID: 532115808, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
-  - m_RefCount: 16
+  - m_RefCount: 19
     m_Data: {fileID: -1557185207, guid: dc2947234e0724a4683f7cf5ad92e17e, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 0
@@ -888,7 +908,7 @@ Tilemap:
       e31: 0
       e32: 6.53e-43
       e33: 6.53e-43
-  - m_RefCount: 12
+  - m_RefCount: 14
     m_Data:
       e00: -1
       e01: 0
@@ -925,13 +945,13 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 27
+  - m_RefCount: 29
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -19, y: -7, z: 0}
-  m_Size: {x: 19, y: 12, z: 1}
+  m_Origin: {x: -19, y: -9, z: 0}
+  m_Size: {x: 19, y: 14, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1057,10 +1077,10 @@ CompositeCollider2D:
   m_ColliderPaths: []
   m_CompositePaths:
     m_Paths:
-    - - {x: -7.5000296, y: -3.5}
+    - - {x: -7.5000296, y: -4.5}
       - {x: -7.5000296, y: 2.5}
       - {x: -8, y: 2.499971}
-      - {x: -7.9999704, y: -3.5}
+      - {x: -7.9999704, y: -4.5}
     - - {x: -9.00003, y: -3.5}
       - {x: -9.00003, y: -0.5}
       - {x: -9.5, y: -0.5000293}
@@ -16930,7 +16950,7 @@ PrefabInstance:
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[10].m_Data
       value: 
-      objectReference: {fileID: 21300000, guid: 1b488631c6040b04f80066e67f7ce595, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[11].m_Data
       value: 
@@ -16950,7 +16970,7 @@ PrefabInstance:
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[15].m_Data
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 1b488631c6040b04f80066e67f7ce595, type: 3}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[16].m_Data
       value: 
@@ -21309,7 +21329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[10].m_RefCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[11].m_RefCount
@@ -21329,7 +21349,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[15].m_RefCount
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_TileSpriteArray.Array.data[16].m_RefCount
@@ -41593,7 +41613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_Tiles.Array.data[1222].second.m_TileSpriteIndex
-      value: 10
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2991796595443207555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
       propertyPath: m_Tiles.Array.data[1223].second.m_TileMatrixIndex
@@ -60633,11 +60653,11 @@ MonoBehaviour:
   pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
-  weaponSpawnOffset: {x: 0, y: -6}
-  cheeseSpawnOffset: {x: -1, y: -6}
-  powerupSpawnOffset: {x: 0, y: -6}
-  weaponUpgradeSpawnOffset: {x: 0, y: -6}
-  playerSpawnOffset: {x: -6, y: -1.5}
+  weaponSpawnOffset: {x: 2, y: -6}
+  cheeseSpawnOffset: {x: 1, y: -6}
+  powerupSpawnOffset: {x: 2, y: -6}
+  weaponUpgradeSpawnOffset: {x: 2, y: -6}
+  playerSpawnOffset: {x: -4, y: -8.5}
   hiders:
   - hidingType: 1
     toEnable: {fileID: 4711255213968670627}
