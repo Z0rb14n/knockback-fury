@@ -98,7 +98,7 @@ namespace Weapons
             int size = Physics2D.OverlapCircleNonAlloc(_body.position, explosionRange, _colliderTest);
             for (int i = 0; i < size; i++)
             {
-                Weapon.HitEntity(_colliderTest[i], _damage);
+                Weapon.HitEntity(_colliderTest[i], _damage, _weaponData.selfDamage);
             }
 
             GameObject go = Instantiate(detonationVFX, transform.parent);

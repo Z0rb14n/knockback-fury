@@ -18,6 +18,8 @@ namespace Weapons
         public float projectileSpeed = 1;
         [Min(0)]
         public int projectileDamage = 1;
+        [Min(0)]
+        public int selfDamage = 1;
 
         [NonSerialized] public int actualDamage = 1;
         [Min(0)]
