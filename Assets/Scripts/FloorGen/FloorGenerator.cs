@@ -17,8 +17,13 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class FloorGenerator : MonoBehaviour
     {
+        [Header("Floors")]
         [Min(0), Tooltip("Floor index for Enemy generation")]
         public int floorNumber;
+        [Tooltip("Place to teleport player in between levels")]
+        public Vector3 playerHoldingPosition = new(69420, 666, 0);
+        [Tooltip("Where to generate next place")]
+        public Vector2Int generationStartOffset = new(0, 6);
         [Header("Enemy generation")]
         public FloorEnemyPack[] floorEnemyPacks = {
             new() { normalPackSize = 8, endingPackSize = 14, endingHasBoss = false },
@@ -42,6 +47,8 @@ namespace FloorGen
         public GameObject playerUpgradePrefab;
         [Tooltip("Cheese prefab")]
         public GameObject cheesePrefab;
+        [Tooltip("Room Changer Prefab")]
+        public GameObject roomChangePrefab;
         
         public SocketObject[] socketObjects;
         [Header("Weapon Generation")]
@@ -80,6 +87,7 @@ namespace FloorGen
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
         private HashSet<UpgradeType> _validUpgradeTypes = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
+        private Random _random;
 
         private void Awake()
         {
@@ -116,30 +124,33 @@ namespace FloorGen
             }
         }
 
-        private Random GenerateRNG()
+        private void GenerateRNG()
         {
             if (seed == 0)
             {
                 int guidHash = Guid.NewGuid().GetHashCode();
                 Debug.Log($"Random seed: {guidHash}");
-                return new Random(guidHash);
+                _random = new Random(guidHash);
             }
-            Debug.Log($"Reusing old seed: {seed}");
-            return new Random(seed);
+            else
+            {
+                Debug.Log($"Reusing old seed: {seed}");
+                _random = new Random(seed);
+            } 
         }
 
         private void Generate()
         {
             Grid grid = new();
-            Random random = GenerateRNG();
+            GenerateRNG();
             // Set the player's position based on the starting position
             // (we modify this later, this is just in case it bugs)
             playerTransform.position = generationStart * gridSize;
             
-            int roomCount = random.Next(minRooms,maxRooms+1);
+            int roomCount =_random.Next(minRooms,maxRooms+1);
 
             List<Vector2Int> toBranch = new() { generationStart };
-            int middleLength = GenerateMiddleRow(random, grid, toBranch, roomCount);
+            int middleLength = GenerateMiddleRow(grid, toBranch, roomCount);
             toBranch.Remove(new Vector2Int(middleLength, 0) + generationStart);
             roomCount -= middleLength;
 
@@ -154,26 +165,26 @@ namespace FloorGen
                     withinIterationToBranch.AddRange(toBranch);
                 }
                 // Swap with last element and remove last instead of removing by index.
-                int index = random.Next(0, withinIterationToBranch.Count);
+                int index =_random.Next(0, withinIterationToBranch.Count);
                 Vector2Int start = withinIterationToBranch.SwapRemove(index);
                 int currBranchiness = branchiness;
                 do
                 {
-                    RoomType dir = RandomDirUnweighted(random, AllowedBranchMovements(start, middleLength));
+                    RoomType dir = RandomDirUnweighted(AllowedBranchMovements(start, middleLength));
                     Vector2Int movedStart = dir.Move(start);
                     if (!grid.ContainsKey(movedStart)) roomCount--;
                     ExpandSide(grid, start, dir);
                     start = movedStart;
                     currBranchiness -= branchinessDecrease;
-                } while (roomCount > 0 && CalculateRandomLog(random, currBranchiness));
+                } while (roomCount > 0 && CalculateRandomLog(currBranchiness));
             }
-            GenerateFromGrid(random, grid, middleLength);
+            GenerateFromGrid(grid, middleLength);
         }
 
-        private int GenerateMiddleRow(Random random, Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
+        private int GenerateMiddleRow(Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
         {
             int middle = (maxRoomCount + centerRowMin) / 2;
-            int roomsToGenerate = random.Next(centerRowMin, middle + 1)-1;
+            int roomsToGenerate =_random.Next(centerRowMin, middle + 1)-1;
             int retVal = roomsToGenerate;
             Vector2Int currVector2Int = generationStart;
             while (roomsToGenerate > 0)
@@ -189,6 +200,7 @@ namespace FloorGen
 
         private void GeneratePrefabSizes()
         {
+            if (socketObjects == null) return;
             foreach (SocketObject so in socketObjects)
             {
                 if (!_socketPrefabSizes.ContainsKey(so.size))
@@ -214,12 +226,37 @@ namespace FloorGen
             }
         }
 
-        private static Vector2Int RandomPosExcept(Random random, Grid grid, params Vector2Int[] disallowedRooms)
+        public void Transition()
         {
-            return grid.Keys.Except(disallowedRooms).ToList().GetRandom(random);
+            playerTransform.position = playerHoldingPosition;
+            while (transform.childCount > 0)
+            {
+                DestroyImmediate(transform.GetChild(0).gameObject);
+            }
+
+            generationStart += generationStartOffset;
+            floorNumber++;
+            seed = _random.Next();
+            Instantiate(gameObject);
+            Destroy(gameObject);
         }
 
-        private WeaponPickup GenerateWeaponPickup(Random random, Vector3 pos, GameObject parent, bool startsActive)
+        private Vector2Int RandomPosExcept(Grid grid, params Vector2Int[] disallowedRooms)
+        {
+            return grid.Keys.Except(disallowedRooms).ToList().GetRandom(_random);
+        }
+
+        private RoomTransitionInteractable GenerateRoomTransitionInteractable(Vector3 pos, GameObject parent)
+        {
+            GameObject roomChanger = Instantiate(roomChangePrefab, pos, Quaternion.identity, parent.transform);
+            roomChanger.SetActive(false);
+            
+            RoomTransitionInteractable rti = roomChanger.GetComponent<RoomTransitionInteractable>();
+            rti.floorGenerator = this;
+            return rti;
+        }
+
+        private WeaponPickup GenerateWeaponPickup(Vector3 pos, GameObject parent, bool startsActive)
         {
             GameObject weaponPickupObject = Instantiate(weaponPickupPrefab, pos, Quaternion.identity, parent.transform);
             WeaponPickup weaponPickup = weaponPickupObject.GetComponent<WeaponPickup>();
@@ -227,7 +264,7 @@ namespace FloorGen
                 PlayerWeaponControl.Instance.GetInventory.Where(data => data).Select(data => data.weaponName).ToHashSet();
             List<WeaponData> eligibleWeapons =
                 weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName)).ToList();
-            weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(random));
+            weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(_random));
             weaponPickup.UpdateSprite();
             weaponPickupObject.SetActive(startsActive);
             return weaponPickup;
@@ -242,7 +279,7 @@ namespace FloorGen
             return cheesePickup;
         }
 
-        private UpgradePickup GeneratePlayerUpgradePickup(Random random, Vector3 position, GameObject parent)
+        private UpgradePickup GeneratePlayerUpgradePickup(Vector3 position, GameObject parent)
         {
             GameObject playerUpgrade = Instantiate(playerUpgradePrefab, position, Quaternion.identity, parent.transform);
             playerUpgrade.SetActive(false);
@@ -252,13 +289,13 @@ namespace FloorGen
                 Debug.LogWarning("Empty valid upgrade types - regenerating.");
                 _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             }
-            pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(random);
+            pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(_random);
             UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
             _validUpgradeTypes.Remove(pickup.upgrade);
             return pickup;
         }
         
-        private void GenerateEnemies(Random random, List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomData roomData, bool isEndRoom)
+        private void GenerateEnemies(List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomData roomData, bool isEndRoom)
         {
             EnemySpawnType[] enumValues = Enum.GetValues(typeof(EnemySpawnType)).Cast<EnemySpawnType>().ToArray();
             while (packSize > 0)
@@ -268,10 +305,10 @@ namespace FloorGen
                 bool generatedEnemy = false;
                 while (eligibleSpawnTypes.Count > 0)
                 {
-                    int indexType = eligibleSpawnTypes.GetRandom(random, out EnemySpawnType type);
+                    int indexType = eligibleSpawnTypes.GetRandom(_random, out EnemySpawnType type);
                     if (roomData.ignoreSocketEnemySpawns)
                     {
-                        GameObject spawnedEnemy = roomData.SpawnEnemy(type, random);
+                        GameObject spawnedEnemy = roomData.SpawnEnemy(type,_random);
                         if (!spawnedEnemy)
                         {
                             eligibleSpawnTypes.SwapRemove(indexType);
@@ -291,7 +328,7 @@ namespace FloorGen
                             eligibleSpawnTypes.SwapRemove(indexType);
                             continue;
                         }
-                        SocketBehaviour behaviour = supportedBehaviours.GetRandom(random);
+                        SocketBehaviour behaviour = supportedBehaviours.GetRandom(_random);
                         if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
                         {
                             packSize -= GetCost(type);
@@ -320,7 +357,7 @@ namespace FloorGen
             // elite dude
             List<EntityHealth> enemies = roomData.Enemies;
             if (enemies.Count == 0) return;
-            EntityHealth randomEnemy = enemies.GetRandom(random);
+            EntityHealth randomEnemy = enemies.GetRandom(_random);
             randomEnemy.health = Mathf.RoundToInt(randomEnemy.health * eliteHealthModifier);
             ContactDamage attack = randomEnemy.GetComponent<ContactDamage>();
             if (attack)
@@ -346,7 +383,7 @@ namespace FloorGen
             }
         }
         
-        private void PopulateSocketsNormal(Random random, Vector2Int gridIndex, GameObject cellObject, bool isEndRoom,
+        private void PopulateSocketsNormal(Vector2Int gridIndex, GameObject cellObject, bool isEndRoom,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             Vector3 gridPos = gridIndex * gridSize;
@@ -356,27 +393,30 @@ namespace FloorGen
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
             if (!generateBoss)
             {
-                roomData.pickup = GeneratePlayerUpgradePickup(random, gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
+                roomData.pickup = GeneratePlayerUpgradePickup(gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
                 roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
                 if (isEndRoom)
-                    roomData.weaponPickup = GenerateWeaponPickup(random, gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
-                if (gridIndex != generationStart) GenerateEnemies(random, sockets, packSize, roomData, isEndRoom);
+                {
+                    roomData.weaponPickup = GenerateWeaponPickup( gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
+                    roomData.roomTransitionInteractable = GenerateRoomTransitionInteractable(gridPos + (Vector3)roomData.roomChangeSpawnOffset, cellObject);
+                }
+                if (gridIndex != generationStart) GenerateEnemies( sockets, packSize, roomData, isEndRoom);
             }
             else
             {
-                PopulateSocketsBossRoom(random, gridIndex, cellObject, sockets);
+                PopulateSocketsBossRoom( gridIndex, cellObject, sockets);
             }
         }
 
-        private void PopulateSocketsWeaponRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
+        private void PopulateSocketsWeaponRoom(Vector2Int gridIndex, GameObject cellObject,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             RoomData roomData = cellObject.GetComponent<RoomData>();
             Vector3 weaponRoomGridPos = gridIndex * gridSize + roomData.weaponSpawnOffset;
-            GenerateWeaponPickup(random, weaponRoomGridPos, cellObject, true);
+            GenerateWeaponPickup( weaponRoomGridPos, cellObject, true);
         }
 
-        private void PopulateSocketsSmithingRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
+        private void PopulateSocketsSmithingRoom(Vector2Int gridIndex, GameObject cellObject,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             RoomData roomData = cellObject.GetComponent<RoomData>();
@@ -384,43 +424,43 @@ namespace FloorGen
                 Quaternion.identity, cellObject.transform);
         }
 
-        private void PopulateSocketsBossRoom(Random random, Vector2Int gridIndex, GameObject cellObject,
+        private void PopulateSocketsBossRoom(Vector2Int gridIndex, GameObject cellObject,
             List<(SocketBehaviour, EnemySpawnType)> sockets)
         {
             // TODO BOSS GENERATION
         }
         
-        private void GenerateFromGrid(Random random, Grid grid, int middleLength)
+        private void GenerateFromGrid(Grid grid, int middleLength)
         {
             Vector2Int finalRoomPos = new Vector2Int(middleLength, 0) + generationStart;
-            bool hasWeaponRoom = random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
-            Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept(random, grid, finalRoomPos) : Vector2Int.zero;
-            bool hasSecondSmithingRoom = random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
-            Vector2Int smithOne = RandomPosExcept(random, grid, finalRoomPos, weaponRoomPos);
-            Vector2Int smithTwo = hasSecondSmithingRoom ? RandomPosExcept(random, grid, finalRoomPos, weaponRoomPos, smithOne) : Vector2Int.zero;
+            bool hasWeaponRoom =_random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
+            Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept( grid, finalRoomPos) : Vector2Int.zero;
+            bool hasSecondSmithingRoom =_random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
+            Vector2Int smithOne = RandomPosExcept( grid, finalRoomPos, weaponRoomPos);
+            Vector2Int smithTwo = hasSecondSmithingRoom ? RandomPosExcept( grid, finalRoomPos, weaponRoomPos, smithOne) : Vector2Int.zero;
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
                 bool isEndRoom = gridIndex == finalRoomPos;
                 bool isBossRoom = floorEnemyPacks[floorNumber].endingHasBoss && isEndRoom;
                 bool isWeaponRoom = hasWeaponRoom && gridIndex == weaponRoomPos;
                 GameObject[] objects = _pairsDict[type];
-                GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(random);
+                GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(_random);
                 randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
                 roomData.EnsureType(type);
-                List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(random, _socketPrefabSizes);
+                List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)
                 {
-                    PopulateSocketsWeaponRoom(random, gridIndex, cellObject, sockets);
+                    PopulateSocketsWeaponRoom( gridIndex, cellObject, sockets);
                 }
                 else if (gridIndex == smithOne || (hasSecondSmithingRoom && gridIndex == smithTwo))
                 {
-                    PopulateSocketsSmithingRoom(random, gridIndex, cellObject, sockets);
+                    PopulateSocketsSmithingRoom( gridIndex, cellObject, sockets);
                 }
                 else
                 {
-                    PopulateSocketsNormal(random, gridIndex, cellObject, isEndRoom, sockets);
+                    PopulateSocketsNormal( gridIndex, cellObject, isEndRoom, sockets);
                 }
                 
                 
@@ -443,10 +483,10 @@ namespace FloorGen
             else grid[vector2Int] = dir.GetOpposing();
         }
 
-        private static bool CalculateRandomLog(Random random, int bias)
+        private bool CalculateRandomLog(int bias)
         {
             float prob = 1 / (1 + Mathf.Exp(-bias));
-            return random.Next(0, 100) < prob * 100;
+            return _random.Next(0, 100) < prob * 100;
         }
 
         private RoomType[] AllowedBranchMovements(Vector2Int pos, int middleLen)
@@ -461,20 +501,20 @@ namespace FloorGen
                 rooms.Remove(RoomType.RightOpen);
             }
 
-            int minY = generationStart.y -1;
-            int maxY = generationStart.y + 1;
+            int minY = generationStart.y - maxRows/2;
+            int maxY = generationStart.y + maxRows/2;
             if (pos.y >= maxY) rooms.Remove(RoomType.TopOpen);
             if (pos.y <= minY) rooms.Remove(RoomType.BottomOpen);
             return rooms.ToArray();
         }
 
-        private static RoomType RandomDir(Random random, RoomType[] types, float[] weights)
+        private RoomType RandomDir(RoomType[] types, float[] weights)
         {
             Debug.Assert(types.Length > 0);
             float sum = weights[0];
             for (int i = 1; i < types.Length; i++) sum += weights[i];
 
-            int rand = random.Next(0, Mathf.RoundToInt(sum * 100));
+            int rand = _random.Next(0, Mathf.RoundToInt(sum * 100));
             float cumSum = 0;
             for (int i = 0; i < types.Length-1; i++)
             {
@@ -485,7 +525,7 @@ namespace FloorGen
             return types[^1];
         }
 
-        private static RoomType RandomDirUnweighted(Random random, RoomType[] types) => RandomDir(random, types, UnweightedWeights);
+        private RoomType RandomDirUnweighted(RoomType[] types) => RandomDir(types, UnweightedWeights);
     }
 
     /// <summary>
