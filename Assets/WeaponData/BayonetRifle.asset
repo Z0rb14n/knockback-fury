@@ -15,11 +15,11 @@ MonoBehaviour:
   weaponName: Bayonet Rifle
   numProjectiles: 1
   range: 100
-  projectileSpeed: 40
-  projectileDamage: 40
-  roundsPerSecond: 1.3
+  projectileSpeed: 50
+  projectileDamage: 50
+  roundsPerSecond: 1.4
   clipSize: 8
-  reloadTime: 1.4
+  reloadTime: 1.85
   spread: 5
   isHitscan: 0
   rightClickAction: 1
