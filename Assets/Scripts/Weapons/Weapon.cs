@@ -385,19 +385,20 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static bool HitEntity(Collider2D collider, int damage)
+        public static bool HitEntity(Collider2D collider, int damage, int selfDamage = 0)
         {
             EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
             if (enemyBomb) enemyBomb.OnHitByPlayer();
-            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage, selfDamage);
         }
 
-        private static bool HitEntityHealth(EntityHealth health, int damage)
+        private static bool HitEntityHealth(EntityHealth health, int damage, int selfDamage = 0)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
             {
                 Debug.Log($"[Raycast] Hit player for {damage}");
+                finalDamage = selfDamage;
             }
             else if (!ReferenceEquals(health,null))
             {

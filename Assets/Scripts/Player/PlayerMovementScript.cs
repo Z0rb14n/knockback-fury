@@ -61,6 +61,8 @@ namespace Player
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
+        public int EffectiveDashes => _dashesRemaining + (_hasMomentumDash ? 1 : 0) + (_hasKeepingInStrideDash ? 1 : 0);
+
         public static PlayerMovementScript Instance
         {
             get
@@ -362,7 +364,7 @@ namespace Player
             {
                 GameEndCanvas.Instance.endData.enemiesKilled++;
             }
-            if (!Grounded) return;
+            if (Grounded) return;
             if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;

@@ -10,6 +10,7 @@ namespace Weapons
         public GameObject visibleUI;
         public GameObject weaponButtonPrefab;
         public RectTransform weaponsArea;
+        public RectTransform buttonsArea;
 
         private WeaponButton[] _weaponButtons;
         private WeaponUpgradeTrigger _upgradeTrigger;
@@ -39,6 +40,10 @@ namespace Weapons
                 _weaponButtons[i].SetDisplayedWeapon(i);
             }
             SelectWeapon(0);
+            for (int i = 0; i < buttonsArea.childCount; i++)
+            {
+                buttonsArea.GetChild(i).gameObject.SetActive(_upgradeTrigger.allowedButtons == null || _upgradeTrigger.allowedButtons.Contains(i));
+            }
             visibleUI.SetActive(true);
         }
 
@@ -73,9 +78,25 @@ namespace Weapons
             Close();
         }
 
+        public void UpgradeDamage()
+        {
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeDamage();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+        
+        public void UpgradeAccuracy()
+        {
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAccuracy();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+
         public void UpgradeRecoil()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeRecoil();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
