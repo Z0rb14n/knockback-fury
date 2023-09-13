@@ -124,12 +124,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 0
   pauseTime: 0
-  jumpForce: 8
+  jumpForce: 10
   normalCollider: {fileID: 6553265572266371507}
   colliderOnWall: {fileID: 1483776281331567196}
   colliderOnRightWall: {fileID: 41531042006896467}
   wallPositionOffset: {x: 0.5, y: 0}
-  targetDistance: 16
+  targetDistance: 18
 --- !u!114 &7310949198750745542
 MonoBehaviour:
   m_ObjectHideFlags: 0
