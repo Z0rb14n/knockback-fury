@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: DoubleBarrelShotgun
   m_EditorClassIdentifier: 
   weaponName: Double-Barrel Shotgun
-  numProjectiles: 10
+  numProjectiles: 12
   range: 15
   projectileSpeed: 20
   projectileDamage: 5
+  selfDamage: 1
   roundsPerSecond: 1.83
   clipSize: 2
   reloadTime: 1.4

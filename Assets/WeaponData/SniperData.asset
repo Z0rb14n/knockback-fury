@@ -17,13 +17,14 @@ MonoBehaviour:
   range: 500
   projectileSpeed: 69420
   projectileDamage: 85
+  selfDamage: 1
   roundsPerSecond: 1
   clipSize: 1
   reloadTime: 1.6
   spread: 0
   isHitscan: 1
   rightClickAction: 0
-  knockbackStrength: 25
+  knockbackStrength: 20
   recoilAnimationDuration: 0.5
   fireMode: 1
   burstInfo:
