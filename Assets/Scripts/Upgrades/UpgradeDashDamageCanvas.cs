@@ -24,7 +24,6 @@ namespace Upgrades
             _adrenalineText = adrenaline.GetComponentInChildren<TextMeshProUGUI>();
             _stabilizedAimText = stabilizedAim.GetComponentInChildren<TextMeshProUGUI>();
             _targetAnalysisBackRect = targetAnalysisGrey.GetComponent<RectTransform>();
-            transform.GetChild(0).gameObject.SetActive(false);// jic
         }
 
         public void Update()
