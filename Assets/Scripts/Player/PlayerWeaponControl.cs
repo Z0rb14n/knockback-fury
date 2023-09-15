@@ -40,10 +40,10 @@ namespace Player
             }
         }
         
-        [SerializeField] private int maxAdrenalineStacks = 4;
+        [SerializeField] public int maxAdrenalineStacks = 4;
         [SerializeField] private float adrenalineLength = 4;
         [SerializeField, Min(0)] private float adrenalineBoost = 0.15f;
-        [SerializeField] private int maxStabilizedAimStacks = 4;
+        [SerializeField] public int maxStabilizedAimStacks = 4;
         [SerializeField] private float stabilizedAimLength = 5;
         [SerializeField, Min(0)] private float stabilizedAimBoost = 0.15f;
         [SerializeField, Min(0)] private float firstStrikeBoost = 0.5f;
