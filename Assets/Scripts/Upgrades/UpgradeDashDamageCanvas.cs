@@ -28,11 +28,11 @@ namespace Upgrades
 
         public void Update()
         {
-            int adrenalineStacks = Mathf.Max(PlayerWeaponControl.Instance.AdrenalineStacks, PlayerWeaponControl.Instance.maxAdrenalineStacks);
+            int adrenalineStacks = Mathf.Min(PlayerWeaponControl.Instance.AdrenalineStacks, PlayerWeaponControl.Instance.maxAdrenalineStacks);
             adrenaline.gameObject.SetActive(adrenalineStacks > 0);
             _adrenalineText.text = adrenalineStacks > 1 ? adrenalineStacks.ToString() : "";
             
-            int stabilizedAimStacks = Mathf.Max(PlayerWeaponControl.Instance.StabilizedAimStacks, PlayerWeaponControl.Instance.maxStabilizedAimStacks);
+            int stabilizedAimStacks = Mathf.Min(PlayerWeaponControl.Instance.StabilizedAimStacks, PlayerWeaponControl.Instance.maxStabilizedAimStacks);
             stabilizedAim.gameObject.SetActive(stabilizedAimStacks > 0);
             _stabilizedAimText.text = stabilizedAimStacks > 1 ? stabilizedAimStacks.ToString() : "";
 
