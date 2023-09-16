@@ -124,12 +124,12 @@ MonoBehaviour:
   patrolPoints: []
   speed: 0
   pauseTime: 0
-  jumpForce: 8
+  jumpForce: 10
   normalCollider: {fileID: 6553265572266371507}
   colliderOnWall: {fileID: 1483776281331567196}
   colliderOnRightWall: {fileID: 41531042006896467}
   wallPositionOffset: {x: 0.5, y: 0}
-  targetDistance: 16
+  targetDistance: 18
 --- !u!114 &7310949198750745542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c27319a8b03fd4593697dbcfc77416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 70
-  health: 70
+  maxHealth: 60
+  health: 60
   iFrameLength: 0
   canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}

@@ -15,15 +15,15 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>();
+                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>(true);
                 if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
         }
         private static PlayerWeaponControl _instance;
 
-        private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(_currAdrenalineStacks, maxAdrenalineStacks);
-        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(_stabilizedAimStacks, maxStabilizedAimStacks);
+        private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(AdrenalineStacks, maxAdrenalineStacks);
+        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(StabilizedAimStacks, maxStabilizedAimStacks);
         private float FirstStrikeDamageBoost => _isFirstStrikeActive ? firstStrikeBoost : 0;
 
         public float NonMeleeDamageBoost => AdrenalineDamageBoost + StabilizedAimDamageBoost;
@@ -40,10 +40,10 @@ namespace Player
             }
         }
         
-        [SerializeField] private int maxAdrenalineStacks = 4;
+        [SerializeField] public int maxAdrenalineStacks = 4;
         [SerializeField] private float adrenalineLength = 4;
         [SerializeField, Min(0)] private float adrenalineBoost = 0.15f;
-        [SerializeField] private int maxStabilizedAimStacks = 4;
+        [SerializeField] public int maxStabilizedAimStacks = 4;
         [SerializeField] private float stabilizedAimLength = 5;
         [SerializeField, Min(0)] private float stabilizedAimBoost = 0.15f;
         [SerializeField, Min(0)] private float firstStrikeBoost = 0.5f;
@@ -54,12 +54,14 @@ namespace Player
         private Weapon _weapon;
         private Camera _cam;
         private Rigidbody2D _body;
-        private int _currAdrenalineStacks;
-        private int _stabilizedAimStacks;
         private IEnumerator _stabilizedAimCoroutine;
         private bool _isFirstStrikeActive;
 
         public readonly List<WeaponPickup> weaponsOn = new();
+
+        public int StabilizedAimStacks { get; private set; }
+
+        public int AdrenalineStacks { get; private set; }
 
         public bool HasWeaponSpace => _weapon.FirstAvailableInventorySpace != -1;
 
@@ -104,7 +106,7 @@ namespace Player
                 if (fireResult)
                 {
                     _playerMovement.RequestKnockback(((Vector2)(transform.position - worldMousePos)).normalized,
-                        _weapon.WeaponData.actualKnockbackStrength);
+                        _weapon.WeaponData.actualKnockbackStrength, true);
                     _isFirstStrikeActive = false;
                 }
             }
@@ -187,16 +189,16 @@ namespace Player
 
         private IEnumerator StabilizedAimBoostCoroutine()
         {
-            _stabilizedAimStacks++;
+            StabilizedAimStacks++;
             yield return new WaitForSeconds(stabilizedAimLength);
-            _stabilizedAimStacks--;
+            StabilizedAimStacks--;
         }
 
         private IEnumerator AdrenalineCoroutine()
         {
-            _currAdrenalineStacks++;
+            AdrenalineStacks++;
             yield return new WaitForSeconds(adrenalineLength);
-            _currAdrenalineStacks--;
+            AdrenalineStacks--;
         }
     }
 }

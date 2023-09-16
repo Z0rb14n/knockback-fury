@@ -18,6 +18,7 @@ namespace Enemies.Ranged
         private bool _hitByPlayer;
         private LayerMask _playerLayerMask;
         private int _projectileLayer;
+        private IEnumerator _detonationCoroutine;
 
         public override void Initialize(float damageMult)
         {
@@ -26,7 +27,8 @@ namespace Enemies.Ranged
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position, playerMovementScript.Velocity);
-            StartCoroutine(DelayedExplosion());
+            _detonationCoroutine = DelayedExplosion();
+            StartCoroutine(_detonationCoroutine);
             _playerLayerMask = LayerMask.GetMask("Player");
             _projectileLayer = LayerMask.NameToLayer("Projectile");
         }
@@ -163,6 +165,9 @@ namespace Enemies.Ranged
             {
                 rigidbody2D.velocity *= -1;
                 gameObject.layer = _projectileLayer;
+                StopCoroutine(_detonationCoroutine);
+                _detonationCoroutine = DelayedExplosion();
+                StartCoroutine(_detonationCoroutine);
             }
             _hitByPlayer = true;
             

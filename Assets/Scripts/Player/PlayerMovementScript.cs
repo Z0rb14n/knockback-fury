@@ -56,14 +56,18 @@ namespace Player
         public float lateJumpLeeway = 3;
         [Min(0), Tooltip("How long jump needs to be held to jump higher")]
         public float highJumpTime = 3;
+        [Min(0), Tooltip("Time on a wall before walljump is enabled")]
+        public float minTimeBeforeWallJump = 0.15f;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
+
+        public int EffectiveDashes => _dashesRemaining + (_hasMomentumDash ? 1 : 0) + (_hasKeepingInStrideDash ? 1 : 0);
 
         public static PlayerMovementScript Instance
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>();
+                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>(true);
                 return _instance;
             }
         }
@@ -98,6 +102,7 @@ namespace Player
         private float _lateJumpTime = 0;
         private float _jumpTime = 0;
         private bool _isHoldingJump = false;
+        private float _timeOnWall = 0;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -250,13 +255,6 @@ namespace Player
 
         private void Update()
         {
-            // just for convenience during testing
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-
-
             if (Grounded)
             {
                 _dashesRemaining = maxDashes;
@@ -292,7 +290,7 @@ namespace Player
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
             }
@@ -304,15 +302,18 @@ namespace Player
         {
             if (_jumpRequest)
             {
-                if (IsOnLeftWall)
+                if (!Grounded && _timeOnWall > minTimeBeforeWallJump)
                 {
-                    _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
-                }
-                else if (IsOnRightWall)
-                {
-                    _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
-                    OnWallLaunch();
+                    if (IsOnLeftWall)
+                    {
+                        _body.AddForce(new Vector2(wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
+                    else if (IsOnRightWall)
+                    {
+                        _body.AddForce(new Vector2(-wallJumpForce.x, wallJumpForce.y), ForceMode2D.Impulse);
+                        OnWallLaunch();
+                    }
                 }
                 _jumpRequest = false;
             }
@@ -328,14 +329,11 @@ namespace Player
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool isSlidingThisFrame = false;
-            if (!Grounded && _body.velocity.y < 0 && xInput != 0)
+
+            bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+            if (!Grounded && _body.velocity.y < 0 && !holdingDown)
             {
-                if (IsOnLeftWall && xInput < 0)
-                {
-                    isSlidingThisFrame = true;
-                    WallSlideLogic();
-                }
-                else if (IsOnRightWall && xInput > 0)
+                if (IsOnLeftWall || IsOnRightWall)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();
@@ -349,10 +347,11 @@ namespace Player
             }
         }
 
-        public void RequestKnockback(Vector2 dir, float str) => RequestKnockback(dir * str);
+        public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
 
-        public void RequestKnockback(Vector2 vec)
+        public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
+            if (isWeapon && Grounded) return;
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
@@ -365,7 +364,7 @@ namespace Player
             {
                 GameEndCanvas.Instance.endData.enemiesKilled++;
             }
-            if (!Grounded) return;
+            if (Grounded) return;
             if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;
@@ -381,6 +380,8 @@ namespace Player
             }
 
             IsWallSliding = true;
+
+            _timeOnWall += Time.fixedDeltaTime;
         }
 
         private void OnWallLaunch()
@@ -388,6 +389,15 @@ namespace Player
             if (PlayerUpgradeManager.Instance[UpgradeType.Momentum] > 0) _hasMomentumDash = true;
             PlayerHealth.Instance.OnWallLaunch();
             PlayerWeaponControl.Instance.OnWallLaunch();
+            ResetDash();
+        }
+
+        private void ResetDash()
+        {
+            if (_dashesRemaining == 0)
+            {
+                _dashesRemaining = 1;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -434,6 +444,7 @@ namespace Player
             {
                 _lateJumpTime = lateJumpLeeway;
             }
+            _timeOnWall = 0;
         }
     }
 }

@@ -20,6 +20,8 @@ namespace FloorGen
         public CheesePickup cheesePickup;
         [HideInInspector]
         public WeaponPickup weaponPickup;
+        [HideInInspector]
+        public RoomTransitionInteractable roomTransitionInteractable;
 
         [Tooltip("Spawn offsets of weapon drops")]
         public Vector2 weaponSpawnOffset = Vector2.up;
@@ -29,6 +31,8 @@ namespace FloorGen
         public Vector2 powerupSpawnOffset = Vector2.up;
         [Tooltip("Spawn offset of weapon upgrades")]
         public Vector2 weaponUpgradeSpawnOffset = Vector2.up;
+        [Tooltip("Spawn offset of room changer")]
+        public Vector2 roomChangeSpawnOffset;
         [Tooltip("Player spawn offset")]
         public Vector2 playerSpawnOffset = Vector2.zero;
 
@@ -133,6 +137,7 @@ namespace FloorGen
             if (pickup) pickup.gameObject.SetActive(true);
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
+            if (roomTransitionInteractable) roomTransitionInteractable.gameObject.SetActive(true);
         }
 
         [Serializable]

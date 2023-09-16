@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 58a26765089c0704db6fb8815145f1ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5430a71e5aeac674db1ba572193a8605, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,25 +126,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf42b0308769a0429b792191a47a1ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 8
+  maxSpeed: 9
   speedSmoothness: 0.01
-  jumpForce: 11
-  wallJumpForce: {x: 12, y: 10.5}
-  dashSpeed: 10
-  dashTime: 0.2
+  jumpForce: 13
+  wallJumpForce: {x: 12, y: 13}
+  dashSpeed: 13.5
+  dashTime: 0.125
   dashStartDelay: 0.07
   maxDashes: 1
-  slideSpeed: 0.7
+  slideSpeed: 0.8
   newMovementEnabled: 1
   accel: 50
-  turnAroundMultiplier: 2
+  turnAroundMultiplier: 9
   decel: 30
   decelAirborne: 15
   decelWhenAbove: 5
   shortJumpPercentage: 0.75
   earlyJumpLeeway: 0.2
   lateJumpLeeway: 0.08
-  highJumpTime: 0.06
+  highJumpTime: 0.08
+  minTimeBeforeWallJump: 0.07
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e86b1837bd62e48b7995c5ea1b052f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 21300000, guid: 58a26765089c0704db6fb8815145f1ce, type: 3}
+  playerSprite: {fileID: 21300000, guid: 5430a71e5aeac674db1ba572193a8605, type: 3}
   fadeSpeed: 0.6
   maxTimeInterval: 1
 --- !u!114 &1994587395661662118
@@ -193,9 +194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed0430dbf3c1cfa49b8f7b1d7b73eb77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
-  health: 20
-  iFrameLength: 1
+  maxHealth: 10
+  health: 10
+  iFrameLength: 2
   canDropCheese: 1
   cheeseItemPickup: {fileID: 0}
   sneakyJumperCooldown: 3
@@ -230,9 +231,9 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.02, y: 0.08}
   m_SpriteTilingProperty:
-    border: {x: 0.050000004, y: 0.15833335, z: 0.10000001, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8333333, y: 0.8333333}
+    oldSize: {x: 0.64, y: 0.64}
     newSize: {x: 0.55, y: 0.51}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
