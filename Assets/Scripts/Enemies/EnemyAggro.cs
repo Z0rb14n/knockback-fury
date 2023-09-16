@@ -1,8 +1,9 @@
 using UnityEngine;
+using Player;
 
 namespace Enemies
 {
-    public class GroundAggro : MonoBehaviour
+    public class EnemyAggro : MonoBehaviour
     {
         public float aggroRange;
         public float deaggroRange;
@@ -11,11 +12,13 @@ namespace Enemies
         private Vector3 _position;
         private Transform _player;
         private LayerMask _playerLayer;
+        private PlayerMovementScript _playerMovementScript;
 
         private void Awake()
         {
-            _position = _collider.bounds.center;
             _playerLayer = LayerMask.GetMask("Player");
+            _playerMovementScript = PlayerMovementScript.Instance;
+            _player = _playerMovementScript.transform;
         }
 
         /// <summary>
@@ -23,26 +26,21 @@ namespace Enemies
         /// </summary>
         private void Update()
         {
+            _position = _collider.bounds.center;
             if (IsInRange(aggroRange) && InLineOfSight())
             {
                 Debug.Log("aggro");
 
             }
-
             if (!IsInRange(deaggroRange))
             {
-
+                Debug.Log("not aggro");
             }
         }
 
         private bool IsInRange(float range)
         {
             RaycastHit2D hit = Physics2D.CircleCast(_collider.bounds.center, range, Vector2.left, 0, _playerLayer);
-
-            if (hit.collider != null)
-            {
-                _player = hit.collider.transform;
-            }
 
             return hit.collider != null;
         }
@@ -62,8 +60,17 @@ namespace Enemies
         private bool InLineOfSight()
         {
             Vector2 rayDirection = _player.position - _position;
-
-            return (Physics2D.Raycast(_position, rayDirection).transform == _player);
+            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy"));
+            Debug.DrawRay(_position, rayDirection, Color.red);
+            try
+            {
+                return (Physics2D.Raycast(_position, rayDirection, deaggroRange, layerMask).collider.gameObject.layer
+                    == LayerMask.NameToLayer("Player"));
+            }
+            catch (System.NullReferenceException)
+            {
+                return false;
+            }
         }
 
     }
