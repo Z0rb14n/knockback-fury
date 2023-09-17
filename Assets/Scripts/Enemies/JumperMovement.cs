@@ -38,7 +38,7 @@ namespace Enemies
             _animator = GetComponent<Animator>();
         }
 
-        private void Start()
+        protected override void Start()
         {
             InitializeCommonVariables();
             InitializeContactFilters();
@@ -75,7 +75,7 @@ namespace Enemies
             };
         }
 
-        private void Update()
+        protected override void Update()
         {
             _isTouchingSurface = Grounded || IsOnLeftWall || IsOnRightWall;
             StickOnWall();

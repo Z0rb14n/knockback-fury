@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6890369457235158245}
   - component: {fileID: 3974579568216880714}
   - component: {fileID: 2134258351842862908}
+  - component: {fileID: 4736502158233764961}
   m_Layer: 7
   m_Name: HeavyEnemy
   m_TagString: Untagged
@@ -159,7 +160,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8980498073613225995}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba43d429fa983784db1ee4fb31132dca, type: 3}
   m_Name: 
@@ -327,6 +328,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4c17bd9dd703047a473451f2af8306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aggroRange: 10
-  deaggroRange: 15
+  aggroRange: 5
+  deaggroRange: 10
   _collider: {fileID: 6502981059598909017}
+--- !u!114 &4736502158233764961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8980498073613225995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7268527427157d042ad80b4ffb123e74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patrolPoints: []
+  speed: 1
+  pauseTime: 1
+  aggroSpeedMultiplier: 3

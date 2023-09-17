@@ -26,7 +26,7 @@ namespace Enemies
 
         
 
-        private void Start()
+        protected virtual void Start()
         {
             InitializeCommonVariables();
             _originalSpeed = speed;
@@ -48,12 +48,12 @@ namespace Enemies
         }
 
 
-        private void Update()
+         protected virtual void Update()
         {
             if (patrolPoints.Length > 0)
             {
                 DoCommonUpdates();
-                MoveToTarget();
+                MoveToTarget(_targetPos, speed);
                 CheckIfFlip();
             }
         }
@@ -71,17 +71,17 @@ namespace Enemies
             }
         }
 
-        private void MoveToTarget()
+        protected void MoveToTarget(Vector2 target, float speed)
         {
             if (_canMove)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _targetPos, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
             }
         }
 
         // checks if sprite needs flipping; if intended movement direction and sprite direction don't match,
         // flip sprite and update _spriteDirection to match
-        protected void CheckIfFlip()
+        public void CheckIfFlip()
         {
             if (_direction != _spriteDirection)
             {

@@ -18,7 +18,7 @@ namespace Enemies
         [SerializeField] private float _delayBeforeAttack;
         private Vector2 _attackBoxCenter;
         private Vector2 _attackBoxSize;
-        private PatrolMovement _movement;
+        private HeavyMovement _movement;
         private PlayerMovementScript _playerMovement;
         private EntityHealth _playerHealth;
         private Transform _player;
@@ -27,13 +27,15 @@ namespace Enemies
         private Animator _animator;
         private AudioSource _bonkSound;
         private float _attackAnimationTime;
-        
+        private int _attackBoxDirection;
+
+
         private static readonly int _animationAtkHash = Animator.StringToHash("Attacking");
 
 
         private void Awake()
         {
-            _movement = GetComponent<PatrolMovement>();
+            _movement = GetComponent<HeavyMovement>();
             _attackTimer = 0;
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
@@ -49,10 +51,11 @@ namespace Enemies
         {
             _attackTimer -= Time.deltaTime;
             if (PlayerInRange()) {
+                _attackBoxDirection = _movement.GetDirection();
                 _movement.DisableMovement();
                 if (_attackTimer <= 0)
                 {
-                    PerformAttack();
+                    PerformAttack(_attackBoxDirection);
                 }
             } else if (!_isAttacking)
             {
@@ -60,6 +63,7 @@ namespace Enemies
             }
 
         }
+
 
         
 
@@ -95,18 +99,18 @@ namespace Enemies
         /// <summary>
         /// Attacks player after set amount of delay and if player is still in range, sets attack cooldown timer
         /// </summary>
-        private void PerformAttack()
+        private void PerformAttack(int direction)
         {
             _attackTimer = attackDelay;
             _isAttacking = true;
             _animator.SetBool(_animationAtkHash, true);
-            StartCoroutine(DelayBeforeAttack());
+            StartCoroutine(DelayBeforeAttack(direction));
         }
 
         /// <summary>
         /// Helper for PerformAttack(); attacks player after set delay, damages player if in range, then waits for animation to finish
         /// </summary>
-        private IEnumerator DelayBeforeAttack()
+        private IEnumerator DelayBeforeAttack(int direction)
         {
             if (_delayBeforeAttack < 0 || _delayBeforeAttack > _attackAnimationTime)
             {
@@ -115,7 +119,7 @@ namespace Enemies
 
             yield return new WaitForSeconds(_delayBeforeAttack);
 
-            if (PlayerInRange())
+            if (PlayerInRange() && _movement.GetDirection() == direction)
             {
                 _playerHealth.TakeDamage(attackDamage);
                 _bonkSound.Play();
@@ -127,6 +131,7 @@ namespace Enemies
 
             _isAttacking = false;
             _animator.SetBool(_animationAtkHash, false);
+            _movement.CheckIfFlip();
         }
 
         /// <summary>

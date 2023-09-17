@@ -13,6 +13,7 @@ namespace Enemies
         private Transform _player;
         private LayerMask _playerLayer;
         private PlayerMovementScript _playerMovementScript;
+        private bool _isAggro;
 
         private void Awake()
         {
@@ -29,12 +30,12 @@ namespace Enemies
             _position = _collider.bounds.center;
             if (IsInRange(aggroRange) && InLineOfSight())
             {
-                Debug.Log("aggro");
+                _isAggro = true;
 
             }
             if (!IsInRange(deaggroRange))
             {
-                Debug.Log("not aggro");
+                _isAggro = false;
             }
         }
 
@@ -72,6 +73,13 @@ namespace Enemies
                 return false;
             }
         }
+
+        public bool IsAggro()
+        {
+            return _isAggro;
+        }
+
+        
 
     }
 }
