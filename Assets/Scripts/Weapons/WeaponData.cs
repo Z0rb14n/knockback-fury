@@ -20,6 +20,8 @@ namespace Weapons
         public int projectileDamage = 1;
         [Min(0)]
         public int selfDamage = 1;
+        [Min(0)]
+        public int cheeseCost = 50;
 
         [NonSerialized] public int actualDamage = 1;
         [Min(0)]
