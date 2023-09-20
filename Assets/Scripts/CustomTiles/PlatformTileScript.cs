@@ -24,12 +24,17 @@ namespace CustomTiles
         /// <summary>
         /// Determines if the player is above this platform (i.e. should consider physics collisions).
         /// </summary>
-        /// <remarks>
-        /// Currently assumes rectangular colliders on both player and platform.
-        /// <p></p>
-        /// Could potentially use <see cref="Collider2D.Distance"/> and its normal if we don't assume that.
-        /// </remarks>
-        private bool IsPlayerAbove => _playerCollider.bounds.min.y >= _collider.bounds.max.y;
+        private bool IsPlayerAbove
+        {
+            get
+            {
+                ColliderDistance2D dist;
+                if (_collider.usedByComposite) dist = _collider.composite.Distance(_playerCollider);
+                else dist = _collider.Distance(_playerCollider);
+                //Debug.Log(dist.distance + "," + dist.normal, this);
+                return (dist.normal.y < 0 && dist.distance >= 0) || Mathf.Abs(dist.distance) < Physics2D.defaultContactOffset;
+            }
+        }
 
         private void Awake()
         {
