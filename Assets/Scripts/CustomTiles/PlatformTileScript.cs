@@ -5,7 +5,9 @@ using UnityEngine;
 namespace CustomTiles
 {
     /// <summary>
-    /// A script to be placed on a square tile to allow movement through.
+    /// A script to be placed on a tile to allow movement through.
+    ///
+    /// Can alternatively be placed on custom diagonal structures.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
     public class PlatformTileScript : MonoBehaviour
