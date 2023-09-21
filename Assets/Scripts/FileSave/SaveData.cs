@@ -10,5 +10,11 @@
     public class SaveData
     {
         public int cheese;
+        /// <summary>
+        /// Note: use enum
+        /// </summary>
+        public int[] unlockedPermanentUpgrades;
+
+        public string[] unlockedWeapons;
     }
 }
