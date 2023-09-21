@@ -6,6 +6,9 @@ using Weapons;
 
 namespace Lobby
 {
+    /// <summary>
+    /// In the weapon store in the lobby, a 'pedestal' of a weapon to purchase.
+    /// </summary>
     [RequireComponent(typeof(SpriteRenderer),typeof(Collider2D))]
     public class WeaponStoreItem : TriggerTextScript
     {

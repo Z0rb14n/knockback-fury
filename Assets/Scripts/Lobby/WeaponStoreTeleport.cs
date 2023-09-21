@@ -4,6 +4,12 @@ using Util;
 
 namespace Lobby
 {
+    /// <summary>
+    /// In the lobby, a teleport object for the weapon store.
+    /// </summary>
+    /// <remarks>
+    /// If other things can use this, rename the file.
+    /// </remarks>
     public class WeaponStoreTeleport : TriggerTextScript
     {
         [SerializeField] private Vector3 positionToTeleport;

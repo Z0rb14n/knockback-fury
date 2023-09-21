@@ -7,10 +7,13 @@ using Weapons;
 
 namespace Lobby
 {
+    /// <summary>
+    /// Script attached to the interactables used to enter rooms.
+    /// </summary>
     [RequireComponent(typeof(Collider2D))]
     public class EnterRoomScript : TriggerTextScript
     {
-        [SerializeField] private string sceneToLoad;
+        [SerializeField, Tooltip("File of scene to load")] private string sceneToLoad;
 
         protected override void OnPlayerInteraction()
         {
