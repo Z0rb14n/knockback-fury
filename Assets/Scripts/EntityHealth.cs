@@ -8,6 +8,7 @@ public class EntityHealth : MonoBehaviour
     public int health;
     public float iFrameLength;
 
+    public bool doesChangeColor = true;
     public bool canDropCheese = true;
     public GameObject cheeseItemPickup;
 
@@ -45,7 +46,7 @@ public class EntityHealth : MonoBehaviour
         DoTakeDamage(dmg);
             
         if (health <= 0) Die();
-        StartCoroutine(DamageFlash());
+        if (doesChangeColor) StartCoroutine(DamageFlash());
     }
 
     private IEnumerator DamageFlash()
