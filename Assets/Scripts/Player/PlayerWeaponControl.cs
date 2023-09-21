@@ -69,7 +69,11 @@ namespace Player
         public WeaponData[] Inventory
         {
             get => _weapon.weaponInventory;
-            set => _weapon.weaponInventory = value;
+            set
+            {
+                _weapon.weaponInventory = value;
+                _weapon.UpdateFromWeaponData();
+            }
         }
 
         private WeaponPickup FirstAvailableItem => weaponsOn.FirstOrDefault(t => t.delay <= 0);
