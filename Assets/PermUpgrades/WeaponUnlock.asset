@@ -15,5 +15,6 @@ MonoBehaviour:
   upgradeType: 1
   displayName: 'The Stash: {{name}}'
   infoText: You can find the {{name}}
+  cheeseCost: 1
   implemented: 0
   comment: remember to replace {{name}} later

@@ -1,6 +1,7 @@
 ﻿using Player;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Util
 {
@@ -13,12 +14,15 @@ namespace Util
     public class TriggerTextScript : MonoBehaviour
     {
         [SerializeField, Tooltip("Text notification to be displayed")] protected TextMeshPro notification;
+
+        [SerializeField, Tooltip("Event triggered on interaction")] protected UnityEvent eventOnInteraction;
         private bool _isPlayerInside;
         
         private void Update()
         {
             if (_isPlayerInside && Input.GetKeyDown(KeyCode.E))
             {
+                eventOnInteraction.Invoke();
                 OnPlayerInteraction();
             }
         }
