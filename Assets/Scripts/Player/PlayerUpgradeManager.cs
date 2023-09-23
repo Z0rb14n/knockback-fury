@@ -24,9 +24,7 @@ namespace Player
         [Range(0,1)]public float oneYearOfReloadPercent = 0.6f;
         [Min(0)] public float oneYearOfReloadTiming = 0.75f;
 
-        public delegate void UpgradePickupHandler(UpgradeType type, int data);
-
-        public event UpgradePickupHandler OnUpgradePickup;
+        public event Action<UpgradeType, int> OnUpgradePickup;
 
         private readonly Dictionary<UpgradeType, int> _upgradesDict = new();
         private readonly Dictionary<UpgradeType, int> _upgradesData = new();

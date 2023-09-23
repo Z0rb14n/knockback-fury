@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using Player;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EntityHealth : MonoBehaviour
 {
@@ -12,9 +14,7 @@ public class EntityHealth : MonoBehaviour
     public bool canDropCheese = true;
     public GameObject cheeseItemPickup;
 
-    public delegate void DeathDelegate(EntityHealth source);
-
-    public event DeathDelegate OnDeath;
+    public Action<EntityHealth> OnDeath;
     
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
