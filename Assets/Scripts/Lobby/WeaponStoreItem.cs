@@ -46,7 +46,7 @@ namespace Lobby
                 {
                     GameObject go = Instantiate(pickupPrefab, transform.position - new Vector3(0,0.5f,0), Quaternion.identity);
                     WeaponPickup pickup = go.GetComponent<WeaponPickup>();
-                    pickup.UpdateSprite(data);
+                    pickup.UpdateSprite(Instantiate(data));
                     pickup.delay = -1;
                     PlayerWeaponControl.Instance.PickupWeapon(pickup);
                     Destroy(gameObject);
