@@ -84,6 +84,7 @@ namespace FileSave
             if (type != PermUpgradeType.WeaponUnlock) data.unlockedPermUpgradeTypes.Add(type);
             if (weaponData != null) data.unlockedWeaponSet.Add(weaponData);
             data.cheese -= cost;
+            OnCheeseCountChange?.Invoke(-1);
             OnUpgradesChanged?.Invoke();
         }
 
