@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using PermUpgrade;
+using UnityEngine;
 
 namespace FileSave
 {
@@ -23,18 +26,33 @@ namespace FileSave
         private static CrossRunInfo _instance;
         #endregion
 
-        public delegate void CheeseEventHandler(int change);
+        public event Action<int> OnCheeseCountChange;
 
-        public event CheeseEventHandler OnCheeseCountChange;
+        public event Action OnUpgradesChanged;
 
         public void ReadFromSave()
         {
             data = SaveIO.Read();
+            PermUpgradeType[] allTypes = Enum.GetValues(typeof(PermUpgradeType)).Cast<PermUpgradeType>().ToArray();
+            data.unlockedPermUpgradeTypes =
+                data.unlockedPermanentUpgrades.Select(i => allTypes[i]).ToHashSet();
+            data.unlockedWeaponSet = data.unlockedWeapons.ToHashSet();
             OnCheeseCountChange?.Invoke(data.cheese);
+            OnUpgradesChanged?.Invoke();
         }
 
-        public void WriteToSave() => SaveIO.Save(data);
-        
+        public void WriteToSave()
+        {
+            data.unlockedPermanentUpgrades = data.unlockedPermUpgradeTypes != null
+                ? data.unlockedPermUpgradeTypes.Cast<int>().ToArray()
+                : Array.Empty<int>();
+            
+            data.unlockedWeapons = data.unlockedWeaponSet != null ?
+                data.unlockedWeaponSet.ToArray()
+                : Array.Empty<string>();
+            SaveIO.Save(data);
+        }
+
         private void Awake()
         {
             if (_instance && _instance != this)
@@ -58,6 +76,28 @@ namespace FileSave
         {
             data.cheese += cheese;
             OnCheeseCountChange?.Invoke(cheese);
+        }
+
+        public void BuyUpgrade(PermUpgradeType type, string weaponData, int cost)
+        {
+            Debug.Assert(data.cheese >= cost);
+            if (type != PermUpgradeType.WeaponUnlock) data.unlockedPermUpgradeTypes.Add(type);
+            if (weaponData != null) data.unlockedWeaponSet.Add(weaponData);
+            data.cheese -= cost;
+            OnCheeseCountChange?.Invoke(-1);
+            OnUpgradesChanged?.Invoke();
+        }
+
+        public void ClearUpgrades()
+        {
+            data.unlockedPermUpgradeTypes?.Clear();
+            OnUpgradesChanged?.Invoke();
+        }
+
+        public void ClearUnlockedWeapons()
+        {
+            data.unlockedWeaponSet?.Clear();
+            OnUpgradesChanged?.Invoke();
         }
     }
 }

@@ -1,17 +1,25 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 using Weapons;
 
 namespace Editor
 {
-    [CustomEditor(typeof(WeaponData))]
+    [CustomEditor(typeof(WeaponData)), CanEditMultipleObjects]
     public class WeaponDataEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            EditorGUI.BeginChangeCheck();
-
+            if (targets.Length > 1)
+            {
+                base.OnInspectorGUI();
+                return;
+            }
             WeaponData script = (WeaponData)target;
+            GUI.enabled = false;
+            GUILayout.Label("Current DPS: " + script.DPS);
+            GUI.enabled = true;
+            EditorGUI.BeginChangeCheck();
 
             List<string> excluded = new() { "m_Script" };
             if (script.rightClickAction != WeaponRightClickAction.Melee) excluded.Add("meleeInfo");

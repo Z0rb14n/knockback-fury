@@ -15,17 +15,19 @@ MonoBehaviour:
   weaponName: Grenade Launcher
   numProjectiles: 1
   range: 20
-  projectileSpeed: 5
-  projectileDamage: 30
-  roundsPerSecond: 1
+  projectileSpeed: 10
+  projectileDamage: 50
+  selfDamage: 1
+  cheeseCost: 50
+  roundsPerSecond: 1.2
   clipSize: 6
-  reloadTime: 1.7
-  spread: 10
+  reloadTime: 1.6
+  spread: 5
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 20
+  knockbackStrength: 17
   recoilAnimationDuration: 0.2
-  fireMode: 0
+  fireMode: 1
   burstInfo:
     burstAmount: 0
     withinBurstFirerate: 0

@@ -54,5 +54,28 @@ namespace Util
             list.RemoveAt(last);
             return val;
         }
+
+        /// <summary>
+        /// Utility to call SwapRemove on a random element.
+        /// </summary>
+        /// <param name="list">List to remove element from.</param>
+        /// <param name="random">Source of RNG.</param>
+        /// <typeparam name="T">Type of element in list.</typeparam>
+        /// <returns>Removed element.</returns>
+        public static T RemoveRandom<T>(this List<T> list, Random random)
+        {
+            return SwapRemove(list, random.Next(list.Count));
+        }
+        
+        /// <summary>
+        /// Utility to call SwapRemove on a random element. Uses UnityEngine.Random.
+        /// </summary>
+        /// <param name="list">List to remove element from.</param>
+        /// <typeparam name="T">Type of element in list.</typeparam>
+        /// <returns>Removed element.</returns>
+        public static T RemoveRandom<T>(this List<T> list)
+        {
+            return SwapRemove(list, UnityEngine.Random.Range(0, list.Count));
+        }
     }
 }

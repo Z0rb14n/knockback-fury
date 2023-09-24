@@ -20,16 +20,17 @@ namespace Player
             }
         }
         private static PlayerUpgradeManager _instance;
-        public PlayerUpgradeCount[] upgrades;
+        [SerializeField] private PlayerUpgradeCount[] upgrades;
         [Range(0,1)]public float oneYearOfReloadPercent = 0.6f;
         [Min(0)] public float oneYearOfReloadTiming = 0.75f;
 
-        public delegate void UpgradePickupHandler(UpgradeType type, int data);
-
-        public event UpgradePickupHandler OnUpgradePickup;
+        public event Action<UpgradeType, int> OnUpgradePickup;
 
         private readonly Dictionary<UpgradeType, int> _upgradesDict = new();
         private readonly Dictionary<UpgradeType, int> _upgradesData = new();
+
+        public IEnumerable<UpgradeType> GetUniqueUpgrades =>
+            _upgradesDict.Where(pair => pair.Value > 0).Select(pair => pair.Key).Distinct();
 
         public int TotalUpgradeCount => _upgradesDict.Select(pair => pair.Value).Sum();
         

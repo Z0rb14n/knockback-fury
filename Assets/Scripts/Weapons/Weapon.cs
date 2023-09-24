@@ -52,7 +52,7 @@ namespace Weapons
             {
                 Vector2 normalizedLookDirection = LookDirection.normalized;
                 float angle = Mathf.Atan2(normalizedLookDirection.y, normalizedLookDirection.x);
-                angle += Random.Range(-WeaponData.spread/2, WeaponData.spread/2) * Mathf.Deg2Rad;
+                angle += Random.Range(-WeaponData.actualSpread/2, WeaponData.actualSpread/2) * Mathf.Deg2Rad;
                 return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
             }
         }
@@ -82,7 +82,10 @@ namespace Weapons
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
             _source = GetComponent<AudioSource>();
-            WeaponData.Reload();
+            foreach (WeaponData data in weaponInventory)
+            {
+                if (data) data.OnAfterDeserialize();
+            }
             UpdateFromWeaponData();
             EnsureInventoryHasSpace();
         }
@@ -119,14 +122,14 @@ namespace Weapons
                     {
                         Vector3 mousePos = GetMousePos();
                         PlayerMovementScript.Instance.RequestKnockback((transform.position - mousePos).normalized,
-                            WeaponData.actualKnockbackStrength);
+                            WeaponData.actualKnockbackStrength, true);
                         FireWeaponUnchecked(PlayerWeaponControl.Instance.TotalDamageMult);
                     }
                 }
             }
         }
 
-        private void UpdateFromWeaponData()
+        public void UpdateFromWeaponData()
         {
             if (WeaponData == null) return;
             sprite.sprite = WeaponData.sprite;
@@ -149,7 +152,7 @@ namespace Weapons
                 int damage = isMelee
                     ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
                                        WeaponData.meleeInfo.baseDamage)
-                    : WeaponData.projectileDamage;
+                    : WeaponData.actualDamage;
                 damage += isMelee
                     ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
                     : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
@@ -382,19 +385,20 @@ namespace Weapons
             sprite.flipY = mousePos.x < pivotPoint.x;
         }
 
-        public static bool HitEntity(Collider2D collider, int damage)
+        public static bool HitEntity(Collider2D collider, int damage, int selfDamage = 0)
         {
             EnemyBombScript enemyBomb = collider.GetComponent<EnemyBombScript>();
             if (enemyBomb) enemyBomb.OnHitByPlayer();
-            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage);
+            return HitEntityHealth(collider.GetComponent<EntityHealth>(), damage, selfDamage);
         }
 
-        private static bool HitEntityHealth(EntityHealth health, int damage)
+        private static bool HitEntityHealth(EntityHealth health, int damage, int selfDamage = 0)
         {
             int finalDamage = damage;
             if (health is PlayerHealth)
             {
                 Debug.Log($"[Raycast] Hit player for {damage}");
+                finalDamage = selfDamage;
             }
             else if (!ReferenceEquals(health,null))
             {
@@ -410,7 +414,6 @@ namespace Weapons
                         finalDamage += Mathf.RoundToInt(damage * boost);
                     }
                 }
-                Debug.Log(finalDamage);
             }
             // ReSharper disable once UseNullPropagation
             if (ReferenceEquals(health, null)) return false;

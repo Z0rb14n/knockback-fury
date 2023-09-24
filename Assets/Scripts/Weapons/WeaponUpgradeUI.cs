@@ -1,5 +1,6 @@
 using Player;
 using UnityEngine;
+using Util;
 
 namespace Weapons
 {
@@ -9,36 +10,16 @@ namespace Weapons
         public GameObject visibleUI;
         public GameObject weaponButtonPrefab;
         public RectTransform weaponsArea;
+        public RectTransform buttonsArea;
 
         private WeaponButton[] _weaponButtons;
         private WeaponUpgradeTrigger _upgradeTrigger;
-        private int _selectedWeaponIndex = 0;
+        private int _selectedWeaponIndex;
 
         private void EnsureLength(int len)
         {
-            if (weaponsArea.childCount == len)
-            {
-                if (_weaponButtons != null) return;
-                _weaponButtons = new WeaponButton[len];
-                for (int i = 0; i < len; i++)
-                {
-                    _weaponButtons[i] = weaponsArea.GetChild(i).GetComponent<WeaponButton>();
-                }
-                return;
-            }
-            for (int i = weaponsArea.childCount; i < len; i++)
-            {
-                Instantiate(weaponButtonPrefab, weaponsArea);
-            }
-
-            for (int i = weaponsArea.childCount; i > len; i--)
-            {
-                Destroy(weaponsArea.GetChild(i).gameObject);
-            }
-
-            // since GetComponentsInChildren bugs fsr
+            ObjectUtil.EnsureLength(weaponsArea, len, weaponButtonPrefab);
             _weaponButtons = new WeaponButton[len];
-
             for (int i = 0; i < len; i++)
             {
                 _weaponButtons[i] = weaponsArea.GetChild(i).GetComponent<WeaponButton>();
@@ -59,6 +40,10 @@ namespace Weapons
                 _weaponButtons[i].SetDisplayedWeapon(i);
             }
             SelectWeapon(0);
+            for (int i = 0; i < buttonsArea.childCount; i++)
+            {
+                buttonsArea.GetChild(i).gameObject.SetActive(_upgradeTrigger.allowedButtons == null || _upgradeTrigger.allowedButtons.Contains(i));
+            }
             visibleUI.SetActive(true);
         }
 
@@ -69,6 +54,11 @@ namespace Weapons
             {
                 _weaponButtons[i].ButtonInteractable = (index != i);
             }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && visibleUI.activeSelf) Close();
         }
 
         public void Close()
@@ -82,7 +72,23 @@ namespace Weapons
 
         public void UpgradeAmmo()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+
+        public void UpgradeDamage()
+        {
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeDamage();
+            Destroy(_upgradeTrigger.gameObject);
+            _upgradeTrigger = null;
+            Close();
+        }
+        
+        public void UpgradeAccuracy()
+        {
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeAccuracy();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -90,7 +96,7 @@ namespace Weapons
 
         public void UpgradeRecoil()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeRecoil();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -98,7 +104,7 @@ namespace Weapons
 
         public void UpgradeKnockback()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeKnockback();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeKnockback();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -106,7 +112,7 @@ namespace Weapons
 
         public void UpgradeRange()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeRange();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeRange();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
