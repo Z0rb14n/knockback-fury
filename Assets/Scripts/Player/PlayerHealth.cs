@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GameEnd;
 using UnityEngine;
@@ -19,11 +20,8 @@ namespace Player
         }
         private static PlayerHealth _instance;
         private PlayerUpgradeManager _upgradeManager;
-        
-        
-        public delegate void TargetAnalysisUpdateHandler();
 
-        public event TargetAnalysisUpdateHandler OnTargetAnalysisUpdate;
+        public event Action OnTargetAnalysisUpdate;
 
         [SerializeField] private int sneakyJumperCooldown = 3;
         [SerializeField] private int sneakyJumperInvulnTime = 1;

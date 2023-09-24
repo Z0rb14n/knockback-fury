@@ -72,7 +72,7 @@ namespace Weapons
 
         public void UpgradeAmmo()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeAmmoCapacity();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -80,7 +80,7 @@ namespace Weapons
 
         public void UpgradeDamage()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeDamage();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeDamage();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -88,7 +88,7 @@ namespace Weapons
         
         public void UpgradeAccuracy()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeAccuracy();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeAccuracy();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -96,7 +96,7 @@ namespace Weapons
 
         public void UpgradeRecoil()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeRecoil();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeRecoil();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -104,7 +104,7 @@ namespace Weapons
 
         public void UpgradeKnockback()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeKnockback();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeKnockback();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();
@@ -112,7 +112,7 @@ namespace Weapons
 
         public void UpgradeRange()
         {
-            PlayerWeaponControl.Instance.GetInventory[_selectedWeaponIndex].UpgradeRange();
+            PlayerWeaponControl.Instance.Inventory[_selectedWeaponIndex].UpgradeRange();
             Destroy(_upgradeTrigger.gameObject);
             _upgradeTrigger = null;
             Close();

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using Player;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EntityHealth : MonoBehaviour
 {
@@ -8,12 +10,11 @@ public class EntityHealth : MonoBehaviour
     public int health;
     public float iFrameLength;
 
+    public bool doesChangeColor = true;
     public bool canDropCheese = true;
     public GameObject cheeseItemPickup;
 
-    public delegate void DeathDelegate(EntityHealth source);
-
-    public event DeathDelegate OnDeath;
+    public Action<EntityHealth> OnDeath;
     
     protected float _iFrameTimer;
     protected SpriteRenderer _sprite;
@@ -45,7 +46,7 @@ public class EntityHealth : MonoBehaviour
         DoTakeDamage(dmg);
             
         if (health <= 0) Die();
-        StartCoroutine(DamageFlash());
+        if (doesChangeColor) StartCoroutine(DamageFlash());
     }
 
     private IEnumerator DamageFlash()
