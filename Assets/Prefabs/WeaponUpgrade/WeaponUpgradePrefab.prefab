@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a646f17618947d24484ebcc0ea667d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notification: {fileID: 3868675004766858145}
   weaponUpgradeUI: {fileID: 0}
-  notificationOnEnter: {fileID: 3868675004766858151}
 --- !u!1 &3868675004766858151
 GameObject:
   m_ObjectHideFlags: 0

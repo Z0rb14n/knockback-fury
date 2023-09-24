@@ -34,7 +34,7 @@ namespace Weapons
         public void SetDisplayedWeapon(int newIndex)
         {
             index = newIndex;
-            WeaponData data = PlayerWeaponControl.Instance.GetInventory[newIndex];
+            WeaponData data = PlayerWeaponControl.Instance.Inventory[newIndex];
             imageToSet.sprite = data.sprite;
             text.text = data.weaponName;
         }

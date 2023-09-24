@@ -1,48 +1,23 @@
 using System.Collections.Generic;
-using Player;
 using UnityEngine;
+using Util;
 
 namespace Weapons
 {
     [DisallowMultipleComponent, RequireComponent(typeof(Collider2D))]
-    public class WeaponUpgradeTrigger : MonoBehaviour
+    public class WeaponUpgradeTrigger : TriggerTextScript
     {
         public WeaponUpgradeUI weaponUpgradeUI;
-        public GameObject notificationOnEnter;
-
         public HashSet<int> allowedButtons;
-        
-        private bool _isPlayerInside;
 
         private void Awake()
         {
             if (!weaponUpgradeUI) weaponUpgradeUI = FindObjectOfType<WeaponUpgradeUI>();
         }
 
-        private void Update()
+        protected override void OnPlayerInteraction()
         {
-            if (_isPlayerInside && Input.GetKeyDown(KeyCode.E))
-            {
-                weaponUpgradeUI.Open(this);
-            }
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.GetComponent<PlayerMovementScript>())
-            {
-                _isPlayerInside = true;
-                notificationOnEnter?.SetActive(true);
-            }
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (other.GetComponent<PlayerMovementScript>())
-            {
-                _isPlayerInside = false;
-                notificationOnEnter?.SetActive(false);
-            }
+            weaponUpgradeUI.Open(this);
         }
     }
 }

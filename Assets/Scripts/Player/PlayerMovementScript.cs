@@ -438,6 +438,11 @@ namespace Player
             _platformsOn.Remove(platform);
         }
 
+        public void ClearPlatformsOn()
+        {
+            _platformsOn.Clear();
+        }
+
         private void OnCollisionExit2D(Collision2D collision)
         {
             if (_body.velocity.y < 0)

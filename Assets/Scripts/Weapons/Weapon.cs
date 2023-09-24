@@ -129,7 +129,7 @@ namespace Weapons
             }
         }
 
-        private void UpdateFromWeaponData()
+        public void UpdateFromWeaponData()
         {
             if (WeaponData == null) return;
             sprite.sprite = WeaponData.sprite;

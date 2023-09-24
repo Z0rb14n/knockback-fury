@@ -55,6 +55,21 @@ namespace GameEnd
         }
 
         /// <summary>
+        /// Re-enables physics and player collision and goes to lobby
+        /// </summary>
+        public void GoToLobby()
+        {
+            Time.timeScale = 1;
+            PlayerMovementScript.Instance.CanMove = true;
+            PlayerWeaponControl.Instance.enabled = true;
+            CameraScript.Instance.enabled = true;
+            int _playerLayerID = LayerMask.NameToLayer("Player");
+            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
+            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+            SceneManager.LoadScene("LobbyScene");
+        }
+
+        /// <summary>
         /// Displays this after a delay (realtime seconds).
         /// </summary>
         /// <param name="delay">Delay in realtime seconds.</param>

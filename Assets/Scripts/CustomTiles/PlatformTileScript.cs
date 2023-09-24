@@ -5,7 +5,9 @@ using UnityEngine;
 namespace CustomTiles
 {
     /// <summary>
-    /// A script to be placed on a square tile to allow movement through.
+    /// A script to be placed on a tile to allow movement through.
+    ///
+    /// Can alternatively be placed on custom diagonal structures.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
     public class PlatformTileScript : MonoBehaviour
@@ -24,12 +26,19 @@ namespace CustomTiles
         /// <summary>
         /// Determines if the player is above this platform (i.e. should consider physics collisions).
         /// </summary>
-        /// <remarks>
-        /// Currently assumes rectangular colliders on both player and platform.
-        /// <p></p>
-        /// Could potentially use <see cref="Collider2D.Distance"/> and its normal if we don't assume that.
-        /// </remarks>
-        private bool IsPlayerAbove => _playerCollider.bounds.min.y >= _collider.bounds.max.y;
+        private bool IsPlayerAbove
+        {
+            get
+            {
+                ColliderDistance2D dist = _collider.usedByComposite
+                    ? _collider.composite.Distance(_playerCollider)
+                    : _collider.Distance(_playerCollider);
+                float fromVertical = Vector2.Dot(dist.normal, Vector2.up);
+                return Mathf.Abs(fromVertical) > 0.4 &&
+                    (dist.normal.y < 0 && dist.distance >= -Physics2D.defaultContactOffset) ||
+                    (dist.normal.y > 0 && dist.distance < 0 && dist.distance >= -Physics2D.defaultContactOffset);
+            }
+        }
 
         private void Awake()
         {

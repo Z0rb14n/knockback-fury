@@ -17,6 +17,8 @@ MonoBehaviour:
   range: 20
   projectileSpeed: 30
   projectileDamage: 23
+  selfDamage: 1
+  cheeseCost: 50
   roundsPerSecond: 4
   clipSize: 12
   reloadTime: 2.3

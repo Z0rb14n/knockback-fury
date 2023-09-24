@@ -77,6 +77,13 @@ namespace Pause
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        public void OnLobbyButtonClicked()
+        {
+            EnablePlayerCollision();
+            Hide();
+            SceneManager.LoadScene("LobbyScene");
+        }
+
         public void OnMainMenuButtonClicked()
         {
             EnablePlayerCollision();
