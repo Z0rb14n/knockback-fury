@@ -30,11 +30,13 @@ namespace CustomTiles
         {
             get
             {
-                ColliderDistance2D dist;
-                if (_collider.usedByComposite) dist = _collider.composite.Distance(_playerCollider);
-                else dist = _collider.Distance(_playerCollider);
-                //Debug.Log(dist.distance + "," + dist.normal, this);
-                return (dist.normal.y < 0 && dist.distance >= 0) || Mathf.Abs(dist.distance) < Physics2D.defaultContactOffset;
+                ColliderDistance2D dist = _collider.usedByComposite
+                    ? _collider.composite.Distance(_playerCollider)
+                    : _collider.Distance(_playerCollider);
+                float fromVertical = Vector2.Dot(dist.normal, Vector2.up);
+                return Mathf.Abs(fromVertical) > 0.4 &&
+                    (dist.normal.y < 0 && dist.distance >= -Physics2D.defaultContactOffset) ||
+                    (dist.normal.y > 0 && dist.distance < 0 && dist.distance >= -Physics2D.defaultContactOffset);
             }
         }
 
