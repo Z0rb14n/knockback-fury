@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -121,6 +122,14 @@ namespace Player
 
             if (Input.GetMouseButtonDown(1)) _weapon.UseRightClick(_body.velocity);
         }
+        
+        public void SetNewInventorySize(int size)
+        {
+            WeaponData[] newDat = new WeaponData[size];
+            Array.Copy(_weapon.weaponInventory, newDat, _weapon.weaponInventory.Length);
+            for (int i = 0; i < _weapon.weaponInventory.Length; i++) newDat[i] =  _weapon.weaponInventory[i];
+            _weapon.weaponInventory = newDat;
+        }
 
         public void OnWallLaunch()
         {
@@ -193,6 +202,7 @@ namespace Player
                 yield return new WaitForSeconds(1);
                 StartCoroutine(StabilizedAimBoostCoroutine());
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         private IEnumerator StabilizedAimBoostCoroutine()

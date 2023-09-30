@@ -1,6 +1,9 @@
+using System;
 using System.Linq;
 using Enemies.Ranged;
+using FileSave;
 using GameEnd;
+using PermUpgrade;
 using Player;
 using UnityEngine;
 using Upgrades;
@@ -92,8 +95,16 @@ namespace Weapons
 
         private void EnsureInventoryHasSpace()
         {
-            if (weaponInventory != null && weaponInventory.Length != 0) return;
-            weaponInventory = new WeaponData[2];
+            if (weaponInventory != null && weaponInventory.Length != 0 &&
+                (weaponInventory.Length == 3 || !CrossRunInfo.HasUpgrade(PermUpgradeType.ExtraHolster)))
+            {
+                return;
+            }
+
+            WeaponData[] newData = new WeaponData[CrossRunInfo.HasUpgrade(PermUpgradeType.ExtraHolster) ? 3 : 2];
+            if (weaponInventory != null)
+                Array.Copy(weaponInventory, newData, weaponInventory.Length);
+            weaponInventory = newData;
             weaponIndex = 0;
         }
 
