@@ -1,4 +1,8 @@
-﻿namespace FileSave
+﻿using System;
+using System.Collections.Generic;
+using PermUpgrade;
+
+namespace FileSave
 {
     /// <summary>
     /// Persistent save data.
@@ -10,5 +14,14 @@
     public class SaveData
     {
         public int cheese;
+        /// <summary>
+        /// Note: use enum
+        /// </summary>
+        public int[] unlockedPermanentUpgrades;
+
+        public string[] unlockedWeapons;
+
+        [NonSerialized] public HashSet<PermUpgradeType> unlockedPermUpgradeTypes;
+        [NonSerialized] public HashSet<string> unlockedWeaponSet;
     }
 }

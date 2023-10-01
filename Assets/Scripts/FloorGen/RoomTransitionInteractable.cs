@@ -15,6 +15,7 @@ namespace FloorGen
         {
             if (_isPlayerInside && Input.GetKeyDown(KeyCode.E))
             {
+                PlayerMovementScript.Instance.ClearPlatformsOn();
                 floorGenerator.Transition();
             }
         }
