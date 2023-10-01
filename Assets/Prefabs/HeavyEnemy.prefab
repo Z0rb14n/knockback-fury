@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroRange: 5
   deaggroRange: 10
+  showAggroRanges: 0
   _collider: {fileID: 6502981059598909017}
 --- !u!114 &4736502158233764961
 MonoBehaviour:

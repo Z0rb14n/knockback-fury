@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(Animator), typeof(AudioSource), typeof(PatrolMovement))]
+    [RequireComponent(typeof(Animator), typeof(AudioSource), typeof(HeavyMovement))]
     public class HeavyAttack : MonoBehaviour
     {
         public float attackDistance;

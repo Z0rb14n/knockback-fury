@@ -7,6 +7,7 @@ namespace Enemies
     {
         public float aggroRange;
         public float deaggroRange;
+        public bool showAggroRanges;
 
         [SerializeField] private CapsuleCollider2D _collider;
         private Vector3 _position;
@@ -48,11 +49,15 @@ namespace Enemies
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(_collider.bounds.center, aggroRange);
+            if (showAggroRanges)
+            {
+                Gizmos.color = Color.magenta;
+                Gizmos.DrawWireSphere(_collider.bounds.center, aggroRange);
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(_collider.bounds.center, deaggroRange);
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(_collider.bounds.center, deaggroRange);
+            }
+            
         }
 
         /// <summary>

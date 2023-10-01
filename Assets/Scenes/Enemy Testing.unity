@@ -2827,6 +2827,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2134258351842862908, guid: efd4553bad3a24e479b124992ad2c5b5, type: 3}
+      propertyPath: showAggroRanges
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3250355253141131760, guid: efd4553bad3a24e479b124992ad2c5b5, type: 3}
       propertyPath: patrolPoints.Array.size
       value: 2

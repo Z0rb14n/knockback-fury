@@ -42,7 +42,6 @@ namespace Enemies
             {
                 base.Update();
             }
-            Debug.Log(_canMove);
         }
 
     }
