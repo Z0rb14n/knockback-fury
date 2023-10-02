@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1063232189279130196}
   - component: {fileID: 3628323996390703106}
   - component: {fileID: 1451045152520852183}
+  - component: {fileID: 1548388652613100245}
   m_Layer: 7
   m_Name: RangedEnemy
   m_TagString: Untagged
@@ -158,6 +159,7 @@ MonoBehaviour:
   maxHealth: 300
   health: 300
   iFrameLength: 0
+  doesChangeColor: 1
   canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!114 &1063232189279130196
@@ -175,6 +177,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7397105965758314663, guid: 726bbe6c41016854780bfbe8be3160b4, type: 3}
   bulletPos: {fileID: 6556247771018272447}
   fireDelay: 2
+  damageMultiplier: 1
 --- !u!58 &3628323996390703106
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -287,6 +290,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1548388652613100245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6556247770705963530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: TODO
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &6556247771018272444
 GameObject:
   m_ObjectHideFlags: 0
