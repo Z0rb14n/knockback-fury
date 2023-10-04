@@ -97,7 +97,30 @@ namespace Weapons
         /// <summary>
         /// Return the Damage Per Second (assuming all shots hit)
         /// </summary>
-        public float DPS => numProjectiles * projectileDamage * roundsPerSecond;
+        public float DPS
+        {
+            get
+            {
+                float fastestFire = roundsPerSecond;
+                if (fireMode == FireMode.Burst)
+                    fastestFire = Mathf.Max(fastestFire, burstInfo.withinBurstFirerate);
+                return numProjectiles * projectileDamage * fastestFire;
+            }
+        }
+
+        /// <summary>
+        /// Return the Damage Per Second of alt fire
+        /// </summary>
+        public float AltDPS
+        {
+            get
+            {
+                float fastestFire = roundsPerSecond;
+                if (altFireMode == FireMode.Burst)
+                    fastestFire = Mathf.Max(fastestFire, burstInfo.withinBurstFirerate);
+                return numProjectiles * projectileDamage * fastestFire;
+            }
+        }
 
         public void UpgradeAmmoCapacity()
         {

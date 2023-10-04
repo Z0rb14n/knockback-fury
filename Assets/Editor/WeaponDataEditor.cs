@@ -18,6 +18,8 @@ namespace Editor
             WeaponData script = (WeaponData)target;
             GUI.enabled = false;
             GUILayout.Label("Current DPS: " + script.DPS);
+            if (script.rightClickAction == WeaponRightClickAction.FireModeToggle) 
+                GUILayout.Label("Alt DPS: " + script.AltDPS);
             GUI.enabled = true;
             EditorGUI.BeginChangeCheck();
 
@@ -42,6 +44,7 @@ namespace Editor
                 return null;
 
             Texture2D tex = new(width, height);
+            
             EditorUtility.CopySerialized (data.sprite.texture, tex);
             return tex;
         }
