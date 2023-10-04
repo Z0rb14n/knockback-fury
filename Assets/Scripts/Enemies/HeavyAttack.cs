@@ -88,7 +88,7 @@ namespace Enemies
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * _movement.GetDirection(),
+            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * (_movement?.GetDirection() ?? 1),
                 new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z));
         }
 
