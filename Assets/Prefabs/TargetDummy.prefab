@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 871780559127431302}
   - component: {fileID: 1193230711588742508}
   - component: {fileID: 7236440661524435674}
-  - component: {fileID: 7236440661524435669}
+  - component: {fileID: 7857815425010391599}
   m_Layer: 7
   m_Name: TargetDummy
   m_TagString: Untagged
@@ -107,8 +107,8 @@ MonoBehaviour:
   cheeseItemPickup: {fileID: 0}
   display: {fileID: 871780559749268261}
   maxTime: 1.5
---- !u!61 &7236440661524435669
-BoxCollider2D:
+--- !u!70 &7857815425010391599
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -121,18 +121,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 5.12, y: 5.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.25, y: 0.64}
+  m_Direction: 0
 --- !u!1 &871780559749268267
 GameObject:
   m_ObjectHideFlags: 0
