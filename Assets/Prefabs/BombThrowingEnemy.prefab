@@ -12,9 +12,29 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: _source.Path
+      value: event:/SFX/Enemies/BombThrowing/BombThrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 4488847752800442320, guid: fa90e8493a384014194673dde3e28bbd, type: 3}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: _source.Guid.Data1
+      value: 1374531282
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: _source.Guid.Data2
+      value: 1223214023
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: _source.Guid.Data3
+      value: 648831874
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: _source.Guid.Data4
+      value: 1655027631
+      objectReference: {fileID: 0}
     - target: {fileID: 1451045152520852183, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_audioClip
       value: 
@@ -77,6 +97,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4676967839840957038, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+    - {fileID: 1548388652613100245, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+    - {fileID: 1451045152520852183, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
 --- !u!1 &310210426833455857 stripped
 GameObject:

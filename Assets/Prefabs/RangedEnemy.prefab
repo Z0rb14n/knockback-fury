@@ -178,6 +178,13 @@ MonoBehaviour:
   bulletPos: {fileID: 6556247771018272447}
   fireDelay: 2
   damageMultiplier: 1
+  _source:
+    Guid:
+      Data1: 108970357
+      Data2: 1166904568
+      Data3: -286745927
+      Data4: 942258990
+    Path: event:/SFX/Weapons/Weap_Silenced
 --- !u!58 &3628323996390703106
 CircleCollider2D:
   m_ObjectHideFlags: 0

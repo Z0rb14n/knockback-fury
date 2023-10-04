@@ -12,7 +12,7 @@ using FMODUnity;
 
 namespace Weapons
 {
-    [RequireComponent(typeof(AudioSource))]
+    // [RequireComponent(typeof())]
     public class Weapon : MonoBehaviour
     {
         // CONSTANT
