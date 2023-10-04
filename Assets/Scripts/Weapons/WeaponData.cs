@@ -52,7 +52,7 @@ namespace Weapons
         public Sprite sprite;
         public GameObject customProjectile;
 
-        public AudioClip fireEffect;
+        public FMODUnity.EventReference fireEffect;
         [NonSerialized]
         public int numUpgrades;
 
