@@ -53690,8 +53690,9 @@ MonoBehaviour:
   roomChangeSpawnOffset: {x: 0, y: 0}
   playerSpawnOffset: {x: -4.5, y: -1.5}
   hiders: []
-  layouts: []
+  sockets: []
   ignoreSocketEnemySpawns: 1
+  socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
 --- !u!4 &9193671199273025701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}

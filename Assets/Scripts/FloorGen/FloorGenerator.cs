@@ -542,16 +542,7 @@ namespace FloorGen
         public RoomType type;
         public GameObject[] roomPrefab;
     }
-
-    /// <summary>
-    /// Layout of sockets to be placed within a room/cell
-    /// </summary>
-    [Serializable]
-    public struct Layout
-    {
-        public SocketShape[] sockets;
-    }
-
+    
     /// <summary>
     /// Socket prefab and its corresponding size
     /// </summary>
@@ -560,16 +551,6 @@ namespace FloorGen
     {
         public Vector2 size;
         public GameObject prefab;
-    }
-
-    /// <summary>
-    /// Individual size/position pairing for socket location
-    /// </summary>
-    [Serializable]
-    public struct SocketShape
-    {
-        public Vector2 size;
-        public Vector2 position;
     }
 
     /// <summary>

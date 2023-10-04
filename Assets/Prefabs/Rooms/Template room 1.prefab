@@ -57742,11 +57742,11 @@ MonoBehaviour:
     toEnable: {fileID: 6513306641249675174}
   - hidingType: 8
     toEnable: {fileID: 9051665792846702043}
-  layouts:
-  - sockets:
-    - size: {x: 3, y: 3}
-      position: {x: 4, y: -1.5}
+  sockets:
+  - size: {x: 6, y: 6}
+    position: {x: 5, y: 0}
   ignoreSocketEnemySpawns: 1
+  socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
 --- !u!4 &7308564583867378131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}

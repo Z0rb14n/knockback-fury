@@ -52441,13 +52441,9 @@ MonoBehaviour:
     toEnable: {fileID: 7640691481989031740}
   - hidingType: 4
     toEnable: {fileID: 8805559452172188159}
-  layouts:
-  - sockets:
-    - size: {x: 2, y: 2}
-      position: {x: -3, y: 0}
-    - size: {x: 2.5, y: 2.5}
-      position: {x: 4.75, y: -2.75}
+  sockets: []
   ignoreSocketEnemySpawns: 1
+  socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
 --- !u!4 &7308564583867378131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}

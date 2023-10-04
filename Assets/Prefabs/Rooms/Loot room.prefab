@@ -54335,10 +54335,12 @@ MonoBehaviour:
   pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
+  roomTransitionInteractable: {fileID: 0}
   weaponSpawnOffset: {x: 1, y: 0}
   cheeseSpawnOffset: {x: 1, y: 0}
   powerupSpawnOffset: {x: 1, y: 0}
   weaponUpgradeSpawnOffset: {x: 1, y: 0}
+  roomChangeSpawnOffset: {x: 0, y: 0}
   playerSpawnOffset: {x: -4.5, y: -2.5}
   hiders:
   - hidingType: 1
@@ -54349,8 +54351,9 @@ MonoBehaviour:
     toEnable: {fileID: 4260516280522759489}
   - hidingType: 8
     toEnable: {fileID: 9209437763507429779}
-  layouts: []
+  sockets: []
   ignoreSocketEnemySpawns: 1
+  socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
 --- !u!4 &7308564583867378131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}
