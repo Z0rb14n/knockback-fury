@@ -307,6 +307,34 @@ PrefabInstance:
       propertyPath: minTimeBeforeWallJump
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/SFX/Weapons/Weap_Melee
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -9069859
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1187403827
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: -1577106754
+      objectReference: {fileID: 0}
+    - target: {fileID: 8288673372217343626, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: -779691936
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
 --- !u!114 &87238628 stripped
@@ -1559,6 +1587,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1786939277743127766, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786939277743127766, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2741323833745279407, guid: d905535c1596a3f48936f8511a24858e, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1573,6 +1609,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2741323833745279407, guid: d905535c1596a3f48936f8511a24858e, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442094254051203248, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4442094254051203248, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5365125579688223093, guid: d905535c1596a3f48936f8511a24858e, type: 3}
