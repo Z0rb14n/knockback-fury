@@ -5,7 +5,7 @@
 			<value>Weap_GrenadeLauncher</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{968ebd4f-7dce-4b96-bf08-c95a14352202}</destination>
@@ -90,7 +90,10 @@
 	<object class="MixerBusPanner" id="{df898368-a724-4a03-933d-44081a2db92f}" />
 	<object class="SingleSound" id="{7614cf60-923c-4803-ac49-6bbdd811ce8e}">
 		<property name="length">
-			<value>0.62693877551020405</value>
+			<value>0.576938775510204</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.050000000000000003</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{d841f1b0-130e-4218-bd40-c0f6b7356c4e}</destination>
@@ -98,7 +101,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{5b680381-56b1-4415-996b-9ddf9636a532}">
 		<property name="volume">
-			<value>-18.5</value>
+			<value>-15</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -116,6 +119,7 @@
 	<object class="MixerBusEffectChain" id="{4a728455-89a2-46d6-a3e5-c501aadac456}">
 		<relationship name="effects">
 			<destination>{00a98522-8dd9-4783-b7fc-d3650db9f607}</destination>
+			<destination>{dfe58df1-f0ab-4bf0-b284-80301b6156f0}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{992352c9-fae0-4f28-a700-cce5e247ccba}" />
@@ -128,6 +132,15 @@
 	</object>
 	<object class="MixerBusPanner" id="{b75dff7a-a7e1-4aa1-9a5f-41723de27fe8}" />
 	<object class="MixerBusFader" id="{00a98522-8dd9-4783-b7fc-d3650db9f607}" />
+	<object class="SpatialiserEffect" id="{dfe58df1-f0ab-4bf0-b284-80301b6156f0}">
+		<property name="panBlend">
+			<value>0</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{726bf27d-8a52-4ab3-885a-16b2505e1f33}" />
-	<object class="ObjectSpatialiserEffect" id="{83b0e1e6-843b-4436-9c2a-de6fa15c3aae}" />
+	<object class="ObjectSpatialiserEffect" id="{83b0e1e6-843b-4436-9c2a-de6fa15c3aae}">
+		<property name="distanceRolloffType">
+			<value>4</value>
+		</property>
+	</object>
 </objects>
