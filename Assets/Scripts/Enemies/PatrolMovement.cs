@@ -19,7 +19,7 @@ namespace Enemies
         protected int _spriteDirection;
         protected float _switchTargetDistance;
         protected bool _canMove;
-        private Collider2D _collider2D;
+        protected Collider2D _collider2D;
 
         private float _originalSpeed;
         

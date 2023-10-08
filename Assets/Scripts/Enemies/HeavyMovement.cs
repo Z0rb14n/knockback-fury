@@ -7,6 +7,7 @@ namespace Enemies
     public class HeavyMovement : PatrolMovement
     {
         public float aggroSpeedMultiplier;
+        public float maxFallHeight;
 
         private EnemyAggro _aggroScript;
         private bool _isAggro;
@@ -26,6 +27,7 @@ namespace Enemies
         protected override void Update()
         {
             _isAggro = _aggroScript.IsAggro();
+            _canMove = DetermineCanMove();
             
             if (_isAggro)
             {
@@ -44,5 +46,26 @@ namespace Enemies
             }
         }
 
+        private bool DetermineCanMove()
+        {
+            Vector2 rayDirection = Vector2.down;
+            Vector2 position;
+            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy") 
+                | 1 << LayerMask.NameToLayer("Player"));
+            if (_direction == 1)
+            {
+                position = new Vector2(_collider2D.bounds.max.x, _collider2D.bounds.center.y);
+            }
+            else
+            {
+                position = new Vector2(_collider2D.bounds.min.x, _collider2D.bounds.center.y);
+            }
+
+            Debug.DrawRay(position, rayDirection, Color.black);
+            return Physics2D.Raycast(position, rayDirection, maxFallHeight, layerMask);
+        }
+
     }
+
+
 }

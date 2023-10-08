@@ -183,6 +183,7 @@ MonoBehaviour:
   maxHealth: 125
   health: 125
   iFrameLength: 0
+  doesChangeColor: 1
   canDropCheese: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!114 &781840091141345320
@@ -330,7 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   aggroRange: 5
   deaggroRange: 10
-  showAggroRanges: 0
+  showAggroRanges: 1
   _collider: {fileID: 6502981059598909017}
 --- !u!114 &4736502158233764961
 MonoBehaviour:
@@ -348,3 +349,4 @@ MonoBehaviour:
   speed: 1
   pauseTime: 1
   aggroSpeedMultiplier: 3
+  maxFallHeight: 2
