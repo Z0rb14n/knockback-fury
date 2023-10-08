@@ -50,7 +50,7 @@ namespace FloorGen
         [Tooltip("Room Changer Prefab")]
         public GameObject roomChangePrefab;
         
-        public SocketObject[] socketObjects;
+        public GameObject[] socketPrefabs;
         [Header("Weapon Generation")]
         public WeaponData[] weaponsList;
         public GameObject weaponPickupPrefab;
@@ -198,12 +198,12 @@ namespace FloorGen
 
         private void GeneratePrefabSizes()
         {
-            if (socketObjects == null) return;
-            foreach (SocketObject so in socketObjects)
+            if (socketPrefabs == null) return;
+            foreach (GameObject go in socketPrefabs)
             {
-                if (!_socketPrefabSizes.ContainsKey(so.size))
-                    _socketPrefabSizes[so.size] = new();
-                _socketPrefabSizes[so.size].Add(so.prefab);
+                Vector2 size = go.GetComponent<SocketBehaviour>().size;
+                if (!_socketPrefabSizes.ContainsKey(size)) _socketPrefabSizes[size] = new List<GameObject>();
+                _socketPrefabSizes[size].Add(go);
             }
         }
 
@@ -541,16 +541,6 @@ namespace FloorGen
     {
         public RoomType type;
         public GameObject[] roomPrefab;
-    }
-    
-    /// <summary>
-    /// Socket prefab and its corresponding size
-    /// </summary>
-    [Serializable]
-    public struct SocketObject
-    {
-        public Vector2 size;
-        public GameObject prefab;
     }
 
     /// <summary>
