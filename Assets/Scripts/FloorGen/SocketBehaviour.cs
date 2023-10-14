@@ -6,11 +6,17 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class SocketBehaviour : MonoBehaviour
     {
+        public Vector2 size;
         private EnemySpawnPoint[] _spawnPoints;
 
         private void Awake()
         {
             _spawnPoints = GetComponentsInChildren<EnemySpawnPoint>();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireCube(Vector3.zero, size);
         }
 
         public EnemySpawnType AllowedSpawnTypes => _spawnPoints.Aggregate<EnemySpawnPoint, EnemySpawnType>(0, (current, point) => current | point.types);

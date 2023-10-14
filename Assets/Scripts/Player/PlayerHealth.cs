@@ -86,12 +86,15 @@ namespace Player
 
         private static IEnumerator OnDeathCoroutine()
         {
-            PlayerMovementScript.Instance.CanMove = false;
-            PlayerWeaponControl.Instance.enabled = false;
-            CameraScript.Instance.enabled = false;
-            Time.timeScale = 0;
-            GameEndCanvas.Instance.DisplayAfterDelay(1, false);
-            yield return new WaitForSecondsRealtime(1);
+            if (GameEndCanvas.Instance)
+            {
+                PlayerMovementScript.Instance.CanMove = false;
+                PlayerWeaponControl.Instance.enabled = false;
+                CameraScript.Instance.enabled = false;
+                Time.timeScale = 0;
+                GameEndCanvas.Instance.DisplayAfterDelay(1, false);
+                yield return new WaitForSecondsRealtime(1);
+            }
         }
 
         private IEnumerator DisableCollision()
