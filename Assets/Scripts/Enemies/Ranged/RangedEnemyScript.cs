@@ -1,6 +1,7 @@
 using System.Collections;
 using Player;
 using UnityEngine;
+using FMODUnity;
 
 namespace Enemies.Ranged
 {
@@ -18,7 +19,7 @@ namespace Enemies.Ranged
 
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
-        private AudioSource _source;
+        [SerializeField] private EventReference _source;
         private PlayerMovementScript _playerMovement;
         private SpriteRenderer _sprite;
         private Animator _animator;
@@ -26,7 +27,6 @@ namespace Enemies.Ranged
         
         private void Awake()
         {
-            _source = GetComponent<AudioSource>();
             _sprite = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _playerMovement = PlayerMovementScript.Instance;
@@ -48,7 +48,7 @@ namespace Enemies.Ranged
                     GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
                     go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
                 }
-                if (_source && _source.clip) _source.Play();
+                if (_source.Path.Length > 0) RuntimeManager.PlayOneShot(_source,transform.position);
             }
         }
 

@@ -38,4 +38,10 @@ MonoBehaviour:
   altFireMode: 0
   sprite: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
   customProjectile: {fileID: 0}
-  fireEffect: {fileID: 8300000, guid: f2986af7a19e3c341b98a751ecaa552a, type: 3}
+  fireEffect:
+    Guid:
+      Data1: 444489450
+      Data2: 1230548147
+      Data3: 971715503
+      Data4: -1121522320
+    Path: event:/SFX/Weapons/Weap_Sniper

@@ -38,4 +38,10 @@ MonoBehaviour:
   altFireMode: 0
   sprite: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
   customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}
-  fireEffect: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
+  fireEffect:
+    Guid:
+      Data1: 1318238220
+      Data2: 1301262900
+      Data3: -648970852
+      Data4: 1357936274
+    Path: event:/SFX/Weapons/Weap_GrenadeLauncher
