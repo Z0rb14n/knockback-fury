@@ -407,8 +407,9 @@ namespace Weapons
             int finalDamage = damage;
             if (health is PlayerHealth)
             {
-                Debug.Log($"[Raycast] Hit player for {damage}");
+                Debug.Log($"[Weapon::HitEntityHealth] Tried to hit player for {damage}");
                 finalDamage = selfDamage;
+                if (CrossRunInfo.HasUpgrade(PermUpgradeType.GarbageRat)) return false;
             }
             else if (!ReferenceEquals(health,null))
             {
