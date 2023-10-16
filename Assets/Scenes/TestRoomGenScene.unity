@@ -308,6 +308,26 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: accel
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: jumpForce
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: slideSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: wallJumpForce.x
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: wallJumpForce.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: minTimeBeforeWallJump
       value: 0.05
       objectReference: {fileID: 0}

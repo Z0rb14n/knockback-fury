@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Mouser Pistol
   numProjectiles: 1
   range: 15
-  projectileSpeed: 17
+  projectileSpeed: 20
   projectileDamage: 18
   selfDamage: 1
   cheeseCost: 50
@@ -25,7 +25,7 @@ MonoBehaviour:
   spread: 3.5
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 7
+  knockbackStrength: 15
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
