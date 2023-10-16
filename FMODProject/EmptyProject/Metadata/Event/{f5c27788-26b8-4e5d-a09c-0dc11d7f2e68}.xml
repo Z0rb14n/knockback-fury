@@ -5,7 +5,7 @@
 			<value>GL_Explode</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{40ec46dc-c84b-418e-a529-53b1b474b448}</destination>
@@ -120,9 +120,15 @@
 	<object class="MixerBusEffectChain" id="{e723b97c-883a-4ffc-9b9c-ba61b7064d4b}">
 		<relationship name="effects">
 			<destination>{9279f29a-7193-4ef2-ab68-248d2b649589}</destination>
+			<destination>{44defe32-2d20-4602-83fa-70ef6ef26a23}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{fdbc7b5c-f9ff-4cee-95a0-dfebd2c8adb1}" />
 	<object class="MixerBusFader" id="{3e3829f9-0bae-433d-aee7-44c412a40514}" />
 	<object class="MixerBusFader" id="{9279f29a-7193-4ef2-ab68-248d2b649589}" />
+	<object class="SpatialiserEffect" id="{44defe32-2d20-4602-83fa-70ef6ef26a23}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+	</object>
 </objects>
