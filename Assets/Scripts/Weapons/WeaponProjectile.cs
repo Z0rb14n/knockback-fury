@@ -1,7 +1,8 @@
 ﻿using Player;
 using UnityEngine;
 using Upgrades;
-
+using FMODUnity;
+using FMOD.Studio;
 namespace Weapons
 {
     [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
@@ -14,6 +15,8 @@ namespace Weapons
         [Tooltip("(For Grenades) Detonates on destruction")]
         public bool detonateOnDestroy;
         [Tooltip("Detonation VFX Prefab")]
+
+        [SerializeField] private EventReference _explosionSFX;
         public GameObject detonationVFX;
         private float _remainingDistance;
         private int _damage;
@@ -22,6 +25,8 @@ namespace Weapons
         private bool _hitPlayer;
         private WeaponData _weaponData;
         private Collider2D[] _colliderTest = new Collider2D[20];
+
+
         
         private void Awake()
         {
@@ -102,6 +107,7 @@ namespace Weapons
             }
 
             GameObject go = Instantiate(detonationVFX, transform.parent);
+            RuntimeManager.PlayOneShot(_explosionSFX,transform.position);
             go.transform.position = transform.position;
             go.GetComponent<ExplosionVFX>().SetSize(explosionRange);
         }
