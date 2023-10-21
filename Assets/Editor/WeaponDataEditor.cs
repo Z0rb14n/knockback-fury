@@ -27,6 +27,7 @@ namespace Editor
             if (script.rightClickAction != WeaponRightClickAction.Melee) excluded.Add("meleeInfo");
             if (script.fireMode != FireMode.Burst && script.altFireMode != FireMode.Burst) excluded.Add("burstInfo");
             if (script.rightClickAction != WeaponRightClickAction.FireModeToggle) excluded.Add("altFireMode");
+            if (script.pierceMode == PierceMode.None) excluded.Add(nameof(script.pierceInfo));
             DrawPropertiesExcluding(serializedObject, excluded.ToArray());
 
             if (EditorGUI.EndChangeCheck())

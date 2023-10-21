@@ -147,6 +147,21 @@ namespace Weapons
             _source = WeaponData.fireEffect;
         }
 
+        private void HitscanHitLogic(RaycastHit2D hit, bool isMelee, Vector2 vel, Vector2 dir)
+        {
+            int damage = isMelee
+                ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
+                                   WeaponData.meleeInfo.baseDamage)
+                : WeaponData.actualDamage;
+            damage += isMelee
+                ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
+                : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
+            if (!ReferenceEquals(hit.collider, null))
+            {
+                HitEntity(hit.collider, damage);
+            }
+        }
+
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
@@ -157,18 +172,30 @@ namespace Weapons
             for (int i = 0; i < count; i++)
             {
                 Vector2 dir = RandomizedLookDirection;
-                RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, raycastMask);
-                Vector2 finalPos = ReferenceEquals(hit.collider, null) ? origin + (dir * range) : hit.point;
-                int damage = isMelee
-                    ? Mathf.RoundToInt(Mathf.Max(0, Vector2.Dot(vel, dir)) * WeaponData.meleeInfo.velMultiplier +
-                                       WeaponData.meleeInfo.baseDamage)
-                    : WeaponData.actualDamage;
-                damage += isMelee
-                    ? Mathf.RoundToInt(damage * PlayerWeaponControl.Instance.NonMeleeDamageBoost)
-                    : Mathf.RoundToInt(damage * (PlayerWeaponControl.Instance.TotalDamageMult - 1));
-                if (!ReferenceEquals(hit.collider, null))
+                Vector2 finalPos = origin + (dir * range);
+                if (WeaponData.pierceMode == PierceMode.None)
                 {
-                    HitEntity(hit.collider, damage);
+                    RaycastHit2D hit = Physics2D.Raycast(origin, dir, range, raycastMask);
+                    if (!ReferenceEquals(hit.collider, null)) finalPos = hit.point;
+                    HitscanHitLogic(hit, isMelee, vel, dir);
+                }
+                else
+                {
+                    // yo bro if you hate it so much why don't you fix it while somehow supporting infinite hits
+                    // ReSharper disable once Unity.PreferNonAllocApi
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, range, raycastMask);
+                    int pierces = WeaponData.pierceInfo.maxPierces;
+                    foreach (RaycastHit2D hit in hits)
+                    {
+                        // ReSharper disable once Unity.NoNullPropagation
+                        EntityHealth health = hit.collider?.GetComponent<EntityHealth>();
+                        HitscanHitLogic(hit, isMelee, vel, dir);
+                        if (CheckAndUpdatePiercing(WeaponData, health, ref pierces))
+                        {
+                            finalPos = hit.point;
+                            break;
+                        }
+                    }
                 }
                 if (!isMelee)
                 {
@@ -393,6 +420,25 @@ namespace Weapons
             Vector2 mousePos = GetMousePos();
             spritePivot.right = mousePos - pivotPoint;
             sprite.flipY = mousePos.x < pivotPoint.x;
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data">WeaponData of fired weaopn</param>
+        /// <param name="other">Hit EntityHealth, if present</param>
+        /// <param name="remainingPierces">Number of remaining pierces; modified when method ends</param>
+        /// <returns>Whether the GameObject should be destroyed</returns>
+        public static bool CheckAndUpdatePiercing(WeaponData data, EntityHealth other, ref int remainingPierces)
+        {
+            if (data.pierceMode == PierceMode.None) return true;
+            bool hasEntity = other;
+            if (data.pierceMode == PierceMode.FirstWall && !hasEntity) return true;
+            if (remainingPierces <= 0 && !data.pierceInfo.isInfinitePierce) return true;
+            if (data.pierceMode == PierceMode.WallAsEnemy && !hasEntity) remainingPierces--;
+            if (hasEntity) remainingPierces--;
+
+            return false;
         }
 
         public static bool HitEntity(Collider2D collider, int damage, int selfDamage = 0)

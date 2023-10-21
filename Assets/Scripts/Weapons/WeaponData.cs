@@ -53,6 +53,8 @@ namespace Weapons
         public GameObject customProjectile;
 
         public FMODUnity.EventReference fireEffect;
+        public PierceMode pierceMode = PierceMode.None;
+        public PierceInfo pierceInfo;
         [NonSerialized]
         public int numUpgrades;
 
@@ -165,9 +167,21 @@ namespace Weapons
     {
         [Min(0), Tooltip("Number of bullets in the burst.")]
         public int burstAmount;
-        [Min(0),Tooltip("RPS within the burst.")]
+        [Min(0), Tooltip("RPS within the burst.")]
         public float withinBurstFirerate;
     }
+
+    [Serializable]
+    public struct PierceInfo
+    {
+        [Min(0), Tooltip("Max number of objects to penetrate")]
+        public int maxPierces;
+        [Min(0), Tooltip("Time before permitting hitting the same object")]
+        public float invulnTimer;
+        [Tooltip("Whether we pierce indefinitely")]
+        public bool isInfinitePierce;
+    }
+    
     [Serializable]
     public struct MeleeInfo
     {

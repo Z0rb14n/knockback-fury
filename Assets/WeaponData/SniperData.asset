@@ -45,3 +45,8 @@ MonoBehaviour:
       Data3: 971715503
       Data4: -1121522320
     Path: event:/SFX/Weapons/Weap_Sniper
+  pierceMode: 1
+  pierceInfo:
+    maxPierces: 1
+    invulnTimer: 0
+    isInfinitePierce: 0
