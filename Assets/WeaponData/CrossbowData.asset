@@ -15,17 +15,17 @@ MonoBehaviour:
   weaponName: Crossbow
   numProjectiles: 1
   range: 90
-  projectileSpeed: 15
-  projectileDamage: 100
+  projectileSpeed: 30
+  projectileDamage: 70
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 1
-  clipSize: 1
+  roundsPerSecond: 1.5
+  clipSize: 3
   reloadTime: 1.4
   spread: 0
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 0
+  knockbackStrength: 15
   recoilAnimationDuration: 0
   fireMode: 1
   burstInfo:

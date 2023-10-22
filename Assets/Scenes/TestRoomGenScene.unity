@@ -272,17 +272,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 227042018}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: weaponInventory.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
+      objectReference: {fileID: 11400000, guid: 13f7ed0d7bb67cf4fb6fd44be66122d1, type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: a0b17100a9a49fa4aadda36c4ae8804c, type: 2}
+    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: weaponInventory.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+      objectReference: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
     - target: {fileID: 4802255312805004380, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: attenuationObject
       value: 
@@ -306,6 +314,26 @@ PrefabInstance:
     - target: {fileID: 6244737822807091051, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: accel
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: jumpForce
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: slideSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: wallJumpForce.x
+      value: 15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: wallJumpForce.y
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8168244775167315299, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: minTimeBeforeWallJump
@@ -891,6 +919,9 @@ MonoBehaviour:
   - {fileID: 4214757178654429746, guid: 59b38ea7172f9a44589fc09c183edbc3, type: 3}
   - {fileID: 5611468861318173077, guid: b3ff506c4185d934ab1d7b3424ae99db, type: 3}
   - {fileID: 5611468861318173077, guid: 96f648bd44aa71342a84dbc5c8cbcd1a, type: 3}
+  - {fileID: 5611468861318173077, guid: eef3d19fb2cbc9c458b7d98a41010156, type: 3}
+  - {fileID: 5611468861318173077, guid: c1ae9af141e5f0b4d9ec1110df04681b, type: 3}
+  - {fileID: 5611468861318173077, guid: 21b0c744237732049bcf5ccbf1c05f45, type: 3}
   weaponsList:
   - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
   - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
