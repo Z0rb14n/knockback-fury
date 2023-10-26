@@ -44,4 +44,9 @@ MonoBehaviour:
       Data2: 1301262900
       Data3: -648970852
       Data4: 1357936274
-    Path: event:/SFX/Weapons/Weap_GrenadeLauncher
+    Path: event:/SFX/Weapons/GL/GL_Fire
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0

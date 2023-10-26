@@ -10,42 +10,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: AssaultRifleData
+  m_Name: PiercingSMG
   m_EditorClassIdentifier: 
-  weaponName: Assault Rifle
+  weaponName: BSMG
   numProjectiles: 1
-  range: 30
+  range: 20
   projectileSpeed: 20
-  projectileDamage: 13
+  projectileDamage: 9
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 5
-  clipSize: 24
-  reloadTime: 1.2
-  spread: 10
+  roundsPerSecond: 8
+  clipSize: 70
+  reloadTime: 1.5
+  spread: 15
   isHitscan: 0
-  rightClickAction: 2
-  knockbackStrength: 10
+  rightClickAction: 0
+  knockbackStrength: 4
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
-    burstAmount: 3
-    withinBurstFirerate: 8
+    burstAmount: 0
+    withinBurstFirerate: 0
   meleeInfo:
     baseDamage: 0
     velMultiplier: 0
     meleeRange: 0
-  altFireMode: 2
-  sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+  altFireMode: 0
+  sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
   customProjectile: {fileID: 0}
   fireEffect:
     Guid:
-      Data1: 1487475868
-      Data2: 1228691077
-      Data3: 1192172165
-      Data4: 789521315
-    Path: event:/SFX/Weapons/Weap_Rifle
-  pierceMode: 0
+      Data1: 108970357
+      Data2: 1166904568
+      Data3: -286745927
+      Data4: 942258990
+    Path: event:/SFX/Weapons/Weap_Silenced
+  pierceMode: 3
   pierceInfo:
-    maxPierces: 0
-    invulnTimer: 0
+    maxPierces: 3
+    invulnTimer: 0.1
+    isInfinitePierce: 0
