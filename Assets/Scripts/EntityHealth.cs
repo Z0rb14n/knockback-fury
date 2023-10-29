@@ -31,7 +31,6 @@ public class EntityHealth : MonoBehaviour
 
     protected virtual void Update()
     {
-        
         if (_iFrameTimer > 0f)
         {
             _iFrameTimer -= Time.deltaTime;
