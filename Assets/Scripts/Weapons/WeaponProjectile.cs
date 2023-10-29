@@ -146,6 +146,16 @@ namespace Weapons
             CollisionLogic(other.collider);
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            CollisionLogic(other);
+        }
+        
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            CollisionLogic(other);
+        }
+
         private void Detonation()
         {
             if (!detonateOnDestroy) return;
