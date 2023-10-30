@@ -21,6 +21,8 @@ namespace Enemies.Ranged
         private IEnumerator _detonationCoroutine;
 
         [SerializeField] private EventReference _bombSound;
+        [SerializeField] private EventReference _fuseSound;
+        private EventInstance _fuseSFX;
 
         public override void Initialize(float damageMult)
         {
@@ -33,8 +35,9 @@ namespace Enemies.Ranged
             StartCoroutine(_detonationCoroutine);
             _playerLayerMask = LayerMask.GetMask("Player");
             _projectileLayer = LayerMask.NameToLayer("Projectile");
+            _fuseSFX = RuntimeManager.CreateInstance(_fuseSound);
+             _fuseSFX.start();
         }
-
         /// <summary>
         /// Calculates the velocity that we want given a starting position, ending position and target's velocity
         /// </summary>
@@ -109,6 +112,7 @@ namespace Enemies.Ranged
                 Vector2 knockbackDirection = new((playerMovement.transform.position - pos).normalized.x * 0.1f, 0.04f);
                 playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
+            _fuseSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             Destroy(gameObject);
 
             if (!playerCaused) return;
