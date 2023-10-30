@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using PermUpgrade;
+using Player;
 using UnityEngine;
 
 namespace FileSave
@@ -14,6 +15,7 @@ namespace FileSave
         public SaveData data;
 
         #region Singleton
+
         public static CrossRunInfo Instance
         {
             // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
@@ -23,8 +25,16 @@ namespace FileSave
                 return _instance;
             }
         }
+
         private static CrossRunInfo _instance;
+
         #endregion
+
+        public static bool HasUpgrade(PermUpgradeType type)
+        {
+            return Instance && Instance.data?.unlockedPermUpgradeTypes != null
+                            && Instance.data.unlockedPermUpgradeTypes.Contains(type);
+        }
 
         public event Action<int> OnCheeseCountChange;
 
@@ -46,9 +56,9 @@ namespace FileSave
             data.unlockedPermanentUpgrades = data.unlockedPermUpgradeTypes != null
                 ? data.unlockedPermUpgradeTypes.Cast<int>().ToArray()
                 : Array.Empty<int>();
-            
-            data.unlockedWeapons = data.unlockedWeaponSet != null ?
-                data.unlockedWeaponSet.ToArray()
+
+            data.unlockedWeapons = data.unlockedWeaponSet != null
+                ? data.unlockedWeaponSet.ToArray()
                 : Array.Empty<string>();
             SaveIO.Save(data);
         }
@@ -61,6 +71,7 @@ namespace FileSave
                 Destroy(gameObject);
                 return;
             }
+
             DontDestroyOnLoad(gameObject);
             Debug.Log("[CrossRunInfo::Awake] Reading save data from " + SaveIO.saveLocation);
             ReadFromSave();
@@ -86,6 +97,10 @@ namespace FileSave
             data.cheese -= cost;
             OnCheeseCountChange?.Invoke(-1);
             OnUpgradesChanged?.Invoke();
+            if (type == PermUpgradeType.ExtraHolster)
+            {
+                PlayerWeaponControl.Instance.SetNewInventorySize(PlayerWeaponControl.Instance.Inventory.Length + 1);
+            }
         }
 
         public void ClearUpgrades()
