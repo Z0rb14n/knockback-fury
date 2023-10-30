@@ -10,24 +10,17 @@ namespace Enemies
         public float explodeDistance;
         public float explodeDelayTime;
 
-        private void Start()
+        private void Awake()
         {
             player = PlayerMovementScript.Instance.gameObject;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            Vector3 playerPos = player.transform.position;
-            Vector3 enemyPos = transform.position;
-            float distance = (playerPos-enemyPos).magnitude;
-
-            //find distance between player and enemy
-
-            if (distance < explodeDistance) 
+            if (Vector2.Distance(player.transform.position, transform.position) < explodeDistance)
             {
                 StartCoroutine(Explode());   
             }
-
         }
 
         private IEnumerator Explode() 
