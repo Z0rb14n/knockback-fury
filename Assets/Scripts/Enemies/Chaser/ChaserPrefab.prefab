@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3237788133357728958}
   - component: {fileID: 3237788133357728953}
   - component: {fileID: 3237788133357728952}
+  - component: {fileID: 5126662251168286645}
   - component: {fileID: 3237788133357728957}
   - component: {fileID: 3237788133357728956}
   - component: {fileID: 3237788133357728931}
@@ -19,9 +20,8 @@ GameObject:
   - component: {fileID: 3237788133357728928}
   - component: {fileID: 3237788133357728929}
   - component: {fileID: 6166057425882935633}
-  - component: {fileID: 5126662251168286645}
   m_Layer: 0
-  m_Name: Enemy_chaser
+  m_Name: ChaserPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,8 +35,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3237788133357728955}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.09, y: 2.59, z: 0}
-  m_LocalScale: {x: 0.62066144, y: 0.6292902, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,6 +131,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5126662251168286645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237788133357728955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e00cd6ec61bc9d42a16a74bbda7805a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explodeDistance: 1
+  explodeDelayTime: 1
 --- !u!114 &3237788133357728957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +160,7 @@ MonoBehaviour:
   UpdateFrequency: 20
   Threaded: 0
   SensorShared: 1
-  Sensor: {fileID: 11400000, guid: 50295abe9b9af3b4ca8e8b5b797a11fc, type: 2}
+  Sensor: {fileID: 11400000, guid: a3b9e8752b887ac4987fb52ffd344145, type: 2}
   objectiveLabels:
   - interest
   - danger
@@ -387,17 +401,3 @@ MonoBehaviour:
   rangeGizmo:
     Enabled: 0
     Color: {r: 0.2627451, g: 0.79607844, b: 0.24705882, a: 1}
---- !u!114 &5126662251168286645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3237788133357728955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fdb29549b5e3af49b81f874653b5502, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explodeDistance: 1
-  explodeDelayTime: 0.5
