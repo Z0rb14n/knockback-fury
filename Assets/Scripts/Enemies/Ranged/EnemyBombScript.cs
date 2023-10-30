@@ -15,7 +15,6 @@ namespace Enemies.Ranged
         public bool playerVelocityPrediction = true;
 
         private bool _hitByPlayer;
-        private LayerMask _playerLayerMask;
         private int _projectileLayer;
         private IEnumerator _detonationCoroutine;
 
@@ -28,7 +27,6 @@ namespace Enemies.Ranged
             rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position, playerMovementScript.Velocity);
             _detonationCoroutine = DelayedExplosion();
             StartCoroutine(_detonationCoroutine);
-            _playerLayerMask = LayerMask.GetMask("Player");
             _projectileLayer = LayerMask.NameToLayer("Projectile");
         }
 
