@@ -37,6 +37,7 @@ namespace Enemies.Ranged
             _projectileLayer = LayerMask.NameToLayer("Projectile");
             _fuseSFX = RuntimeManager.CreateInstance(_fuseSound);
              _fuseSFX.start();
+             _fuseSFX.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject, rigidbody2D));
         }
         /// <summary>
         /// Calculates the velocity that we want given a starting position, ending position and target's velocity
