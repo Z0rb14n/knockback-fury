@@ -60811,11 +60811,11 @@ MonoBehaviour:
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
   roomTransitionInteractable: {fileID: 0}
-  weaponSpawnOffset: {x: 0.5, y: -6.5}
-  cheeseSpawnOffset: {x: -0.5, y: -6.5}
-  powerupSpawnOffset: {x: 0.5, y: -6.5}
-  weaponUpgradeSpawnOffset: {x: 0.5, y: -6.5}
-  roomChangeSpawnOffset: {x: 1.5, y: -6.5}
+  weaponSpawnOffset: {x: 1.5, y: 4.5}
+  cheeseSpawnOffset: {x: 7.5, y: 4}
+  powerupSpawnOffset: {x: 7, y: -9}
+  weaponUpgradeSpawnOffset: {x: 6.5, y: 4}
+  roomChangeSpawnOffset: {x: 5.5, y: 4}
   playerSpawnOffset: {x: -7, y: -4}
   hiders:
   - hidingType: 1
