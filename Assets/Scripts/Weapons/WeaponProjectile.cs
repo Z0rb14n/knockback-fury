@@ -113,8 +113,9 @@ namespace Weapons
             return other && _entityInvulns.Contains(other);
         }
 
-        private void CollisionLogic(Collider2D other)
+        private void CollisionLogic(Collider2D other, bool isTrigger)
         {
+            if (isTrigger ^ _collider.isTrigger) return;
             EntityHealth health = other.GetComponent<EntityHealth>();
             if (UpdateAndCheckInvulnTimer(health)) return;
             if (!_hitPlayer && health is PlayerHealth) return;
@@ -138,12 +139,22 @@ namespace Weapons
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            CollisionLogic(other.collider);
+            CollisionLogic(other.collider, false);
         }
 
         private void OnCollisionStay2D(Collision2D other)
         {
-            CollisionLogic(other.collider);
+            CollisionLogic(other.collider, false);
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            CollisionLogic(other, true);
+        }
+        
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            CollisionLogic(other, true);
         }
 
         private void Detonation()

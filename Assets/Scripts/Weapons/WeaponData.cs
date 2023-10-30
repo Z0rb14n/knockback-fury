@@ -55,6 +55,7 @@ namespace Weapons
         public FMODUnity.EventReference fireEffect;
         public PierceMode pierceMode = PierceMode.None;
         public PierceInfo pierceInfo;
+        public bool unlockedByDefault = true;
         [NonSerialized]
         public int numUpgrades;
 
