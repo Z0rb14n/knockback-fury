@@ -9,16 +9,17 @@ namespace Enemies
     [RequireComponent(typeof(AIMFollow))]
     public class ChaserBehaviour : MonoBehaviour
     {
+        [Tooltip("VFX to create on explosion")]
         public GameObject explosionVFX;
-        [Min(0)]
+        [Min(0), Tooltip("Explosion radius")]
         public float explosionRadius = 1;
-        [Min(0)]
+        [Min(0), Tooltip("Damage of explosion")]
         public int explosionDamage = 1;
-        [Min(0)]
+        [Min(0), Tooltip("Explosion knockback force")]
         public float knockbackForce = 10;
-        [Min(0)]
+        [Min(0), Tooltip("Distance before explosion timer starts")]
         public float explodeDistance;
-        [Min(0)]
+        [Min(0), Tooltip("Delay before explosion occurs")]
         public float explodeDelayTime;
 
         private GameObject player;
