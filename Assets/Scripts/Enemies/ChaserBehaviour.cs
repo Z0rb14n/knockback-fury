@@ -1,8 +1,8 @@
 using System.Collections;
+using Enemies.Ranged;
 using Player;
 using Polarith.AI.Move;
 using UnityEngine;
-using Weapons;
 
 namespace Enemies
 {
@@ -24,7 +24,6 @@ namespace Enemies
 
         private GameObject player;
         private AIMFollow _aimFollow;
-        private LayerMask _playerLayerMask;
         
         private void Awake()
         {
@@ -32,7 +31,6 @@ namespace Enemies
             _aimFollow = GetComponent<AIMFollow>();
             _aimFollow.Enabled = false;
             _aimFollow.Target = player;
-            _playerLayerMask = LayerMask.GetMask("Player");
         }
 
         private void FixedUpdate()
@@ -59,19 +57,7 @@ namespace Enemies
         {
             //do something before explosion delay
             yield return new WaitForSeconds(explodeDelayTime);
-            Vector3 pos = transform.position;
-            GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
-            explosionObject.GetComponent<ExplosionVFX>().SetSize(explosionRadius);
-
-            Collider2D playerCollider = Physics2D.OverlapCircle(pos, explosionRadius, _playerLayerMask);
-            if (playerCollider)
-            {
-                PlayerMovementScript playerMovement = PlayerMovementScript.Instance;
-                EntityHealth playerHealth = PlayerHealth.Instance;
-                playerHealth.TakeDamage(explosionDamage);
-                Vector2 knockbackDirection = new((playerMovement.transform.position - pos).normalized.x * 0.1f, 0.04f);
-                playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
-            }
+            EnemyBombScript.DetonateHitPlayer(transform.position, explosionVFX, explosionDamage, explosionRadius, knockbackForce);
             Destroy(gameObject);
         }
     }

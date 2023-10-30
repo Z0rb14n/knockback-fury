@@ -90,21 +90,26 @@ namespace Enemies.Ranged
             if (PlayerUpgradeManager.Instance[UpgradeType.TossBack] <= 0) Detonate(true);
         }
 
-        private void Detonate(bool playerCaused)
+        public static void DetonateHitPlayer(Vector3 pos, GameObject vfx, int damage, float radius, float knockbackForce)
         {
-            Vector3 pos = transform.position;
-            GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
+            GameObject explosionObject = Instantiate(vfx, pos, Quaternion.identity);
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
 
-            Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, _playerLayerMask);
+            Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, LayerMask.GetMask("Player"));
             if (playerCollider)
             {
                 PlayerMovementScript playerMovement = PlayerMovementScript.Instance;
                 EntityHealth playerHealth = PlayerHealth.Instance;
-                playerHealth.TakeDamage(Mathf.RoundToInt(bulletDamage * damageMultiplier));
+                playerHealth.TakeDamage(damage);
                 Vector2 knockbackDirection = new((playerMovement.transform.position - pos).normalized.x * 0.1f, 0.04f);
                 playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
+        }
+
+        private void Detonate(bool playerCaused)
+        {
+            Vector3 pos = transform.position;
+            DetonateHitPlayer(pos, explosionVFX, bulletDamage, radius, knockbackForce);
             Destroy(gameObject);
 
             if (!playerCaused) return;
