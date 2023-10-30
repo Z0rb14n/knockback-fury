@@ -1,10 +1,13 @@
 using Player;
 using System.Collections;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+using System.Security.Cryptography;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(Animator), typeof(AudioSource), typeof(HeavyMovement))]
+    [RequireComponent(typeof(Animator), typeof(PatrolMovement))]
     public class HeavyAttack : MonoBehaviour
     {
         public float attackDistance;
@@ -18,29 +21,26 @@ namespace Enemies
         [SerializeField] private float _delayBeforeAttack;
         private Vector2 _attackBoxCenter;
         private Vector2 _attackBoxSize;
-        private HeavyMovement _movement;
+        private PatrolMovement _movement;
         private PlayerMovementScript _playerMovement;
         private EntityHealth _playerHealth;
         private Transform _player;
         private float _attackTimer;
         private bool _isAttacking;
         private Animator _animator;
-        private AudioSource _bonkSound;
+        [SerializeField] private EventReference _bonkSound;
         private float _attackAnimationTime;
-        private int _attackBoxDirection;
-
-
+        
         private static readonly int _animationAtkHash = Animator.StringToHash("Attacking");
 
 
         private void Awake()
         {
-            _movement = GetComponent<HeavyMovement>();
+            _movement = GetComponent<PatrolMovement>();
             _attackTimer = 0;
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
             _animator = GetComponent<Animator>();
-            _bonkSound = GetComponent<AudioSource>();
             GetAttackAnimationTime();
         }        
 
@@ -51,11 +51,10 @@ namespace Enemies
         {
             _attackTimer -= Time.deltaTime;
             if (PlayerInRange()) {
-                _attackBoxDirection = _movement.GetDirection();
                 _movement.DisableMovement();
                 if (_attackTimer <= 0)
                 {
-                    PerformAttack(_attackBoxDirection);
+                    PerformAttack();
                 }
             } else if (!_isAttacking)
             {
@@ -63,7 +62,6 @@ namespace Enemies
             }
 
         }
-
 
         
 
@@ -92,25 +90,25 @@ namespace Enemies
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * Mathf.Sign(transform.localScale.x),
+            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * (_movement?.GetDirection() ?? 1),
                 new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z));
         }
 
         /// <summary>
         /// Attacks player after set amount of delay and if player is still in range, sets attack cooldown timer
         /// </summary>
-        private void PerformAttack(int direction)
+        private void PerformAttack()
         {
             _attackTimer = attackDelay;
             _isAttacking = true;
             _animator.SetBool(_animationAtkHash, true);
-            StartCoroutine(DelayBeforeAttack(direction));
+            StartCoroutine(DelayBeforeAttack());
         }
 
         /// <summary>
         /// Helper for PerformAttack(); attacks player after set delay, damages player if in range, then waits for animation to finish
         /// </summary>
-        private IEnumerator DelayBeforeAttack(int direction)
+        private IEnumerator DelayBeforeAttack()
         {
             if (_delayBeforeAttack < 0 || _delayBeforeAttack > _attackAnimationTime)
             {
@@ -119,10 +117,10 @@ namespace Enemies
 
             yield return new WaitForSeconds(_delayBeforeAttack);
 
-            if (PlayerInRange() && _movement.GetDirection() == direction)
+            if (PlayerInRange())
             {
                 _playerHealth.TakeDamage(attackDamage);
-                _bonkSound.Play();
+                RuntimeManager.PlayOneShot(_bonkSound, transform.position);
                 Vector2 knockbackDirection = new((_player.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
@@ -131,7 +129,6 @@ namespace Enemies
 
             _isAttacking = false;
             _animator.SetBool(_animationAtkHash, false);
-            _movement.CheckIfFlip();
         }
 
         /// <summary>

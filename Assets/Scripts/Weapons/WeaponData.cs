@@ -52,7 +52,10 @@ namespace Weapons
         public Sprite sprite;
         public GameObject customProjectile;
 
-        public AudioClip fireEffect;
+        public FMODUnity.EventReference fireEffect;
+        public PierceMode pierceMode = PierceMode.None;
+        public PierceInfo pierceInfo;
+        public bool unlockedByDefault = true;
         [NonSerialized]
         public int numUpgrades;
 
@@ -97,7 +100,30 @@ namespace Weapons
         /// <summary>
         /// Return the Damage Per Second (assuming all shots hit)
         /// </summary>
-        public float DPS => numProjectiles * projectileDamage * roundsPerSecond;
+        public float DPS
+        {
+            get
+            {
+                float fastestFire = roundsPerSecond;
+                if (fireMode == FireMode.Burst)
+                    fastestFire = Mathf.Max(fastestFire, burstInfo.withinBurstFirerate);
+                return numProjectiles * projectileDamage * fastestFire;
+            }
+        }
+
+        /// <summary>
+        /// Return the Damage Per Second of alt fire
+        /// </summary>
+        public float AltDPS
+        {
+            get
+            {
+                float fastestFire = roundsPerSecond;
+                if (altFireMode == FireMode.Burst)
+                    fastestFire = Mathf.Max(fastestFire, burstInfo.withinBurstFirerate);
+                return numProjectiles * projectileDamage * fastestFire;
+            }
+        }
 
         public void UpgradeAmmoCapacity()
         {
@@ -142,9 +168,21 @@ namespace Weapons
     {
         [Min(0), Tooltip("Number of bullets in the burst.")]
         public int burstAmount;
-        [Min(0),Tooltip("RPS within the burst.")]
+        [Min(0), Tooltip("RPS within the burst.")]
         public float withinBurstFirerate;
     }
+
+    [Serializable]
+    public struct PierceInfo
+    {
+        [Min(0), Tooltip("Max number of objects to penetrate")]
+        public int maxPierces;
+        [Min(0), Tooltip("Time before permitting hitting the same object")]
+        public float invulnTimer;
+        [Tooltip("Whether we pierce indefinitely")]
+        public bool isInfinitePierce;
+    }
+    
     [Serializable]
     public struct MeleeInfo
     {

@@ -153,6 +153,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _delayBeforeAttack: 1
+  _bonkSound:
+    Guid:
+      Data1: -9069859
+      Data2: 1187403827
+      Data3: -1577106754
+      Data4: -779691936
+    Path: event:/SFX/Weapons/Weap_Melee
 --- !u!114 &3250355253141131760
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{e539fa59-b581-493a-bd41-490e4a487a83}">
+		<property name="assetPath">
+			<value>minigun.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.52099773242630387</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{67f343a1-feb2-410a-a7a7-14f030ad29dc}</destination>
+		</relationship>
+	</object>
+</objects>

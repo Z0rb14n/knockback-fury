@@ -50,7 +50,7 @@ namespace FloorGen
         [Tooltip("Room Changer Prefab")]
         public GameObject roomChangePrefab;
         
-        public SocketObject[] socketObjects;
+        public GameObject[] socketPrefabs;
         [Header("Weapon Generation")]
         public WeaponData[] weaponsList;
         public GameObject weaponPickupPrefab;
@@ -198,12 +198,12 @@ namespace FloorGen
 
         private void GeneratePrefabSizes()
         {
-            if (socketObjects == null) return;
-            foreach (SocketObject so in socketObjects)
+            if (socketPrefabs == null) return;
+            foreach (GameObject go in socketPrefabs)
             {
-                if (!_socketPrefabSizes.ContainsKey(so.size))
-                    _socketPrefabSizes[so.size] = new();
-                _socketPrefabSizes[so.size].Add(so.prefab);
+                Vector2 size = go.GetComponent<SocketBehaviour>().size;
+                if (!_socketPrefabSizes.ContainsKey(size)) _socketPrefabSizes[size] = new List<GameObject>();
+                _socketPrefabSizes[size].Add(go);
             }
         }
 
@@ -261,7 +261,8 @@ namespace FloorGen
             HashSet<string> playerCurrInventory =
                 PlayerWeaponControl.Instance.Inventory.Where(data => data).Select(data => data.weaponName).ToHashSet();
             List<WeaponData> eligibleWeapons =
-                weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName)).ToList();
+                weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName))
+                    .Where(weapon => weapon.unlockedByDefault || CrossRunInfo.Instance.data.unlockedWeaponSet.Contains(weapon.weaponName)).ToList();
             weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(_random));
             weaponPickup.UpdateSprite();
             weaponPickupObject.SetActive(startsActive);
@@ -541,35 +542,6 @@ namespace FloorGen
     {
         public RoomType type;
         public GameObject[] roomPrefab;
-    }
-
-    /// <summary>
-    /// Layout of sockets to be placed within a room/cell
-    /// </summary>
-    [Serializable]
-    public struct Layout
-    {
-        public SocketShape[] sockets;
-    }
-
-    /// <summary>
-    /// Socket prefab and its corresponding size
-    /// </summary>
-    [Serializable]
-    public struct SocketObject
-    {
-        public Vector2 size;
-        public GameObject prefab;
-    }
-
-    /// <summary>
-    /// Individual size/position pairing for socket location
-    /// </summary>
-    [Serializable]
-    public struct SocketShape
-    {
-        public Vector2 size;
-        public Vector2 position;
     }
 
     /// <summary>

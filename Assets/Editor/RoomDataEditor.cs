@@ -12,7 +12,12 @@ namespace Editor
             base.OnInspectorGUI();
             if (serializedObject.targetObjects.Length != 1) return;
             RoomData roomData = (RoomData)target;
-            roomData.ToPreview = EditorGUILayout.IntField("Layout To Preview", roomData.ToPreview);
+            if (GUILayout.Button("Locate Sockets from Tilemap"))
+            {
+                roomData.LocateSocketFromTilemap();
+                EditorUtility.SetDirty(roomData);
+                serializedObject.Update();
+            }
             GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode;
             if (GUILayout.Button("Create Spawn Point"))
             {
@@ -20,7 +25,6 @@ namespace Editor
                 Object instantiatedPoint = PrefabUtility.InstantiatePrefab(o, roomData.transform);
                 Selection.activeObject = instantiatedPoint;
             }
-
             GUI.enabled = true;
         }
 
@@ -33,15 +37,15 @@ namespace Editor
             roomData.weaponUpgradeSpawnOffset = DrawSocketFor(roomData.weaponUpgradeSpawnOffset, "Upgrade Spawn Offset");
             roomData.playerSpawnOffset = DrawSocketFor(roomData.playerSpawnOffset, "Upgrade Spawn Offset");
             roomData.roomChangeSpawnOffset = DrawSocketFor(roomData.roomChangeSpawnOffset, "Room Change Spawn Offset");
-            if (roomData.layouts == null || roomData.ToPreview >= roomData.layouts.Length || roomData.ToPreview < 0) return;
+            if (roomData.sockets == null) return;
             Vector3 initialPos = roomData.transform.position;
-            Layout layout = roomData.layouts[roomData.ToPreview];
+            SocketShape[] sockets = roomData.sockets;
             EditorGUI.BeginChangeCheck();
-            Vector3[] newPositions = new Vector3[layout.sockets.Length];
+            Vector3[] newPositions = new Vector3[sockets.Length];
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (int i = 0; i < layout.sockets.Length; i++)
+            for (int i = 0; i < sockets.Length; i++)
             {
-                SocketShape socket = layout.sockets[i];
+                SocketShape socket = sockets[i];
                 Handles.color = Color.yellow;
                 Handles.DrawWireCube(initialPos+(Vector3)socket.position, (Vector3) socket.size + Vector3.forward);
                 newPositions[i] = Handles.SnapValue(Handles.PositionHandle(initialPos + (Vector3)socket.position, roomData.transform.rotation), EditorSnapSettings.move);
@@ -49,10 +53,10 @@ namespace Editor
             
             if (EditorGUI.EndChangeCheck())
             {
-                Undo.RecordObject(roomData, $"Change Layout {roomData.ToPreview} Socket position");
-                for (int i = 0; i < layout.sockets.Length; i++)
+                Undo.RecordObject(roomData, $"Change Layout Socket position");
+                for (int i = 0; i < sockets.Length; i++)
                 {
-                    roomData.layouts[roomData.ToPreview].sockets[i].position = newPositions[i];
+                    roomData.sockets[i].position = newPositions[i];
                 }
             }
         }

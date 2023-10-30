@@ -16,7 +16,7 @@ MonoBehaviour:
   numProjectiles: 1
   range: 20
   projectileSpeed: 20
-  projectileDamage: 9
+  projectileDamage: 10
   selfDamage: 1
   cheeseCost: 50
   roundsPerSecond: 8
@@ -25,7 +25,7 @@ MonoBehaviour:
   spread: 30
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 4
+  knockbackStrength: 6
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -38,4 +38,15 @@ MonoBehaviour:
   altFireMode: 0
   sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
   customProjectile: {fileID: 0}
-  fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
+  fireEffect:
+    Guid:
+      Data1: 108970357
+      Data2: 1166904568
+      Data3: -286745927
+      Data4: 942258990
+    Path: event:/SFX/Weapons/Weap_Silenced
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0

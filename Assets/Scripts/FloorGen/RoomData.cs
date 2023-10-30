@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FileSave;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Upgrades;
 using Util;
 using Weapons;
@@ -37,13 +38,12 @@ namespace FloorGen
         public Vector2 playerSpawnOffset = Vector2.zero;
 
         public ExitHider[] hiders;
-        
-        public Layout[] layouts;
+
+        public SocketShape[] sockets;
 
         public bool ignoreSocketEnemySpawns = true;
-        
-        
-        public int ToPreview { get; set; } = -1;
+
+        public TileBase socketTile;
 
         private readonly HashSet<EntityHealth> _enemies = new();
 
@@ -80,16 +80,99 @@ namespace FloorGen
             }
         }
 
+        /// <summary>
+        /// Of a socket given its start top left coordinate, find width and height
+        /// </summary>
+        /// <param name="tilemap">Tilemap to check grid cells of</param>
+        /// <param name="bounds">Max bounds of tilemap</param>
+        /// <param name="start">Starting position</param>
+        /// <returns>Size, assuming rectangular sockets</returns>
+        private Vector2Int SocketSize(Tilemap tilemap, BoundsInt bounds, Vector2Int start)
+        {
+            int width = 0;
+            int height = 0;
+            for (int x = start.x; x <= bounds.xMax; x++)
+            {
+                if (tilemap.GetTile(new Vector3Int(x,start.y,0)) == socketTile) width++;
+                else break;
+            }
+            
+            for (int y = start.y; y <= bounds.yMax; y++)
+            {
+                if (tilemap.GetTile(new Vector3Int(start.x,y,0)) == socketTile) height++;
+                else break;
+            }
+
+            return new Vector2Int(width, height);
+        }
+
+        /// <summary>
+        /// Updates and locates all sockets in this tilemap, indicated by a specific tile.
+        /// </summary>
+        /// <remarks>
+        /// Only works on rectangular sockets as it finds the top left corner and iterates over two axes repeatedly.
+        ///
+        /// Behaviour is undefined for non-rectangular sockets.
+        /// </remarks>
+        // ReSharper disable Unity.PerformanceAnalysis
+        public void LocateSocketFromTilemap()
+        {
+            Tilemap tilemap = GetComponentInChildren<Tilemap>();
+            if (!tilemap)
+            {
+                Debug.Log("No tilemap.");
+                return;
+            }
+
+            if (!tilemap.ContainsTile(socketTile))
+            {
+                Debug.Log("Socket tile not present.");
+                sockets = Array.Empty<SocketShape>();
+                return;
+            }
+            tilemap.CompressBounds();
+            BoundsInt bounds = tilemap.cellBounds;
+            Debug.Log(bounds);
+            List<BoundsInt> allFoundBounds = new();
+            for (int x = bounds.xMin; x <= bounds.xMax; x++)
+            {
+                for (int y = bounds.yMin; y <= bounds.yMax; y++)
+                {
+                    // yes, suboptimal
+                    // if you don't like it, build your own KD tree then
+                    if (allFoundBounds.Any(bound => bound.Contains(new Vector3Int(x, y)))) continue;
+                    if (tilemap.GetTile(new Vector3Int(x, y)) != socketTile) continue;
+                    Vector2Int size = SocketSize(tilemap, bounds, new Vector2Int(x, y));
+                    allFoundBounds.Add(new BoundsInt(x,y,0,size.x,size.y,1));
+                    Debug.Log("found: " + new BoundsInt(x,y,0,size.x,size.y,1));
+                }
+            }
+
+            sockets = new SocketShape[allFoundBounds.Count];
+            Vector3 cellSize = tilemap.cellSize;
+            for (int i = 0; i < allFoundBounds.Count; i++)
+            {
+                BoundsInt bound = allFoundBounds[i];
+                Vector2 bottomLeft = tilemap.CellToWorld(bound.position);
+                Vector2 size = new(cellSize.x * bound.size.x, cellSize.y * bound.size.y);
+                Vector2 center = bottomLeft + size/2;
+                sockets[i] = new SocketShape
+                {
+                    position = center,
+                    size = size
+                };
+            }
+        }
+
         public List<(SocketBehaviour, EnemySpawnType)> GenerateSockets(Random random, Dictionary<Vector2, List<GameObject>> socketPrefabSizes)
         {
             List<(SocketBehaviour, EnemySpawnType)> socketBehaviours = new();
-            if (layouts == null || layouts.Length == 0)
+            if (sockets == null)
             {
-                Debug.LogWarning("[RoomData::GenerateSockets] No layouts for this object. Skipping.");
+                Debug.LogWarning("[RoomData::GenerateSockets] No sockets for this object. Skipping.");
                 return socketBehaviours;
             }
-            Layout layout = layouts.GetRandom(random);
-            foreach (SocketShape shape in layout.sockets)
+            foreach (SocketShape shape in sockets)
             {
                 if (socketPrefabSizes.TryGetValue(shape.size, out List<GameObject> possibleSocketPrefabs) && possibleSocketPrefabs.Count > 0)
                 {
