@@ -255,6 +255,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 871210707627827411, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9518738d08a58944f878c970e4bfe13b, type: 3}
     - target: {fileID: 1367610322427148548, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Volume
       value: 0.3
@@ -278,19 +282,19 @@ PrefabInstance:
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 13f7ed0d7bb67cf4fb6fd44be66122d1, type: 2}
+      objectReference: {fileID: 11400000, guid: fd1ca15a3a8a6074dba28f29a3ac3bcc, type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: a0b17100a9a49fa4aadda36c4ae8804c, type: 2}
+      objectReference: {fileID: 11400000, guid: 3b8f7c4bcfe8f6d44bdd4a7f3dc8b07a, type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
+      objectReference: {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7, type: 2}
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
+      objectReference: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
     - target: {fileID: 4802255312805004380, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: attenuationObject
       value: 
@@ -307,6 +311,10 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.r
       value: 0.12941177
       objectReference: {fileID: 0}
+    - target: {fileID: 5138450944320709130, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: playerSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9518738d08a58944f878c970e4bfe13b, type: 3}
     - target: {fileID: 5138450944320709130, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: maxTimeInterval
       value: 0.025
