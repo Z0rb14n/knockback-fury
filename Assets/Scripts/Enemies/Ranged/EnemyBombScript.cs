@@ -3,7 +3,8 @@ using Player;
 using UnityEngine;
 using Upgrades;
 using Weapons;
-
+using FMODUnity;
+using FMOD.Studio;
 namespace Enemies.Ranged
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
@@ -18,6 +19,8 @@ namespace Enemies.Ranged
         private LayerMask _playerLayerMask;
         private int _projectileLayer;
         private IEnumerator _detonationCoroutine;
+
+        [SerializeField] private EventReference _bombSound;
 
         public override void Initialize(float damageMult)
         {
@@ -94,6 +97,7 @@ namespace Enemies.Ranged
         {
             Vector3 pos = transform.position;
             GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
+            RuntimeManager.PlayOneShot(_bombSound, transform.position);
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
 
             Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, _playerLayerMask);
