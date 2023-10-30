@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: CrossbowData 2
+  m_Name: LightCrossbowData
   m_EditorClassIdentifier: 
   weaponName: Crossbow (Light)
   numProjectiles: 1
@@ -45,3 +45,9 @@ MonoBehaviour:
       Data3: -3995723
       Data4: -862931539
     Path: event:/SFX/Weapons/Weap_Pistol
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 0

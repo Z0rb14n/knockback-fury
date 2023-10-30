@@ -6,7 +6,6 @@ using GameEnd;
 using UnityEngine;
 using Upgrades;
 using Weapons;
-using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -18,8 +17,6 @@ namespace Player
     {
         [Min(0), Tooltip("Affects the speed of the player")]
         public float maxSpeed = 69;
-        [Min(0), Tooltip("Smoothness of Speed Changes")]
-        public float speedSmoothness = 0.5f;
         [Min(0), Tooltip("Jump Impulse")]
         public float jumpForce = 10;
         [Tooltip("Wall Jump Impulse")]
@@ -36,8 +33,6 @@ namespace Player
         public float slideSpeed = 0.05f;
 
         [Header("New Movement")]
-        [Tooltip("Whether new movement is enabled.")]
-        public bool newMovementEnabled = true;
         [Min(0), Tooltip("Acceleration (scaled by time)")]
         public float accel = 50;
         [Min(0), Tooltip("Acceleration multiplier when turning around")]
@@ -98,11 +93,11 @@ namespace Player
         private bool _hasMomentumDash;
         private SpriteRenderer _sprite;
         private readonly List<PlatformTileScript> _platformsOn = new();
-        private float _earlyJumpTime = 0;
-        private float _lateJumpTime = 0;
-        private float _jumpTime = 0;
-        private bool _isHoldingJump = false;
-        private float _timeOnWall = 0;
+        private float _earlyJumpTime;
+        private float _lateJumpTime;
+        private float _jumpTime;
+        private bool _isHoldingJump;
+        private float _timeOnWall;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -156,48 +151,40 @@ namespace Player
             {
                 _sprite.flipX = xInput < 0;
             }
-            if (!newMovementEnabled)
+
+            float originalX = _body.velocity.x;
+            float newX = originalX;
+
+            if (xInput != 0)
             {
-                if (xInput != 0)
+                float normalAccel = accel * Time.deltaTime;
+                if (originalX > 0 && xInput < 0)
                 {
-                    _speed = Mathf.SmoothDamp(_speed, xInput * maxSpeed, ref _currentVelocity, speedSmoothness);
-                    _body.velocity = new Vector2(_speed, _body.velocity.y);
+                    newX -= Mathf.Min(Mathf.Max(originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                }
+                else if (originalX < 0 && xInput > 0)
+                {
+                    newX += Mathf.Min(Mathf.Max(-originalX, normalAccel), normalAccel * turnAroundMultiplier);
+                }
+                else if (Mathf.Abs(originalX) < maxSpeed)
+                {
+                    newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
                 }
             }
             else
             {
-                float originalX = _body.velocity.x;
-                float newX = originalX;
-
-                if (xInput != 0)
-                {
-                    float normalAccel = accel * Time.deltaTime;
-                    if (originalX > 0 && xInput < 0)
-                    {
-                        newX -= Mathf.Min(Mathf.Max(originalX, normalAccel), normalAccel * turnAroundMultiplier);
-                    } else if (originalX < 0 && xInput > 0)
-                    {
-                        newX += Mathf.Min(Mathf.Max(-originalX, normalAccel), normalAccel * turnAroundMultiplier);
-                    } else if (Mathf.Abs(originalX) < maxSpeed)
-                    {
-                        newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
-                    }
-                }
-                else
-                {
-                    float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
-                    newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
-                }
-
-                if (Mathf.Abs(originalX) > maxSpeed)
-                {
-                    float diff = Mathf.Abs(originalX) - maxSpeed;
-                    float normalDecel = decelWhenAbove * Time.deltaTime;
-                    newX -= Mathf.Sign(originalX) * Mathf.Min(normalDecel, diff);
-                }
-
-                _body.velocity = new Vector2(newX, _body.velocity.y);
+                float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
+                newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
             }
+
+            if (Mathf.Abs(originalX) > maxSpeed)
+            {
+                float diff = Mathf.Abs(originalX) - maxSpeed;
+                float normalDecel = decelWhenAbove * Time.deltaTime;
+                newX -= Mathf.Sign(originalX) * Mathf.Min(normalDecel, diff);
+            }
+
+            _body.velocity = new Vector2(newX, _body.velocity.y);
         }
 
         private void JumpLogic()
@@ -327,7 +314,7 @@ namespace Player
                 _knockbackVector = Vector2.zero;
                 _knockbackRequest = false;
             }
-            float xInput = Input.GetAxisRaw("Horizontal");
+            // float xInput = Input.GetAxisRaw("Horizontal");
             bool isSlidingThisFrame = false;
 
             bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
@@ -412,6 +399,7 @@ namespace Player
         {
             _body.constraints = RigidbodyConstraints2D.FreezeAll;
             yield return new WaitForSeconds(dashStartDelay);
+            // ReSharper disable once Unity.InefficientPropertyAccess
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
             _meshTrail.StartDash(_sprite.flipX);
