@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 
 namespace Enemies
@@ -11,7 +12,7 @@ namespace Enemies
 
         private void Start()
         {
-            player = GameObject.FindWithTag("Enemy_chaser_follow");
+            player = PlayerMovementScript.Instance.gameObject;
         }
 
         private void Update()
