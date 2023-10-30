@@ -17,9 +17,9 @@ namespace Enemies
 
         private void Update()
         {
-            Vector3 playerPOS = player.transform.position;
-            Vector3 enemyPOS = transform.position;
-            float distance = (playerPOS-enemyPOS).magnitude;
+            Vector3 playerPos = player.transform.position;
+            Vector3 enemyPos = transform.position;
+            float distance = (playerPos-enemyPos).magnitude;
 
             //find distance between player and enemy
 
@@ -31,7 +31,8 @@ namespace Enemies
         }
 
         private IEnumerator Explode() 
-        {  //do something before explosion delay
+        {
+            //do something before explosion delay
             yield return new WaitForSeconds(explodeDelayTime);
             //do something after explosion delay
             Destroy(gameObject);
