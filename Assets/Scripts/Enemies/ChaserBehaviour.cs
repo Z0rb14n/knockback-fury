@@ -1,18 +1,24 @@
 using System.Collections;
 using Player;
+using Polarith.AI.Move;
 using UnityEngine;
 
 namespace Enemies
 {
+    [RequireComponent(typeof(AIMFollow))]
     public class ChaserBehaviour : MonoBehaviour
     {
         private GameObject player;
+        private AIMFollow _aimFollow;
         public float explodeDistance;
         public float explodeDelayTime;
 
         private void Awake()
         {
             player = PlayerMovementScript.Instance.gameObject;
+            _aimFollow = GetComponent<AIMFollow>();
+            _aimFollow.Enabled = false;
+            _aimFollow.Target = player;
         }
 
         private void FixedUpdate()
@@ -21,6 +27,18 @@ namespace Enemies
             {
                 StartCoroutine(Explode());   
             }
+        }
+        
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.GetComponent<PlayerMovementScript>()) return;
+            _aimFollow.Enabled = true;
+        }
+        
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.GetComponent<PlayerMovementScript>()) return;
+            _aimFollow.Enabled = false;
         }
 
         private IEnumerator Explode() 

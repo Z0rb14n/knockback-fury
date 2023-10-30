@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3237788133357728958}
   - component: {fileID: 398408246079528400}
   - component: {fileID: 3809223162317804369}
+  - component: {fileID: 9067770034105995923}
   - component: {fileID: 3237788133357728952}
   - component: {fileID: 5126662251168286645}
   - component: {fileID: 5840147881884405027}
@@ -143,6 +144,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.4}
   m_EdgeRadius: 0.3
+--- !u!58 &9067770034105995923
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237788133357728955}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 16
 --- !u!50 &3237788133357728952
 Rigidbody2D:
   serializedVersion: 4
@@ -295,7 +312,7 @@ MonoBehaviour:
     PresetVelocity: 0
     Prediction: 0
     PredictionMagnitude: 0
-  targetTag: Player
+  targetTag: Untagged
 --- !u!114 &3237788133357728931
 MonoBehaviour:
   m_ObjectHideFlags: 0
