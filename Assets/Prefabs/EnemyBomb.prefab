@@ -200,3 +200,17 @@ MonoBehaviour:
   radius: 1
   playerDamage: 100
   playerVelocityPrediction: 1
+  _bombSound:
+    Guid:
+      Data1: -171804792
+      Data2: 1314727608
+      Data3: -1056072544
+      Data4: 1747877661
+    Path: event:/SFX/Weapons/GL/GL_Explode
+  _fuseSound:
+    Guid:
+      Data1: -993106317
+      Data2: 1113978710
+      Data3: -62807370
+      Data4: 753462319
+    Path: event:/SFX/Entities/Bomb/Bomb_Fuse
