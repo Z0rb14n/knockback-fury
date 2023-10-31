@@ -3,7 +3,8 @@ using Player;
 using UnityEngine;
 using Upgrades;
 using Weapons;
-
+using FMODUnity;
+using FMOD.Studio;
 namespace Enemies.Ranged
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
@@ -19,6 +20,10 @@ namespace Enemies.Ranged
         private int _projectileLayer;
         private IEnumerator _detonationCoroutine;
 
+        [SerializeField] private EventReference _bombSound;
+        [SerializeField] private EventReference _fuseSound;
+        private EventInstance _fuseSFX;
+
         public override void Initialize(float damageMult)
         {
             damageMultiplier = damageMult;
@@ -30,8 +35,10 @@ namespace Enemies.Ranged
             StartCoroutine(_detonationCoroutine);
             _playerLayerMask = LayerMask.GetMask("Player");
             _projectileLayer = LayerMask.NameToLayer("Projectile");
+            _fuseSFX = RuntimeManager.CreateInstance(_fuseSound);
+             _fuseSFX.start();
+             _fuseSFX.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject, rigidbody2D));
         }
-
         /// <summary>
         /// Calculates the velocity that we want given a starting position, ending position and target's velocity
         /// </summary>
@@ -94,6 +101,7 @@ namespace Enemies.Ranged
         {
             Vector3 pos = transform.position;
             GameObject explosionObject = Instantiate(explosionVFX, pos, Quaternion.identity);
+            RuntimeManager.PlayOneShot(_bombSound, transform.position);
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
 
             Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, _playerLayerMask);
@@ -105,6 +113,7 @@ namespace Enemies.Ranged
                 Vector2 knockbackDirection = new((playerMovement.transform.position - pos).normalized.x * 0.1f, 0.04f);
                 playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
+            _fuseSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             Destroy(gameObject);
 
             if (!playerCaused) return;
