@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patrolPoints: []
-  speed: 1
-  pauseTime: 1
+  speed: 5
+  pauseTime: 0.7
 --- !u!114 &8982589570335167837
 MonoBehaviour:
   m_ObjectHideFlags: 0

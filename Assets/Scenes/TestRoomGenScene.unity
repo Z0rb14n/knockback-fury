@@ -308,48 +308,31 @@ PrefabInstance:
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
       propertyPath: weaponInventory.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825,
+      objectReference: {fileID: 11400000, guid: afe6cb6622887fd46927c2b13c479777,
         type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
-        type: 3}
-      propertyPath: weaponInventory.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: fd1ca15a3a8a6074dba28f29a3ac3bcc,
-        type: 2}
-    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
-        type: 3}
-      propertyPath: weaponInventory.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3b8f7c4bcfe8f6d44bdd4a7f3dc8b07a,
+      objectReference: {fileID: 11400000, guid: 1add6fdbc0936e44daf454ba37a4e974,
         type: 2}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
       propertyPath: weaponInventory.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7,
+      objectReference: {fileID: 11400000, guid: d835523dddd6d2046854387e30949575,
         type: 2}
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a,
-        type: 3}
-    - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c,
+      objectReference: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c,
         type: 3}
     - target: {fileID: 3228942646842628699, guid: e4407057e7ec397438cf8541912ada1c,
         type: 3}
