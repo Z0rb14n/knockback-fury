@@ -376,7 +376,13 @@ namespace FloorGen
                 rangedEnemy.damageMultiplier = eliteDamageModifier;
             }
 
-            if (!attack && !heavyAttack && !rangedEnemy)
+            ChaserBehaviour chaserBehaviour = randomEnemy.GetComponent<ChaserBehaviour>();
+            if (chaserBehaviour)
+            {
+                chaserBehaviour.explosionDamage = Mathf.RoundToInt(chaserBehaviour.explosionDamage * eliteDamageModifier);
+            }
+
+            if (!attack && !heavyAttack && !rangedEnemy && !chaserBehaviour)
             {
                 Debug.LogError("Elite enemy doesn't have any damage dealing capabilities.");
             }
@@ -390,21 +396,16 @@ namespace FloorGen
             FloorEnemyPack pack = floorEnemyPacks[floorNumber];
             bool generateBoss = isEndRoom && pack.endingHasBoss;
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
-            if (!generateBoss)
+            if (generateBoss) return;
+            roomData.pickup = GeneratePlayerUpgradePickup(gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
+            roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
+            if (isEndRoom)
             {
-                roomData.pickup = GeneratePlayerUpgradePickup(gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
-                roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
-                if (isEndRoom)
-                {
-                    roomData.weaponPickup = GenerateWeaponPickup( gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
-                    roomData.roomTransitionInteractable = GenerateRoomTransitionInteractable(gridPos + (Vector3)roomData.roomChangeSpawnOffset, cellObject);
-                }
-                if (gridIndex != generationStart) GenerateEnemies( sockets, packSize, roomData, isEndRoom);
+                roomData.weaponPickup = GenerateWeaponPickup( gridPos + (Vector3) roomData.weaponSpawnOffset, cellObject, false);
+                roomData.roomTransitionInteractable = GenerateRoomTransitionInteractable(gridPos + (Vector3)roomData.roomChangeSpawnOffset, cellObject);
             }
-            else
-            {
-                PopulateSocketsBossRoom( gridIndex, cellObject, sockets);
-            }
+            if (gridIndex != generationStart) GenerateEnemies( sockets, packSize, roomData, isEndRoom);
+            // else: additional boss room generation if required?
         }
 
         private void PopulateSocketsWeaponRoom(Vector2Int gridIndex, GameObject cellObject,
@@ -428,12 +429,6 @@ namespace FloorGen
                 buttons.RemoveRandom(_random)
             };
             upgrade.GetComponent<WeaponUpgradeTrigger>().allowedButtons = result;
-        }
-
-        private void PopulateSocketsBossRoom(Vector2Int gridIndex, GameObject cellObject,
-            List<(SocketBehaviour, EnemySpawnType)> sockets)
-        {
-            // TODO BOSS GENERATION
         }
         
         private void GenerateFromGrid(Grid grid, int middleLength)

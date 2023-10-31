@@ -228,7 +228,7 @@ namespace Weapons
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            if (_source.Path.Length > 0)
+            if (!_source.Guid.IsNull)
             {
                 RuntimeManager.PlayOneShot(_source,transform.position);
             }

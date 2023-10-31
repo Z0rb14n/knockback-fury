@@ -58,13 +58,6 @@ namespace Pause
             actualPauseMenu.gameObject.SetActive(false);
         }
 
-        private static void EnablePlayerCollision()
-        {
-            int playerLayerID = LayerMask.NameToLayer("Player");
-            int enemyLayerID = LayerMask.NameToLayer("Enemy");
-            Physics2D.IgnoreLayerCollision(playerLayerID, enemyLayerID, false);
-        }
-
         public void OnResumeButtonClicked()
         {
             Hide();
@@ -72,21 +65,21 @@ namespace Pause
 
         public void OnRestartButtonClicked()
         {
-            EnablePlayerCollision();
+            MiscUtil.EnablePlayerEnemyCollision();
             Hide();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         public void OnLobbyButtonClicked()
         {
-            EnablePlayerCollision();
+            MiscUtil.EnablePlayerEnemyCollision();
             Hide();
             SceneManager.LoadScene("LobbyScene");
         }
 
         public void OnMainMenuButtonClicked()
         {
-            EnablePlayerCollision();
+            MiscUtil.EnablePlayerEnemyCollision();
             Hide();
             SceneManager.LoadScene("MainMenuScene");
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using GameEnd;
 using UnityEngine;
 using Upgrades;
+using Util;
 
 namespace Player
 {
@@ -99,18 +100,16 @@ namespace Player
 
         private IEnumerator DisableCollision()
         {
-            int _playerLayerID = LayerMask.NameToLayer("Player");
-            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
-
-            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, true);
+            MiscUtil.DisablePlayerEnemyCollision();
             for (float i = 0; i < iFrameLength; i += 0.2f)
             {
                 _sprite.color = new Color(1, 1, 1, 0.5f);
                 yield return new WaitForSeconds(0.1f);
+                // ReSharper disable once Unity.InefficientPropertyAccess
                 _sprite.color = Color.white;
                 yield return new WaitForSeconds(0.1f);
             }
-            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+            MiscUtil.EnablePlayerEnemyCollision();
         }
 
         public void OnDamageDealtToOther(int amount)

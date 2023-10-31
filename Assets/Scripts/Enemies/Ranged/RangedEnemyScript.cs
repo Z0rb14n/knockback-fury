@@ -75,7 +75,7 @@ namespace Enemies.Ranged
         {
             GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
             go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
-            if (_source.Path.Length > 0) RuntimeManager.PlayOneShot(_source,transform.position);
+            if (!_source.Guid.IsNull) RuntimeManager.PlayOneShot(_source,transform.position);
         }
     }
 }

@@ -65,6 +65,15 @@ public class EntityHealth : MonoBehaviour
         PlayerHealth.Instance.OnDamageDealtToOther(actualDamage);
     }
 
+    public void KillNonPlayer()
+    {
+        if (isDead) return;
+        Debug.Log("KillNonPlayer");
+        Destroy(gameObject);
+        OnDeath?.Invoke(this);
+        isDead = true;
+    }
+
     protected virtual void Die()
     {
         if (!isDead)
@@ -76,7 +85,7 @@ public class EntityHealth : MonoBehaviour
             isDead = true;
             if (canDropCheese && cheeseItemPickup && Random.Range(0, 1f) < 0.05f)
             {
-                Instantiate(cheeseItemPickup, transform.position, transform.rotation, transform.parent);
+                Instantiate(cheeseItemPickup, transform.position, Quaternion.identity, transform.parent);
             }
         }
     }
