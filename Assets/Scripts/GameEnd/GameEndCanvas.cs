@@ -4,6 +4,7 @@ using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Util;
 
 namespace GameEnd
 {
@@ -48,9 +49,7 @@ namespace GameEnd
             PlayerMovementScript.Instance.CanMove = true;
             PlayerWeaponControl.Instance.enabled = true;
             CameraScript.Instance.enabled = true;
-            int _playerLayerID = LayerMask.NameToLayer("Player");
-            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
-            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+            MiscUtil.EnablePlayerEnemyCollision();
             SceneManager.LoadScene("MainMenuScene");
         }
 
@@ -63,9 +62,7 @@ namespace GameEnd
             PlayerMovementScript.Instance.CanMove = true;
             PlayerWeaponControl.Instance.enabled = true;
             CameraScript.Instance.enabled = true;
-            int _playerLayerID = LayerMask.NameToLayer("Player");
-            int _enemyLayerID = LayerMask.NameToLayer("Enemy");
-            Physics2D.IgnoreLayerCollision(_playerLayerID, _enemyLayerID, false);
+            MiscUtil.EnablePlayerEnemyCollision();
             SceneManager.LoadScene("LobbyScene");
         }
 

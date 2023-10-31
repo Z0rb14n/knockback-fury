@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(AIMFollow))]
+    [RequireComponent(typeof(AIMFollow), typeof(EntityHealth))]
     public class ChaserBehaviour : MonoBehaviour
     {
         [Tooltip("VFX to create on explosion")]
@@ -23,6 +23,7 @@ namespace Enemies
         public float explodeDelayTime;
 
         private GameObject player;
+        private EntityHealth _entityHealth;
         private AIMFollow _aimFollow;
         
         private void Awake()
@@ -31,6 +32,7 @@ namespace Enemies
             _aimFollow = GetComponent<AIMFollow>();
             _aimFollow.Enabled = false;
             _aimFollow.Target = player;
+            _entityHealth = GetComponent<EntityHealth>();
         }
 
         private void FixedUpdate()
@@ -57,6 +59,7 @@ namespace Enemies
         {
             //do something before explosion delay
             yield return new WaitForSeconds(explodeDelayTime);
+            _entityHealth.KillNonPlayer();
             EnemyBombScript.DetonateHitPlayer(transform.position, explosionVFX, explosionDamage, explosionRadius, knockbackForce);
             Destroy(gameObject);
         }
