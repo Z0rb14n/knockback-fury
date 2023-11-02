@@ -28,7 +28,8 @@ namespace Enemies
         {
             _isAggro = _aggroScript.IsAggro();
             _canMove = DetermineCanMove();
-            
+            _position = _collider2D.bounds.center;
+
             if (_isAggro)
             {
                 _direction = (int)Mathf.Sign(_player.position.x - _body.position.x);

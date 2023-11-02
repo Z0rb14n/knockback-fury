@@ -175,6 +175,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 1
   pauseTime: 1
+  maxFallHeighttttt: 0
 --- !u!114 &8982589570335167837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,5 +356,6 @@ MonoBehaviour:
   patrolPoints: []
   speed: 1
   pauseTime: 1
-  aggroSpeedMultiplier: 3
+  maxFallHeighttttt: 2
+  aggroSpeedMultiplier: 1
   maxFallHeight: 2
