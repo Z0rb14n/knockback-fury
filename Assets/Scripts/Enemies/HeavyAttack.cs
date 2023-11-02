@@ -50,16 +50,21 @@ namespace Enemies
         private void Update()
         {
             _attackTimer -= Time.deltaTime;
-            if (PlayerInRange()) {
-                _movement.DisableMovement();
-                if (_attackTimer <= 0)
-                {
-                    PerformAttack();
-                }
-            } else if (!_isAttacking)
+            if (!_isAttacking)
             {
-                _movement.EnableMovement();
+                if (PlayerInRange()) {
+                    _movement.DisableMovement();
+                    if (_attackTimer <= 0)
+                    {
+                        _movement.StartAttack();
+                        PerformAttack();
+                    }
+                } else if (!_isAttacking)
+                {
+                    _movement.EnableMovement();
+                }
             }
+            
 
         }
 
@@ -128,6 +133,7 @@ namespace Enemies
             yield return new WaitForSeconds(_attackAnimationTime - _delayBeforeAttack);
 
             _isAttacking = false;
+            _movement.EndAttack();
             _animator.SetBool(_animationAtkHash, false);
         }
 

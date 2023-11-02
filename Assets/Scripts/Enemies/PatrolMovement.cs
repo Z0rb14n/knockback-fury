@@ -10,7 +10,7 @@ namespace Enemies
         public Transform[] patrolPoints;
         public float speed;
         public float pauseTime;
-        public float maxFallHeighttttt;
+        public float maxFallHeight;
 
         protected int _target;
         protected Vector2 _targetPos;
@@ -22,11 +22,10 @@ namespace Enemies
         protected bool _canMove;
         protected Collider2D _collider2D;
         protected Vector2 _position;
-        
+        protected bool _isAttacking;
+
         private float _originalSpeed;
         private Vector2 _colliderSize;
-        
-
         
 
         protected virtual void Start()
@@ -49,6 +48,7 @@ namespace Enemies
                 _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);   
             }
             _spriteDirection = 1;
+            _isAttacking = false;
         }
 
 
@@ -69,7 +69,8 @@ namespace Enemies
         {
             _targetPos.y = transform.position.y;
             _position = _collider2D.bounds.center;
-            DetermineDirection();
+            _canMove = DetermineCanMove();
+            if (!_isAttacking) DetermineDirection();
             if (Vector2.Distance(transform.position, _targetPos) < _switchTargetDistance)
             {
                 SwitchTargets();
@@ -79,24 +80,24 @@ namespace Enemies
 
         protected void MoveToTarget(Vector2 target, float speed)
         {
-            if (_canMove)
+            if (_canMove && !_isAttacking)
             {
                 if (HasObstacle())
                 {
-                    Debug.Log("obstacle detected");
+                    // Debug.Log("obstacle detected");
                     float obstacleHeight = HasSpaceToMoveUp();
                     if (obstacleHeight != -1f)
                     {
-                        Debug.Log("attempting to move up");
+                        // Debug.Log("attempting to move up");
                         if (_direction == 1)
                         {
-                            Debug.Log("movepos right");
-                            Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
+                            // Debug.Log("movepos right");
+                            // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
                             _body.MovePosition(_body.position + new Vector2(0.5f, obstacleHeight + 0.1f));
                         } else
                         {
-                            Debug.Log("movepos left");
-                            Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
+                            // Debug.Log("movepos left");
+                            // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
                             _body.MovePosition(_body.position + new Vector2(-0.5f, obstacleHeight + 0.1f));
                         }
                     }
@@ -134,7 +135,7 @@ namespace Enemies
             RaycastHit2D hit = Physics2D.Raycast(frontFootPos, rayDirection, 0.1f, layerMask);
             if (hit.collider != null)
             {
-                Debug.Log("Collided with: " + hit.collider.name);
+                // Debug.Log("Collided with: " + hit.collider.name);
                 return true;
             }
 
@@ -178,11 +179,11 @@ namespace Enemies
             float distanceToObstacle = hitDown.distance;
             float obstacleHeight = colliderHeight - distanceToObstacle;
             
-            Debug.Log("distance: " + distanceToObstacle.ToString());
-            Debug.Log("maxFallHeighttttt: " + maxFallHeighttttt.ToString());
-            Debug.Log("colliderHeight: " + colliderHeight.ToString());
-            Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
-            if (obstacleHeight >= maxFallHeighttttt) return -1.0f;
+            // Debug.Log("distance: " + distanceToObstacle.ToString());
+            // Debug.Log("maxFallHeight: " + maxFallHeight.ToString());
+            // Debug.Log("colliderHeight: " + colliderHeight.ToString());
+            // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
+            if (obstacleHeight >= maxFallHeight) return -1.0f;
             
             float rayUpDistance = colliderHeight - distanceToObstacle + 0.2f;
             RaycastHit2D hitUp = Physics2D.Raycast(verticalCheckOrigin, Vector2.up, rayUpDistance, layerMask);
@@ -218,6 +219,25 @@ namespace Enemies
             }
         }
 
+        protected bool DetermineCanMove()
+        {
+            Vector2 rayDirection = Vector2.down;
+            Vector2 position;
+            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy")
+                | 1 << LayerMask.NameToLayer("Player"));
+            if (_direction == 1)
+            {
+                position = new Vector2(_collider2D.bounds.max.x, _collider2D.bounds.center.y);
+            }
+            else
+            {
+                position = new Vector2(_collider2D.bounds.min.x, _collider2D.bounds.center.y);
+            }
+
+            Debug.DrawRay(position, rayDirection, Color.black);
+            return Physics2D.Raycast(position, rayDirection, maxFallHeight, layerMask);
+        }
+
         protected void DetermineDirection()
         {
             _direction = (int) Mathf.Sign(patrolPoints[_target].position.x - _body.position.x);
@@ -238,6 +258,16 @@ namespace Enemies
         public void DisableMovement()
         {
             _canMove = false;
+        }
+
+        public void StartAttack()
+        {
+            _isAttacking = true;
+        }
+
+        public void EndAttack()
+        {
+            _isAttacking = false;
         }
 
         public int GetDirection()

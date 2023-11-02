@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6502981059598909017}
   - component: {fileID: 9160687194028808476}
   - component: {fileID: 3814316568827834456}
-  - component: {fileID: 3250355253141131760}
   - component: {fileID: 8982589570335167837}
   - component: {fileID: 781840091141345320}
   - component: {fileID: 6890369457235158245}
@@ -160,22 +159,6 @@ MonoBehaviour:
       Data3: -1577106754
       Data4: -779691936
     Path: event:/SFX/Weapons/Weap_Melee
---- !u!114 &3250355253141131760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8980498073613225995}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba43d429fa983784db1ee4fb31132dca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  patrolPoints: []
-  speed: 1
-  pauseTime: 1
-  maxFallHeighttttt: 0
 --- !u!114 &8982589570335167837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +339,5 @@ MonoBehaviour:
   patrolPoints: []
   speed: 1
   pauseTime: 1
-  maxFallHeighttttt: 2
-  aggroSpeedMultiplier: 1
   maxFallHeight: 2
+  aggroSpeedMultiplier: 2
