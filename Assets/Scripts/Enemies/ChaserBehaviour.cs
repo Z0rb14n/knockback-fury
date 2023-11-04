@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(AIMFollow), typeof(EntityHealth))]
+    [RequireComponent(typeof(AIMFollow), typeof(EntityHealth), typeof(AIMSteeringFilter))]
     public class ChaserBehaviour : MonoBehaviour
     {
         [Tooltip("VFX to create on explosion")]
@@ -22,22 +22,38 @@ namespace Enemies
         [Min(0), Tooltip("Delay before explosion occurs")]
         public float explodeDelayTime;
 
-        private GameObject player;
+        private static AIMSteeringPerceiver GlobalSteeringPerceiver
+        {
+            get
+            {
+                if (!_globalSteeringPerceiver) _globalSteeringPerceiver = FindObjectOfType<AIMSteeringPerceiver>();
+                return _globalSteeringPerceiver;
+            }
+        }
+        private static AIMSteeringPerceiver _globalSteeringPerceiver;
+
+        private GameObject _player;
         private EntityHealth _entityHealth;
+        private AIMSteeringFilter _aimSteeringFilter;
         private AIMFollow _aimFollow;
         
         private void Awake()
         {
-            player = PlayerMovementScript.Instance.gameObject;
+            _player = PlayerMovementScript.Instance.gameObject;
             _aimFollow = GetComponent<AIMFollow>();
             _aimFollow.Enabled = false;
-            _aimFollow.Target = player;
+            _aimFollow.Target = _player;
             _entityHealth = GetComponent<EntityHealth>();
+            _aimSteeringFilter = GetComponent<AIMSteeringFilter>();
+            if (!_aimSteeringFilter.SteeringPerceiver)
+            {
+                _aimSteeringFilter.SteeringPerceiver = GlobalSteeringPerceiver;
+            }
         }
 
         private void FixedUpdate()
         {
-            if (Vector2.Distance(player.transform.position, transform.position) < explodeDistance)
+            if (Vector2.Distance(_player.transform.position, transform.position) < explodeDistance)
             {
                 StartCoroutine(Explode());   
             }
