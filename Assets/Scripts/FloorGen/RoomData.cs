@@ -37,6 +37,11 @@ namespace FloorGen
         [Tooltip("Player spawn offset")]
         public Vector2 playerSpawnOffset = Vector2.zero;
 
+        [Tooltip("Room Size")]
+        public Vector2 roomSize;
+        [Tooltip("Room center offset - only changes gizmo!")]
+        public Vector2 roomCenterOffset;
+
         public ExitHider[] hiders;
 
         public SocketShape[] sockets;
@@ -221,6 +226,11 @@ namespace FloorGen
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
             if (roomTransitionInteractable) roomTransitionInteractable.gameObject.SetActive(true);
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireCube(transform.position + (Vector3) roomCenterOffset, (Vector3) roomSize + Vector3.forward);
         }
 
         [Serializable]

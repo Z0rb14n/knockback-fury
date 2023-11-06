@@ -60817,6 +60817,8 @@ MonoBehaviour:
   weaponUpgradeSpawnOffset: {x: 6.5, y: 4}
   roomChangeSpawnOffset: {x: 5.5, y: 4}
   playerSpawnOffset: {x: -7, y: -4}
+  roomSize: {x: 21, y: 21}
+  roomCenterOffset: {x: 1, y: -2}
   hiders:
   - hidingType: 1
     toEnable: {fileID: 8252024923737977057}

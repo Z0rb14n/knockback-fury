@@ -446,9 +446,12 @@ namespace FloorGen
                 bool isWeaponRoom = hasWeaponRoom && gridIndex == weaponRoomPos;
                 GameObject[] objects = _pairsDict[type];
                 GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(_random);
-                randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
+                if (!isBossRoom && roomData.roomSize != gridSize)
+                {
+                    Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
+                }
                 roomData.EnsureType(type);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)

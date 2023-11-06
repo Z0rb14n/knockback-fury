@@ -53697,6 +53697,8 @@ MonoBehaviour:
   weaponUpgradeSpawnOffset: {x: 1, y: -1.5}
   roomChangeSpawnOffset: {x: 0, y: 0}
   playerSpawnOffset: {x: -4.5, y: -1.5}
+  roomSize: {x: 21, y: 21}
+  roomCenterOffset: {x: 1, y: -2}
   hiders: []
   sockets: []
   ignoreSocketEnemySpawns: 1
