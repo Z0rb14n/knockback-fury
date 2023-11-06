@@ -262,7 +262,11 @@ namespace FloorGen
                 PlayerWeaponControl.Instance.Inventory.Where(data => data).Select(data => data.weaponName).ToHashSet();
             List<WeaponData> eligibleWeapons =
                 weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName))
-                    .Where(weapon => weapon.unlockedByDefault || CrossRunInfo.Instance.data.unlockedWeaponSet.Contains(weapon.weaponName)).ToList();
+                    .Where(weapon =>
+                        // ReSharper disable once Unity.NoNullPropagation
+                        weapon.unlockedByDefault || (CrossRunInfo.Instance?.data?.unlockedWeaponSet != null &&
+                                                     CrossRunInfo.Instance.data.unlockedWeaponSet.Contains(
+                                                         weapon.weaponName))).ToList();
             weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(_random));
             weaponPickup.UpdateSprite();
             weaponPickupObject.SetActive(startsActive);
@@ -446,9 +450,10 @@ namespace FloorGen
                 bool isWeaponRoom = hasWeaponRoom && gridIndex == weaponRoomPos;
                 GameObject[] objects = _pairsDict[type];
                 GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(_random);
+                randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
-                if (!isBossRoom && roomData.roomSize != gridSize)
+                if (roomData.roomSize != gridSize)
                 {
                     Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
                 }
