@@ -258,7 +258,7 @@ MonoBehaviour:
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
-  gridSize: {x: 80, y: 60}
+  gridSize: {x: 50, y: 21}
   generationStart: {x: -15, y: 5}
   playerTransform: {fileID: 419107792}
 --- !u!4 &25068407
