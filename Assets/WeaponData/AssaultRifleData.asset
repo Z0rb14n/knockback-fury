@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Assault Rifle
   numProjectiles: 1
   range: 30
-  projectileSpeed: 20
+  projectileSpeed: 30
   projectileDamage: 13
   selfDamage: 1
   cheeseCost: 50
@@ -49,3 +49,5 @@ MonoBehaviour:
   pierceInfo:
     maxPierces: 0
     invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 1

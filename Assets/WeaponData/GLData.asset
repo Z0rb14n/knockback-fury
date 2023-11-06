@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponName: Grenade Launcher
   numProjectiles: 1
   range: 20
-  projectileSpeed: 10
-  projectileDamage: 50
+  projectileSpeed: 25
+  projectileDamage: 70
   selfDamage: 1
   cheeseCost: 50
   roundsPerSecond: 1.2
@@ -50,3 +50,4 @@ MonoBehaviour:
     maxPierces: 0
     invulnTimer: 0
     isInfinitePierce: 0
+  unlockedByDefault: 1

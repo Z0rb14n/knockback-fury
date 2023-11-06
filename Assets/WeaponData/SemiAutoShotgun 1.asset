@@ -45,9 +45,9 @@ MonoBehaviour:
       Data3: -1022891902
       Data4: 2012654420
     Path: event:/SFX/Weapons/Weap_ShotgunAlt
-  pierceMode: 0
+  pierceMode: 2
   pierceInfo:
-    maxPierces: 0
-    invulnTimer: 0
+    maxPierces: 5
+    invulnTimer: 19
     isInfinitePierce: 0
   unlockedByDefault: 1
