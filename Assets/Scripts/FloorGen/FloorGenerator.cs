@@ -262,7 +262,11 @@ namespace FloorGen
                 PlayerWeaponControl.Instance.Inventory.Where(data => data).Select(data => data.weaponName).ToHashSet();
             List<WeaponData> eligibleWeapons =
                 weaponsList.Where(weapon => !playerCurrInventory.Contains(weapon.weaponName))
-                    .Where(weapon => weapon.unlockedByDefault || CrossRunInfo.Instance.data.unlockedWeaponSet.Contains(weapon.weaponName)).ToList();
+                    .Where(weapon =>
+                        // ReSharper disable once Unity.NoNullPropagation
+                        weapon.unlockedByDefault || (CrossRunInfo.Instance?.data?.unlockedWeaponSet != null &&
+                                                     CrossRunInfo.Instance.data.unlockedWeaponSet.Contains(
+                                                         weapon.weaponName))).ToList();
             weaponPickup.weaponData = Instantiate(eligibleWeapons.GetRandom(_random));
             weaponPickup.UpdateSprite();
             weaponPickupObject.SetActive(startsActive);
@@ -449,6 +453,10 @@ namespace FloorGen
                 randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
+                if (roomData.roomSize != gridSize)
+                {
+                    Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
+                }
                 roomData.EnsureType(type);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
                 if (hasWeaponRoom && gridIndex == weaponRoomPos)
