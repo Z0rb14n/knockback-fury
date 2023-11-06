@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 9
-  speedSmoothness: 0.01
   jumpForce: 13
   wallJumpForce: {x: 12, y: 13}
   dashSpeed: 13.5
@@ -149,7 +148,6 @@ MonoBehaviour:
   dashStartDelay: 0.07
   maxDashes: 1
   slideSpeed: 0.8
-  newMovementEnabled: 1
   accel: 50
   turnAroundMultiplier: 9
   decel: 30
@@ -408,11 +406,11 @@ PrefabInstance:
     - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
+      objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
     - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3054874151231780715, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
@@ -420,7 +418,7 @@ PrefabInstance:
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Color.b
       value: 1

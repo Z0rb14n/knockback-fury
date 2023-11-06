@@ -272,25 +272,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 227042018}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: weaponInventory.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: weaponInventory.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 83c85386afc1ad74981defaa435f61cb, type: 2}
-    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: weaponInventory.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: dd20bc218fa375340af3358343b7b6bd, type: 2}
-    - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponInventory.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: b0c1e383edee634469e31f9f3fa49ef8, type: 2}
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
+      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
     - target: {fileID: 3228942646842628699, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.54285717
