@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: SniperData
+  m_Name: GLData 2
   m_EditorClassIdentifier: 
-  weaponName: Sniper
+  weaponName: Grenade Launcher
   numProjectiles: 1
-  range: 500
-  projectileSpeed: 69420
-  projectileDamage: 85
+  range: 20
+  projectileSpeed: 10
+  projectileDamage: 100
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 1
+  roundsPerSecond: 1.2
   clipSize: 6
-  reloadTime: 2.3
-  spread: 0
-  isHitscan: 1
+  reloadTime: 1.6
+  spread: 5
+  isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 20
-  recoilAnimationDuration: 0.5
+  knockbackStrength: 17
+  recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
     burstAmount: 0
@@ -36,18 +36,18 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
-  customProjectile: {fileID: 0}
+  sprite: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
+  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}
   fireEffect:
     Guid:
-      Data1: 444489450
-      Data2: 1230548147
-      Data3: 971715503
-      Data4: -1121522320
-    Path: event:/SFX/Weapons/Weap_Sniper
-  pierceMode: 1
+      Data1: 1318238220
+      Data2: 1301262900
+      Data3: -648970852
+      Data4: 1357936274
+    Path: event:/SFX/Weapons/GL/GL_Fire
+  pierceMode: 0
   pierceInfo:
-    maxPierces: 1
+    maxPierces: 0
     invulnTimer: 0
     isInfinitePierce: 0
   unlockedByDefault: 1
