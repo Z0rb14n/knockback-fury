@@ -258,7 +258,7 @@ MonoBehaviour:
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
-  gridSize: {x: 40, y: 21}
+  gridSize: {x: 80, y: 60}
   generationStart: {x: -15, y: 5}
   playerTransform: {fileID: 419107792}
 --- !u!4 &25068407
@@ -1022,7 +1022,7 @@ GameObject:
   - component: {fileID: 914233868}
   - component: {fileID: 914233867}
   m_Layer: 0
-  m_Name: RoomGen
+  m_Name: OldRoomGen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
