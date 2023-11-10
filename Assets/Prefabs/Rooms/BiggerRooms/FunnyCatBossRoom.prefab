@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  knockbackForce: 300
+  knockbackForce: 200
 --- !u!50 &8956019310673940361
 Rigidbody2D:
   serializedVersion: 4
@@ -170,6 +170,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialVelocity: {x: 0, y: -50}
+  delayBeforeAttacking: 1.5
+  delayBetweenJumps: 2.5
+  jumpVector: {x: 10, y: 25}
+  normalSprite: {fileID: 21300000, guid: 20c0a3f93a123944498fb8e5d8679b2a, type: 3}
+  leftSprite: {fileID: 21300000, guid: 268f19be17766e642a40db2ce0a0b6ec, type: 3}
+  rightSprite: {fileID: 21300000, guid: bc11ac814b44b824fa82049b45b7175a, type: 3}
+  backSprite: {fileID: 21300000, guid: b3a60ed98b4ca9e4eb29e53f5d468068, type: 3}
+  roomCeiling: {fileID: 3848909274982158111}
 --- !u!114 &1934838150308643429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,8 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
@@ -442,8 +450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
@@ -698,8 +706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
@@ -1863,7 +1871,6 @@ MonoBehaviour:
   originalBossEnemy: {fileID: 5695699972413134992}
   catBoss: {fileID: 217003966872483885}
   delayBeforeSpawn: 5
-  roomCeiling: {fileID: 3848909274982158111}
 --- !u!1 &3270442569201604101
 GameObject:
   m_ObjectHideFlags: 0
@@ -4324,8 +4331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
@@ -4787,8 +4794,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
-  health: 200
+  maxHealth: 1
+  health: 1
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
