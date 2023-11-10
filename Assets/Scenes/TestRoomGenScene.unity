@@ -199,7 +199,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0b17100a9a49fa4aadda36c4ae8804c, type: 2}
   weaponPickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
   weaponUpgradePrefab: {fileID: 3868675004188845447, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
-  bossRoomPrefab: {fileID: 6904360811100635293, guid: a7cbfdd4a470b384dbe8e7058e2e83bf, type: 3}
+  bossRoomPrefab: {fileID: 6198271201817309835, guid: f62d6c138fed40b47917520032733922, type: 3}
   lootRoomPrefab: {fileID: 3954450897855488146, guid: 976db2ff5dd61e847b1816474d14341d, type: 3}
   pairs:
   - type: -1
@@ -275,7 +275,7 @@ MonoBehaviour:
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
   gridSize: {x: 50, y: 21}
-  generationStart: {x: -15, y: 5}
+  generationStart: {x: 0, y: 0}
   playerTransform: {fileID: 419107792}
 --- !u!4 &25068407
 Transform:
