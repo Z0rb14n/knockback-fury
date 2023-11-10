@@ -48,6 +48,7 @@ namespace Util
         /// <typeparam name="T">Type of elements in list</typeparam>
         public static T SwapRemove<T>(this List<T> list, int index)
         {
+            if (list.Count == 0) Debug.LogError("[ListUtil::SwapRemove] empty list provided.");
             int last = list.Count - 1;
             T val = list[index];
             list[index] = list[last];
