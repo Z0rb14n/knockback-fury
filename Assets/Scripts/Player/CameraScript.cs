@@ -18,6 +18,8 @@ namespace Player
         
         [Tooltip("Maximum View Distance")]
         public float maxViewDist = 150;
+        [Tooltip("Camera Offset")]
+        public Vector3 camOffset = new(-1, 0);
         private Camera _mainCam;
         private Vector2 _screenDims; // Cache screen dimensions
         private Vector3 _displacement; // Reuse displacement vector to prevent frequent object creation
@@ -50,7 +52,7 @@ namespace Player
 
             // how ironic that an optimization actually resulted in an inefficient property access huh
             // ReSharper disable once Unity.InefficientPropertyAccess
-            transform.localPosition = _displacement;
+            transform.localPosition = _displacement + camOffset;
         }
 
         /// <summary>
