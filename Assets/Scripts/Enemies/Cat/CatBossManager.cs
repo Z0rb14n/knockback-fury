@@ -12,6 +12,9 @@ namespace Enemies.Cat
         [SerializeField] private EntityHealth[] secretTriggers;
         [SerializeField] private BossEnemy originalBossEnemy;
         [SerializeField] private CatBoss catBoss;
+        [SerializeField] private GameObject floorToDestroy;
+
+        [SerializeField] private Transform newCatSpawn;
 
         [SerializeField, Min(0)] private float delayBeforeSpawn = 5;
 
@@ -52,6 +55,12 @@ namespace Enemies.Cat
             CameraScript.Instance.CameraShakeStrength = 0;
             catBoss.StartSpawn();
             _bossHealthBar.health = _catHealth;
+        }
+
+        public void EndPhaseOne()
+        {
+            Destroy(floorToDestroy);
+            catBoss.transform.position = newCatSpawn.transform.position;
         }
     }
 }

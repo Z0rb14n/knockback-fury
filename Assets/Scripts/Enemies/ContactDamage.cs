@@ -7,6 +7,7 @@ namespace Enemies
     {
         public int damage;
         public int knockbackForce;
+        public bool damageOnTrigger;
 
         private LayerMask _playerLayer;
 
@@ -24,6 +25,16 @@ namespace Enemies
             if (collision.collider.gameObject.layer != _playerLayer) return;
             PlayerHealth.Instance.TakeDamage(damage);
             Vector2 knockbackDirection = new((collision.transform.position - transform.position).normalized.x * 0.1f, 0.04f);
+            PlayerMovementScript.Instance.RequestKnockback(knockbackDirection, knockbackForce);
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            if (!damageOnTrigger) return;
+            if (other.gameObject.layer != _playerLayer) return;
+            
+            PlayerHealth.Instance.TakeDamage(damage);
+            Vector2 knockbackDirection = new((other.transform.position - transform.position).normalized.x * 0.1f, 0.04f);
             PlayerMovementScript.Instance.RequestKnockback(knockbackDirection, knockbackForce);
         }
     }
