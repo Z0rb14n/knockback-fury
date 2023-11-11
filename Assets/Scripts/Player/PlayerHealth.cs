@@ -73,8 +73,8 @@ namespace Player
                     GameEndCanvas.Instance.endData.damageTaken += Mathf.Min(health, dmg);
                 }
                 health -= dmg;
-                _iFrameTimer = iFrameLength;
             }
+            _iFrameTimer = iFrameLength;
             StartCoroutine(DisableCollision());
             
         }
