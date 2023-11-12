@@ -11,7 +11,9 @@ namespace Util
         {
             int playerLayerID = LayerMask.NameToLayer("Player");
             int enemyLayerID = LayerMask.NameToLayer("Enemy");
+            int enemyLayerID2 = LayerMask.NameToLayer("EnemyIgnorePlatform");
             Physics2D.IgnoreLayerCollision(playerLayerID, enemyLayerID, false);
+            Physics2D.IgnoreLayerCollision(playerLayerID, enemyLayerID2, false);
         }
         
         /**
@@ -21,7 +23,9 @@ namespace Util
         {
             int playerLayerID = LayerMask.NameToLayer("Player");
             int enemyLayerID = LayerMask.NameToLayer("Enemy");
+            int enemyLayerID2 = LayerMask.NameToLayer("EnemyIgnorePlatform");
             Physics2D.IgnoreLayerCollision(playerLayerID, enemyLayerID, true);
+            Physics2D.IgnoreLayerCollision(playerLayerID, enemyLayerID2, true);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Enemies.Cat
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Rigidbody2D))]
-    public class CatBoss : MonoBehaviour
+    public class CatBossPhaseOne : MonoBehaviour
     {
         [NonSerialized]
         public CatBossManager CatManager;
@@ -17,6 +17,13 @@ namespace Enemies.Cat
         [SerializeField, Min(0)] private Vector2 jumpVector = new(10,10);
         [SerializeField, Min(0)] private Vector2 smallJumpVector = new(10,3);
         [SerializeField] private float playerOffsetForSmallJump = 1;
+        [SerializeField] private GameObject floorToDestroy;
+        [SerializeField] private float delayBeforeJumpBreak = 3;
+        [SerializeField] private Vector2 spotAboveFloor;
+        [SerializeField] private float timeToSpotAboveFloor = 0.5f;
+        [SerializeField] private float delayAboveFloor = 1;
+        [SerializeField] private Vector2 spotBelowFloor;
+        [SerializeField] private float floorFallTime = 0.5f;
 
         [SerializeField] private Sprite normalSprite;
         [SerializeField] private Sprite leftSprite;
@@ -29,6 +36,7 @@ namespace Enemies.Cat
         private LayerMask _groundLayer;
         private SpriteRenderer _spriteRenderer;
         private BossEnemy _originalBoss;
+        private Collider2D _floorCollider;
         private bool _attacking;
 
         private bool Grounded => _collider.IsTouchingLayers(_groundLayer);
@@ -38,6 +46,7 @@ namespace Enemies.Cat
             _collider = GetComponent<Collider2D>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _floorCollider = floorToDestroy.GetComponent<Collider2D>();
             _groundLayer = LayerMask.GetMask("Default");
         }
 
@@ -101,6 +110,43 @@ namespace Enemies.Cat
             }
         }
 
+        public void OnDeath()
+        {
+            StartCoroutine(DeathCoroutine());
+        }
+
+        private IEnumerator DeathCoroutine()
+        {
+            _collider.enabled = false;
+            _rigidbody.isKinematic = true;
+            _spriteRenderer.sprite = normalSprite;
+            yield return new WaitForSeconds(delayBeforeJumpBreak);
+            Vector2 prevPos = _rigidbody.position;
+            Vector2 trSpotAboveFloor = transform.parent.TransformPoint(spotAboveFloor);
+            for (float time = 0; time < timeToSpotAboveFloor; time += Time.deltaTime)
+            {
+                _rigidbody.position = Vector2.Lerp(prevPos, trSpotAboveFloor, time / timeToSpotAboveFloor);
+                yield return null;
+            }
+
+            _rigidbody.position = trSpotAboveFloor;
+            yield return new WaitForSeconds(delayAboveFloor);
+            float floorUpperBound = _floorCollider.bounds.max.y;
+            Vector2 trSpotBelowFloor = transform.parent.TransformPoint(spotBelowFloor);
+            for (float time = 0; time < floorFallTime; time += Time.deltaTime)
+            {
+                _rigidbody.position = Vector2.Lerp(trSpotAboveFloor, trSpotBelowFloor, time / floorFallTime);
+                if (floorToDestroy && _rigidbody.position.y < floorUpperBound)
+                {
+                    Destroy(floorToDestroy);
+                    floorToDestroy = null;
+                }
+                yield return null;
+            }
+            CatManager.EndPhaseOne();
+            Destroy(gameObject);
+        }
+
         private void FixedUpdate()
         {
             DestroyOldBossIfPresent();
@@ -108,6 +154,12 @@ namespace Enemies.Cat
             {
                 LookAtPlayer();
             }
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(transform.parent.TransformPoint(spotAboveFloor), 1);
+            Gizmos.DrawWireSphere(transform.parent.TransformPoint(spotBelowFloor), 1);
         }
     }
 }

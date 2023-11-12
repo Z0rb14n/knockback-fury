@@ -28,7 +28,7 @@
         
         protected override void Die()
         {
-            _bossManager.EndPhaseOne();
+            _bossManager.OnCatDeath();
         }
     }
 }

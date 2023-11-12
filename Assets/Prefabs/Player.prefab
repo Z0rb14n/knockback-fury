@@ -405,6 +405,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
     - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: raycastMask.m_Bits
+      value: 5257
+      objectReference: {fileID: 0}
+    - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}

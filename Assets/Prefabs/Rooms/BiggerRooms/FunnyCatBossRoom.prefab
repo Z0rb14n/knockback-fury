@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 8956019310673940361}
   - component: {fileID: 217003966872483885}
   - component: {fileID: 7872333126935335529}
-  m_Layer: 10
-  m_Name: CatBoss
+  m_Layer: 12
+  m_Name: CatBossP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,6 +176,13 @@ MonoBehaviour:
   jumpVector: {x: 10, y: 25}
   smallJumpVector: {x: 10, y: 7}
   playerOffsetForSmallJump: 0
+  floorToDestroy: {fileID: 8547103633080979974}
+  delayBeforeJumpBreak: 3
+  spotAboveFloor: {x: 19, y: 0}
+  timeToSpotAboveFloor: 0.5
+  delayAboveFloor: 1
+  spotBelowFloor: {x: 19, y: -30}
+  floorFallTime: 0.5
   normalSprite: {fileID: 21300000, guid: 20c0a3f93a123944498fb8e5d8679b2a, type: 3}
   leftSprite: {fileID: 21300000, guid: 268f19be17766e642a40db2ce0a0b6ec, type: 3}
   rightSprite: {fileID: 21300000, guid: bc11ac814b44b824fa82049b45b7175a, type: 3}
@@ -199,6 +206,7 @@ MonoBehaviour:
   doesChangeColor: 0
   canDropCheese: 0
   cheeseItemPickup: {fileID: 0}
+  triggers: 
 --- !u!1 &708281020285477252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,9 +1537,8 @@ MonoBehaviour:
   - {fileID: 6559365008506353441}
   - {fileID: 5212240995592756854}
   originalBossEnemy: {fileID: 5695699972413134992}
-  catBoss: {fileID: 217003966872483885}
-  floorToDestroy: {fileID: 8547103633080979974}
-  newCatSpawn: {fileID: 3377248770775238750}
+  catBossP1: {fileID: 217003966872483885}
+  catBossP2: {fileID: 3736409006273147599}
   delayBeforeSpawn: 5
 --- !u!1 &3270442569201604101
 GameObject:
@@ -18788,7 +18795,7 @@ GameObject:
   - component: {fileID: 8930177312841055003}
   - component: {fileID: 4776126386909782677}
   - component: {fileID: 3736409006273147599}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: CatBossP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18949,6 +18956,7 @@ MonoBehaviour:
   doesChangeColor: 0
   canDropCheese: 0
   cheeseItemPickup: {fileID: 0}
+  triggers: 
 --- !u!114 &3736409006273147599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20006,7 +20014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413593398316933292, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Size.y
-      value: 1
+      value: 0.95
       objectReference: {fileID: 0}
     - target: {fileID: 8413593398316933292, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Offset.y
@@ -20604,7 +20612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413593398316933292, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Size.y
-      value: 1
+      value: 0.95
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
@@ -21222,7 +21230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8413593398316933292, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Size.y
-      value: 0.5
+      value: 0.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}

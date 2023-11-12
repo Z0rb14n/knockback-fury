@@ -11,25 +11,26 @@ namespace Enemies.Cat
     {
         [SerializeField] private EntityHealth[] secretTriggers;
         [SerializeField] private BossEnemy originalBossEnemy;
-        [SerializeField] private CatBoss catBoss;
-        [SerializeField] private GameObject floorToDestroy;
-
-        [SerializeField] private Transform newCatSpawn;
+        [SerializeField] private CatBossPhaseOne catBossP1;
+        [SerializeField] private CatBossPhaseTwo catBossP2;
 
         [SerializeField, Min(0)] private float delayBeforeSpawn = 5;
 
         private int _triggersRemaining;
+        private bool _isPhaseOne = true;
         private Collider2D _originalBossCollider;
         private EntityHealth _catHealth;
+        private EntityHealth _catHealthP2;
         private BossHealthBar _bossHealthBar;
 
         private void Awake()
         {
-            catBoss.CatManager = this;
+            catBossP1.CatManager = this;
             _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
             _triggersRemaining = secretTriggers.Length;
             _originalBossCollider = originalBossEnemy.GetComponent<Collider2D>();
-            _catHealth = catBoss.GetComponent<EntityHealth>();
+            _catHealth = catBossP1.GetComponent<EntityHealth>();
+            _catHealthP2 = catBossP2.GetComponent<EntityHealth>();
             foreach (EntityHealth health in secretTriggers)
             {
                 health.OnDeath += OnDeath;
@@ -48,19 +49,31 @@ namespace Enemies.Cat
         private IEnumerator StartSpawnSoon()
         {
             _originalBossCollider.enabled = false;
-            catBoss.PrepareToSpawn(originalBossEnemy);
+            catBossP1.PrepareToSpawn(originalBossEnemy);
             CameraScript.Instance.CameraShakeStrength = 1;
             originalBossEnemy.StopBeingActive();
             yield return new WaitForSeconds(delayBeforeSpawn);
             CameraScript.Instance.CameraShakeStrength = 0;
-            catBoss.StartSpawn();
+            catBossP1.StartSpawn();
             _bossHealthBar.health = _catHealth;
+        }
+
+        public void OnCatDeath()
+        {
+            if (_isPhaseOne)
+            {
+                _isPhaseOne = false;
+                catBossP1.OnDeath();
+            }
+            else
+            {
+                
+            }
         }
 
         public void EndPhaseOne()
         {
-            Destroy(floorToDestroy);
-            catBoss.transform.position = newCatSpawn.transform.position;
+            _bossHealthBar.health = _catHealthP2;
         }
 
         public void CatHealthTriggerReach(int index)
