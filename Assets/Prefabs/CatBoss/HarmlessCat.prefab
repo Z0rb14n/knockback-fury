@@ -176,3 +176,5 @@ MonoBehaviour:
   leftSprite: {fileID: 21300000, guid: 268f19be17766e642a40db2ce0a0b6ec, type: 3}
   rightSprite: {fileID: 21300000, guid: bc11ac814b44b824fa82049b45b7175a, type: 3}
   catDebris: {fileID: 2375711980092311021, guid: f6ff9a2141f9a7b48a44dd624db9ce26, type: 3}
+  friends: []
+  jumpVector: {x: 4, y: 4}
