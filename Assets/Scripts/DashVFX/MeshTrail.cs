@@ -43,7 +43,8 @@ namespace DashVFX
                 transform =
                 {
                     position = transform.position,
-                    rotation = transform.rotation
+                    rotation = transform.rotation,
+                    localScale = transform.localScale
                 }
             };
             SpriteRenderer spriteRenderer = obj.GetComponent<SpriteRenderer>();

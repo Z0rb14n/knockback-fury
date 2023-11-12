@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GameEnd;
 using Player;
 using UnityEngine;
 
@@ -68,6 +69,10 @@ namespace Enemies.Cat
             else
             {
                 
+                if (GameEndCanvas.Instance)
+                {
+                    GameEndCanvas.Instance.DisplayAfterDelay(4, true);
+                }
             }
         }
 
@@ -78,7 +83,7 @@ namespace Enemies.Cat
 
         public void CatHealthTriggerReach(int index)
         {
-            
+            catBossP2.OnTriggerReach(index);
         }
     }
 }
