@@ -68,7 +68,7 @@ namespace Enemies.Cat
             }
             else
             {
-                
+                catBossP2.OnDeath();
                 if (GameEndCanvas.Instance)
                 {
                     GameEndCanvas.Instance.DisplayAfterDelay(4, true);

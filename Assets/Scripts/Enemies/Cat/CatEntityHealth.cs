@@ -3,6 +3,8 @@
     public class CatEntityHealth : EntityHealth
     {
         public int[] triggers;
+
+        public bool Invuln { get; set; } = false;
         private int _triggerVal;
         private CatBossManager _bossManager;
         protected override void Awake()
@@ -14,6 +16,7 @@
 
         public override void TakeDamage(int dmg)
         {
+            if (Invuln) return;
             if (health <= 0) return;
             DoTakeDamage(dmg);
             if (triggers != null && _triggerVal < triggers.Length && health < triggers[_triggerVal])

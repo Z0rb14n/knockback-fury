@@ -2,6 +2,7 @@
 using System.Collections;
 using DashVFX;
 using Enemies.Ranged;
+using FMODUnity;
 using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +19,21 @@ namespace Enemies.Cat
         [SerializeField] private Sprite normalSprite;
         [SerializeField] private Sprite leftSprite;
         [SerializeField] private Sprite rightSprite;
+        [SerializeField] private CatInvulnMachine[] invulnDevices;
+        [SerializeField] private GameObject invulnShield;
+
+        [SerializeField] private GameObject batGroup;
+        [SerializeField] private Transform batTransform;
+
+        [SerializeField] private float batStartRotation = -5;
+        [SerializeField] private float batEndRotation = -30;
+        [SerializeField] private int batAttackDamage = 0;
+        [SerializeField] private float batKnockback = 50;
+        [SerializeField] private Vector2 batJumpVector = new(10, 10);
+        [SerializeField, Min(0)] private float batDownLength = 1;
+        [SerializeField, Min(0)] private float batDelay = 1.5f;
+
+        [SerializeField] private EventReference bonkSound;
         // -1: normal
         // 0: can dash, slightly faster
         // 1: can dash, even faster, activates invuln
@@ -30,21 +46,42 @@ namespace Enemies.Cat
         private SpriteRenderer _spriteRenderer;
         private Collider2D _floorCollider;
         private MeshTrail _meshTrail;
+        private int _invulnDevices;
+        private BossHealthBar _bossHealthBar;
+        private CatEntityHealth _catEntityHealth;
+        private IEnumerator _batCoroutine;
+        private PlayerHealth _playerHealth;
+        private bool _canAttackWithBat = true;
         private bool Grounded => _collider.IsTouchingLayers(_groundLayer);
 
         private void Awake()
         {
             _player = PlayerMovementScript.Instance;
+            _playerHealth = PlayerHealth.Instance;
             _collider = GetComponent<Collider2D>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _meshTrail = GetComponent<MeshTrail>();
+            _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
+            _catEntityHealth = GetComponent<CatEntityHealth>();
             _groundLayer = LayerMask.GetMask("Default", "IgnorePlayer");
         }
 
         public void FixedUpdate()
         {
             if (Grounded) LookAtPlayer();
+            if (_phase == 2)
+            {
+                Vector3 playerPos = _player.transform.position;
+                Vector3 pos = transform.position;
+                bool isLeft = playerPos.x < pos.x;
+                bool isIn = _collider.bounds.Contains(playerPos);
+                transform.localScale = new Vector3(isLeft ? -CurrSetting.size : CurrSetting.size, CurrSetting.size, 1);
+                if (Grounded && !isIn)
+                {
+                    _rigidbody.AddForce(batJumpVector * new Vector2(isLeft ? -1 : 1, 1) * _rigidbody.mass, ForceMode2D.Impulse);
+                }
+            }
         }
 
         public void Activate()
@@ -112,11 +149,44 @@ namespace Enemies.Cat
         {
             _phase = phase;
             UpdateSize();
+            if (phase == 1/* || phase == 2*/)
+            {
+                // todo turrets
+                _catEntityHealth.Invuln = true;
+                _bossHealthBar.BarColor = Color.yellow;
+                invulnShield.SetActive(true);
+            }
+            if (phase == 1)
+            {
+                _invulnDevices = invulnDevices.Length;
+                foreach (CatInvulnMachine go in invulnDevices) go.gameObject.SetActive(true);
+            }
+
+            if (phase == 2)
+            {
+                batGroup.SetActive(true);
+            }
+        }
+
+        public void OnDeath()
+        {
+            // todo debris on death
+            Destroy(gameObject);
         }
 
         private void UpdateSize()
         {
             transform.localScale = new Vector3(CurrSetting.size, CurrSetting.size, 1);
+        }
+        public void OnInvulnDeath()
+        {
+            _invulnDevices--;
+            if (_invulnDevices <= 0)
+            {
+                _bossHealthBar.BarColor = Color.red;
+                _catEntityHealth.Invuln = false;
+                invulnShield.SetActive(false);
+            }
         }
 
         [Serializable]
@@ -132,6 +202,45 @@ namespace Enemies.Cat
             public float dashVel;
             public float timeBeforeDash;
             public float size;
+        }
+        
+        
+        // TODO REFACTOR - DUPLICATE OF GOON
+        private IEnumerator BatCoroutine()
+        {
+            while (_batCoroutine != null)
+            {
+                yield return new WaitUntil(() => _canAttackWithBat);
+                StartCoroutine(AttackAnimation());
+            }
+        }
+
+        private IEnumerator AttackAnimation()
+        {
+            _canAttackWithBat = false;
+            batTransform.localEulerAngles = new Vector3(0, 0, batEndRotation);
+            _playerHealth.TakeDamage(batAttackDamage);
+            RuntimeManager.PlayOneShot(bonkSound, transform.position);
+            Vector2 knockbackDirection = new((_player.transform.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
+            _player.RequestKnockback(knockbackDirection, batKnockback);
+            yield return new WaitForSeconds(batDownLength);
+            // ReSharper disable once Unity.InefficientPropertyAccess
+            batTransform.localEulerAngles = new Vector3(0,0,batStartRotation);
+            yield return new WaitForSeconds(batDelay - batDownLength);
+            _canAttackWithBat = true;
+        }
+
+        public void StartAttackingPlayerWithBat()
+        {
+            _batCoroutine = BatCoroutine();
+            StartCoroutine(_batCoroutine);
+        }
+
+        public void StopAttackingPlayerWithBat()
+        {
+            StopCoroutine(_batCoroutine);
+            _batCoroutine = null;
+            batTransform.localEulerAngles = Vector3.zero;
         }
     }
 }
