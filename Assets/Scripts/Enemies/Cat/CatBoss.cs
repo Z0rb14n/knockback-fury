@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Enemies.Cat
 {
-    [RequireComponent(typeof(EntityHealth), typeof(SpriteRenderer), typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(Rigidbody2D))]
     public class CatBoss : MonoBehaviour
     {
         [NonSerialized]

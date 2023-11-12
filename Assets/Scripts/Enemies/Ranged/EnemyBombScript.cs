@@ -31,7 +31,7 @@ namespace Enemies.Ranged
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
-                playerMovementScript.Velocity);
+                playerMovementScript.Velocity, playerVelocityPrediction, projectileSpeed, delayBeforeDestruction);
             _detonationCoroutine = DelayedExplosion();
             StartCoroutine(_detonationCoroutine);
             _projectileLayer = LayerMask.NameToLayer("Projectile");
@@ -46,18 +46,22 @@ namespace Enemies.Ranged
         /// <param name="startingPos">Starting position</param>
         /// <param name="endingPos">Ending position</param>
         /// <param name="endingVel">Target's ending velocity</param>
+        /// <param name="predictVelocity">Whether we predict player velocity</param>
+        /// <param name="maxSpeed">Max projectile speed</param>
+        /// <param name="maxTime">Max time</param>
         /// <returns>Velocity to be at, clamped to max velocity.</returns>
-        private Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, Vector2 endingVel)
+        public static Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, Vector2 endingVel,
+            bool predictVelocity, float maxSpeed, float maxTime)
         {
             Vector2 diff = endingPos - startingPos;
             Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
             float g = -Physics2D.gravity.y;
 
-            if (endingVel.magnitude != 0 && playerVelocityPrediction)
+            if (endingVel.magnitude != 0 && predictVelocity)
             {
                 // approximate new position by just increasing by velocity slightly
                 // actual numerical solution is too complicated
-                float approximateTime = (diff.magnitude) / projectileSpeed;
+                float approximateTime = (diff.magnitude) / maxSpeed;
                 endingPos += endingVel * approximateTime;
                 diff = endingPos - startingPos;
                 Debug.DrawLine(startingPos, endingPos, Color.green, 2);
@@ -69,12 +73,11 @@ namespace Enemies.Ranged
              * Moving target requires a quartic polynomial solution, and that doesn't work as floating points don't
              * have complex number support.
              */
-            float t = Mathf.Clamp(
-                Mathf.Sqrt(Mathf.Sqrt(4 / (g * g) * diff.sqrMagnitude)), 0.001f, delayBeforeDestruction);
+            float t = Mathf.Clamp(Mathf.Sqrt(Mathf.Sqrt(4 / (g * g) * diff.sqrMagnitude)), 0.001f, maxTime);
             Vector2 numericalSolution = new(diff.x / t, diff.y / t + g * t / 2);
             Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
             //Debug.Log(numericalSolution.magnitude);
-            return Vector2.ClampMagnitude(numericalSolution, projectileSpeed);
+            return Vector2.ClampMagnitude(numericalSolution, maxSpeed);
         }
 
         private void FixedUpdate()

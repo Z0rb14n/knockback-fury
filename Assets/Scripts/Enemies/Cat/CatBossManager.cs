@@ -62,5 +62,10 @@ namespace Enemies.Cat
             Destroy(floorToDestroy);
             catBoss.transform.position = newCatSpawn.transform.position;
         }
+
+        public void CatHealthTriggerReach(int index)
+        {
+            
+        }
     }
 }
