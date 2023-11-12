@@ -15,6 +15,7 @@ namespace Enemies.Cat
         [SerializeField] private CatBossPhaseOne catBossP1;
         [SerializeField] private CatBossPhaseTwo catBossP2;
 
+        [SerializeField, Min(0)] private float delayBeforeWin = 2;
         [SerializeField, Min(0)] private float delayBeforeSpawn = 5;
 
         private int _triggersRemaining;
@@ -71,7 +72,7 @@ namespace Enemies.Cat
                 catBossP2.OnDeath();
                 if (GameEndCanvas.Instance)
                 {
-                    GameEndCanvas.Instance.DisplayAfterDelay(4, true);
+                    GameEndCanvas.Instance.DisplayAfterDelay(delayBeforeWin, true);
                 }
             }
         }

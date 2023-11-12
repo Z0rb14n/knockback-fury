@@ -1065,10 +1065,62 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1583662164043562909, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 1888889460221024043, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 2434384232496990663, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 3310559124872734321, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 3893106371841910930, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 4345779262598071827, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 4612498683628088996, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 5053801271579314095, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 5062901578106674832, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 5653335741892887179, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 5790737285002586135, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
     - target: {fileID: 6198271201817309835, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: m_Name
       value: FunnyCatBossRoom
       objectReference: {fileID: 0}
+    - target: {fileID: 6516775229607405376, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
+    - target: {fileID: 7304687974572370555, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: projectileParent
+      value: 
+      objectReference: {fileID: 884211960}
     - target: {fileID: 8378786413493259048, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: m_Tiles.Array.data[16].second.m_AllTileFlags
       value: 1073741825

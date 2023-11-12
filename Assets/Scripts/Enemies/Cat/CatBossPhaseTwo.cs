@@ -5,6 +5,7 @@ using Enemies.Ranged;
 using FMODUnity;
 using Player;
 using UnityEngine;
+using Util;
 using Random = UnityEngine.Random;
 
 namespace Enemies.Cat
@@ -20,6 +21,9 @@ namespace Enemies.Cat
         [SerializeField] private Sprite leftSprite;
         [SerializeField] private Sprite rightSprite;
         [SerializeField] private CatInvulnMachine[] invulnDevices;
+        [SerializeField] private CatTurret[] turrets;
+        [SerializeField] private float timeBetweenTurrets = 0.2f;
+        [SerializeField] private float timeAfterTurrets = 10;
         [SerializeField] private GameObject invulnShield;
 
         [SerializeField] private GameObject batGroup;
@@ -32,6 +36,7 @@ namespace Enemies.Cat
         [SerializeField] private Vector2 batJumpVector = new(10, 10);
         [SerializeField, Min(0)] private float batDownLength = 1;
         [SerializeField, Min(0)] private float batDelay = 1.5f;
+        [SerializeField] private GameObject catDebris;
 
         [SerializeField] private EventReference bonkSound;
         // -1: normal
@@ -52,6 +57,7 @@ namespace Enemies.Cat
         private IEnumerator _batCoroutine;
         private PlayerHealth _playerHealth;
         private bool _canAttackWithBat = true;
+        private bool _turretPhaseOver;
         private bool Grounded => _collider.IsTouchingLayers(_groundLayer);
 
         private void Awake()
@@ -69,8 +75,7 @@ namespace Enemies.Cat
 
         public void FixedUpdate()
         {
-            if (Grounded) LookAtPlayer();
-            if (_phase == 2)
+            if (_phase == 2 && _turretPhaseOver)
             {
                 Vector3 playerPos = _player.transform.position;
                 Vector3 pos = transform.position;
@@ -79,9 +84,11 @@ namespace Enemies.Cat
                 transform.localScale = new Vector3(isLeft ? -CurrSetting.size : CurrSetting.size, CurrSetting.size, 1);
                 if (Grounded && !isIn)
                 {
-                    _rigidbody.AddForce(batJumpVector * new Vector2(isLeft ? -1 : 1, 1) * _rigidbody.mass, ForceMode2D.Impulse);
+                    _rigidbody.velocity = batJumpVector * new Vector2(isLeft ? -1 : 1, 1);
                 }
-            }
+
+                _spriteRenderer.sprite = rightSprite;
+            } else if (Grounded) LookAtPlayer();
         }
 
         public void Activate()
@@ -149,9 +156,8 @@ namespace Enemies.Cat
         {
             _phase = phase;
             UpdateSize();
-            if (phase == 1/* || phase == 2*/)
+            if (phase == 1 || phase == 2)
             {
-                // todo turrets
                 _catEntityHealth.Invuln = true;
                 _bossHealthBar.BarColor = Color.yellow;
                 invulnShield.SetActive(true);
@@ -165,13 +171,32 @@ namespace Enemies.Cat
             if (phase == 2)
             {
                 batGroup.SetActive(true);
+                foreach (CatTurret turret in turrets) turret.Activate();
+                StartCoroutine(TurretPhaseCoroutine());
             }
+        }
+
+        private IEnumerator TurretPhaseCoroutine()
+        {
+            turrets.Shuffle();
+            foreach (CatTurret turret in turrets)
+            {
+                turret.Fire();
+                yield return new WaitForSeconds(timeBetweenTurrets);
+            }
+
+            yield return new WaitForSeconds(timeAfterTurrets);
+            _catEntityHealth.Invuln = false;
+            _bossHealthBar.BarColor = Color.red;
+            invulnShield.SetActive(false);
+            _turretPhaseOver = true;
         }
 
         public void OnDeath()
         {
-            // todo debris on death
             Destroy(gameObject);
+            GameObject go = Instantiate(catDebris, transform.position, Quaternion.identity);
+            go.transform.localScale = transform.localScale;
         }
 
         private void UpdateSize()
@@ -232,6 +257,7 @@ namespace Enemies.Cat
 
         public void StartAttackingPlayerWithBat()
         {
+            if (!_turretPhaseOver) return;
             _batCoroutine = BatCoroutine();
             StartCoroutine(_batCoroutine);
         }
