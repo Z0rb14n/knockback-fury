@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DashVFX
 {
-    public class MeshTrail : MonoBehaviour
+    public class MeshTrail : AbstractDashTrail
     {
         public Sprite playerSprite;
 
@@ -15,14 +15,14 @@ namespace DashVFX
         private bool _shouldShowVFX;
         private bool _isFlipped;
 
-        public void StartDash(bool flipped)
+        public override void StartDash(bool flipped)
         {
             _shouldShowVFX = true;
             _isFlipped = flipped;
             StartCoroutine(DashCoroutine());
         }
 
-        public void StopDash()
+        public override void StopDash()
         {
             _shouldShowVFX = false;
         }

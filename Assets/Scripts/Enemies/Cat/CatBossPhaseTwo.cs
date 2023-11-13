@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 namespace Enemies.Cat
 {
     [RequireComponent(typeof(EntityHealth), typeof(SpriteRenderer), typeof(Rigidbody2D)),
-    RequireComponent(typeof(MeshTrail))]
+    RequireComponent(typeof(AbstractDashTrail))]
     public class CatBossPhaseTwo : MonoBehaviour
     {
         public AttackSetting[] attackSettings;
@@ -50,7 +50,7 @@ namespace Enemies.Cat
         private LayerMask _groundLayer;
         private SpriteRenderer _spriteRenderer;
         private Collider2D _floorCollider;
-        private MeshTrail _meshTrail;
+        private AbstractDashTrail _dashTrail;
         private int _invulnDevices;
         private BossHealthBar _bossHealthBar;
         private CatEntityHealth _catEntityHealth;
@@ -67,7 +67,7 @@ namespace Enemies.Cat
             _collider = GetComponent<Collider2D>();
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
-            _meshTrail = GetComponent<MeshTrail>();
+            _dashTrail = GetComponent<AbstractDashTrail>();
             _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
             _catEntityHealth = GetComponent<CatEntityHealth>();
             _groundLayer = LayerMask.GetMask("Default", "IgnorePlayer");
@@ -102,6 +102,7 @@ namespace Enemies.Cat
             {
                 yield return new WaitForSeconds(CurrSetting.attackDelay);
                 if (!Grounded) continue;
+                _dashTrail.StopDash();
                 bool doDash = CurrSetting.canDash && Random.Range(0.0f, 1.0f) < CurrSetting.dashFreq;
                 if (doDash)
                 {
@@ -117,11 +118,9 @@ namespace Enemies.Cat
                     pos = _rigidbody.position;
                     _rigidbody.velocity = (playerPos - pos).normalized * CurrSetting.dashVel;
                     LookAtPlayer();
-                    _meshTrail.playerSprite = _spriteRenderer.sprite;
-                    _meshTrail.StartDash(false);
+                    _dashTrail.StartDash(false);
                     yield return new WaitForSeconds(0.5f);
                     _rigidbody.gravityScale = 1; 
-                    _meshTrail.StopDash();
                 }
                 else
                 {
@@ -141,6 +140,7 @@ namespace Enemies.Cat
                     if (!float.IsNaN(force.x)) _rigidbody.velocity = force;
                 }
             }
+            _dashTrail.StopDash();
         }
 
         private void LookAtPlayer()
