@@ -199,8 +199,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a0b17100a9a49fa4aadda36c4ae8804c, type: 2}
   weaponPickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
   weaponUpgradePrefab: {fileID: 3868675004188845447, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
-  bossRoomPrefab: {fileID: 6904360811100635293, guid: a7cbfdd4a470b384dbe8e7058e2e83bf, type: 3}
-  lootRoomPrefab: {fileID: 4983919535184341483, guid: fed08d46baf075748bf6946cd9bf2360, type: 3}
+  bossRoomPrefab: {fileID: 6198271201817309835, guid: f62d6c138fed40b47917520032733922, type: 3}
+  lootRoomPrefab: {fileID: 4983919535184341483, guid: 753df178530f8dd4d83201c9c456f06a, type: 3}
   pairs:
   - type: -1
     roomPrefab:
@@ -291,7 +291,7 @@ MonoBehaviour:
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
   gridSize: {x: 50, y: 21}
-  generationStart: {x: -15, y: 5}
+  generationStart: {x: 0, y: 0}
   playerTransform: {fileID: 419107792}
 --- !u!4 &25068407
 Transform:
@@ -464,6 +464,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+    - target: {fileID: 2238002965259948386, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: upgrades.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2238002965259948386, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: upgrades.Array.data[0].type
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2238002965259948386, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: upgrades.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3228942646842628699, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.54285717

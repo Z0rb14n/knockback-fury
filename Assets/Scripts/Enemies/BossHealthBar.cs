@@ -1,5 +1,4 @@
-﻿using GameEnd;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Enemies
@@ -9,6 +8,12 @@ namespace Enemies
         public EntityHealth health;
         [SerializeField] private Image healthBar;
         private RectTransform _healthBarRect;
+
+        public Color BarColor
+        {
+            get => healthBar.color;
+            set => healthBar.color = value;
+        }
 
         private bool _hasDied;
         
@@ -28,20 +33,10 @@ namespace Enemies
 
         private void SetValues()
         {
-            float ratio = (float)health.health / health.maxHealth;
+            float ratio = health?(float)health.health / health.maxHealth : 0;
             // wtf is with this anchoredPosition + sizeDelta BS
             _healthBarRect.anchoredPosition = new Vector2(-1000f * (1 - ratio) / 2, 0);
             _healthBarRect.sizeDelta = new Vector2(-10 - 1000f * (1 - ratio), -10);
-            if (health.health <= 0 && !_hasDied)
-            {
-                // TODO MOVE TO BOSS ENTITY HEALTH
-                // BUT I'M LAZY
-                _hasDied = true;
-                if (GameEndCanvas.Instance)
-                {
-                    GameEndCanvas.Instance.DisplayAfterDelay(1, true);
-                }
-            }
         }
 
         private void Update()

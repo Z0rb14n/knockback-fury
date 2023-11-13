@@ -30,8 +30,17 @@ namespace Enemies.Ranged
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
-            rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
-                playerMovementScript.Velocity);
+            if (playerVelocityPrediction)
+            {
+                rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
+                    playerMovementScript.Velocity, projectileSpeed, delayBeforeDestruction);
+            }
+            else
+            {
+                rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
+                    projectileSpeed, delayBeforeDestruction);
+            }
+
             _detonationCoroutine = DelayedExplosion();
             StartCoroutine(_detonationCoroutine);
             _projectileLayer = LayerMask.NameToLayer("Projectile");
@@ -40,28 +49,21 @@ namespace Enemies.Ranged
             _fuseSFX.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject, rigidbody2D));
         }
 
+
         /// <summary>
         /// Calculates the velocity that we want given a starting position, ending position and target's velocity
         /// </summary>
         /// <param name="startingPos">Starting position</param>
         /// <param name="endingPos">Ending position</param>
-        /// <param name="endingVel">Target's ending velocity</param>
+        /// <param name="maxSpeed">Max projectile speed</param>
+        /// <param name="maxTime">Max time</param>
+        /// <param name="g">Custom gravity: NaN if use global</param>
         /// <returns>Velocity to be at, clamped to max velocity.</returns>
-        private Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, Vector2 endingVel)
+        public static Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, float maxSpeed, float maxTime, float g = float.NaN)
         {
             Vector2 diff = endingPos - startingPos;
             Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
-            float g = -Physics2D.gravity.y;
-
-            if (endingVel.magnitude != 0 && playerVelocityPrediction)
-            {
-                // approximate new position by just increasing by velocity slightly
-                // actual numerical solution is too complicated
-                float approximateTime = (diff.magnitude) / projectileSpeed;
-                endingPos += endingVel * approximateTime;
-                diff = endingPos - startingPos;
-                Debug.DrawLine(startingPos, endingPos, Color.green, 2);
-            }
+            if (float.IsNaN(g)) g = -Physics2D.gravity.y;
 
             /*
              * Numerical solution for minimizing squared velocity given ending target is stationary.
@@ -69,12 +71,34 @@ namespace Enemies.Ranged
              * Moving target requires a quartic polynomial solution, and that doesn't work as floating points don't
              * have complex number support.
              */
-            float t = Mathf.Clamp(
-                Mathf.Sqrt(Mathf.Sqrt(4 / (g * g) * diff.sqrMagnitude)), 0.001f, delayBeforeDestruction);
+            float t = Mathf.Clamp(Mathf.Sqrt(Mathf.Sqrt(4 / (g * g) * diff.sqrMagnitude)), 0.001f, maxTime);
             Vector2 numericalSolution = new(diff.x / t, diff.y / t + g * t / 2);
             Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
             //Debug.Log(numericalSolution.magnitude);
-            return Vector2.ClampMagnitude(numericalSolution, projectileSpeed);
+            return Vector2.ClampMagnitude(numericalSolution, maxSpeed);
+        }
+
+        /// <summary>
+        /// Calculates the velocity that we want given a starting position, ending position and target's velocity
+        /// </summary>
+        /// <param name="startingPos">Starting position</param>
+        /// <param name="endingPos">Ending position</param>
+        /// <param name="endingVel">Target's ending velocity</param>
+        /// <param name="maxSpeed">Max projectile speed</param>
+        /// <param name="maxTime">Max time</param>
+        /// <param name="g">Custom gravity: NaN if use global</param>
+        /// <returns>Velocity to be at, clamped to max velocity.</returns>
+        public static Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, Vector2 endingVel,
+            float maxSpeed, float maxTime, float g = float.NaN)
+        {
+            if (float.IsNaN(g)) g = -Physics2D.gravity.y;
+            Vector2 diff = endingPos - startingPos;
+            // approximate new position by just increasing by velocity slightly
+            // actual numerical solution is too complicated
+            float approximateTime = (diff.magnitude) / maxSpeed;
+            endingPos += endingVel * approximateTime;
+            Debug.DrawLine(startingPos, endingPos, Color.green, 2);
+            return CalculateVelocity(startingPos, endingPos, maxSpeed, maxTime, g);
         }
 
         private void FixedUpdate()

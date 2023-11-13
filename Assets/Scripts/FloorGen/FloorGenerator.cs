@@ -60,13 +60,13 @@ namespace FloorGen
         public GameObject lootRoomPrefab;
         public Pair[] pairs;
         public int seed;
-        [Min(0), Tooltip("Number of rows for generation")]
+        [Min(1), Tooltip("Number of rows for generation")]
         public int maxRows = 3;
-        [Min(0), Tooltip("Max number of rooms generated")]
+        [Min(2), Tooltip("Max number of rooms generated")]
         public int minRooms = 12;
-        [Min(0), Tooltip("Max number of rooms generated")]
+        [Min(2), Tooltip("Max number of rooms generated")]
         public int maxRooms = 15;
-        [Min(0), Tooltip("Minimum number of rows generated on center row")]
+        [Min(2), Tooltip("Minimum number of rows generated on center row")]
         public int centerRowMin = 8;
         // ReSharper disable once StringLiteralTypo
         [Tooltip("Branchiness of final branch sweep")]

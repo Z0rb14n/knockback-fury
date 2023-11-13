@@ -48,6 +48,7 @@ namespace Util
         /// <typeparam name="T">Type of elements in list</typeparam>
         public static T SwapRemove<T>(this List<T> list, int index)
         {
+            if (list.Count == 0) Debug.LogError("[ListUtil::SwapRemove] empty list provided.");
             int last = list.Count - 1;
             T val = list[index];
             list[index] = list[last];
@@ -76,6 +77,16 @@ namespace Util
         public static T RemoveRandom<T>(this List<T> list)
         {
             return SwapRemove(list, UnityEngine.Random.Range(0, list.Count));
+        }
+        
+        public static void Shuffle<T> (this T[] array)
+        {
+            int n = array.Length;
+            while (n > 1) 
+            {
+                int k = UnityEngine.Random.Range(0,n--);
+                (array[n], array[k]) = (array[k], array[n]);
+            }
         }
     }
 }
