@@ -338,6 +338,8 @@ namespace Player
 
         public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
+            // bruh
+            if (isWeapon && (IsWallSliding || Grounded)) vec *= 2;
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
