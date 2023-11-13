@@ -1081,6 +1081,10 @@ PrefabInstance:
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 884211960}
+    - target: {fileID: 3625089229972408744, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3893106371841910930, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: projectileParent
       value: 
@@ -1117,10 +1121,22 @@ PrefabInstance:
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 884211960}
+    - target: {fileID: 6642038770978823538, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784935151727607713, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7304687974572370555, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: projectileParent
       value: 
       objectReference: {fileID: 884211960}
+    - target: {fileID: 7472962727128657148, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8378786413493259048, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: m_Tiles.Array.data[16].second.m_AllTileFlags
       value: 1073741825
