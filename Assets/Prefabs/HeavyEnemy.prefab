@@ -176,7 +176,8 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 1
   canDropCheese: 1
-  cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
+  cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176,
+    type: 3}
 --- !u!114 &781840091141345320
 MonoBehaviour:
   m_ObjectHideFlags: 0

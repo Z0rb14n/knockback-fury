@@ -20,8 +20,8 @@ MonoBehaviour:
   selfDamage: 1
   cheeseCost: 50
   roundsPerSecond: 1
-  clipSize: 1
-  reloadTime: 1.6
+  clipSize: 6
+  reloadTime: 2.3
   spread: 0
   isHitscan: 1
   rightClickAction: 0
@@ -50,3 +50,4 @@ MonoBehaviour:
     maxPierces: 1
     invulnTimer: 0
     isInfinitePierce: 0
+  unlockedByDefault: 1

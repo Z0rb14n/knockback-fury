@@ -23,7 +23,7 @@ namespace Enemies
             
             Destroy(gameObject);
             
-            if (boss) boss.IsActive = true;
+            if (boss) boss.StartBoss();
             wallBehindPlayer.SetActive(true);
             healthBar.gameObject.SetActive(true);
         }

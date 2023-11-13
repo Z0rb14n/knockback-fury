@@ -51,7 +51,7 @@ namespace Enemies
             _physicsCheckMask = LayerMask.GetMask("Default");
             _groundFilter = new ContactFilter2D
             {
-                layerMask = _physicsCheckMask,
+                layerMask = LayerMask.GetMask("Default", "Platform"),
                 useLayerMask = true,
                 useNormalAngle = true,
                 minNormalAngle = 30,

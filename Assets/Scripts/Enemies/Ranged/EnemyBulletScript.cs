@@ -23,10 +23,14 @@ namespace Enemies.Ranged
 
         public virtual void Initialize(float damageMult)
         {
+            Vector3 direction = PlayerMovementScript.Instance.transform.position - transform.position;
+            Initialize(damageMultiplier, direction);
+        }
+
+        public virtual void Initialize(float damageMult, Vector3 direction)
+        {
             damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
-            
-            Vector3 direction = PlayerMovementScript.Instance.transform.position - transform.position;
             rigidbody2D.velocity = direction.normalized * projectileSpeed;
             float rot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.localEulerAngles = new Vector3(0, 0, rot);

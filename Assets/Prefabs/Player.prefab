@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 3228942646842628699}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5430a71e5aeac674db1ba572193a8605, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9518738d08a58944f878c970e4bfe13b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 9
-  speedSmoothness: 0.01
   jumpForce: 13
   wallJumpForce: {x: 12, y: 13}
   dashSpeed: 13.5
@@ -149,7 +148,6 @@ MonoBehaviour:
   dashStartDelay: 0.07
   maxDashes: 1
   slideSpeed: 0.8
-  newMovementEnabled: 1
   accel: 50
   turnAroundMultiplier: 9
   decel: 30
@@ -193,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e86b1837bd62e48b7995c5ea1b052f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 21300000, guid: 5430a71e5aeac674db1ba572193a8605, type: 3}
+  playerSprite: {fileID: 21300000, guid: 9518738d08a58944f878c970e4bfe13b, type: 3}
   fadeSpeed: 0.6
   maxTimeInterval: 1
 --- !u!114 &1994587395661662118
@@ -248,7 +246,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
+    oldSize: {x: 0.54285717, y: 0.54285717}
     newSize: {x: 0.55, y: 0.51}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -346,6 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxViewDist: 150
+  camOffset: {x: 2, y: 0, z: 0}
 --- !u!1001 &4372441462678086230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -406,13 +405,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
     - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: raycastMask.m_Bits
+      value: 5257
+      objectReference: {fileID: 0}
+    - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: weaponInventory.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
+      objectReference: {fileID: 11400000, guid: 1acaad02cc1f9db4ba31cf0bc1191825, type: 2}
     - target: {fileID: 3054874150355908591, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: weaponInventory.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3054874151231780715, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_LocalScale.y
       value: 1
@@ -420,7 +423,7 @@ PrefabInstance:
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
     - target: {fileID: 3054874151231780716, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_Color.b
       value: 1

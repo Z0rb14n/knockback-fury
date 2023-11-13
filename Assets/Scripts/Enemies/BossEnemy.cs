@@ -1,28 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GameEnd;
 using Player;
 using UnityEngine;
 using Util;
-using Random = UnityEngine.Random;
 
 namespace Enemies
 {
     public class BossEnemy : MonoBehaviour
     {
-        private bool _active;
-        public bool IsActive
-        {
-            get => _active;
-            set
-            {
-                if (value)
-                {
-                    OnActivate();
-                }
-
-                _active = value;
-            }
-        }
 
         [SerializeField, Min(0)] private float speed;
         [SerializeField] private DelayedDeathZone[] deathZones;
@@ -36,29 +22,55 @@ namespace Enemies
         [SerializeField, Min(0)] private int numberOfSummons = 3;
         [SerializeField] private Vector3[] summonLocations;
         [SerializeField] private bool summonsUseWorld = true;
-        
+
+        private readonly List<GameObject> _summons = new();
         private PlayerMovementScript _playerMovement;
         private PlayerHealth _playerHealth;
+        private bool _active;
+
+        private IEnumerator _zonesCoroutine;
+        private IEnumerator _summonCoroutine;
 
         private void Awake()
         {
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
+            GetComponent<EntityHealth>().OnDeath += _ =>
+            {
+                if (GameEndCanvas.Instance)
+                {
+                    GameEndCanvas.Instance.DisplayAfterDelay(1, true);
+                }
+            };
         }
 
         private void FixedUpdate()
         {
-            if (IsActive)
+            if (_active)
                 transform.position = Vector3.MoveTowards(transform.position, _playerMovement.transform.position,
                     speed * Time.fixedDeltaTime);
         }
 
-        private void OnActivate()
+        public void StartBoss()
         {
-            StartCoroutine(ZonesCoroutine());
-            StartCoroutine(SummonCoroutine());
+            _active = true;
+            _zonesCoroutine = ZonesCoroutine();
+            _summonCoroutine = SummonCoroutine();
+            StartCoroutine(_zonesCoroutine);
+            StartCoroutine(_summonCoroutine);
         }
 
+        public void StopBeingActive()
+        {
+            _active = false;
+            StopCoroutine(_summonCoroutine);
+            StopCoroutine(_zonesCoroutine);
+            foreach (GameObject go in _summons)
+            {
+                Destroy(go);
+            }
+            _summons.Clear();
+        }
         private IEnumerator ZonesCoroutine()
         {
             while (_playerHealth.health > 0)
@@ -84,9 +96,16 @@ namespace Enemies
                 {
                     Vector3 position = summonLocations[randVals[i]];
                     if (!summonsUseWorld) position = parent.TransformPoint(position);
-                    Instantiate(minionPrefab, position, Quaternion.identity, parent);
+                    GameObject newSummon = Instantiate(minionPrefab, position, Quaternion.identity, parent);
+                    newSummon.GetComponent<EntityHealth>().OnDeath += OnSummonDeath;
+                    _summons.Add(newSummon);
                 }
             }
+        }
+
+        private void OnSummonDeath(EntityHealth health)
+        {
+            _summons.Remove(health.gameObject);
         }
 
         private void OnDrawGizmosSelected()

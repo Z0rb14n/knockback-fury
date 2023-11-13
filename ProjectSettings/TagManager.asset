@@ -3,12 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Pathfinding_perciever
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - IgnorePlayer
   - Water
   - UI
   - Player
@@ -16,9 +17,9 @@ TagManager:
   - Projectile
   - Platform
   - EnemyBomb
-  - 
-  - 
-  - 
+  - Enemy_chaser_avoid
+  - EnemyIgnorePlatform
+  - IgnoreAll
   - 
   - 
   - 
