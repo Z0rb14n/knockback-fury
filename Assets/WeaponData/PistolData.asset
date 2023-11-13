@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Mouser Pistol
   numProjectiles: 1
-  range: 15
+  range: 8
   projectileSpeed: 20
   projectileDamage: 18
   selfDamage: 1
@@ -22,10 +22,10 @@ MonoBehaviour:
   roundsPerSecond: 3.7
   clipSize: 10
   reloadTime: 0.85
-  spread: 3.5
+  spread: 0.875
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 15
+  knockbackStrength: 12
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -45,3 +45,9 @@ MonoBehaviour:
       Data3: -3995723
       Data4: -862931539
     Path: event:/SFX/Weapons/Weap_Pistol
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 1
