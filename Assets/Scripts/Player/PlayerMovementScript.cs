@@ -51,8 +51,12 @@ namespace Player
         public float lateJumpLeeway = 3;
         [Min(0), Tooltip("How long jump needs to be held to jump higher")]
         public float highJumpTime = 3;
-        [Min(0), Tooltip("Time on a wall before walljump is enabled")]
+        [Min(0), Tooltip("Time on a wall before wall jump is enabled")]
         public float minTimeBeforeWallJump = 0.15f;
+        [Min(0), Tooltip("Grounded KB Multiplier for weapons")]
+        public float groundedKBMultiplier = 2;
+        [Min(0), Tooltip("Wall Slid KB Multiplier for weapons")]
+        public float wallKBMultiplier = 2;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -62,11 +66,11 @@ namespace Player
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>(true);
-                return _instance;
+                if (instance == null) instance = FindObjectOfType<PlayerMovementScript>(true);
+                return instance;
             }
         }
-        private static PlayerMovementScript _instance;
+        private static PlayerMovementScript instance;
 
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
@@ -107,7 +111,7 @@ namespace Player
 
         private void Awake()
         {
-            _instance = this;
+            instance = this;
             _body = GetComponent<Rigidbody2D>();
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
@@ -280,6 +284,7 @@ namespace Player
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
+                _platformsOn.Clear();
             }
 
             JumpLogic();
@@ -338,8 +343,11 @@ namespace Player
 
         public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
-            // bruh
-            if (isWeapon && (IsWallSliding || Grounded)) vec *= 2;
+            if (isWeapon)
+            {
+                if (Grounded) vec *= groundedKBMultiplier;
+                else if (IsWallSliding) vec *= wallKBMultiplier;
+            }
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;
