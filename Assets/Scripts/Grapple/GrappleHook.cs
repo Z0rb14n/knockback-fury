@@ -58,6 +58,14 @@ namespace Grapple
                     _line.SetPosition(1, hookedPos);
                     transform.position = hookedPos;
                 }
+                else
+                {
+                    if (!ReferenceEquals(_hookedEntity, null))
+                    {
+                        _player.OnGrappleExpire();
+                        Destroy(gameObject);
+                    }
+                }
             }
         }
 
