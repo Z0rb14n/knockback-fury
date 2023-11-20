@@ -316,6 +316,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 0
   cheeseItemPickup: {fileID: 0}
   triggers: 
 --- !u!1 &708281020285477252
@@ -447,6 +448,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!1 &952430791885641086
 GameObject:
@@ -577,6 +579,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!1 &1229148117742949536
 GameObject:
@@ -944,6 +947,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!1 &1400406636722384484
 GameObject:
@@ -4417,6 +4421,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!1 &3848909274982158082
 GameObject:
@@ -18834,6 +18839,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!1 &5586677779597706091
 GameObject:
@@ -19207,6 +19213,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 1
   canDropCheese: 0
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 0}
 --- !u!114 &8685860438239627838
 MonoBehaviour:
@@ -19716,6 +19723,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 0
   canDropCheese: 0
+  grappleHookTarget: 0
   cheeseItemPickup: {fileID: 0}
   triggers: e2040000f40100000a000000
 --- !u!114 &3736409006273147599
@@ -21031,6 +21039,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7927312596109395352}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava (3)
@@ -21399,6 +21411,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7927312596109395352}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: -0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava (1)
@@ -21888,6 +21904,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7099081316454418510}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava
@@ -22283,6 +22303,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7927312596109395352}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava
@@ -23918,6 +23942,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7927312596109395352}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava (4)
@@ -23992,6 +24020,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7099081316454418510}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava (1)
@@ -24515,6 +24547,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7099081316454418510}
     m_Modifications:
+    - target: {fileID: 2798166575816961733, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
+      propertyPath: m_SurfaceLevel
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201350, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Name
       value: Lava (2)

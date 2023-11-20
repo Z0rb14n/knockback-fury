@@ -156,8 +156,8 @@ MonoBehaviour:
   playerHoldingPosition: {x: 69420, y: 666, z: 0}
   generationStartOffset: {x: 0, y: 6}
   floorEnemyPacks:
-  - normalPackSize: 8
-    endingPackSize: 14
+  - normalPackSize: 40
+    endingPackSize: 50
     endingHasBoss: 1
   - normalPackSize: 10
     endingPackSize: 17

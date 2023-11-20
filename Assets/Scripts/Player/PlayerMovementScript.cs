@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CustomTiles;
 using DashVFX;
 using GameEnd;
+using Grapple;
 using UnityEngine;
 using Upgrades;
 using Weapons;
@@ -37,10 +38,6 @@ namespace Player
         public float accel = 50;
         [Min(0), Tooltip("Acceleration multiplier when turning around")]
         public float turnAroundMultiplier = 2f;
-        [Min(0), Tooltip("Deceleration (scaled by time) when grounded")]
-        public float decel = 20;
-        [Min(0), Tooltip("Deceleration (scaled by time) when airborne")]
-        public float decelAirborne = 5;
         [Min(0), Tooltip("Deceleration (scaled by time) when above max speed")]
         public float decelWhenAbove = 5;
         [Min(0), Tooltip("The height of the short jump compared to the high jump")]
@@ -51,8 +48,18 @@ namespace Player
         public float lateJumpLeeway = 3;
         [Min(0), Tooltip("How long jump needs to be held to jump higher")]
         public float highJumpTime = 3;
-        [Min(0), Tooltip("Time on a wall before walljump is enabled")]
+        [Min(0), Tooltip("Time on a wall before wall jump is enabled")]
         public float minTimeBeforeWallJump = 0.15f;
+        [Min(0), Tooltip("Grounded KB Multiplier for weapons")]
+        public float groundedKBMultiplier = 2;
+        [Min(0), Tooltip("Wall Slid KB Multiplier for weapons")]
+        public float wallKBMultiplier = 2;
+
+        [Header("Grapple Hook")]
+        [Min(0), Tooltip("Grapple Hook Velocity")]
+        public float grappleVelocity = 10;
+        [Tooltip("Grappling hook prefab")]
+        public GameObject grapplePrefab;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
@@ -62,11 +69,11 @@ namespace Player
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<PlayerMovementScript>(true);
-                return _instance;
+                if (instance == null) instance = FindObjectOfType<PlayerMovementScript>(true);
+                return instance;
             }
         }
-        private static PlayerMovementScript _instance;
+        private static PlayerMovementScript instance;
 
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
@@ -98,6 +105,7 @@ namespace Player
         private float _jumpTime;
         private bool _isHoldingJump;
         private float _timeOnWall;
+        private GrappleHook _activeGrappleHook;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
@@ -107,7 +115,7 @@ namespace Player
 
         private void Awake()
         {
-            _instance = this;
+            instance = this;
             _body = GetComponent<Rigidbody2D>();
             _meshTrail = GetComponent<MeshTrail>();
             _weapon = GetComponentInChildren<Weapon>();
@@ -170,11 +178,6 @@ namespace Player
                 {
                     newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
                 }
-            }
-            else
-            {
-                float normalDecel = (Grounded ? decel : decelAirborne) * Time.deltaTime;
-                newX -= Mathf.Sign(originalX) * Mathf.Min(Mathf.Abs(originalX), normalDecel);
             }
 
             if (Mathf.Abs(originalX) > maxSpeed)
@@ -240,6 +243,29 @@ namespace Player
             }
         }
 
+        private void GrappleHookLogic()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (_activeGrappleHook) Destroy(_activeGrappleHook.gameObject);
+                GameObject go = Instantiate(grapplePrefab, _body.position, Quaternion.identity);
+                // TODO OPTIMIZE
+                Vector2 worldMousePos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
+                go.GetComponent<Rigidbody2D>().velocity = ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized*grappleVelocity + _body.velocity;
+                _activeGrappleHook = go.GetComponent<GrappleHook>();
+            }
+        }
+
+        public void OnGrappleOOB()
+        {
+            _activeGrappleHook = null;
+        }
+
+        public void OnGrappleExpire()
+        {
+            _activeGrappleHook = null;
+        }
+
         private void Update()
         {
             if (Grounded)
@@ -259,9 +285,14 @@ namespace Player
             }
 
             HorizontalMovementLogic(xInput);
+            GrappleHookLogic();
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)
-                || Input.GetKeyDown(KeyCode.UpArrow)) _jumpRequest = true;
+                                                || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                _jumpRequest = true;
+                if (_activeGrappleHook) Destroy(_activeGrappleHook.gameObject);
+            }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -280,6 +311,7 @@ namespace Player
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
+                _platformsOn.Clear();
             }
 
             JumpLogic();
@@ -338,6 +370,11 @@ namespace Player
 
         public void RequestKnockback(Vector2 vec, bool isWeapon = false)
         {
+            if (isWeapon)
+            {
+                if (Grounded) vec *= groundedKBMultiplier;
+                else if (IsWallSliding) vec *= wallKBMultiplier;
+            }
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
             _knockbackRequest = true;

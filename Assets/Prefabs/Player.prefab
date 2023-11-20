@@ -150,14 +150,16 @@ MonoBehaviour:
   slideSpeed: 0.8
   accel: 50
   turnAroundMultiplier: 9
-  decel: 30
-  decelAirborne: 15
   decelWhenAbove: 5
   shortJumpPercentage: 0.75
   earlyJumpLeeway: 0.2
   lateJumpLeeway: 0.08
   highJumpTime: 0.08
   minTimeBeforeWallJump: 0.07
+  groundedKBMultiplier: 2
+  wallKBMultiplier: 2
+  grappleVelocity: 25
+  grapplePrefab: {fileID: 8171226218910466548, guid: d761d3fd7321b484982293e910d39ed0, type: 3}
 --- !u!114 &7387056994418124513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +213,7 @@ MonoBehaviour:
   iFrameLength: 2
   doesChangeColor: 1
   canDropCheese: 1
+  grappleHookTarget: 0
   cheeseItemPickup: {fileID: 0}
   sneakyJumperCooldown: 3
   sneakyJumperInvulnTime: 1

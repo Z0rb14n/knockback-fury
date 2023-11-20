@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 3237788133357728928}
   - component: {fileID: 3237788133357728929}
   - component: {fileID: 6166057425882935633}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: ChaserPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +216,7 @@ MonoBehaviour:
   iFrameLength: 0
   doesChangeColor: 1
   canDropCheese: 1
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!114 &3237788133357728957
 MonoBehaviour:
