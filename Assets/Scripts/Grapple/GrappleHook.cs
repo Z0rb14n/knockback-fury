@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Grapple
 {
-    [RequireComponent(typeof(LineRenderer),typeof(SpringJoint2D))]
+    [RequireComponent(typeof(LineRenderer),typeof(SpringJoint2D), typeof(DistanceJoint2D))]
     public class GrappleHook : MonoBehaviour
     {
         [SerializeField, Min(0)]
@@ -15,7 +15,9 @@ namespace Grapple
         private bool useFixedDistance;
         [SerializeField, Min(0)]
         private float fixedDistance;
+        [SerializeField] private bool useDistJoint;
         private SpringJoint2D _joint;
+        private DistanceJoint2D _distJoint;
         private Rigidbody2D _body;
         private Rigidbody2D _playerBody;
         private PlayerMovementScript _player;
@@ -29,6 +31,7 @@ namespace Grapple
         private void Awake()
         {
             _joint = GetComponent<SpringJoint2D>();
+            _distJoint = GetComponent<DistanceJoint2D>();
             _line = GetComponent<LineRenderer>();
             _body = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
@@ -95,9 +98,13 @@ namespace Grapple
                 _line.SetPosition(1, pos);
                 _line.enabled = true;
                 _body.constraints = RigidbodyConstraints2D.FreezeAll;
-                _joint.enabled = true;
-                _joint.connectedBody = _playerBody;
-                _joint.distance = useFixedDistance ? fixedDistance : dist;
+                Joint2D usedJoint = useDistJoint ? _distJoint : _joint;
+                usedJoint.enabled = true;
+                usedJoint.connectedBody = _playerBody;
+                if (useDistJoint)
+                    _distJoint.distance = useFixedDistance ? fixedDistance : dist;
+                else
+                    _joint.distance = useFixedDistance ? fixedDistance : dist;
                 _collider.enabled = false;
                 StartCoroutine(DestroyAfterDelay());
             }
