@@ -77,7 +77,7 @@ namespace Enemies.Cat
         {
             if (_phase == 2 && _turretPhaseOver)
             {
-                Vector3 playerPos = _player.transform.position;
+                Vector3 playerPos = _player.Pos;
                 Vector3 pos = transform.position;
                 bool isLeft = playerPos.x < pos.x;
                 bool isIn = _collider.bounds.Contains(playerPos);
@@ -108,13 +108,13 @@ namespace Enemies.Cat
                 {
                     _spriteRenderer.sprite = normalSprite;
                     Vector2 pos = _rigidbody.position;
-                    _rigidbody.velocity = EnemyBombScript.CalculateVelocity(pos, new Vector2(pos.x, _player.transform.position.y),
+                    _rigidbody.velocity = EnemyBombScript.CalculateVelocity(pos, new Vector2(pos.x, _player.Pos.y),
                         new Vector2(0, _player.Velocity.y), CurrSetting.maxVel, CurrSetting.timeBeforeDash);
                     yield return new WaitForSeconds(CurrSetting.timeBeforeDash);
                     _rigidbody.gravityScale = 0;
                     
                     // ReSharper disable once Unity.InefficientPropertyAccess
-                    Vector2 playerPos = _player.transform.position;
+                    Vector2 playerPos = _player.Pos;
                     pos = _rigidbody.position;
                     _rigidbody.velocity = (playerPos - pos).normalized * CurrSetting.dashVel;
                     LookAtPlayer();
@@ -124,7 +124,7 @@ namespace Enemies.Cat
                 }
                 else
                 {
-                    Vector2 playerPos = _player.transform.position;
+                    Vector2 playerPos = _player.Pos;
                     Vector2 pos = _rigidbody.position;
                     Vector2 force;
                     if (CurrSetting.predictVel)
@@ -145,7 +145,7 @@ namespace Enemies.Cat
 
         private void LookAtPlayer()
         {
-            Vector3 playerPos = _player.transform.position;
+            Vector3 playerPos = _player.Pos;
             Vector2 pos = _rigidbody.position;
             if (playerPos.x < pos.x) _spriteRenderer.sprite = leftSprite;
             else if (playerPos.x > pos.x) _spriteRenderer.sprite = rightSprite;
@@ -246,7 +246,7 @@ namespace Enemies.Cat
             batTransform.localEulerAngles = new Vector3(0, 0, batEndRotation);
             _playerHealth.TakeDamage(batAttackDamage);
             RuntimeManager.PlayOneShot(bonkSound, transform.position);
-            Vector2 knockbackDirection = new((_player.transform.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
+            Vector2 knockbackDirection = new((_player.Pos - (Vector2)_collider.bounds.center).normalized.x * 0.1f, 0.04f);
             _player.RequestKnockback(knockbackDirection, batKnockback);
             yield return new WaitForSeconds(batDownLength);
             // ReSharper disable once Unity.InefficientPropertyAccess

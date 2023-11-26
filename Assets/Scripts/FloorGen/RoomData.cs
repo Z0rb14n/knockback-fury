@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Enemies;
 using FileSave;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -51,15 +52,46 @@ namespace FloorGen
         public TileBase socketTile;
 
         private readonly HashSet<EntityHealth> _enemies = new();
+        private readonly Dictionary<EntityHealth, EnemyBehaviour> _enemyBehaviours = new();
 
         public List<EntityHealth> Enemies => new(_enemies);
 
         private EnemySpawnPoint[] _spawnPoints;
         private Dictionary<EnemySpawnType, List<EnemySpawnPoint>> _spawnTypeMapping;
+        private RoomTrigger _roomTrigger;
+        private bool _mobsShouldDisappear;
 
         private void Awake()
         {
+            _roomTrigger = GetComponentInChildren<RoomTrigger>();
             InitializePointsAndMappings();
+            _mobsShouldDisappear = GetComponentInParent<FloorGenerator>()?.mobsShouldDisappear ?? false;
+        }
+
+        private void Start()
+        {
+            if (!_roomTrigger) return;
+            RoomTriggerOnOnPlayerExit();
+            _roomTrigger.OnPlayerEnter += RoomTriggerOnOnPlayerEnter;
+            _roomTrigger.OnPlayerExit += RoomTriggerOnOnPlayerExit;
+        }
+
+        private void RoomTriggerOnOnPlayerExit()
+        {
+            foreach (EnemyBehaviour behaviours in _enemyBehaviours.Values)
+            {
+                if (_mobsShouldDisappear) behaviours.gameObject.SetActive(false);
+                else behaviours.enabled = false;
+            }
+        }
+
+        private void RoomTriggerOnOnPlayerEnter()
+        {
+            foreach (EnemyBehaviour behaviours in _enemyBehaviours.Values)
+            {
+                if (_mobsShouldDisappear) behaviours.gameObject.SetActive(true);
+                else behaviours.enabled = true;
+            }
         }
 
         private void InitializePointsAndMappings()
@@ -206,6 +238,8 @@ namespace FloorGen
             bool didSpawn = point.SpawnEnemy(type, out GameObject go);
             Debug.Assert(didSpawn);
             EntityHealth health = go.GetComponent<EntityHealth>();
+            EnemyBehaviour behaviour = go.GetComponent<EnemyBehaviour>();
+            _enemyBehaviours.Add(health, behaviour);
             Debug.Assert(health, "Added enemy should have EntityHealth attached");
             AddEnemy(health);
             return go;
@@ -221,6 +255,7 @@ namespace FloorGen
         {
             health.OnDeath -= OnEnemyDeath;
             _enemies.Remove(health);
+            _enemyBehaviours.Remove(health);
             if (_enemies.Count != 0) return;
             if (pickup) pickup.gameObject.SetActive(true);
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);

@@ -42,8 +42,8 @@ namespace Enemies.Cat
 
         private void FixedUpdate()
         {
-            Vector3 playerPos = _player.transform.position;
-            Vector3 pos = transform.position;
+            Vector2 playerPos = _player.Pos;
+            Vector2 pos = _rigidbody.position;
             if (playerPos.x < pos.x)
                 _spriteRenderer.sprite = _friendDead ? rightSprite : leftSprite;
             else

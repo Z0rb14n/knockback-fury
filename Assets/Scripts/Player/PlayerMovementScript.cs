@@ -80,6 +80,12 @@ namespace Player
 
         public Vector2 Velocity => _body.velocity;
 
+        public Vector2 Pos
+        {
+            get => _body.position;
+            set => _body.position = value;
+        }
+
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
         private int _dashesRemaining = 1;

@@ -17,6 +17,7 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class FloorGenerator : MonoBehaviour
     {
+        public bool mobsShouldDisappear = true;
         [Header("Floors")]
         [Min(0), Tooltip("Floor index for Enemy generation")]
         public int floorNumber;
