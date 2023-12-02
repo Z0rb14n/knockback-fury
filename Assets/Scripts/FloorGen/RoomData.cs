@@ -56,6 +56,13 @@ namespace FloorGen
 
         public List<EntityHealth> Enemies => new(_enemies);
 
+        public bool PlayerVisited { get; private set; } = false;
+        public bool PlayerPresent { get; private set; } = false;
+
+        public event Action OnPlayerVisit;
+
+        [NonSerialized] public Vector2Int GridIndex;
+
         private EnemySpawnPoint[] _spawnPoints;
         private Dictionary<EnemySpawnType, List<EnemySpawnPoint>> _spawnTypeMapping;
         private RoomTrigger _roomTrigger;
@@ -83,6 +90,8 @@ namespace FloorGen
                 if (_mobsShouldDisappear) behaviours.gameObject.SetActive(false);
                 else behaviours.enabled = false;
             }
+
+            PlayerPresent = false;
         }
 
         private void RoomTriggerOnOnPlayerEnter()
@@ -92,6 +101,14 @@ namespace FloorGen
                 if (_mobsShouldDisappear) behaviours.gameObject.SetActive(true);
                 else behaviours.enabled = true;
             }
+
+            if (!PlayerVisited)
+            {
+                PlayerVisited = true;
+                OnPlayerVisit?.Invoke();
+            }
+
+            PlayerPresent = true;
         }
 
         private void InitializePointsAndMappings()
