@@ -40,6 +40,7 @@ namespace Util
             {
                 _isPlayerInside = true;
                 notification.gameObject.SetActive(true);
+                PlayerMovementScript.Instance.CanGrapple = false;
             }
         }
 
@@ -49,6 +50,7 @@ namespace Util
             {
                 _isPlayerInside = false;
                 notification.gameObject.SetActive(false);
+                PlayerMovementScript.Instance.CanGrapple = true;
             }
         }
     }

@@ -78,6 +78,8 @@ namespace Player
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
 
+        public bool CanGrapple { get; set; } = true;
+
         public Vector2 Velocity => _body.velocity;
 
         public Vector2 Pos
@@ -251,7 +253,7 @@ namespace Player
 
         private void GrappleHookLogic()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && CanGrapple)
             {
                 if (_activeGrappleHook) Destroy(_activeGrappleHook.gameObject);
                 GameObject go = Instantiate(grapplePrefab, _body.position, Quaternion.identity);
