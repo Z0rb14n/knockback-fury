@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Crossbow
   numProjectiles: 1
-  range: 90
+  range: 16
   projectileSpeed: 30
   projectileDamage: 70
   selfDamage: 1
@@ -45,3 +45,9 @@ MonoBehaviour:
       Data3: -3995723
       Data4: -862931539
     Path: event:/SFX/Weapons/Weap_Pistol
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 1

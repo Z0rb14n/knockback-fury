@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: SMG
   numProjectiles: 1
-  range: 20
+  range: 10
   projectileSpeed: 20
   projectileDamage: 10
   selfDamage: 1
@@ -50,3 +50,4 @@ MonoBehaviour:
     maxPierces: 0
     invulnTimer: 0
     isInfinitePierce: 0
+  unlockedByDefault: 1

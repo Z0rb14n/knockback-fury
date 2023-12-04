@@ -179,11 +179,12 @@ MonoBehaviour:
   - {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
   - {fileID: 461541005378355308, guid: d8027a8a4594f664e8d5bc9c909e898a, type: 3}
   - {fileID: 4214757178654429746, guid: 59b38ea7172f9a44589fc09c183edbc3, type: 3}
-  - {fileID: 5611468861318173077, guid: b3ff506c4185d934ab1d7b3424ae99db, type: 3}
   - {fileID: 5611468861318173077, guid: 96f648bd44aa71342a84dbc5c8cbcd1a, type: 3}
   - {fileID: 5611468861318173077, guid: eef3d19fb2cbc9c458b7d98a41010156, type: 3}
   - {fileID: 5611468861318173077, guid: c1ae9af141e5f0b4d9ec1110df04681b, type: 3}
-  - {fileID: 5611468861318173077, guid: 21b0c744237732049bcf5ccbf1c05f45, type: 3}
+  - {fileID: 5611468861318173077, guid: 28e41b72a176fa441830108ffa036f5a, type: 3}
+  - {fileID: 5611468861318173077, guid: 094b2bce6c0118d4d96a3c1d118fa7e4, type: 3}
+  - {fileID: 5611468861318173077, guid: 69287c439b45ab8468bac22e9ae8f7d8, type: 3}
   weaponsList:
   - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
   - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
@@ -208,86 +209,102 @@ MonoBehaviour:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 0
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 8
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 12
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 14
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 10
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 9
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 13
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 11
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 1
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 5
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 7
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 3
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 4
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 6
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   - type: 2
     roomPrefab:
     - {fileID: 3954450897855488146, guid: 1e258c8dcd2d2354fb9d91f31ec73bd1, type: 3}
     - {fileID: 3954450897855488146, guid: 6d64ca7114f20e6478a567e3a8d9fd63, type: 3}
     - {fileID: 3954450897855488146, guid: defe471b7e788d24298b2764233610d3, type: 3}
+    - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   seed: 0
   maxRows: 3
-  minRooms: 12
-  maxRooms: 15
-  centerRowMin: 8
+  minRooms: 6
+  maxRooms: 8
+  centerRowMin: 4
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}

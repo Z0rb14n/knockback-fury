@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Dual Revolvers
   numProjectiles: 1
-  range: 20
+  range: 10
   projectileSpeed: 30
   projectileDamage: 23
   selfDamage: 1
@@ -45,3 +45,9 @@ MonoBehaviour:
       Data3: 1192172165
       Data4: 789521315
     Path: event:/SFX/Weapons/Weap_Rifle
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 1
