@@ -143,7 +143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  knockbackForce: 100
+  knockbackForce: 80
+  damageOnTrigger: 0
 --- !u!114 &3041133532461335286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +160,9 @@ MonoBehaviour:
   maxHealth: 60
   health: 60
   iFrameLength: 0
+  doesChangeColor: 1
   canDropCheese: 1
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!212 &45822130718748350
 SpriteRenderer:

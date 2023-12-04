@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Double-Barrel Shotgun
   numProjectiles: 12
-  range: 15
+  range: 7
   projectileSpeed: 20
   projectileDamage: 5
   selfDamage: 1
@@ -45,3 +45,9 @@ MonoBehaviour:
       Data3: -1022891902
       Data4: 2012654420
     Path: event:/SFX/Weapons/Weap_ShotgunAlt
+  pierceMode: 0
+  pierceInfo:
+    maxPierces: 0
+    invulnTimer: 0
+    isInfinitePierce: 0
+  unlockedByDefault: 1

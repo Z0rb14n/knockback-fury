@@ -9,7 +9,6 @@ using UnityEngine;
 using Upgrades;
 using Util;
 using Weapons;
-using Grid = System.Collections.Generic.Dictionary<UnityEngine.Vector2Int, FloorGen.RoomType>;
 using Random = System.Random;
 
 namespace FloorGen
@@ -17,6 +16,7 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class FloorGenerator : MonoBehaviour
     {
+        public bool mobsShouldDisappear = true;
         [Header("Floors")]
         [Min(0), Tooltip("Floor index for Enemy generation")]
         public int floorNumber;
@@ -83,6 +83,8 @@ namespace FloorGen
         [Tooltip("Transform to forcibly set position of")]
         public Transform playerTransform;
 
+        [SerializeField] private MinimapUI minimapUI;
+
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
         private HashSet<UpgradeType> _validUpgradeTypes = new();
@@ -142,6 +144,7 @@ namespace FloorGen
         private void Generate()
         {
             Grid grid = new();
+            grid.GenerationStart = generationStart;
             GenerateRNG();
             // Set the player's position based on the starting position
             // (we modify this later, this is just in case it bugs)
@@ -170,13 +173,16 @@ namespace FloorGen
                 {
                     RoomType dir = RandomDirUnweighted(AllowedBranchMovements(start, middleLength));
                     Vector2Int movedStart = dir.Move(start);
-                    if (!grid.ContainsKey(movedStart)) roomCount--;
+                    if (!grid.HasRoomPos(movedStart)) roomCount--;
                     ExpandSide(grid, start, dir);
                     start = movedStart;
                     currBranchiness -= branchinessDecrease;
                 } while (roomCount > 0 && CalculateRandomLog(currBranchiness));
             }
+            
+            GenerateSpecialRoomPositions(grid, middleLength);
             GenerateFromGrid(grid, middleLength);
+            if (minimapUI) minimapUI.GenerateMinimap(grid);
         }
 
         private int GenerateMiddleRow(Grid grid, List<Vector2Int> toBranch, int maxRoomCount)
@@ -241,7 +247,7 @@ namespace FloorGen
 
         private Vector2Int RandomPosExcept(Grid grid, params Vector2Int[] disallowedRooms)
         {
-            return grid.Keys.Except(disallowedRooms).ToList().GetRandom(_random);
+            return grid.Rooms.Except(disallowedRooms).ToList().GetRandom(_random);
         }
 
         private RoomTransitionInteractable GenerateRoomTransitionInteractable(Vector3 pos, GameObject parent)
@@ -434,36 +440,46 @@ namespace FloorGen
             };
             upgrade.GetComponent<WeaponUpgradeTrigger>().allowedButtons = result;
         }
+
+        private void GenerateSpecialRoomPositions(Grid grid, int middleLength)
+        {
+            Vector2Int finalRoomPos = new Vector2Int(middleLength, 0) + generationStart;
+            grid.FinalRoom = finalRoomPos;
+            bool hasWeaponRoom =_random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
+            Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept( grid, finalRoomPos) : Vector2Int.zero;
+            if (hasWeaponRoom) grid.WeaponRooms.Add(weaponRoomPos);
+            bool hasSecondSmithingRoom =_random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
+            Vector2Int smithOne = RandomPosExcept( grid, finalRoomPos, weaponRoomPos);
+            grid.SmithingRooms.Add(smithOne);
+            Vector2Int smithTwo = hasSecondSmithingRoom ? RandomPosExcept( grid, finalRoomPos, weaponRoomPos, smithOne) : Vector2Int.zero;
+            if (hasSecondSmithingRoom) grid.SmithingRooms.Add(smithTwo);
+        }
         
         private void GenerateFromGrid(Grid grid, int middleLength)
         {
-            Vector2Int finalRoomPos = new Vector2Int(middleLength, 0) + generationStart;
-            bool hasWeaponRoom =_random.Next(0, 2) == 1 || PlayerWeaponControl.Instance.HasWeaponSpace;
-            Vector2Int weaponRoomPos = hasWeaponRoom ? RandomPosExcept( grid, finalRoomPos) : Vector2Int.zero;
-            bool hasSecondSmithingRoom =_random.Next(0, 2) == 1 && PlayerWeaponControl.Instance.HasNoUpgradedWeapons;
-            Vector2Int smithOne = RandomPosExcept( grid, finalRoomPos, weaponRoomPos);
-            Vector2Int smithTwo = hasSecondSmithingRoom ? RandomPosExcept( grid, finalRoomPos, weaponRoomPos, smithOne) : Vector2Int.zero;
+            grid.EndingHasBoss = floorEnemyPacks[floorNumber].endingHasBoss;
             foreach ((Vector2Int gridIndex, RoomType type) in grid)
             {
-                bool isEndRoom = gridIndex == finalRoomPos;
+                bool isEndRoom = gridIndex == grid.FinalRoom;
                 bool isBossRoom = floorEnemyPacks[floorNumber].endingHasBoss && isEndRoom;
-                bool isWeaponRoom = hasWeaponRoom && gridIndex == weaponRoomPos;
+                bool isWeaponRoom = grid.WeaponRooms.Contains(gridIndex);
                 GameObject[] objects = _pairsDict[type];
                 GameObject randomCellPrefab = isBossRoom ? bossRoomPrefab : objects.GetRandom(_random);
                 randomCellPrefab = isWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, gridIndex * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
+                roomData.GridIndex = gridIndex;
                 if (roomData.roomSize != gridSize)
                 {
                     Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
                 }
                 roomData.EnsureType(type);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
-                if (hasWeaponRoom && gridIndex == weaponRoomPos)
+                if (isWeaponRoom)
                 {
                     PopulateSocketsWeaponRoom( gridIndex, cellObject, sockets);
                 }
-                else if (gridIndex == smithOne || (hasSecondSmithingRoom && gridIndex == smithTwo))
+                else if (grid.SmithingRooms.Contains(gridIndex))
                 {
                     PopulateSocketsSmithingRoom( gridIndex, cellObject, sockets);
                 }
@@ -478,6 +494,7 @@ namespace FloorGen
                 {
                     playerTransform.position = generationStart * gridSize + roomData.playerSpawnOffset;
                 }
+                grid.SetData(gridIndex, roomData);
             }
         }
 
@@ -485,10 +502,10 @@ namespace FloorGen
         {
             // can't be mixed
             Debug.Assert(dir.GetParts().Count == 1, "[FloorGenerator::ExpandSide] room type isn't a singular enum");
-            if (grid.ContainsKey(vector2Int)) grid[vector2Int] |= dir;
+            if (grid.HasRoomPos(vector2Int)) grid[vector2Int] |= dir;
             else grid[vector2Int] = dir;
             vector2Int = dir.Move(vector2Int);
-            if (grid.ContainsKey(vector2Int)) grid[vector2Int] |= dir.GetOpposing();
+            if (grid.HasRoomPos(vector2Int)) grid[vector2Int] |= dir.GetOpposing();
             else grid[vector2Int] = dir.GetOpposing();
         }
 

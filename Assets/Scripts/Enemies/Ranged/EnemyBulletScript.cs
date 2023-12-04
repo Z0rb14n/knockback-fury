@@ -23,11 +23,11 @@ namespace Enemies.Ranged
 
         public virtual void Initialize(float damageMult)
         {
-            Vector3 direction = PlayerMovementScript.Instance.transform.position - transform.position;
+            Vector2 direction = PlayerMovementScript.Instance.Pos - rigidbody2D.position;
             Initialize(damageMultiplier, direction);
         }
 
-        public virtual void Initialize(float damageMult, Vector3 direction)
+        public virtual void Initialize(float damageMult, Vector2 direction)
         {
             damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();

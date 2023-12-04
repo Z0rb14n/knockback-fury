@@ -6,7 +6,7 @@ using FMODUnity;
 namespace Enemies.Ranged
 {
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
-    public class RangedEnemyScript : MonoBehaviour
+    public class RangedEnemyScript : EnemyBehaviour
     {
         [Tooltip("Prefab of bullet object")]
         public GameObject bulletPrefab;

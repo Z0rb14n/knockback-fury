@@ -64,8 +64,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1250
-  health: 1250
+  maxHealth: 1000
+  health: 1000
   iFrameLength: 0
   doesChangeColor: 1
   canDropCheese: 0
