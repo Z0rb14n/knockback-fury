@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace FloorGen
 {
@@ -8,6 +9,8 @@ namespace FloorGen
         [SerializeField] private Vector2Int iconOffsets = new(65, 65);
         [SerializeField] private GameObject minimapIconPrefab;
         [SerializeField] private GameObject minimapBridgeIconPrefab;
+        [SerializeField] private Vector2 wideBridgeSize = new(25, 10);
+        [SerializeField] private Vector2 tallBridgeSize = new(10, 25);
 
         [SerializeField] private Transform iconsParent;
 
@@ -22,6 +25,8 @@ namespace FloorGen
             {
                 Destroy(iconsParent.GetChild(i).gameObject);
             }
+
+            HashSet<(Vector2Int, RoomType)> edges = new();
             
             foreach ((Vector2Int index, RoomType type) in grid)
             {
@@ -40,6 +45,46 @@ namespace FloorGen
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Upgrade;
                 }
                 _icons.Add(index, icon);
+                List<RoomType> currEdges = type.GetParts();
+                foreach (RoomType currEdge in currEdges)
+                {
+                    if (edges.Contains((index, currEdge)) ||
+                        edges.Contains((currEdge.Move(index), currEdge.GetOpposing())))
+                    {
+                        continue;
+                    }
+
+                    Vector2 initialPos = actualIndex * iconOffsets;
+                    Vector2 bridgeSize;
+                    switch (currEdge)
+                    {
+                        case RoomType.LeftOpen:
+                            initialPos -= new Vector2(iconOffsets.x / 2f, 0);
+                            bridgeSize = wideBridgeSize;
+                            break;
+                        case RoomType.TopOpen:
+                            initialPos += new Vector2(0, iconOffsets.y / 2f);
+                            bridgeSize = tallBridgeSize;
+                            break;
+                        case RoomType.RightOpen:
+                            initialPos += new Vector2(iconOffsets.x / 2f, 0);
+                            bridgeSize = wideBridgeSize;
+                            break;
+                        case RoomType.BottomOpen:
+                            initialPos -= new Vector2(0, iconOffsets.y / 2f);
+                            bridgeSize = tallBridgeSize;
+                            break;
+                        default:
+                            bridgeSize = Vector2.zero;
+                            break;
+                    }
+                    
+                    GameObject bridge = Instantiate(minimapBridgeIconPrefab, iconsParent);
+                    RectTransform rect = bridge.GetComponent<RectTransform>();
+                    rect.anchoredPosition = initialPos;
+                    rect.sizeDelta = bridgeSize;
+                    edges.Add((index, currEdge));
+                }
             }
         }
 
