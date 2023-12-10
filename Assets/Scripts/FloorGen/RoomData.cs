@@ -47,6 +47,8 @@ namespace FloorGen
 
         public SocketShape[] sockets;
 
+        public PipeBehaviour[] pipes;
+
         public bool ignoreSocketEnemySpawns = true;
 
         public TileBase socketTile;
