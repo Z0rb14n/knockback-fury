@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb97edb2c3154f1f971fc8daad96ecdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnOffset: {x: 1.5, y: 0}
+  spawnOffset: {x: 2, y: 0}
   platformTop: {fileID: 2233282262450646573}
   horizontalTolerance: 5
 --- !u!249 &1334788825860045723

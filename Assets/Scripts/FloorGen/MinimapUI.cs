@@ -45,7 +45,7 @@ namespace FloorGen
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Upgrade;
                 }
                 _icons.Add(room.Pos, icon);
-                foreach (RoomType currEdge in room.Edges.Select(edge => edge.Type))
+                foreach (RoomType currEdge in room.Edges.Values.Select(edge => edge.Type))
                 {
                     if (edges.Contains((room.Pos, currEdge)) ||
                         edges.Contains((currEdge.Move(room.Pos), currEdge.GetOpposing())))

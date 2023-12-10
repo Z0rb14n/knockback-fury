@@ -43,11 +43,7 @@ namespace FloorGen
         [Tooltip("Room center offset - only changes gizmo!")]
         public Vector2 roomCenterOffset;
 
-        public ExitHider[] hiders;
-
         public SocketShape[] sockets;
-
-        public PipeBehaviour[] pipes;
 
         public bool ignoreSocketEnemySpawns = true;
 
@@ -58,12 +54,16 @@ namespace FloorGen
 
         public List<EntityHealth> Enemies => new(_enemies);
 
-        public bool PlayerVisited { get; private set; } = false;
-        public bool PlayerPresent { get; private set; } = false;
+        public bool PlayerVisited { get; private set; }
+        public bool PlayerPresent { get; private set; }
+
+        private PipeBehaviour[] _pipes;
+
+        public PipeBehaviour FirstUnoccupiedPipe => Pipes.FirstOrDefault(behaviour => !behaviour.OtherPipe);
+
+        public PipeBehaviour[] Pipes => _pipes ??= GetComponentsInChildren<PipeBehaviour>();
 
         public event Action OnPlayerVisit;
-
-        [NonSerialized] public Vector2Int GridIndex;
 
         private EnemySpawnPoint[] _spawnPoints;
         private Dictionary<EnemySpawnType, List<EnemySpawnPoint>> _spawnTypeMapping;
@@ -75,6 +75,7 @@ namespace FloorGen
             _roomTrigger = GetComponentInChildren<RoomTrigger>();
             InitializePointsAndMappings();
             _mobsShouldDisappear = GetComponentInParent<FloorGenerator>()?.mobsShouldDisappear ?? false;
+            _pipes ??= GetComponentsInChildren<PipeBehaviour>();
         }
 
         private void Start()
@@ -125,14 +126,6 @@ namespace FloorGen
                     if (_spawnTypeMapping.ContainsKey(t)) _spawnTypeMapping[t].Add(point);
                     else _spawnTypeMapping[t] = new List<EnemySpawnPoint>(new []{point});
                 }
-            }
-        }
-
-        public void EnsureType(RoomType type)
-        {
-            foreach (ExitHider hider in hiders)
-            {
-                if ((type & hider.hidingType) == 0) hider.toEnable.SetActive(true);
             }
         }
 
@@ -285,13 +278,6 @@ namespace FloorGen
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(transform.position + (Vector3) roomCenterOffset, (Vector3) roomSize + Vector3.forward);
-        }
-
-        [Serializable]
-        public struct ExitHider
-        {
-            public RoomType hidingType;
-            public GameObject toEnable;
         }
     }
 }

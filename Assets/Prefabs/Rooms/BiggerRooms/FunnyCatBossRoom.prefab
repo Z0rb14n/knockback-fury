@@ -19470,7 +19470,6 @@ MonoBehaviour:
   playerSpawnOffset: {x: -20, y: -10}
   roomSize: {x: 50, y: 21}
   roomCenterOffset: {x: 1, y: -2}
-  hiders: []
   sockets: []
   ignoreSocketEnemySpawns: 1
   socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
@@ -20913,6 +20912,7 @@ Transform:
   - {fileID: 4649922470294796736}
   - {fileID: 3209282102449117579}
   - {fileID: 8928862708615618302}
+  - {fileID: 7814183344701191885}
   m_Father: {fileID: 8521903942143718067}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22042,6 +22042,72 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6355341723460201352, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
   m_PrefabInstance: {fileID: 1988959889404194405}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2304510414877496904
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6879765133640367602}
+    m_Modifications:
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -21.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.625
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664327, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: m_Name
+      value: PipePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8325689353158664345, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+      propertyPath: spawnOffset.x
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+--- !u!4 &7814183344701191885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8325689353158664325, guid: b54bfd60fbaa416499af0af321380a92, type: 3}
+  m_PrefabInstance: {fileID: 2304510414877496904}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2441411679709925928
 PrefabInstance:

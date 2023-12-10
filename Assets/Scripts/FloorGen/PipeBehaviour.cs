@@ -22,10 +22,15 @@ namespace FloorGen
             }
         }
 
+        private void Start()
+        {
+            if (!OtherPipe) Destroy(gameObject);
+        }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer != _playerLayer) return;
-            if (OtherPipe) other.gameObject.transform.position = transform.TransformPoint(spawnOffset);
+            if (OtherPipe) other.gameObject.transform.position = OtherPipe.transform.TransformPoint(spawnOffset);
         }
 
         private void OnDrawGizmosSelected()

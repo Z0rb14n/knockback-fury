@@ -465,33 +465,27 @@ namespace FloorGen
                 randomCellPrefab = room.IsWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, room.Pos * gridSize, Quaternion.identity, worldParent);
                 RoomData roomData = cellObject.GetComponent<RoomData>();
-                roomData.GridIndex = room.Pos;
                 if (roomData.roomSize != gridSize)
-                {
                     Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
-                }
-                roomData.EnsureType(room.AggregateType);
-                List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
+                room.CellObject = cellObject;
+                grid.SetData(room.Pos, roomData);
+            }
+            foreach (GridRoom room in grid)
+            {
+                List<(SocketBehaviour, EnemySpawnType)> sockets = room.Data.GenerateSockets(_random, _socketPrefabSizes);
                 if (room.IsWeaponRoom)
-                {
-                    PopulateSocketsWeaponRoom(room.Pos, cellObject, sockets);
-                }
+                    PopulateSocketsWeaponRoom(room.Pos, room.CellObject, sockets);
                 else if (room.IsSmithingRoom)
-                {
-                    PopulateSocketsSmithingRoom(room.Pos, cellObject, sockets);
-                }
+                    PopulateSocketsSmithingRoom(room.Pos, room.CellObject, sockets);
                 else
-                {
-                    PopulateSocketsNormal(room.Pos, cellObject, room.IsFinalRoom, sockets);
-                }
-                
+                    PopulateSocketsNormal(room.Pos, room.CellObject, room.IsFinalRoom, sockets);
                 
                 // Set the player's position based on the starting position
                 if (generationStart == room.Pos)
-                {
-                    playerTransform.position = generationStart * gridSize + roomData.playerSpawnOffset;
-                }
-                grid.SetData(room.Pos, roomData);
+                    playerTransform.position = generationStart * gridSize + room.Data.playerSpawnOffset;
+
+                foreach (GridEdge edge in room.Edges.Values)
+                    grid.AddEdgePipes(edge.Room1, edge.Room2);
             }
         }
 
