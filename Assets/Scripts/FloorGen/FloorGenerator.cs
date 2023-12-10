@@ -460,7 +460,7 @@ namespace FloorGen
             grid.SetEndingHasBoss(floorEnemyPacks[floorNumber].endingHasBoss);
             foreach (GridRoom room in grid)
             {
-                GameObject[] objects = _pairsDict[room.Type];
+                GameObject[] objects = _pairsDict[room.AggregateType];
                 GameObject randomCellPrefab = room.IsBossRoom ? bossRoomPrefab : objects.GetRandom(_random);
                 randomCellPrefab = room.IsWeaponRoom ? lootRoomPrefab : randomCellPrefab;
                 GameObject cellObject = Instantiate(randomCellPrefab, room.Pos * gridSize, Quaternion.identity, worldParent);
@@ -470,7 +470,7 @@ namespace FloorGen
                 {
                     Debug.LogWarning($"[FloorGenerator::GenerateFromGrid] Mismatched Room data grid size {roomData.roomSize} versus grid size {gridSize}");
                 }
-                roomData.EnsureType(room.Type);
+                roomData.EnsureType(room.AggregateType);
                 List<(SocketBehaviour, EnemySpawnType)> sockets = roomData.GenerateSockets(_random, _socketPrefabSizes);
                 if (room.IsWeaponRoom)
                 {
@@ -499,11 +499,9 @@ namespace FloorGen
         {
             // can't be mixed
             Debug.Assert(dir.GetParts().Count == 1, "[FloorGenerator::ExpandSide] room type isn't a singular enum");
-            if (grid.HasRoomPos(vector2Int)) grid.AddRoomType(vector2Int, dir);
-            else grid.AddGridRoom(vector2Int, dir);
-            vector2Int = dir.Move(vector2Int);
-            if (grid.HasRoomPos(vector2Int)) grid.AddRoomType(vector2Int, dir.GetOpposing());
-            else grid.AddGridRoom(vector2Int, dir.GetOpposing());
+            Vector2Int next = dir.Move(vector2Int);
+            grid.EnsureRoomsPresent(vector2Int, next);
+            grid.AddGridEdge(vector2Int, next, dir);
         }
 
         private bool CalculateRandomLog(int bias)

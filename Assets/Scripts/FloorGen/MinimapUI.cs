@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using Util;
 
 namespace FloorGen
 {
@@ -45,8 +45,7 @@ namespace FloorGen
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Upgrade;
                 }
                 _icons.Add(room.Pos, icon);
-                List<RoomType> currEdges = room.Type.GetParts();
-                foreach (RoomType currEdge in currEdges)
+                foreach (RoomType currEdge in room.Edges.Select(edge => edge.Type))
                 {
                     if (edges.Contains((room.Pos, currEdge)) ||
                         edges.Contains((currEdge.Move(room.Pos), currEdge.GetOpposing())))
