@@ -4,37 +4,105 @@ using UnityEngine;
 
 namespace FloorGen
 {
-    public class Grid : IEnumerable<KeyValuePair<Vector2Int, RoomType>>
+    public class Grid : IEnumerable<GridRoom>
     {
-        private readonly Dictionary<Vector2Int, RoomType> _data = new();
-        private readonly Dictionary<Vector2Int, RoomData> _dataMappings = new();
-        public Vector2Int FinalRoom;
-        public Vector2Int GenerationStart;
-        public bool EndingHasBoss;
-        public readonly List<Vector2Int> WeaponRooms = new();
-        // ReSharper disable once IdentifierTypo
-        public readonly List<Vector2Int> SmithingRooms = new();
+        private readonly Dictionary<Vector2Int, GridRoom> _data = new();
 
-        public RoomType this[Vector2Int key]
+        private Vector2Int _finalRoomPos;
+
+        public Vector2Int FinalRoomPos
+        {
+            get => _finalRoomPos;
+            set
+            {
+                if (_data.TryGetValue(_finalRoomPos, out GridRoom room)) room.IsFinalRoom = false;
+                _finalRoomPos = value;
+                if (_data.TryGetValue(_finalRoomPos, out room)) room.IsFinalRoom = true;
+            }
+        }
+
+        public Vector2Int GenerationStart;
+
+        public GridRoom this[Vector2Int key]
         {
             get => _data[key];
             set => _data[key] = value;
         }
 
-        public RoomData GetData(Vector2Int key) => _dataMappings[key];
+        public void AddGridRoom(Vector2Int key, RoomType startingDir)
+        {
+            GridRoom room = new()
+            {
+                Pos = key,
+                Type = startingDir
+            };
+            _data.Add(key, room);
+        }
 
-        public void SetData(Vector2Int key, RoomData val) => _dataMappings[key] = val;
+        public void AddRoomType(Vector2Int key, RoomType additionalDir)
+        {
+            if (!_data.TryGetValue(key, out GridRoom val))
+            {
+                Debug.LogWarning($"No room at {key} found");
+                return;
+            }
 
-        public IEnumerable<KeyValuePair<Vector2Int, RoomData>> GetAllData() => _dataMappings;
+            val.Type |= additionalDir;
+        }
+
+        public void SetWeaponRoom(Vector2Int key, bool isWeaponRoom = true)
+        {
+            if (!_data.TryGetValue(key, out GridRoom val))
+            {
+                Debug.LogWarning($"No room at {key} found");
+                return;
+            }
+
+            val.IsWeaponRoom = isWeaponRoom;
+        }
+
+        public void SetSmithingRoom(Vector2Int key, bool isSmithingRoom = true)
+        {
+            if (!_data.TryGetValue(key, out GridRoom val))
+            {
+                Debug.LogWarning($"No room at {key} found");
+                return;
+            }
+
+            val.IsSmithingRoom = isSmithingRoom;
+        }
+
+        public void SetEndingHasBoss(bool hasBoss = true)
+        {
+            if (!_data.TryGetValue(_finalRoomPos, out GridRoom val))
+            {
+                Debug.LogWarning($"No room at {_finalRoomPos} found");
+                return;
+            }
+
+            val.IsBossRoom = hasBoss;
+        }
+
+        public void SetData(Vector2Int key, RoomData val) => _data[key].Data = val;
 
         public IEnumerable<Vector2Int> Rooms => _data.Keys;
 
         public bool HasRoomPos(Vector2Int pos) => _data.ContainsKey(pos);
 
         /// <inheritdoc />
-        public IEnumerator<KeyValuePair<Vector2Int, RoomType>> GetEnumerator() => _data.GetEnumerator();
+        public IEnumerator<GridRoom> GetEnumerator() => _data.Values.GetEnumerator();
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_data).GetEnumerator();
+    }
+    public class GridRoom
+    {
+        public Vector2Int Pos;
+        public RoomType Type;
+        public RoomData Data;
+        public bool IsWeaponRoom;
+        public bool IsSmithingRoom;
+        public bool IsFinalRoom;
+        public bool IsBossRoom;
     }
 }

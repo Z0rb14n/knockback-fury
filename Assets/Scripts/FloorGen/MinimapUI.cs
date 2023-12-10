@@ -28,28 +28,28 @@ namespace FloorGen
 
             HashSet<(Vector2Int, RoomType)> edges = new();
             
-            foreach ((Vector2Int index, RoomType type) in grid)
+            foreach (GridRoom room in grid)
             {
-                Vector2Int actualIndex = index - grid.GenerationStart;
+                Vector2Int actualIndex = room.Pos - grid.GenerationStart;
                 GameObject instantiated = Instantiate(minimapIconPrefab, iconsParent);
                 instantiated.transform.localPosition = (Vector2)actualIndex * iconOffsets;
                 MinimapIcon icon = instantiated.GetComponent<MinimapIcon>();
-                if (grid.FinalRoom == index)
+                if (room.IsFinalRoom)
                 {
-                    icon.RoomIcon = grid.EndingHasBoss ? MinimapIcon.DisplayedIcon.Boss : MinimapIcon.DisplayedIcon.NewRoom;
-                } else if (grid.WeaponRooms.Contains(index))
+                    icon.RoomIcon = room.IsBossRoom ? MinimapIcon.DisplayedIcon.Boss : MinimapIcon.DisplayedIcon.NewRoom;
+                } else if (room.IsWeaponRoom)
                 {
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Weapon;
-                } else if (grid.SmithingRooms.Contains(index))
+                } else if (room.IsSmithingRoom)
                 {
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Upgrade;
                 }
-                _icons.Add(index, icon);
-                List<RoomType> currEdges = type.GetParts();
+                _icons.Add(room.Pos, icon);
+                List<RoomType> currEdges = room.Type.GetParts();
                 foreach (RoomType currEdge in currEdges)
                 {
-                    if (edges.Contains((index, currEdge)) ||
-                        edges.Contains((currEdge.Move(index), currEdge.GetOpposing())))
+                    if (edges.Contains((room.Pos, currEdge)) ||
+                        edges.Contains((currEdge.Move(room.Pos), currEdge.GetOpposing())))
                     {
                         continue;
                     }
@@ -83,7 +83,7 @@ namespace FloorGen
                     RectTransform rect = bridge.GetComponent<RectTransform>();
                     rect.anchoredPosition = initialPos;
                     rect.sizeDelta = bridgeSize;
-                    edges.Add((index, currEdge));
+                    edges.Add((room.Pos, currEdge));
                 }
             }
         }
@@ -91,16 +91,16 @@ namespace FloorGen
         public void UpdateDisplay()
         {
             // TODO ONLY UPDATE A FEW
-            foreach ((Vector2Int index, RoomData display) in _grid.GetAllData())
+            foreach (GridRoom room in _grid)
             {
                 MinimapIcon.DisplayState newState = MinimapIcon.DisplayState.Unvisited;
-                if (display.PlayerPresent)
+                if (room.Data.PlayerPresent)
                 {
                     newState = MinimapIcon.DisplayState.Present;
-                    iconsParent.transform.localPosition = -(Vector2)(index-_grid.GenerationStart) * iconOffsets;
+                    iconsParent.transform.localPosition = -(Vector2)(room.Pos-_grid.GenerationStart) * iconOffsets;
                 }
-                else if (display.PlayerVisited) newState = MinimapIcon.DisplayState.Visited;
-                _icons[index].State = newState;
+                else if (room.Data.PlayerVisited) newState = MinimapIcon.DisplayState.Visited;
+                _icons[room.Pos].State = newState;
             }
         }
 
