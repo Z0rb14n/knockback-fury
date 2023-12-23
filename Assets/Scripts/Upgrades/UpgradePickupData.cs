@@ -8,6 +8,8 @@ namespace Upgrades
     [CreateAssetMenu(menuName = "Upgrade Data")]
     public class UpgradePickupData : ScriptableObject
     {
+        [Tooltip("Internal upgrade category")]
+        public UpgradeCategory upgradeCategory;
         [Tooltip("Internal upgrade type")]
         public UpgradeType upgradeType;
         [Tooltip("Upgrade data - currently only used for Cloak and Dagger/Target Analysis as of now")]

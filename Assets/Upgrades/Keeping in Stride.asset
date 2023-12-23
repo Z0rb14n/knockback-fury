@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Keeping in Stride
   m_EditorClassIdentifier: 
+  upgradeCategory: 1
   upgradeType: 6
   upgradeData: 0
   displayName: Keeping in Stride
   infoText: Gain a dash charge whenever you kill an enemy while airborne.
   implemented: 1
+  comment: 

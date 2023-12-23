@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: First Strike
   m_EditorClassIdentifier: 
+  upgradeCategory: 3
   upgradeType: 12
   upgradeData: 0
   displayName: First Strike
   infoText: First shot after reloading does 1.5X damage.
   implemented: 1
+  comment: 
