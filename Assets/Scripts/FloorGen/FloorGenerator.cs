@@ -43,8 +43,6 @@ namespace FloorGen
         public float eliteHealthModifier = 2f;
         [Min(0), Tooltip("Elite damage modifier")]
         public float eliteDamageModifier = 2f;
-        [Tooltip("Player Upgrade prefab")]
-        public GameObject playerUpgradePrefab;
         [Tooltip("Cheese prefab")]
         public GameObject cheesePrefab;
         [Tooltip("Room Changer Prefab")]
@@ -87,13 +85,11 @@ namespace FloorGen
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
-        private HashSet<UpgradeType> _validUpgradeTypes = new();
         private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
         private Random _random;
 
         private void Awake()
         {
-            _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
             _socketPrefabSizes.Clear();
             GeneratePrefabSizes();
             _pairsDict.Clear();
@@ -287,22 +283,6 @@ namespace FloorGen
             cheesePickup.amount = amount;
             return cheesePickup;
         }
-
-        private UpgradePickup GeneratePlayerUpgradePickup(Vector3 position, GameObject parent)
-        {
-            GameObject playerUpgrade = Instantiate(playerUpgradePrefab, position, Quaternion.identity, parent.transform);
-            playerUpgrade.SetActive(false);
-            UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
-            if (_validUpgradeTypes.Count == 0)
-            {
-                Debug.LogWarning("Empty valid upgrade types - regenerating.");
-                _validUpgradeTypes = new HashSet<UpgradeType>(UpgradeManager.Instance.ImplementedUpgrades);
-            }
-            pickup.upgrade = _validUpgradeTypes.ToList().GetRandom(_random);
-            UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
-            _validUpgradeTypes.Remove(pickup.upgrade);
-            return pickup;
-        }
         
         private void GenerateEnemies(List<(SocketBehaviour, EnemySpawnType)> sockets, float packSize, RoomData roomData, bool isEndRoom)
         {
@@ -314,7 +294,7 @@ namespace FloorGen
                 bool generatedEnemy = false;
                 while (eligibleSpawnTypes.Count > 0)
                 {
-                    int indexType = eligibleSpawnTypes.GetRandom(_random, out EnemySpawnType type);
+                    EnemySpawnType type = eligibleSpawnTypes.GetRandom(_random, out int indexType);
                     if (roomData.ignoreSocketEnemySpawns)
                     {
                         GameObject spawnedEnemy = roomData.SpawnEnemy(type,_random);
@@ -407,7 +387,6 @@ namespace FloorGen
             bool generateBoss = isEndRoom && pack.endingHasBoss;
             float packSize = isEndRoom ? pack.endingPackSize : pack.normalPackSize;
             if (generateBoss) return;
-            roomData.pickup = GeneratePlayerUpgradePickup(gridPos + (Vector3) roomData.powerupSpawnOffset, cellObject);
             roomData.cheesePickup = GenerateCheesePickup(gridPos + (Vector3) roomData.cheeseSpawnOffset, cellObject, isEndRoom ? 10 : 5);
             if (isEndRoom)
             {

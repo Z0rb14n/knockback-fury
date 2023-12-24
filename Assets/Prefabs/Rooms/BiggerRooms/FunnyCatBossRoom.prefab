@@ -19458,7 +19458,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1870d823b22a4bdebb6004e87353a3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
   roomTransitionInteractable: {fileID: 0}
@@ -19473,6 +19472,9 @@ MonoBehaviour:
   sockets: []
   ignoreSocketEnemySpawns: 1
   socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
+  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
+  healthPickupPrefab: {fileID: 0}
+  cheesePickupPrefab: {fileID: 0}
 --- !u!1 &6319256637977655647
 GameObject:
   m_ObjectHideFlags: 0

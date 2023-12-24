@@ -52278,7 +52278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1870d823b22a4bdebb6004e87353a3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickup: {fileID: 0}
   cheesePickup: {fileID: 0}
   weaponPickup: {fileID: 0}
   roomTransitionInteractable: {fileID: 0}
@@ -52290,11 +52289,6 @@ MonoBehaviour:
   playerSpawnOffset: {x: -5, y: 2}
   roomSize: {x: 21, y: 21}
   roomCenterOffset: {x: 1, y: -2}
-  hiders:
-  - hidingType: 1
-    toEnable: {fileID: 8640730458838021270}
-  - hidingType: 4
-    toEnable: {fileID: 5602590552855621982}
   sockets:
   - size: {x: 2, y: 2}
     position: {x: -3, y: 0}
@@ -52302,6 +52296,9 @@ MonoBehaviour:
     position: {x: 4.75, y: -2.75}
   ignoreSocketEnemySpawns: 1
   socketTile: {fileID: 11400000, guid: c776162fd129a814681523e9435f8ed2, type: 2}
+  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
+  healthPickupPrefab: {fileID: 7303408875578781334, guid: b0f872a5b3517174a9e8a477c84a5a36, type: 3}
+  cheesePickupPrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!4 &7308564583867378131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2925969703667180555, guid: f743ea86a6ec10e4eb950eb3497f8247, type: 3}

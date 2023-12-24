@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Enemies;
 using FileSave;
+using PermUpgrade;
+using Player;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Upgrades;
@@ -16,8 +18,6 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class RoomData : MonoBehaviour
     {
-        [HideInInspector]
-        public UpgradePickup pickup;
         [HideInInspector]
         public CheesePickup cheesePickup;
         [HideInInspector]
@@ -48,6 +48,12 @@ namespace FloorGen
         public bool ignoreSocketEnemySpawns = true;
 
         public TileBase socketTile;
+        [Tooltip("Player Upgrade prefab")]
+        public GameObject playerUpgradePrefab;
+        [Tooltip("Health Pickup prefab")]
+        public GameObject healthPickupPrefab;
+        [Tooltip("Cheese Pickup prefab")]
+        public GameObject cheesePickupPrefab;
 
         private readonly HashSet<EntityHealth> _enemies = new();
         private readonly Dictionary<EntityHealth, EnemyBehaviour> _enemyBehaviours = new();
@@ -277,7 +283,36 @@ namespace FloorGen
 
         private void GenerateUpgrade()
         {
-            if (pickup) pickup.gameObject.SetActive(true);
+            Vector3 pos = transform.position + (Vector3) powerupSpawnOffset;
+            UpgradeManager upgradeManager = UpgradeManager.Instance;
+            bool isFullHealth = PlayerHealth.Instance.health == PlayerHealth.Instance.maxHealth;
+            HashSet<UpgradeType> validUpgradeTypes = new(upgradeManager.ImplementedUpgrades);
+            validUpgradeTypes.ExceptWith(PlayerUpgradeManager.Instance.GetUniqueUpgrades);
+            if (!CrossRunInfo.HasUpgrade(PermUpgradeType.SteelClaws))
+            {
+                validUpgradeTypes.RemoveWhere(type =>
+                    upgradeManager.UpgradeMapping[type].upgradeCategory == UpgradeCategory.WallRun);
+            }
+            if (!CrossRunInfo.HasUpgrade(PermUpgradeType.GrapplingHook))
+            {
+                validUpgradeTypes.RemoveWhere(type =>
+                    upgradeManager.UpgradeMapping[type].upgradeCategory == UpgradeCategory.Grapple);
+            }
+            if (validUpgradeTypes.Count == 0)
+            {
+                Instantiate(isFullHealth ? cheesePickupPrefab : healthPickupPrefab, pos, Quaternion.identity, transform);
+                return;
+            }
+            int totalWeight = validUpgradeTypes.Count + (isFullHealth?0:4);
+            if (UnityEngine.Random.Range(0, totalWeight) >= validUpgradeTypes.Count)
+            {
+                Instantiate(healthPickupPrefab, pos, Quaternion.identity, transform);
+                return;
+            }
+            GameObject playerUpgrade = Instantiate(playerUpgradePrefab, pos, Quaternion.identity, transform);
+            UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
+            pickup.upgrade = validUpgradeTypes.ToList().GetRandom();
+            UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
         }
 
         private void OnDrawGizmosSelected()
