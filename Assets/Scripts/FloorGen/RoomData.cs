@@ -269,10 +269,15 @@ namespace FloorGen
             _enemies.Remove(health);
             _enemyBehaviours.Remove(health);
             if (_enemies.Count != 0) return;
-            if (pickup) pickup.gameObject.SetActive(true);
+            GenerateUpgrade();
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
             if (roomTransitionInteractable) roomTransitionInteractable.gameObject.SetActive(true);
+        }
+
+        private void GenerateUpgrade()
+        {
+            if (pickup) pickup.gameObject.SetActive(true);
         }
 
         private void OnDrawGizmosSelected()

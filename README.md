@@ -30,6 +30,7 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - Spike Thing: https://opengameart.org/content/gsr4-assault-blade
  - Conveyor Belt: https://opengameart.org/content/factory-tileset
  - Pipe Tileset: https://opengameart.org/content/16x16-pipe-tileset
+ - Heart: https://opengameart.org/content/heart-pixel-art
 
 ### Sounds
  - https://opengameart.org/content/hollywood-style-pistol-silencer-sound-effect
