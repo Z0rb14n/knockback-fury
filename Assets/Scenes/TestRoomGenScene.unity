@@ -172,7 +172,6 @@ MonoBehaviour:
   jumperPackCost: 2
   eliteHealthModifier: 2
   eliteDamageModifier: 2
-  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
   cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
   roomChangePrefab: {fileID: 307047880062284244, guid: 7b17b7af887935e4997fac1f7909818e, type: 3}
   socketPrefabs:
@@ -306,9 +305,9 @@ MonoBehaviour:
     - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   seed: 0
   maxRows: 3
-  minRooms: 6
-  maxRooms: 8
-  centerRowMin: 4
+  minRooms: 12
+  maxRooms: 15
+  centerRowMin: 8
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
@@ -1142,7 +1141,6 @@ MonoBehaviour:
   jumperPackCost: 2
   eliteHealthModifier: 2
   eliteDamageModifier: 2
-  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
   cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
   roomChangePrefab: {fileID: 307047880062284244, guid: 7b17b7af887935e4997fac1f7909818e, type: 3}
   socketPrefabs:
