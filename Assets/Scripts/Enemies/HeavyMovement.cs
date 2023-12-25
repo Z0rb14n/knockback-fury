@@ -7,7 +7,7 @@ namespace Enemies
     public class HeavyMovement : PatrolMovement
     {
         public float aggroSpeedMultiplier;
-        
+
 
         private EnemyAggro _aggroScript;
         private bool _isAggro;
@@ -36,6 +36,7 @@ namespace Enemies
                 {
                     _direction = (int)Mathf.Sign(_player.position.x - _body.position.x);
                 }
+
                 _playerPos = new Vector2(_player.position.x, transform.position.y);
                 MoveToTarget(_playerPos, speed * aggroSpeedMultiplier);
                 if (_isAttacking) Debug.Log("is attacking");
@@ -44,7 +45,6 @@ namespace Enemies
                     Debug.Log(_isAttacking.ToString());
                     CheckIfFlip();
                 }
-                
             }
             else
             {
@@ -52,6 +52,4 @@ namespace Enemies
             }
         }
     }
-
-
 }

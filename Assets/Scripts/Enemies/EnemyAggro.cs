@@ -32,8 +32,8 @@ namespace Enemies
             if (IsInRange(aggroRange) && InLineOfSight())
             {
                 _isAggro = true;
-
             }
+
             if (!IsInRange(deaggroRange))
             {
                 _isAggro = false;
@@ -57,7 +57,6 @@ namespace Enemies
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(_collider.bounds.center, deaggroRange);
             }
-            
         }
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace Enemies
             try
             {
                 return (Physics2D.Raycast(_position, rayDirection, deaggroRange, layerMask).collider.gameObject.layer
-                    == LayerMask.NameToLayer("Player"));
+                        == LayerMask.NameToLayer("Player"));
             }
             catch (System.NullReferenceException)
             {
@@ -83,8 +82,5 @@ namespace Enemies
         {
             return _isAggro;
         }
-
-        
-
     }
 }
