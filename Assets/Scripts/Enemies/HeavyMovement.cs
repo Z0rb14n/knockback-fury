@@ -38,7 +38,6 @@ namespace Enemies
 
                 _playerPos = new Vector2(_player.position.x, transform.position.y);
                 MoveToTarget(_playerPos, speed * aggroSpeedMultiplier);
-                if (_isAttacking) Debug.Log("is attacking");
                 if (_canMove && !_isAttacking)
                 {
                     CheckIfFlip();
