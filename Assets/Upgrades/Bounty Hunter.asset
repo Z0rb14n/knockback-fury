@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Bounty Hunter
   m_EditorClassIdentifier: 
+  upgradeCategory: 5
   upgradeType: 21
   upgradeData: 0
   displayName: Bounty Hunter
   infoText: Killing a hooked enemy resets grappling hook cooldown.
   implemented: 0
+  comment: 

@@ -54,12 +54,12 @@ namespace Enemies.Cat
         {
             for (int i = 0; i < numProjectiles; i++)
             {
-                Vector3 playerPos = _player.transform.position;
-                Vector3 pos = transform.position;
-                Vector3 dir = (playerPos - pos).normalized;
+                Vector2 playerPos = _player.Pos;
+                Vector2 pos = transform.position;
+                Vector2 dir = (playerPos - pos).normalized;
                 if (Random.Range(0.0f, 1.0f) < 0.3f)
                 {
-                    dir = (playerPos + new Vector3(0, 3, 0) - pos).normalized;
+                    dir = (playerPos + new Vector2(0, 3) - pos).normalized;
                 }
                 else if (Random.Range(0.0f, 1.0f) < 0.3f)
                 {

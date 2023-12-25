@@ -1,13 +1,12 @@
 using System.Collections;
 using Enemies.Ranged;
 using Player;
-using Polarith.AI.Move;
 using UnityEngine;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(AIMFollow), typeof(EntityHealth), typeof(AIMSteeringFilter))]
-    public class ChaserBehaviour : MonoBehaviour
+    [RequireComponent(typeof(EntityHealth), typeof(Rigidbody2D))]
+    public class ChaserBehaviour : EnemyBehaviour
     {
         [Tooltip("VFX to create on explosion")]
         public GameObject explosionVFX;
@@ -21,54 +20,35 @@ namespace Enemies
         public float explodeDistance;
         [Min(0), Tooltip("Delay before explosion occurs")]
         public float explodeDelayTime;
+        [Min(0), Tooltip("Speed, m/s")]
+        public float speed = 1;
 
-        private static AIMSteeringPerceiver GlobalSteeringPerceiver
-        {
-            get
-            {
-                if (!_globalSteeringPerceiver) _globalSteeringPerceiver = FindObjectOfType<AIMSteeringPerceiver>();
-                return _globalSteeringPerceiver;
-            }
-        }
-        private static AIMSteeringPerceiver _globalSteeringPerceiver;
-
-        private GameObject _player;
         private EntityHealth _entityHealth;
-        private AIMSteeringFilter _aimSteeringFilter;
-        private AIMFollow _aimFollow;
+        private Rigidbody2D _rigidbody2D;
+        private PlayerMovementScript _player;
+        private bool _isExploding;
         
         private void Awake()
         {
-            _player = PlayerMovementScript.Instance.gameObject;
-            _aimFollow = GetComponent<AIMFollow>();
-            _aimFollow.Enabled = false;
-            _aimFollow.Target = _player;
+            _player = PlayerMovementScript.Instance;
             _entityHealth = GetComponent<EntityHealth>();
-            _aimSteeringFilter = GetComponent<AIMSteeringFilter>();
-            if (!_aimSteeringFilter.SteeringPerceiver)
-            {
-                _aimSteeringFilter.SteeringPerceiver = GlobalSteeringPerceiver;
-            }
+            _rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
         private void FixedUpdate()
         {
-            if (Vector2.Distance(_player.transform.position, transform.position) < explodeDistance)
+            Vector2 pos = _rigidbody2D.position;
+            Vector2 playerPos = _player.Pos;
+            Vector2 targetDir = playerPos - pos;
+            if (!_isExploding && Vector2.SqrMagnitude(targetDir) < explodeDistance * explodeDistance)
             {
-                StartCoroutine(Explode());   
+                _isExploding = true;
+                StartCoroutine(Explode());
             }
-        }
-        
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.GetComponent<PlayerMovementScript>()) return;
-            _aimFollow.Enabled = true;
-        }
-        
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (!other.GetComponent<PlayerMovementScript>()) return;
-            _aimFollow.Enabled = false;
+            _rigidbody2D.MovePosition(pos + Vector2.ClampMagnitude(targetDir, speed * Time.fixedDeltaTime));
+            _rigidbody2D.SetRotation(Mathf.Acos(Vector2.Dot(Vector2.up, targetDir.normalized))
+                                     * Mathf.Rad2Deg
+                                     * -Mathf.Sign(targetDir.x));
         }
 
         private IEnumerator Explode() 

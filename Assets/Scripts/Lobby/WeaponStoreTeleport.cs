@@ -35,7 +35,7 @@ namespace Lobby
 
         protected override void OnPlayerInteraction()
         {
-            if (isTeleportEnabled) PlayerMovementScript.Instance.transform.position = positionToTeleport;
+            if (isTeleportEnabled) PlayerMovementScript.Instance.Pos = positionToTeleport;
         }
 
         private void OnDrawGizmosSelected()

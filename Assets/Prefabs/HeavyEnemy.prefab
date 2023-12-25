@@ -171,11 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8299a83b396c11f428dc604fd31998cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 125
-  health: 125
+  maxHealth: 110
+  health: 110
   iFrameLength: 0
   doesChangeColor: 1
   canDropCheese: 1
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176,
     type: 3}
 --- !u!114 &781840091141345320
@@ -192,6 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   knockbackForce: 80
+  damageOnTrigger: 0
 --- !u!95 &6890369457235158245
 Animator:
   serializedVersion: 5

@@ -87,7 +87,7 @@ namespace Enemies.Cat
         {
             if (Grounded)
             {
-                Vector3 playerPos = _player.transform.position;
+                Vector2 playerPos = _player.Pos;
                 Vector2 pos = _rigidbody.position;
                 if (playerPos.x < pos.x) _spriteRenderer.sprite = leftSprite;
                 else if (playerPos.x > pos.x) _spriteRenderer.sprite = rightSprite;
@@ -100,7 +100,7 @@ namespace Enemies.Cat
             {
                 yield return new WaitForSeconds(delayBetweenJumps);
                 
-                Vector3 playerPos = _player.transform.position;
+                Vector2 playerPos = _player.Pos;
                 Vector2 pos = _rigidbody.position;
                 Vector2 force = jumpVector;
                 if (playerPos.y < pos.y + playerOffsetForSmallJump) force = smallJumpVector;

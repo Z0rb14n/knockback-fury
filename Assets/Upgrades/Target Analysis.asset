@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Target Analysis
   m_EditorClassIdentifier: 
+  upgradeCategory: 1
   upgradeType: 5
   upgradeData: 100
   displayName: Target Analysis
   infoText: Dealing damage slowly recharges a shield that absorbs a hit.
   implemented: 1
+  comment: 

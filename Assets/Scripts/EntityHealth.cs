@@ -12,6 +12,7 @@ public class EntityHealth : MonoBehaviour
 
     public bool doesChangeColor = true;
     public bool canDropCheese = true;
+    public bool grappleHookTarget = true;
     public GameObject cheeseItemPickup;
 
     public Action<EntityHealth> OnDeath;

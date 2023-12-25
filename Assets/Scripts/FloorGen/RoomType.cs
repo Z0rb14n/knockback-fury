@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Grid = System.Collections.Generic.Dictionary<UnityEngine.Vector2Int, FloorGen.RoomType>;
 
 namespace FloorGen
 {

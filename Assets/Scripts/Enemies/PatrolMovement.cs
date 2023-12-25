@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Enemies
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
-    public class PatrolMovement : MonoBehaviour
+    public class PatrolMovement : EnemyBehaviour
     {
 
         public Transform[] patrolPoints;

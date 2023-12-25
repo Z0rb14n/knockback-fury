@@ -32,7 +32,7 @@ namespace Player
         {
             _prevDisplayedHp = playerHealth.health;
             _prevDisplayedMax = playerHealth.maxHealth;
-            float ratio = (float)_prevDisplayedHp / _prevDisplayedMax;
+            float ratio = Mathf.Clamp((float)_prevDisplayedHp / _prevDisplayedMax,0,1);
             Color color = colorGradient.Evaluate(ratio);
             textObject.color = color;
             healthBar.color = color;
