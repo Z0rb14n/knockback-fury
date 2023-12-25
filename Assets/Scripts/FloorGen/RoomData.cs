@@ -300,7 +300,12 @@ namespace FloorGen
             }
             if (validUpgradeTypes.Count == 0)
             {
-                Instantiate(isFullHealth ? cheesePickupPrefab : healthPickupPrefab, pos, Quaternion.identity, transform);
+                GameObject go = Instantiate(isFullHealth ? cheesePickupPrefab : healthPickupPrefab, pos, Quaternion.identity, transform);
+                if (isFullHealth)
+                {
+                    CheesePickup newPickup = go.GetComponent<CheesePickup>();
+                    newPickup.amount = 5;
+                }
                 return;
             }
             int totalWeight = validUpgradeTypes.Count + (isFullHealth?0:4);
