@@ -8,7 +8,6 @@ namespace Enemies
     {
         public float aggroSpeedMultiplier;
 
-
         private EnemyAggro _aggroScript;
         private bool _isAggro;
         private PlayerMovementScript _playerMovement;
@@ -26,7 +25,7 @@ namespace Enemies
         // Update is called once per frame
         protected override void Update()
         {
-            _isAggro = _aggroScript.IsAggro();
+            _isAggro = _aggroScript.IsAggro;
             _canMove = DetermineCanMove();
             _position = _collider2D.bounds.center;
 
@@ -34,7 +33,7 @@ namespace Enemies
             {
                 if (!_isAttacking)
                 {
-                    _direction = (int)Mathf.Sign(_player.position.x - _body.position.x);
+                    Direction = (int)Mathf.Sign(_player.position.x - _body.position.x);
                 }
 
                 _playerPos = new Vector2(_player.position.x, transform.position.y);
@@ -42,7 +41,6 @@ namespace Enemies
                 if (_isAttacking) Debug.Log("is attacking");
                 if (_canMove && !_isAttacking)
                 {
-                    Debug.Log(_isAttacking.ToString());
                     CheckIfFlip();
                 }
             }

@@ -72,7 +72,7 @@ namespace Enemies
         /// </summary>
         private bool PlayerInRange()
         {
-            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.GetDirection();
+            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.Direction;
             _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f,
                 _collider.bounds.size.z);
 
@@ -94,7 +94,7 @@ namespace Enemies
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(
-                _collider.bounds.center + transform.right * attackDistance * (_movement?.GetDirection() ?? 1),
+                _collider.bounds.center + transform.right * attackDistance * (_movement?.Direction ?? 1),
                 new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f,
                     _collider.bounds.size.z));
         }

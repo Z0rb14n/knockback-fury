@@ -6,7 +6,6 @@ namespace Enemies
     [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
     public class PatrolMovement : EnemyBehaviour
     {
-
         public Transform[] patrolPoints;
         public float speed;
         public float pauseTime;
@@ -14,7 +13,7 @@ namespace Enemies
 
         protected int _target;
         protected Vector2 _targetPos;
-        protected int _direction;
+        public int Direction { get; protected set; }
         protected Rigidbody2D _body;
         protected SpriteRenderer _sprite;
         protected int _spriteDirection;
@@ -23,10 +22,17 @@ namespace Enemies
         protected Collider2D _collider2D;
         protected Vector2 _position;
         protected bool _isAttacking;
+        protected LayerMask obstacleLayerMask;
 
         private float _originalSpeed;
         private Vector2 _colliderSize;
-        
+
+        protected virtual void Awake()
+        {
+            obstacleLayerMask =
+                ~LayerMask.GetMask("Enemy", "Player", "EnemyIgnorePlatform", "EnemyBomb", "Ignore Raycast");
+        }
+
 
         protected virtual void Start()
         {
@@ -45,14 +51,15 @@ namespace Enemies
             if (patrolPoints.Length > 0)
             {
                 _target = 0;
-                _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);   
+                _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
             }
+
             _spriteDirection = 1;
             _isAttacking = false;
         }
 
 
-         protected virtual void Update()
+        protected virtual void Update()
         {
             if (patrolPoints.Length > 0)
             {
@@ -89,12 +96,13 @@ namespace Enemies
                     if (obstacleHeight != -1f)
                     {
                         // Debug.Log("attempting to move up");
-                        if (_direction == 1)
+                        if (Direction == 1)
                         {
                             // Debug.Log("movepos right");
                             // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
                             _body.MovePosition(_body.position + new Vector2(0.5f, obstacleHeight + 0.1f));
-                        } else
+                        }
+                        else
                         {
                             // Debug.Log("movepos left");
                             // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
@@ -117,7 +125,7 @@ namespace Enemies
         {
             Vector2 frontFootPos;
             Vector2 rayDirection;
-            if (_direction == 1)
+            if (Direction == 1)
             {
                 frontFootPos = _position + new Vector2(_colliderSize.x / 2, -_colliderSize.y / 2 + 0.1f);
                 rayDirection = Vector2.right;
@@ -127,12 +135,10 @@ namespace Enemies
                 frontFootPos = _position + new Vector2(-_colliderSize.x / 2, -_colliderSize.y / 2 + 0.1f);
                 rayDirection = Vector2.left;
             }
-            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy")
-                | 1 << LayerMask.NameToLayer("Player"));
 
             Debug.DrawRay(frontFootPos, rayDirection, Color.blue);
 
-            RaycastHit2D hit = Physics2D.Raycast(frontFootPos, rayDirection, 0.1f, layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(frontFootPos, rayDirection, 0.1f, obstacleLayerMask);
             if (hit.collider != null)
             {
                 // Debug.Log("Collided with: " + hit.collider.name);
@@ -155,9 +161,7 @@ namespace Enemies
             Vector2 frontTopCornerPos;
             Vector2 verticalCheckOrigin;
             float colliderHeight = _colliderSize.y;
-            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy")
-                | 1 << LayerMask.NameToLayer("Player"));
-            if (_direction == 1)
+            if (Direction == 1)
             {
                 frontTopCornerPos = _position + new Vector2(_colliderSize.x / 2, colliderHeight / 2);
                 rayDirection = Vector2.right;
@@ -169,24 +173,26 @@ namespace Enemies
                 rayDirection = Vector2.left;
                 verticalCheckOrigin = frontTopCornerPos - new Vector2(checkAheadDist, 0);
             }
+
             // initial horizontal ray; tests if there are obstacles at head (top corner) level ahead
             Debug.DrawRay(frontTopCornerPos, rayDirection, Color.cyan);
-            if (Physics2D.Raycast(frontTopCornerPos, rayDirection, checkAheadDist, layerMask)) return -1.0f;
-            
+            if (Physics2D.Raycast(frontTopCornerPos, rayDirection, checkAheadDist, obstacleLayerMask)) return -1.0f;
+
             // vertical rays up and down from a little bit ahead of head level
-            RaycastHit2D hitDown = Physics2D.Raycast(verticalCheckOrigin, Vector2.down, colliderHeight, layerMask);
+            RaycastHit2D hitDown =
+                Physics2D.Raycast(verticalCheckOrigin, Vector2.down, colliderHeight, obstacleLayerMask);
             Debug.DrawRay(verticalCheckOrigin, Vector2.down, Color.cyan);
             float distanceToObstacle = hitDown.distance;
             float obstacleHeight = colliderHeight - distanceToObstacle;
-            
+
             // Debug.Log("distance: " + distanceToObstacle.ToString());
             // Debug.Log("maxFallHeight: " + maxFallHeight.ToString());
             // Debug.Log("colliderHeight: " + colliderHeight.ToString());
             // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
             if (obstacleHeight >= maxFallHeight) return -1.0f;
-            
+
             float rayUpDistance = colliderHeight - distanceToObstacle + 0.2f;
-            RaycastHit2D hitUp = Physics2D.Raycast(verticalCheckOrigin, Vector2.up, rayUpDistance, layerMask);
+            RaycastHit2D hitUp = Physics2D.Raycast(verticalCheckOrigin, Vector2.up, rayUpDistance, obstacleLayerMask);
             Debug.DrawRay(verticalCheckOrigin, Vector2.up, Color.cyan);
 
             if (hitUp) return -1.0f;
@@ -197,7 +203,7 @@ namespace Enemies
         // flip sprite and update _spriteDirection to match
         public void CheckIfFlip()
         {
-            if (_direction != _spriteDirection)
+            if (Direction != _spriteDirection)
             {
                 _spriteDirection *= -1;
                 _sprite.flipX = _spriteDirection < 0;
@@ -223,9 +229,7 @@ namespace Enemies
         {
             Vector2 rayDirection = Vector2.down;
             Vector2 position;
-            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy")
-                | 1 << LayerMask.NameToLayer("Player"));
-            if (_direction == 1)
+            if (Direction == 1)
             {
                 position = new Vector2(_collider2D.bounds.max.x, _collider2D.bounds.center.y);
             }
@@ -235,12 +239,12 @@ namespace Enemies
             }
 
             Debug.DrawRay(position, rayDirection, Color.black);
-            return Physics2D.Raycast(position, rayDirection, maxFallHeight, layerMask);
+            return Physics2D.Raycast(position, rayDirection, maxFallHeight, obstacleLayerMask);
         }
 
         protected void DetermineDirection()
         {
-            _direction = (int) Mathf.Sign(patrolPoints[_target].position.x - _body.position.x);
+            Direction = (int)Mathf.Sign(patrolPoints[_target].position.x - _body.position.x);
         }
 
         protected IEnumerator PauseAtDestination()
@@ -268,11 +272,6 @@ namespace Enemies
         public void EndAttack()
         {
             _isAttacking = false;
-        }
-
-        public int GetDirection()
-        {
-            return _direction;
         }
     }
 }
