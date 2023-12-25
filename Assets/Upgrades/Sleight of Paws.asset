@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Sleight of Paws
   m_EditorClassIdentifier: 
+  upgradeCategory: 0
   upgradeType: 3
   upgradeData: 0
   displayName: Sleight of Paws
   infoText: Dashing reloads weapons.
   implemented: 1
+  comment: 

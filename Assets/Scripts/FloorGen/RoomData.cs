@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Enemies;
 using FileSave;
+using PermUpgrade;
+using Player;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Upgrades;
@@ -16,8 +18,6 @@ namespace FloorGen
     [DisallowMultipleComponent]
     public class RoomData : MonoBehaviour
     {
-        [HideInInspector]
-        public UpgradePickup pickup;
         [HideInInspector]
         public CheesePickup cheesePickup;
         [HideInInspector]
@@ -43,25 +43,33 @@ namespace FloorGen
         [Tooltip("Room center offset - only changes gizmo!")]
         public Vector2 roomCenterOffset;
 
-        public ExitHider[] hiders;
-
         public SocketShape[] sockets;
 
         public bool ignoreSocketEnemySpawns = true;
 
         public TileBase socketTile;
+        [Tooltip("Player Upgrade prefab")]
+        public GameObject playerUpgradePrefab;
+        [Tooltip("Health Pickup prefab")]
+        public GameObject healthPickupPrefab;
+        [Tooltip("Cheese Pickup prefab")]
+        public GameObject cheesePickupPrefab;
 
         private readonly HashSet<EntityHealth> _enemies = new();
         private readonly Dictionary<EntityHealth, EnemyBehaviour> _enemyBehaviours = new();
 
         public List<EntityHealth> Enemies => new(_enemies);
 
-        public bool PlayerVisited { get; private set; } = false;
-        public bool PlayerPresent { get; private set; } = false;
+        public bool PlayerVisited { get; private set; }
+        public bool PlayerPresent { get; private set; }
+
+        private PipeBehaviour[] _pipes;
+
+        public PipeBehaviour FirstUnoccupiedPipe => Pipes.FirstOrDefault(behaviour => !behaviour.OtherPipe);
+
+        public PipeBehaviour[] Pipes => _pipes ??= GetComponentsInChildren<PipeBehaviour>();
 
         public event Action OnPlayerVisit;
-
-        [NonSerialized] public Vector2Int GridIndex;
 
         private EnemySpawnPoint[] _spawnPoints;
         private Dictionary<EnemySpawnType, List<EnemySpawnPoint>> _spawnTypeMapping;
@@ -73,6 +81,7 @@ namespace FloorGen
             _roomTrigger = GetComponentInChildren<RoomTrigger>();
             InitializePointsAndMappings();
             _mobsShouldDisappear = GetComponentInParent<FloorGenerator>()?.mobsShouldDisappear ?? false;
+            _pipes ??= GetComponentsInChildren<PipeBehaviour>();
         }
 
         private void Start()
@@ -123,14 +132,6 @@ namespace FloorGen
                     if (_spawnTypeMapping.ContainsKey(t)) _spawnTypeMapping[t].Add(point);
                     else _spawnTypeMapping[t] = new List<EnemySpawnPoint>(new []{point});
                 }
-            }
-        }
-
-        public void EnsureType(RoomType type)
-        {
-            foreach (ExitHider hider in hiders)
-            {
-                if ((type & hider.hidingType) == 0) hider.toEnable.SetActive(true);
             }
         }
 
@@ -274,22 +275,54 @@ namespace FloorGen
             _enemies.Remove(health);
             _enemyBehaviours.Remove(health);
             if (_enemies.Count != 0) return;
-            if (pickup) pickup.gameObject.SetActive(true);
+            GenerateUpgrade();
             if (cheesePickup) cheesePickup.gameObject.SetActive(true);
             if (weaponPickup) weaponPickup.gameObject.SetActive(true);
             if (roomTransitionInteractable) roomTransitionInteractable.gameObject.SetActive(true);
         }
 
+        private void GenerateUpgrade()
+        {
+            Vector3 pos = transform.position + (Vector3) powerupSpawnOffset;
+            UpgradeManager upgradeManager = UpgradeManager.Instance;
+            bool isFullHealth = PlayerHealth.Instance.health == PlayerHealth.Instance.maxHealth;
+            HashSet<UpgradeType> validUpgradeTypes = new(upgradeManager.ImplementedUpgrades);
+            validUpgradeTypes.ExceptWith(PlayerUpgradeManager.Instance.GetUniqueUpgrades);
+            if (!CrossRunInfo.HasUpgrade(PermUpgradeType.SteelClaws))
+            {
+                validUpgradeTypes.RemoveWhere(type =>
+                    upgradeManager.UpgradeMapping[type].upgradeCategory == UpgradeCategory.WallRun);
+            }
+            if (!CrossRunInfo.HasUpgrade(PermUpgradeType.GrapplingHook))
+            {
+                validUpgradeTypes.RemoveWhere(type =>
+                    upgradeManager.UpgradeMapping[type].upgradeCategory == UpgradeCategory.Grapple);
+            }
+            if (validUpgradeTypes.Count == 0)
+            {
+                GameObject go = Instantiate(isFullHealth ? cheesePickupPrefab : healthPickupPrefab, pos, Quaternion.identity, transform);
+                if (isFullHealth)
+                {
+                    CheesePickup newPickup = go.GetComponent<CheesePickup>();
+                    newPickup.amount = 5;
+                }
+                return;
+            }
+            int totalWeight = validUpgradeTypes.Count + (isFullHealth?0:4);
+            if (UnityEngine.Random.Range(0, totalWeight) >= validUpgradeTypes.Count)
+            {
+                Instantiate(healthPickupPrefab, pos, Quaternion.identity, transform);
+                return;
+            }
+            GameObject playerUpgrade = Instantiate(playerUpgradePrefab, pos, Quaternion.identity, transform);
+            UpgradePickup pickup = playerUpgrade.GetComponent<UpgradePickup>();
+            pickup.upgrade = validUpgradeTypes.ToList().GetRandom();
+            UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
+        }
+
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireCube(transform.position + (Vector3) roomCenterOffset, (Vector3) roomSize + Vector3.forward);
-        }
-
-        [Serializable]
-        public struct ExitHider
-        {
-            public RoomType hidingType;
-            public GameObject toEnable;
         }
     }
 }

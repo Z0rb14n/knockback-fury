@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Sneaky Jumper
   m_EditorClassIdentifier: 
+  upgradeCategory: 2
   upgradeType: 10
   upgradeData: 0
   displayName: Sneaky Jumper
   infoText: Immune for 1 second after launching off of walls; 3 second cooldown.
   implemented: 1
+  comment: 

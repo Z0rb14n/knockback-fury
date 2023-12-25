@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1cc1fd7d734a38a58255aa5fb865a7, type: 3}
   m_Name: Speedy Runner
   m_EditorClassIdentifier: 
+  upgradeCategory: 4
   upgradeType: 18
   upgradeData: 0
   displayName: Speedy Runner
   infoText: Wallrun 50% faster.
   implemented: 0
+  comment: 

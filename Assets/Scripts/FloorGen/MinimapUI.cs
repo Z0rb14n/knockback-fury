@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FloorGen
@@ -8,6 +9,8 @@ namespace FloorGen
         [SerializeField] private Vector2Int iconOffsets = new(65, 65);
         [SerializeField] private GameObject minimapIconPrefab;
         [SerializeField] private GameObject minimapBridgeIconPrefab;
+        [SerializeField] private Vector2 wideBridgeSize = new(25, 10);
+        [SerializeField] private Vector2 tallBridgeSize = new(10, 25);
 
         [SerializeField] private Transform iconsParent;
 
@@ -22,40 +25,81 @@ namespace FloorGen
             {
                 Destroy(iconsParent.GetChild(i).gameObject);
             }
+
+            HashSet<(Vector2Int, RoomType)> edges = new();
             
-            foreach ((Vector2Int index, RoomType type) in grid)
+            foreach (GridRoom room in grid)
             {
-                Vector2Int actualIndex = index - grid.GenerationStart;
+                Vector2Int actualIndex = room.Pos - grid.GenerationStart;
                 GameObject instantiated = Instantiate(minimapIconPrefab, iconsParent);
                 instantiated.transform.localPosition = (Vector2)actualIndex * iconOffsets;
                 MinimapIcon icon = instantiated.GetComponent<MinimapIcon>();
-                if (grid.FinalRoom == index)
+                if (room.IsFinalRoom)
                 {
-                    icon.RoomIcon = grid.EndingHasBoss ? MinimapIcon.DisplayedIcon.Boss : MinimapIcon.DisplayedIcon.NewRoom;
-                } else if (grid.WeaponRooms.Contains(index))
+                    icon.RoomIcon = room.IsBossRoom ? MinimapIcon.DisplayedIcon.Boss : MinimapIcon.DisplayedIcon.NewRoom;
+                } else if (room.IsWeaponRoom)
                 {
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Weapon;
-                } else if (grid.SmithingRooms.Contains(index))
+                } else if (room.IsSmithingRoom)
                 {
                     icon.RoomIcon = MinimapIcon.DisplayedIcon.Upgrade;
                 }
-                _icons.Add(index, icon);
+                _icons.Add(room.Pos, icon);
+                foreach (RoomType currEdge in room.Edges.Values.Select(edge => edge.Type))
+                {
+                    if (edges.Contains((room.Pos, currEdge)) ||
+                        edges.Contains((currEdge.Move(room.Pos), currEdge.GetOpposing())))
+                    {
+                        continue;
+                    }
+
+                    Vector2 initialPos = actualIndex * iconOffsets;
+                    Vector2 bridgeSize;
+                    switch (currEdge)
+                    {
+                        case RoomType.LeftOpen:
+                            initialPos -= new Vector2(iconOffsets.x / 2f, 0);
+                            bridgeSize = wideBridgeSize;
+                            break;
+                        case RoomType.TopOpen:
+                            initialPos += new Vector2(0, iconOffsets.y / 2f);
+                            bridgeSize = tallBridgeSize;
+                            break;
+                        case RoomType.RightOpen:
+                            initialPos += new Vector2(iconOffsets.x / 2f, 0);
+                            bridgeSize = wideBridgeSize;
+                            break;
+                        case RoomType.BottomOpen:
+                            initialPos -= new Vector2(0, iconOffsets.y / 2f);
+                            bridgeSize = tallBridgeSize;
+                            break;
+                        default:
+                            bridgeSize = Vector2.zero;
+                            break;
+                    }
+                    
+                    GameObject bridge = Instantiate(minimapBridgeIconPrefab, iconsParent);
+                    RectTransform rect = bridge.GetComponent<RectTransform>();
+                    rect.anchoredPosition = initialPos;
+                    rect.sizeDelta = bridgeSize;
+                    edges.Add((room.Pos, currEdge));
+                }
             }
         }
 
         public void UpdateDisplay()
         {
             // TODO ONLY UPDATE A FEW
-            foreach ((Vector2Int index, RoomData display) in _grid.GetAllData())
+            foreach (GridRoom room in _grid)
             {
                 MinimapIcon.DisplayState newState = MinimapIcon.DisplayState.Unvisited;
-                if (display.PlayerPresent)
+                if (room.Data.PlayerPresent)
                 {
                     newState = MinimapIcon.DisplayState.Present;
-                    iconsParent.transform.localPosition = -(Vector2)(index-_grid.GenerationStart) * iconOffsets;
+                    iconsParent.transform.localPosition = -(Vector2)(room.Pos-_grid.GenerationStart) * iconOffsets;
                 }
-                else if (display.PlayerVisited) newState = MinimapIcon.DisplayState.Visited;
-                _icons[index].State = newState;
+                else if (room.Data.PlayerVisited) newState = MinimapIcon.DisplayState.Visited;
+                _icons[room.Pos].State = newState;
             }
         }
 

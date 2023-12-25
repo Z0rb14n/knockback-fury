@@ -7,6 +7,33 @@ namespace Util
     public static class ListUtil
     {
         /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        public static T GetRandom<T>(this IReadOnlyList<T> list)
+        {
+            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
+            return list[UnityEngine.Random.Range(0, list.Count)];
+        }
+
+        /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="index">Returned value index</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element index</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        public static T GetRandom<T>(this IReadOnlyList<T> list, out int index)
+        {
+            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
+            index = UnityEngine.Random.Range(0, list.Count);
+            return list[index];
+        }
+        /// <summary>
         /// Gets a random entry from a list or array with a provided random number generator.
         /// </summary>
         /// <param name="list">List or array of elements</param>
@@ -26,16 +53,15 @@ namespace Util
         /// </summary>
         /// <param name="list">List or array of elements</param>
         /// <param name="random">Random number generator to generate a random index</param>
-        /// <param name="val">Random element</param>
+        /// <param name="index">Random element index</param>
         /// <typeparam name="T">Type elements in array</typeparam>
         /// <returns>Index of random element</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
-        public static int GetRandom<T>(this IReadOnlyList<T> list, Random random, out T val)
+        public static T GetRandom<T>(this IReadOnlyList<T> list, Random random, out int index)
         {
             if (list.Count == 0) Debug.LogError("[ListUtil::GetRandom] empty list provided.");
-            int index = random.Next(0, list.Count);
-            val = list[index];
-            return index;
+            index = random.Next(0, list.Count);
+            return list[index];
         }
 
         /// <summary>

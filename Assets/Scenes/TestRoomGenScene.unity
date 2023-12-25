@@ -157,9 +157,9 @@ MonoBehaviour:
   playerHoldingPosition: {x: 69420, y: 666, z: 0}
   generationStartOffset: {x: 0, y: 6}
   floorEnemyPacks:
-  - normalPackSize: 40
-    endingPackSize: 50
-    endingHasBoss: 0
+  - normalPackSize: 20
+    endingPackSize: 40
+    endingHasBoss: 1
   - normalPackSize: 10
     endingPackSize: 17
     endingHasBoss: 0
@@ -172,19 +172,22 @@ MonoBehaviour:
   jumperPackCost: 2
   eliteHealthModifier: 2
   eliteDamageModifier: 2
-  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
   cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
   roomChangePrefab: {fileID: 307047880062284244, guid: 7b17b7af887935e4997fac1f7909818e, type: 3}
   socketPrefabs:
   - {fileID: 9107872687060260494, guid: 916dc872533a25840bffa6d1181c8882, type: 3}
   - {fileID: 461541005378355308, guid: d8027a8a4594f664e8d5bc9c909e898a, type: 3}
   - {fileID: 4214757178654429746, guid: 59b38ea7172f9a44589fc09c183edbc3, type: 3}
-  - {fileID: 5611468861318173077, guid: 96f648bd44aa71342a84dbc5c8cbcd1a, type: 3}
-  - {fileID: 5611468861318173077, guid: eef3d19fb2cbc9c458b7d98a41010156, type: 3}
-  - {fileID: 5611468861318173077, guid: c1ae9af141e5f0b4d9ec1110df04681b, type: 3}
   - {fileID: 5611468861318173077, guid: 28e41b72a176fa441830108ffa036f5a, type: 3}
   - {fileID: 5611468861318173077, guid: 094b2bce6c0118d4d96a3c1d118fa7e4, type: 3}
   - {fileID: 5611468861318173077, guid: 69287c439b45ab8468bac22e9ae8f7d8, type: 3}
+  - {fileID: 5611468861318173077, guid: 96f648bd44aa71342a84dbc5c8cbcd1a, type: 3}
+  - {fileID: 5611468861318173077, guid: eef3d19fb2cbc9c458b7d98a41010156, type: 3}
+  - {fileID: 5611468861318173077, guid: c1ae9af141e5f0b4d9ec1110df04681b, type: 3}
+  - {fileID: 5611468861318173077, guid: 21b0c744237732049bcf5ccbf1c05f45, type: 3}
+  - {fileID: 5611468861318173077, guid: 5f24de4fd92b0b64cbae6eaf045dd946, type: 3}
+  - {fileID: 5611468861318173077, guid: ab9c3ed9db5f1ab47932652c72f9baaf, type: 3}
+  - {fileID: 5611468861318173077, guid: a28c849fdfa02074f8f59408a0ab76d0, type: 3}
   weaponsList:
   - {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
   - {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
@@ -302,9 +305,9 @@ MonoBehaviour:
     - {fileID: 3954450897855488146, guid: bec93fe27c722e54a9060078359c13a7, type: 3}
   seed: 0
   maxRows: 3
-  minRooms: 6
-  maxRooms: 8
-  centerRowMin: 4
+  minRooms: 12
+  maxRooms: 15
+  centerRowMin: 8
   branchiness: 1
   branchinessDecrease: 4
   worldParent: {fileID: 25068407}
@@ -1138,7 +1141,6 @@ MonoBehaviour:
   jumperPackCost: 2
   eliteHealthModifier: 2
   eliteDamageModifier: 2
-  playerUpgradePrefab: {fileID: 1070293127956117111, guid: 3870058bd859b504e8e694df3d9046c9, type: 3}
   cheesePrefab: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
   roomChangePrefab: {fileID: 307047880062284244, guid: 7b17b7af887935e4997fac1f7909818e, type: 3}
   socketPrefabs:

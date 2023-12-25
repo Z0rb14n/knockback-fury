@@ -1,3 +1,4 @@
+using System;
 using Player;
 using System.Collections;
 using UnityEngine;
@@ -144,6 +145,15 @@ namespace Enemies
                     _attackAnimationTime = clip.length;
                 }
             }
+        }
+
+        /// <summary>
+        /// On disable, hide animations
+        /// </summary>
+        private void OnDisable()
+        {
+            _isAttacking = false;
+            _animator.SetBool(_animationAtkHash, false);
         }
     }
 }
