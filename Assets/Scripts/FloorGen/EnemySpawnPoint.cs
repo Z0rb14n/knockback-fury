@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Enemies;
 using UnityEngine;
 
@@ -22,6 +23,19 @@ namespace FloorGen
         private Transform[] patrolPoints;
         [Tooltip("Types of enemies that can spawn here.")]
         public EnemySpawnType types;
+
+        private readonly HashSet<EntityHealth> _enemies = new();
+
+        private void Start()
+        {
+            if (_enemies.Count == 0) Destroy(gameObject);
+        }
+
+        private void OnEntityDeath(EntityHealth health)
+        {
+            _enemies.Remove(health);
+            if (_enemies.Count == 0) Destroy(gameObject);
+        }
 
         /// <summary>
         /// Spawn an enemy of a given type.
@@ -48,6 +62,18 @@ namespace FloorGen
             }
         }
 
+        private void SetPatrolPoints(GameObject go)
+        {
+            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
+        }
+
+        private void AddToEnemyList(GameObject go)
+        {
+            EntityHealth health = go.GetComponent<EntityHealth>();
+            _enemies.Add(health);
+            go.GetComponent<EntityHealth>().OnDeath += OnEntityDeath;
+        }
+
         /// <summary>
         /// Spawn a jumper enemy.
         /// </summary>
@@ -60,7 +86,8 @@ namespace FloorGen
             go = Instantiate(jumperPrefab, transform);
             // TODO FIX FROG UNCENTERED
             go.transform.position = transform.position + new Vector3(0,0.75f,0);
-            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
+            SetPatrolPoints(go);
+            AddToEnemyList(go);
             return true;
         }
 
@@ -75,7 +102,8 @@ namespace FloorGen
             if ((types & EnemySpawnType.Heavy) == 0) return false;
             go = Instantiate(heavyPrefab, transform);
             go.transform.position = transform.position;
-            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
+            SetPatrolPoints(go);
+            AddToEnemyList(go);
             return true;
         }
 
@@ -90,6 +118,7 @@ namespace FloorGen
             if ((types & EnemySpawnType.Ranged) == 0) return false;
             go = Instantiate(rangedPrefab, transform);
             go.transform.position = transform.position;
+            AddToEnemyList(go);
             return true;
         }
 
@@ -104,6 +133,7 @@ namespace FloorGen
             if ((types & EnemySpawnType.Chaser) == 0) return false;
             go = Instantiate(chaserPrefab, transform);
             go.transform.position = transform.position;
+            AddToEnemyList(go);
             return true;
         }
     }
