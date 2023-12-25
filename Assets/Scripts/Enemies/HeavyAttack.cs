@@ -1,10 +1,7 @@
-using System;
 using Player;
 using System.Collections;
 using UnityEngine;
 using FMODUnity;
-using FMOD.Studio;
-using System.Security.Cryptography;
 
 namespace Enemies
 {
@@ -31,7 +28,7 @@ namespace Enemies
         private Animator _animator;
         [SerializeField] private EventReference _bonkSound;
         private float _attackAnimationTime;
-        
+
         private static readonly int _animationAtkHash = Animator.StringToHash("Attacking");
 
 
@@ -43,7 +40,7 @@ namespace Enemies
             _playerHealth = PlayerHealth.Instance;
             _animator = GetComponent<Animator>();
             GetAttackAnimationTime();
-        }        
+        }
 
         /// <summary>
         /// Enemy should always stand still when player is in range, only attacks when _attackTimer is below 0
@@ -53,31 +50,31 @@ namespace Enemies
             _attackTimer -= Time.deltaTime;
             if (!_isAttacking)
             {
-                if (PlayerInRange()) {
+                if (PlayerInRange())
+                {
                     _movement.DisableMovement();
                     if (_attackTimer <= 0)
                     {
                         _movement.StartAttack();
                         PerformAttack();
                     }
-                } else if (!_isAttacking)
+                }
+                else if (!_isAttacking)
                 {
                     _movement.EnableMovement();
                 }
             }
-            
-
         }
 
-        
 
         /// <summary>
         ///  Determines whether player is within attack range; range identical to box in OnDrawGizmos()
         /// </summary>
         private bool PlayerInRange()
         {
-            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.GetDirection();
-            _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z);
+            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.Direction;
+            _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f,
+                _collider.bounds.size.z);
 
             RaycastHit2D hit = Physics2D.BoxCast(_attackBoxCenter, _attackBoxSize, 0,
                 Vector2.left, 0, _playerLayer);
@@ -96,8 +93,10 @@ namespace Enemies
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_collider.bounds.center + transform.right * attackDistance * (_movement?.GetDirection() ?? 1),
-                new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f, _collider.bounds.size.z));
+            Gizmos.DrawWireCube(
+                _collider.bounds.center + transform.right * attackDistance * (_movement?.Direction ?? 1),
+                new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f,
+                    _collider.bounds.size.z));
         }
 
         /// <summary>
@@ -127,7 +126,8 @@ namespace Enemies
             {
                 _playerHealth.TakeDamage(attackDamage);
                 RuntimeManager.PlayOneShot(_bonkSound, transform.position);
-                Vector2 knockbackDirection = new((_player.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
+                Vector2 knockbackDirection =
+                    new((_player.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             }
 
@@ -144,7 +144,7 @@ namespace Enemies
         private void GetAttackAnimationTime()
         {
             AnimationClip[] clips = _animator.runtimeAnimatorController.animationClips;
-            foreach(AnimationClip clip in clips)
+            foreach (AnimationClip clip in clips)
             {
                 if (clip.name == "Attack")
                 {

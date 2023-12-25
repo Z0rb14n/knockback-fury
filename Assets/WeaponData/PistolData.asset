@@ -16,13 +16,13 @@ MonoBehaviour:
   numProjectiles: 1
   range: 8
   projectileSpeed: 20
-  projectileDamage: 30
+  projectileDamage: 25
   selfDamage: 1
   cheeseCost: 50
   roundsPerSecond: 3.7
   clipSize: 10
   reloadTime: 0.85
-  spread: 0.875
+  spread: 0.4375
   isHitscan: 0
   rightClickAction: 0
   knockbackStrength: 12

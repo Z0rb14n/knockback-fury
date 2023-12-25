@@ -69,7 +69,6 @@ public class EntityHealth : MonoBehaviour
     public void KillNonPlayer()
     {
         if (isDead) return;
-        Debug.Log("KillNonPlayer");
         Destroy(gameObject);
         OnDeath?.Invoke(this);
         isDead = true;
@@ -79,7 +78,6 @@ public class EntityHealth : MonoBehaviour
     {
         if (!isDead)
         {
-            Debug.Log("Death");
             PlayerMovementScript.Instance.OnEnemyKill();
             Destroy(gameObject);
             OnDeath?.Invoke(this);

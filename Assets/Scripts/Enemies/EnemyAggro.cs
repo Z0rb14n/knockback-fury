@@ -12,13 +12,13 @@ namespace Enemies
         [SerializeField] private CapsuleCollider2D _collider;
         private Vector3 _position;
         private Transform _player;
-        private LayerMask _playerLayer;
+        private LayerMask _lineOfSightMask;
         private PlayerMovementScript _playerMovementScript;
-        private bool _isAggro;
+        public bool IsAggro { get; private set; }
 
         private void Awake()
         {
-            _playerLayer = LayerMask.GetMask("Player");
+            _lineOfSightMask = ~LayerMask.GetMask("Enemy", "EnemyIgnorePlatform", "EnemyBomb", "Ignore Raycast");
             _playerMovementScript = PlayerMovementScript.Instance;
             _player = _playerMovementScript.transform;
         }
@@ -29,22 +29,15 @@ namespace Enemies
         private void Update()
         {
             _position = _collider.bounds.center;
-            if (IsInRange(aggroRange) && InLineOfSight())
+            if (Vector2.Distance(_position, _playerMovementScript.Pos) <= aggroRange && InLineOfSight())
             {
-                _isAggro = true;
-
+                IsAggro = true;
             }
-            if (!IsInRange(deaggroRange))
+
+            if (Vector2.Distance(_position, _playerMovementScript.Pos) > deaggroRange)
             {
-                _isAggro = false;
+                IsAggro = false;
             }
-        }
-
-        private bool IsInRange(float range)
-        {
-            RaycastHit2D hit = Physics2D.CircleCast(_collider.bounds.center, range, Vector2.left, 0, _playerLayer);
-
-            return hit.collider != null;
         }
 
         private void OnDrawGizmos()
@@ -57,7 +50,6 @@ namespace Enemies
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(_collider.bounds.center, deaggroRange);
             }
-            
         }
 
         /// <summary>
@@ -66,25 +58,15 @@ namespace Enemies
         private bool InLineOfSight()
         {
             Vector2 rayDirection = _player.position - _position;
-            int layerMask = ~(1 << LayerMask.NameToLayer("Enemy"));
             Debug.DrawRay(_position, rayDirection, Color.red);
-            try
+            RaycastHit2D hit = Physics2D.Raycast(_position, rayDirection, deaggroRange, _lineOfSightMask);
+            if (hit.collider != null)
             {
-                return (Physics2D.Raycast(_position, rayDirection, deaggroRange, layerMask).collider.gameObject.layer
-                    == LayerMask.NameToLayer("Player"));
+                Debug.DrawLine(_position, hit.point, Color.green);
+                return hit.collider.gameObject.layer == LayerMask.NameToLayer("Player");
             }
-            catch (System.NullReferenceException)
-            {
-                return false;
-            }
+
+            return false;
         }
-
-        public bool IsAggro()
-        {
-            return _isAggro;
-        }
-
-        
-
     }
 }
