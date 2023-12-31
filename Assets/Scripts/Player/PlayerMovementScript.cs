@@ -412,10 +412,15 @@ namespace Player
             {
                 GameEndCanvas.Instance.endData.enemiesKilled++;
             }
-            if (Grounded) return;
-            if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
+
+            if (!Grounded && _upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;
+            }
+
+            if (_activeGrappleHook && _upgradeManager[UpgradeType.RenewedVigor] > 0)
+            {
+                _dashesRemaining = maxDashes;
             }
         }
 
@@ -444,7 +449,7 @@ namespace Player
         {
             if (_dashesRemaining == 0)
             {
-                _dashesRemaining = 1;
+                _dashesRemaining = maxDashes;
             }
         }
 
