@@ -406,6 +406,14 @@ namespace Player
             _knockbackVector += vec;
         }
 
+        public void OnEnemyHook(EntityHealth health)
+        {
+            if (CrossRunInfo.HasUpgrade(PermUpgradeType.TargetedMomentum))
+            {
+                _dashesRemaining = maxDashes;
+            }
+        }
+
         public void OnEnemyKill()
         {
             if (GameEndCanvas.Instance)
@@ -426,7 +434,10 @@ namespace Player
 
         private void WallSlideLogic()
         {
-            _body.velocity = new Vector2(_body.velocity.x, -slideSpeed);
+            float yVel = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S)
+                ? 0
+                : -slideSpeed;
+            _body.velocity = new Vector2(_body.velocity.x, yVel);
             if (!IsWallSliding)
             {
                 PlayerWeaponControl.Instance.OnStartWallSlide();

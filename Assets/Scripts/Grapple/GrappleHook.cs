@@ -94,6 +94,7 @@ namespace Grapple
                     pos = otherEntity.transform.position;
                     _hookedEntity = otherEntity;
                     _hookedEntity.OnDeath += OnHookedEntityDeath;
+                    PlayerMovementScript.Instance.OnEnemyHook(_hookedEntity);
                 }
 
                 float dist = Vector2.Distance(pos, playerPos);
