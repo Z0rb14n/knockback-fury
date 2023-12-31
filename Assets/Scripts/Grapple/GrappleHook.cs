@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Player;
 using UnityEngine;
+using Upgrades;
 
 namespace Grapple
 {
@@ -72,6 +73,14 @@ namespace Grapple
             }
         }
 
+        private void OnHookedEntityDeath(EntityHealth health)
+        {
+            if (PlayerUpgradeManager.Instance[UpgradeType.BountyHunter] > 0)
+            {
+                PlayerMovementScript.Instance.GrappleHookCooldown = 0;
+            }
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (!_isFixed)
@@ -84,6 +93,7 @@ namespace Grapple
                 {
                     pos = otherEntity.transform.position;
                     _hookedEntity = otherEntity;
+                    _hookedEntity.OnDeath += OnHookedEntityDeath;
                 }
 
                 float dist = Vector2.Distance(pos, playerPos);

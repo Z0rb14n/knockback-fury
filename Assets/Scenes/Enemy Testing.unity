@@ -417,6 +417,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+--- !u!1001 &598543540
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3651889302090068126, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_Name
+      value: SaveDataPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3651889302090068128, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 55451d526698de3449f7bfb1a9364ac1, type: 3}
 --- !u!1001 &631005016
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12310,6 +12367,22 @@ PrefabInstance:
     - target: {fileID: 5621624406010825664, guid: d905535c1596a3f48936f8511a24858e, type: 3}
       propertyPath: m_Name
       value: UpgradeDashDamageCanvasPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d905535c1596a3f48936f8511a24858e, type: 3}
