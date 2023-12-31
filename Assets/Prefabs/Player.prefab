@@ -159,6 +159,7 @@ MonoBehaviour:
   groundedKBMultiplier: 1
   wallKBMultiplier: 1
   grappleVelocity: 25
+  grappleCooldown: 3
   grapplePrefab: {fileID: 8171226218910466548, guid: d761d3fd7321b484982293e910d39ed0, type: 3}
 --- !u!114 &7387056994418124513
 MonoBehaviour:
