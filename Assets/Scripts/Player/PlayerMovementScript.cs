@@ -434,10 +434,10 @@ namespace Player
 
         private void WallSlideLogic()
         {
-            float yVel = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S)
-                ? 0
-                : -slideSpeed;
-            _body.velocity = new Vector2(_body.velocity.x, yVel);
+            //bool shouldStayStill = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S);
+            //float yVel = shouldStayStill ? 0 : -slideSpeed;
+            _body.velocity = new Vector2(_body.velocity.x, -slideSpeed);
+            //_body.gravityScale = shouldStayStill ? 0 : 1;
             if (!IsWallSliding)
             {
                 PlayerWeaponControl.Instance.OnStartWallSlide();
