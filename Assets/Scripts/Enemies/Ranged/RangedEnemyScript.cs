@@ -2,6 +2,7 @@ using System.Collections;
 using Player;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.Serialization;
 
 namespace Enemies.Ranged
 {
@@ -21,7 +22,7 @@ namespace Enemies.Ranged
 
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
-        [SerializeField] private EventReference _source;
+        [FormerlySerializedAs("_source")] [SerializeField] private EventReference source;
         private PlayerMovementScript _playerMovement;
         private SpriteRenderer _sprite;
         private Animator _animator;
@@ -83,7 +84,7 @@ namespace Enemies.Ranged
         {
             GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
             go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
-            if (!_source.Guid.IsNull) RuntimeManager.PlayOneShot(_source,transform.position);
+            if (!source.Guid.IsNull) RuntimeManager.PlayOneShot(source,transform.position);
         }
     }
 }
