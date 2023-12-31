@@ -14,6 +14,8 @@ namespace Enemies.Ranged
         public Transform bulletPos;
         [Min(0), Tooltip("Time (seconds) between firing")]
         public float fireDelay = 2;
+        [Tooltip("Whether we check distance to player")]
+        public bool useProximityCheck = true;
         [HideInInspector]
         public float damageMultiplier = 1;
 
@@ -30,6 +32,11 @@ namespace Enemies.Ranged
             _sprite = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             _playerMovement = PlayerMovementScript.Instance;
+            if (!useProximityCheck)
+            {
+                _shootCoroutine = ShootCoroutine();
+                StartCoroutine(_shootCoroutine);
+            }
         }
 
         private void FixedUpdate()
@@ -39,7 +46,7 @@ namespace Enemies.Ranged
 
         private IEnumerator ShootCoroutine()
         {
-            while (_isPlayerInside)
+            while (!useProximityCheck || _isPlayerInside)
             {
                 yield return new WaitForSeconds(fireDelay);
                 if (_animator) _animator.SetTrigger(AnimatorThrowHash);
@@ -48,12 +55,12 @@ namespace Enemies.Ranged
                     GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
                     go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
                 }
-                
             }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (!useProximityCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = true;
             _shootCoroutine = ShootCoroutine();
@@ -62,6 +69,7 @@ namespace Enemies.Ranged
         
         private void OnTriggerExit2D(Collider2D other)
         {
+            if (!useProximityCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = false;
             StopCoroutine(_shootCoroutine);

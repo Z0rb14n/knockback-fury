@@ -20,6 +20,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4488847752800442320, guid: fa90e8493a384014194673dde3e28bbd, type: 3}
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: useProximityCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: _source.Guid.Data1
       value: 1374531282
       objectReference: {fileID: 0}
@@ -50,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 3628323996390703106, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_Radius
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3628323996390703106, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6556247770705963524, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_Sprite
@@ -152,3 +160,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5173186916843899649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310210426833455857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1733003c914419da75a499977f14c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveToPlayer: 0
+  force: 20
