@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3041133532461335286}
   - component: {fileID: 45822130718748350}
   - component: {fileID: 5388541494157965474}
+  - component: {fileID: 4400040088933545736}
   m_Layer: 7
   m_Name: Frog
   m_TagString: Untagged
@@ -124,6 +125,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 0
   pauseTime: 0
+  maxFallHeight: 0
   jumpForce: 10
   normalCollider: {fileID: 6553265572266371507}
   colliderOnWall: {fileID: 1483776281331567196}
@@ -237,3 +239,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4400040088933545736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541920492468595845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1733003c914419da75a499977f14c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveToPlayer: 0
+  force: 20

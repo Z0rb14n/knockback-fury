@@ -2259,6 +2259,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeDashDamageCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d905535c1596a3f48936f8511a24858e, type: 3}
 --- !u!1001 &7408165361231402774

@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using CustomTiles;
 using DashVFX;
+using FileSave;
 using GameEnd;
 using Grapple;
+using PermUpgrade;
 using UnityEngine;
 using Upgrades;
 using Weapons;
@@ -58,12 +60,22 @@ namespace Player
         [Header("Grapple Hook")]
         [Min(0), Tooltip("Grapple Hook Velocity")]
         public float grappleVelocity = 10;
+        [Min(0), Tooltip("Grapple Hook Cooldown")]
+        public float grappleCooldown = 3;
         [Tooltip("Grappling hook prefab")]
         public GameObject grapplePrefab;
 
         private float ActualDashTime => dashTime * (1 + _upgradeManager[UpgradeType.FarStride]);
 
         public int EffectiveDashes => _dashesRemaining + (_hasMomentumDash ? 1 : 0) + (_hasKeepingInStrideDash ? 1 : 0);
+
+        public float GrappleHookCooldown
+        {
+            get => Mathf.Max(0, grappleCooldown - (Time.time - _timeOfGrapple));
+            set => _timeOfGrapple = Time.time - grappleCooldown + value;
+        }
+
+        private float _timeOfGrapple = float.MinValue;
 
         public static PlayerMovementScript Instance
         {
@@ -113,6 +125,7 @@ namespace Player
         private float _jumpTime;
         private bool _isHoldingJump;
         private float _timeOnWall;
+        private Camera _mainCam;
         private GrappleHook _activeGrappleHook;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
@@ -129,6 +142,7 @@ namespace Player
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
             _sprite = GetComponent<SpriteRenderer>();
+            _mainCam = Camera.main;
             InitializeContactFilters();
         }
 
@@ -253,13 +267,16 @@ namespace Player
 
         private void GrappleHookLogic()
         {
-            if (Input.GetKeyDown(KeyCode.E) && CanGrapple)
+            if (!Input.GetKeyDown(KeyCode.E) || !CanGrapple || !CrossRunInfo.HasUpgrade(PermUpgradeType.GrapplingHook)) return;
+            if (_activeGrappleHook) Destroy(_activeGrappleHook.gameObject);
+            if (GrappleHookCooldown <= 0)
             {
-                if (_activeGrappleHook) Destroy(_activeGrappleHook.gameObject);
+                _timeOfGrapple = Time.time;
                 GameObject go = Instantiate(grapplePrefab, _body.position, Quaternion.identity);
-                // TODO OPTIMIZE
-                Vector2 worldMousePos = Camera.main!.ScreenToWorldPoint(Input.mousePosition);
-                go.GetComponent<Rigidbody2D>().velocity = ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized*grappleVelocity + _body.velocity;
+                Vector2 worldMousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+                go.GetComponent<Rigidbody2D>().velocity =
+                    ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized * grappleVelocity +
+                    _body.velocity;
                 _activeGrappleHook = go.GetComponent<GrappleHook>();
             }
         }
@@ -389,22 +406,38 @@ namespace Player
             _knockbackVector += vec;
         }
 
+        public void OnEnemyHook(EntityHealth health)
+        {
+            if (CrossRunInfo.HasUpgrade(PermUpgradeType.TargetedMomentum))
+            {
+                _dashesRemaining = maxDashes;
+            }
+        }
+
         public void OnEnemyKill()
         {
             if (GameEndCanvas.Instance)
             {
                 GameEndCanvas.Instance.endData.enemiesKilled++;
             }
-            if (Grounded) return;
-            if (_upgradeManager[UpgradeType.KeepingInStride] > 0)
+
+            if (!Grounded && _upgradeManager[UpgradeType.KeepingInStride] > 0)
             {
                 _hasKeepingInStrideDash = true;
+            }
+
+            if (_activeGrappleHook && _upgradeManager[UpgradeType.RenewedVigor] > 0)
+            {
+                _dashesRemaining = maxDashes;
             }
         }
 
         private void WallSlideLogic()
         {
+            //bool shouldStayStill = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S);
+            //float yVel = shouldStayStill ? 0 : -slideSpeed;
             _body.velocity = new Vector2(_body.velocity.x, -slideSpeed);
+            //_body.gravityScale = shouldStayStill ? 0 : 1;
             if (!IsWallSliding)
             {
                 PlayerWeaponControl.Instance.OnStartWallSlide();
@@ -427,7 +460,7 @@ namespace Player
         {
             if (_dashesRemaining == 0)
             {
-                _dashesRemaining = 1;
+                _dashesRemaining = maxDashes;
             }
         }
 

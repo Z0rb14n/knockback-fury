@@ -89,7 +89,9 @@ MonoBehaviour:
   maxHealth: 50
   health: 50
   iFrameLength: 0
+  doesChangeColor: 1
   canDropCheese: 1
+  grappleHookTarget: 1
   cheeseItemPickup: {fileID: 3096622510391720760, guid: 866048a358694aa4ba6f4d4b26190176, type: 3}
 --- !u!114 &6335998196205219546
 MonoBehaviour:
@@ -105,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   knockbackForce: 100
+  damageOnTrigger: 0
 --- !u!114 &7912376528173789717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +123,7 @@ MonoBehaviour:
   patrolPoints: []
   speed: 2
   pauseTime: 1
+  maxFallHeight: 2
 --- !u!212 &6948117664754875511
 SpriteRenderer:
   m_ObjectHideFlags: 0
