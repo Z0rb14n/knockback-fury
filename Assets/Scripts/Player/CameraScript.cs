@@ -11,7 +11,7 @@ namespace Player
         {
             get
             {
-                if (!_instance) _instance = FindObjectOfType<CameraScript>();
+                if (!_instance) _instance = FindObjectOfType<CameraScript>(true);
                 return _instance;
             }
         }
