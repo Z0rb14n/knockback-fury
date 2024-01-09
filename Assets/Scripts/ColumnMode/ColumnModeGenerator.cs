@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GameEnd;
 using Player;
 using UnityEngine;
 using Util;
@@ -19,6 +20,7 @@ namespace ColumnMode
         private float _minHeight = -float.MinValue;
         private float _maxHeight = -float.MinValue;
         private PlayerMovementScript _player;
+        private GameEndCanvas _gameEnd;
 
         private void Awake()
         {
@@ -27,6 +29,7 @@ namespace ColumnMode
             _minHeight = 0;
             _maxHeight = 0;
             _player = PlayerMovementScript.Instance;
+            _gameEnd = GameEndCanvas.Instance;
         }
 
         private void FixedUpdate()
@@ -43,6 +46,8 @@ namespace ColumnMode
                 Destroy(_sections.Dequeue().gameObject);
                 _minHeight += diffBetween;
             }
+
+            _gameEnd.endData.maxHeight = Mathf.Max(_gameEnd.endData.maxHeight, _player.Pos.y);
         }
     }
 }

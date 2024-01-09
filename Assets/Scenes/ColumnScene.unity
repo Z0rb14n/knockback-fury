@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7017925239175029770, guid: 0bcb7c2a31190224f9f6b4d70ef63d40, type: 3}
+      propertyPath: isColumnMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bcb7c2a31190224f9f6b4d70ef63d40, type: 3}
 --- !u!224 &159288417 stripped
@@ -442,7 +446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201352, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201352, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -935,7 +939,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: 89b200b696a5a154fa939f8e09d8d776, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1429,7 +1433,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: 89b200b696a5a154fa939f8e09d8d776, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1734,6 +1738,7 @@ MonoBehaviour:
   columnPrefabs:
   - {fileID: 6767382816579671874, guid: cee75a0954de640af8d09c8b9db61c0b, type: 3}
   - {fileID: 6953591541168672487, guid: 880ee016b5ac546e591453ac86533a98, type: 3}
+  - {fileID: 2091098602871514413, guid: 02e35412539d4ef4c9ef80636a33d68a, type: 3}
   diffBeforeDeletion: 20
   diffBetween: 7
   generationStart: 15

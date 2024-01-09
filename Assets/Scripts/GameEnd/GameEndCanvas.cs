@@ -30,6 +30,7 @@ namespace GameEnd
         private TextMeshProUGUI runInfoText;
         [SerializeField]
         private TextMeshProUGUI runInfoNumbers;
+        [SerializeField] private bool isColumnMode;
         [SerializeField] private string winText = "You Win!";
         [SerializeField] private string loseText = "You Died!";
         
@@ -100,10 +101,12 @@ namespace GameEnd
             
             int timeSeconds = Mathf.FloorToInt(Time.timeSinceLevelLoad);
             titleText.text = didWin ? winText : loseText;
-            runInfoText.text = "Time:\nDamage dealt:\nEnemies killed:\nShots fired:\nHits taken:\nDamage taken:\nUpgrades Acquired:";
+            runInfoText.text = "Time:\n" + (isColumnMode? "Distance:\n":"")+
+                               "Damage dealt:\nEnemies killed:\nShots fired:\nHits taken:\nDamage taken:\nUpgrades Acquired:";
             StringBuilder sb = new();
             if (timeSeconds >= 60) sb.Append(timeSeconds / 60).Append("m ");
             sb.Append(timeSeconds % 60).Append("s\n");
+            if (isColumnMode) sb.Append(endData.maxHeight.ToString("F1")).Append("m\n");
             sb.Append(endData.damageDealt).Append('\n');
             sb.Append(endData.enemiesKilled).Append('\n');
             sb.Append(endData.shotsFired).Append('\n');
@@ -118,6 +121,7 @@ namespace GameEnd
         /// </summary>
         public struct GameEndData
         {
+            public float maxHeight;
             public int damageDealt;
             public int enemiesKilled;
             public int shotsFired;
