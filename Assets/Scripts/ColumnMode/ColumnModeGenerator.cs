@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using GameEnd;
 using Player;
 using UnityEngine;
@@ -10,13 +11,15 @@ namespace ColumnMode
     [DisallowMultipleComponent]
     public class ColumnModeGenerator : MonoBehaviour
     {
-        [SerializeField] private GameObject[] columnPrefabs;
+        [SerializeField] private ColumnPrefab[] columnPrefabs;
         [SerializeField, Min(0)] private float diffBeforeDeletion = 20;
         [SerializeField, Min(0)] private float diffBetween = 10;
         [SerializeField, Min(0)] private float generationStart = 15;
         
         
-        private Queue<ColumnSection> _sections = new();
+        private readonly Queue<ColumnSection> _sections = new();
+        private GameObject[] _prefabs;
+        private float[] _weights;
         private float _minHeight = -float.MinValue;
         private float _maxHeight = -float.MinValue;
         private PlayerMovementScript _player;
@@ -24,7 +27,9 @@ namespace ColumnMode
 
         private void Awake()
         {
-            GameObject go = Instantiate(columnPrefabs.GetRandom(), Vector3.zero, Quaternion.identity, transform);
+            _prefabs = columnPrefabs.Select(prefab => prefab.go).ToArray();
+            _weights = columnPrefabs.Select(prefab => prefab.weight).ToArray();
+            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), Vector3.zero, Quaternion.identity, transform);
             _sections.Enqueue(go.GetComponent<ColumnSection>());
             _minHeight = 0;
             _maxHeight = 0;
@@ -36,7 +41,7 @@ namespace ColumnMode
         {
             while (_player.Pos.y + generationStart > _maxHeight)
             {
-                GameObject go = Instantiate(columnPrefabs.GetRandom(), new Vector3(0, _maxHeight+diffBetween), Quaternion.identity, transform);
+                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), new Vector3(0, _maxHeight+diffBetween), Quaternion.identity, transform);
                 _sections.Enqueue(go.GetComponent<ColumnSection>());
                 _maxHeight += diffBetween;
             }
@@ -48,6 +53,20 @@ namespace ColumnMode
             }
 
             _gameEnd.endData.maxHeight = Mathf.Max(_gameEnd.endData.maxHeight, _player.Pos.y);
+        }
+
+        private void OnValidate()
+        {
+            _prefabs = columnPrefabs.Select(prefab => prefab.go).ToArray();
+            _weights = columnPrefabs.Select(prefab => prefab.weight).ToArray();
+        }
+
+        [Serializable]
+        public struct ColumnPrefab
+        {
+            public GameObject go;
+            [Min(0)]
+            public float weight;
         }
     }
 }

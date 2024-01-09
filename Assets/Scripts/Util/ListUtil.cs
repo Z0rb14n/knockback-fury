@@ -33,6 +33,99 @@ namespace Util
             index = UnityEngine.Random.Range(0, list.Count);
             return list[index];
         }
+
+        /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="weights">Weights to select weighted values.</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if weights array is smaller than provided list.</exception>
+        public static T GetRandomWeighted<T>(this IReadOnlyList<T> list, float[] weights) =>
+            GetRandomWeighted(list, weights, out _);
+
+        /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="weights">Weights to select weighted values.</param>
+        /// <param name="index">Returned value index</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if weights array is smaller than provided list.</exception>
+        public static T GetRandomWeighted<T>(this IReadOnlyList<T> list, float[] weights, out int index)
+        {
+            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandomWeighted] empty list provided.");
+            if (weights.Length != list.Count) Debug.LogError("[ListUtil::GetRandomWeighted] mismatched lengths");
+            float sum = weights[0];
+            for (int i = 1; i < list.Count; i++) sum += weights[i];
+
+            float rand = UnityEngine.Random.Range(0f, sum);
+            float cumSum = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (rand < cumSum + weights[i])
+                {
+                    index = i;
+                    return list[i];
+                }
+                cumSum += weights[i];
+            }
+
+            index = list.Count - 1;
+            return list[^1];
+        }
+
+        /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="random">Provided random number generator</param>
+        /// <param name="weights">Weights to select weighted values.</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if weights array is smaller than provided list.</exception>
+        public static T GetRandomWeighted<T>(this IReadOnlyList<T> list, Random random, float[] weights) =>
+            GetRandomWeighted(list, random, weights, out _);
+        
+        /// <summary>
+        /// Gets a random entry from a list or array.
+        /// </summary>
+        /// <param name="list">List or array of elements</param>
+        /// <param name="random">Provided random number generator</param>
+        /// <param name="weights">Weights to select weighted values.</param>
+        /// <param name="index">Returned value index</param>
+        /// <typeparam name="T">Type elements in array</typeparam>
+        /// <returns>Random element</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if zero length list/array is provided.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown if weights array is smaller than provided list.</exception>
+        public static T GetRandomWeighted<T>(this IReadOnlyList<T> list, Random random, float[] weights, out int index)
+        {
+            if (list.Count == 0) Debug.LogError("[ListUtil::GetRandomWeighted] empty list provided.");
+            if (weights.Length != list.Count) Debug.LogError("[ListUtil::GetRandomWeighted] mismatched lengths");
+            float sum = weights[0];
+            for (int i = 1; i < list.Count; i++) sum += weights[i];
+
+            double rand = random.NextDouble()*sum;
+            float cumSum = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (rand < cumSum + weights[i])
+                {
+                    index = i;
+                    return list[i];
+                }
+                cumSum += weights[i];
+            }
+
+            index = list.Count - 1;
+            return list[^1];
+        }
+        
         /// <summary>
         /// Gets a random entry from a list or array with a provided random number generator.
         /// </summary>

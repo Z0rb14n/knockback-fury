@@ -6,7 +6,6 @@ using Enemies.Ranged;
 using FileSave;
 using Player;
 using UnityEngine;
-using Upgrades;
 using Util;
 using Weapons;
 using Random = System.Random;
@@ -85,7 +84,6 @@ namespace FloorGen
 
         private readonly Dictionary<RoomType, GameObject[]> _pairsDict = new();
         private readonly Dictionary<Vector2, List<GameObject>> _socketPrefabSizes = new();
-        private static readonly float[] UnweightedWeights = { 1, 1, 1, 1 };
         private Random _random;
 
         private void Awake()
@@ -167,7 +165,7 @@ namespace FloorGen
                 int currBranchiness = branchiness;
                 do
                 {
-                    RoomType dir = RandomDirUnweighted(AllowedBranchMovements(start, middleLength));
+                    RoomType dir = AllowedBranchMovements(start, middleLength).GetRandom(_random);
                     Vector2Int movedStart = dir.Move(start);
                     if (!grid.HasRoomPos(movedStart)) roomCount--;
                     ExpandSide(grid, start, dir);
@@ -501,25 +499,6 @@ namespace FloorGen
             if (pos.y <= minY) rooms.Remove(RoomType.BottomOpen);
             return rooms.ToArray();
         }
-
-        private RoomType RandomDir(RoomType[] types, float[] weights)
-        {
-            Debug.Assert(types.Length > 0);
-            float sum = weights[0];
-            for (int i = 1; i < types.Length; i++) sum += weights[i];
-
-            int rand = _random.Next(0, Mathf.RoundToInt(sum * 100));
-            float cumSum = 0;
-            for (int i = 0; i < types.Length-1; i++)
-            {
-                if (rand < cumSum + weights[i] * 100) return types[i];
-                cumSum += weights[i] * 100;
-            }
-
-            return types[^1];
-        }
-
-        private RoomType RandomDirUnweighted(RoomType[] types) => RandomDir(types, UnweightedWeights);
     }
 
     /// <summary>

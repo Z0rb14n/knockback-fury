@@ -1736,9 +1736,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   columnPrefabs:
-  - {fileID: 6767382816579671874, guid: cee75a0954de640af8d09c8b9db61c0b, type: 3}
-  - {fileID: 6953591541168672487, guid: 880ee016b5ac546e591453ac86533a98, type: 3}
-  - {fileID: 2091098602871514413, guid: 02e35412539d4ef4c9ef80636a33d68a, type: 3}
+  - go: {fileID: 6953591541168672487, guid: 880ee016b5ac546e591453ac86533a98, type: 3}
+    weight: 1
+  - go: {fileID: 2091098602871514413, guid: 02e35412539d4ef4c9ef80636a33d68a, type: 3}
+    weight: 0.2
+  - go: {fileID: 6767382816579671874, guid: cee75a0954de640af8d09c8b9db61c0b, type: 3}
+    weight: 1
   diffBeforeDeletion: 20
   diffBetween: 7
   generationStart: 15
