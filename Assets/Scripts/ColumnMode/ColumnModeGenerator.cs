@@ -5,6 +5,7 @@ using GameEnd;
 using Player;
 using UnityEngine;
 using Util;
+using Random = UnityEngine.Random;
 
 namespace ColumnMode
 {
@@ -41,7 +42,8 @@ namespace ColumnMode
         {
             while (_player.Pos.y + generationStart > _maxHeight)
             {
-                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), new Vector3(0, _maxHeight+diffBetween), Quaternion.identity, transform);
+                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index), new Vector3(0, _maxHeight+diffBetween), Quaternion.identity, transform);
+                if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0) go.transform.localScale = new Vector3(-1, 1, 1);
                 _sections.Enqueue(go.GetComponent<ColumnSection>());
                 _maxHeight += diffBetween;
             }
@@ -67,6 +69,7 @@ namespace ColumnMode
             public GameObject go;
             [Min(0)]
             public float weight;
+            public bool canFlip;
         }
     }
 }

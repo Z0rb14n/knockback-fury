@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomPropertyDrawer(typeof(ColumnModeGenerator.ColumnPrefab))]
     public class ColumnPrefabPropertyDrawer : PropertyDrawer
     {
+        /*
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             // Using BeginProperty / EndProperty on the parent property means that
@@ -33,5 +33,6 @@ namespace Editor
 
             EditorGUI.EndProperty();
         }
+        */
     }
 }

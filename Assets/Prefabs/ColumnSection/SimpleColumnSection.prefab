@@ -104,12 +104,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
+      propertyPath: useTriggerCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
+      propertyPath: proximityDistance
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
       propertyPath: useProximityCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7847534798708089081, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
@@ -174,12 +182,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
+      propertyPath: useTriggerCheck
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
+      propertyPath: proximityDistance
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5797032309024207535, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
       propertyPath: useProximityCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7847534798708089081, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c9dfd299c680d149bb9566f12052b9c, type: 3}

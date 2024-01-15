@@ -1,5 +1,6 @@
 ﻿using Player;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Enemies
 {
@@ -9,6 +10,7 @@ namespace Enemies
         [SerializeField] private BossEnemy boss;
         [SerializeField] private GameObject wallBehindPlayer;
         [SerializeField] private BossHealthBar healthBar;
+        [SerializeField] private UnityEvent eventOnTrigger;
 
         private void Awake()
         {
@@ -26,6 +28,7 @@ namespace Enemies
             if (boss) boss.StartBoss();
             wallBehindPlayer.SetActive(true);
             healthBar.gameObject.SetActive(true);
+            eventOnTrigger?.Invoke();
         }
     }
 }
