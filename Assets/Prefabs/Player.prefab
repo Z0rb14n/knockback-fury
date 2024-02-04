@@ -145,7 +145,7 @@ MonoBehaviour:
   wallJumpForce: {x: 12, y: 13}
   dashSpeed: 13.5
   dashTime: 0.125
-  dashStartDelay: 0.07
+  dashStartDelay: 0
   maxDashes: 1
   slideSpeed: 0.8
   accel: 50
@@ -349,6 +349,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxViewDist: 150
   camOffset: {x: 2, y: 0, z: 0}
+  columnMode: 0
+  columnMinX: 0
+  columnMaxX: 0
 --- !u!1001 &4372441462678086230
 PrefabInstance:
   m_ObjectHideFlags: 0
