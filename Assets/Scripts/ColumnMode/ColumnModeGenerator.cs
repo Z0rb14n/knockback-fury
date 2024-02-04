@@ -16,7 +16,7 @@ namespace ColumnMode
         [SerializeField, Min(0)] private float diffBeforeDeletion = 20;
         [SerializeField, Min(0)] private float diffBetween = 10;
         [SerializeField, Min(0)] private float generationStart = 15;
-        
+        [SerializeField] private float maxGeneration = 750;
         
         private readonly Queue<ColumnSection> _sections = new();
         private GameObject[] _prefabs;
@@ -30,7 +30,8 @@ namespace ColumnMode
         {
             _prefabs = columnPrefabs.Select(prefab => prefab.go).ToArray();
             _weights = columnPrefabs.Select(prefab => prefab.weight).ToArray();
-            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), Vector3.zero, Quaternion.identity, transform);
+            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), Vector3.zero, Quaternion.identity,
+                transform);
             _sections.Enqueue(go.GetComponent<ColumnSection>());
             _minHeight = 0;
             _maxHeight = 0;
@@ -42,10 +43,13 @@ namespace ColumnMode
         {
             while (_player.Pos.y + generationStart > _maxHeight)
             {
-                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index), new Vector3(0, _maxHeight+diffBetween), Quaternion.identity, transform);
-                if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0) go.transform.localScale = new Vector3(-1, 1, 1);
+                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index),
+                    new Vector3(0, _maxHeight + diffBetween), Quaternion.identity, transform);
+                if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
+                    go.transform.localScale = new Vector3(-1, 1, 1);
                 _sections.Enqueue(go.GetComponent<ColumnSection>());
                 _maxHeight += diffBetween;
+                if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
             }
 
             while (_player.Pos.y > _minHeight + diffBeforeDeletion)
@@ -67,8 +71,7 @@ namespace ColumnMode
         public struct ColumnPrefab
         {
             public GameObject go;
-            [Min(0)]
-            public float weight;
+            [Min(0)] public float weight;
             public bool canFlip;
         }
     }
