@@ -47,15 +47,18 @@ namespace ColumnMode
                     new Vector3(0, _maxHeight + diffBetween), Quaternion.identity, transform);
                 if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
                     go.transform.localScale = new Vector3(-1, 1, 1);
-                _sections.Enqueue(go.GetComponent<ColumnSection>());
-                _maxHeight += diffBetween;
+                ColumnSection section = go.GetComponent<ColumnSection>();
+                section.Initialize();
+                _sections.Enqueue(section);
+                _maxHeight += diffBetween + section.height;
                 if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
             }
 
             while (_player.Pos.y > _minHeight + diffBeforeDeletion)
             {
-                Destroy(_sections.Dequeue().gameObject);
-                _minHeight += diffBetween;
+                ColumnSection section = _sections.Dequeue();
+                Destroy(section.gameObject);
+                _minHeight += diffBetween + section.height;
             }
 
             _gameEnd.endData.maxHeight = Mathf.Max(_gameEnd.endData.maxHeight, _player.Pos.y);

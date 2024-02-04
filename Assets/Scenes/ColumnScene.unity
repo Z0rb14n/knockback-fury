@@ -732,7 +732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6355341723460201353, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: damage
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8413593398316933292, guid: 6612e25a4478cae478a18d10e1db0bb0, type: 3}
       propertyPath: m_Size.x
@@ -2513,9 +2513,12 @@ MonoBehaviour:
     weight: 0.25
     canFlip: 0
   - go: {fileID: 373741415235691490, guid: 8a19232b7d5e5f7468a689dcb884399c, type: 3}
-    weight: 1
+    weight: 0.5
     canFlip: 1
   - go: {fileID: 3594890939023441144, guid: ecf1e85e4da09d64ca751fdc096d0fcc, type: 3}
+    weight: 0.25
+    canFlip: 0
+  - go: {fileID: 3747045934374947470, guid: 8db1b7d31b27241c1b47fe1074d37464, type: 3}
     weight: 0.25
     canFlip: 0
   diffBeforeDeletion: 20
