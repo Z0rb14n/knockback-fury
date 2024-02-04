@@ -20,22 +20,35 @@ namespace Player
         public float maxViewDist = 150;
         [Tooltip("Camera Offset")]
         public Vector3 camOffset = new(-1, 0);
+        [SerializeField] private bool columnMode;
+        [SerializeField] private float columnMinX;
+        [SerializeField] private float columnMaxX;
         private Camera _mainCam;
-        private Vector2 _screenDims; // Cache screen dimensions
+        /// <summary>
+        /// Cached screen dimensions
+        /// </summary>
+        private Vector2 _screenDims;
         private Vector3 _displacement; // Reuse displacement vector to prevent frequent object creation
 
         public float CameraShakeStrength { get; set; }
 
+        public void SetColumnMode(bool value) => columnMode = value;
+
         private void Awake() 
         {
             _mainCam = Camera.main;
-            // Cache the screen dimensions magnitude
             _screenDims = new Vector2(Screen.width, Screen.height);
         }
 
         private void Update() 
         {
             ApplyMouseDisplacement();
+            if (columnMode)
+            {
+                Vector3 pos = transform.position;
+                pos.x = Mathf.Clamp(pos.x, columnMinX, columnMaxX);
+                transform.position = pos;
+            }
             transform.localPosition += (Vector3) Random.insideUnitCircle * CameraShakeStrength;
         }
 
