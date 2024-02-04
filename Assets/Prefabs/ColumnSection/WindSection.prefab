@@ -50,6 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 5
+  weaponsList: []
+  hasWeapon: 0
+  hasWeaponUpgrade: 0
+  hasPlayerUpgrade: 0
 --- !u!1001 &6396616732776206001
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -249,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8422043724619805548, guid: 502a5cbd372ec014ea5e380dc4aaf4f9, type: 3}
       propertyPath: m_ForceMagnitude
-      value: 40
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8422043724619805549, guid: 502a5cbd372ec014ea5e380dc4aaf4f9, type: 3}
       propertyPath: m_RootOrder
