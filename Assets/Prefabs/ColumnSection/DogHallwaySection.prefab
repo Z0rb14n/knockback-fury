@@ -54,6 +54,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 5
+  weaponsList: []
+  hasWeapon: 0
+  hasWeaponUpgrade: 0
+  hasPlayerUpgrade: 1
 --- !u!1 &3169385921213236236
 GameObject:
   m_ObjectHideFlags: 0

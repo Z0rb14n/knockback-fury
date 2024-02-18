@@ -2289,7 +2289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: columnMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: orthographic size
@@ -2520,6 +2520,9 @@ MonoBehaviour:
     canFlip: 0
   - go: {fileID: 3747045934374947470, guid: 8db1b7d31b27241c1b47fe1074d37464, type: 3}
     weight: 0.25
+    canFlip: 0
+  - go: {fileID: 7107788813311594975, guid: b6597490488bb49088f9328ba07b2829, type: 3}
+    weight: 0.5
     canFlip: 0
   diffBeforeDeletion: 20
   diffBetween: 7

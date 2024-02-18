@@ -61,11 +61,15 @@ namespace ColumnMode
                         validUpgradeTypes.RemoveWhere(type =>
                             upgradeManager.UpgradeMapping[type].upgradeCategory == UpgradeCategory.Grapple);
                     }
-                    if (validUpgradeTypes.Count != 0)
+
+                    List<UpgradeType> types = validUpgradeTypes.ToList();
+                    if (types.Count == 0)
                     {
-                        pickup.upgrade = validUpgradeTypes.ToList().GetRandom();
-                        UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
+                        Debug.LogWarning("Exhausted all upgrades when generating: creating new list");
+                        types = UpgradeManager.Instance.ImplementedUpgrades.ToList();
                     }
+                    pickup.upgrade = types.ToList().GetRandom();
+                    UpgradeManager.Instance.UpgradeMapping[pickup.upgrade].Set(pickup);
                 }
             }
         }

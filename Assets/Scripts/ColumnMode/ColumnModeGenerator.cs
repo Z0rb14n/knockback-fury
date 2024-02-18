@@ -30,38 +30,41 @@ namespace ColumnMode
         {
             _prefabs = columnPrefabs.Select(prefab => prefab.go).ToArray();
             _weights = columnPrefabs.Select(prefab => prefab.weight).ToArray();
-            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights), Vector3.zero, Quaternion.identity,
-                transform);
-            _sections.Enqueue(go.GetComponent<ColumnSection>());
-            _minHeight = 0;
-            _maxHeight = 0;
             _player = PlayerMovementScript.Instance;
             _gameEnd = GameEndCanvas.Instance;
+            _minHeight = 0;
+            _maxHeight = 0;
+            AddSection(0);
         }
 
         private void FixedUpdate()
         {
             while (_player.Pos.y + generationStart > _maxHeight)
             {
-                GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index),
-                    new Vector3(0, _maxHeight + diffBetween), Quaternion.identity, transform);
-                if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
-                    go.transform.localScale = new Vector3(-1, 1, 1);
-                ColumnSection section = go.GetComponent<ColumnSection>();
-                section.Initialize();
-                _sections.Enqueue(section);
-                _maxHeight += diffBetween + section.height;
-                if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
+                AddSection(_maxHeight + diffBetween);
             }
 
             while (_player.Pos.y > _minHeight + diffBeforeDeletion)
             {
                 ColumnSection section = _sections.Dequeue();
+                _minHeight = section.transform.position.y + section.height + diffBetween;
                 Destroy(section.gameObject);
-                _minHeight += diffBetween + section.height;
             }
 
             _gameEnd.endData.maxHeight = Mathf.Max(_gameEnd.endData.maxHeight, _player.Pos.y);
+        }
+
+        private void AddSection(float yPos)
+        {
+            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index),
+                new Vector3(0, yPos), Quaternion.identity, transform);
+            if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
+                go.transform.localScale = new Vector3(-1, 1, 1);
+            ColumnSection section = go.GetComponent<ColumnSection>();
+            section.Initialize();
+            _sections.Enqueue(section);
+            _maxHeight = section.transform.position.y + section.height + diffBetween;
+            if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
         }
 
         private void OnValidate()
