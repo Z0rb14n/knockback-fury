@@ -20,9 +20,9 @@ namespace Player
         public float maxViewDist = 150;
         [Tooltip("Camera Offset")]
         public Vector3 camOffset = new(-1, 0);
-        [SerializeField] private bool columnMode;
-        [SerializeField] private float columnMinX;
-        [SerializeField] private float columnMaxX;
+        public bool columnMode;
+        public float columnMinX;
+        public float columnMaxX;
         private Camera _mainCam;
         /// <summary>
         /// Cached screen dimensions

@@ -377,7 +377,7 @@ namespace Player
             bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
             if (!Grounded && _body.velocity.y < 0 && !holdingDown)
             {
-                if (IsOnLeftWall || IsOnRightWall)
+                if ((IsOnLeftWall || IsOnRightWall) && Input.GetAxis("Horizontal") != 0)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();

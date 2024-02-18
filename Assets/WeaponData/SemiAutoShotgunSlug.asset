@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: DualRevolvers 2
+  m_Name: SemiAutoShotgunSlug
   m_EditorClassIdentifier: 
-  weaponName: Dual Revolvers (Rapid)
+  weaponName: Semi-Auto Shotgun (Slug)
   numProjectiles: 1
-  range: 10
-  projectileSpeed: 30
-  projectileDamage: 14
+  range: 8
+  projectileSpeed: 15
+  projectileDamage: 40
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 8
-  clipSize: 6
-  reloadTime: 0.6
-  spread: 37
+  roundsPerSecond: 2.7
+  clipSize: 14
+  reloadTime: 1.4
+  spread: 35
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 6
+  knockbackStrength: 14
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -36,18 +36,18 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
+  sprite: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
   customProjectile: {fileID: 0}
   fireEffect:
     Guid:
-      Data1: 1487475868
-      Data2: 1228691077
-      Data3: 1192172165
-      Data4: 789521315
-    Path: event:/SFX/Weapons/Weap_Rifle
-  pierceMode: 0
+      Data1: 353360515
+      Data2: 1136995414
+      Data3: -1022891902
+      Data4: 2012654420
+    Path: event:/SFX/Weapons/Weap_ShotgunAlt
+  pierceMode: 2
   pierceInfo:
-    maxPierces: 0
-    invulnTimer: 0
+    maxPierces: 5
+    invulnTimer: 19
     isInfinitePierce: 0
   unlockedByDefault: 1

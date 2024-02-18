@@ -2136,10 +2136,14 @@ PrefabInstance:
       objectReference: {fileID: 226217540}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
@@ -2147,7 +2151,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 198624868}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1770027163}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
@@ -2155,11 +2167,23 @@ PrefabInstance:
       value: SetColumnMode
       objectReference: {fileID: 0}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetColumnMode
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: Player.CameraScript, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameEnd.GameEndCanvas, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2733416091004821679, guid: f62d6c138fed40b47917520032733922, type: 3}
+      propertyPath: eventOnTrigger.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6198271201817309835, guid: f62d6c138fed40b47917520032733922, type: 3}
@@ -2289,7 +2313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: columnMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: orthographic size
@@ -2524,8 +2548,8 @@ MonoBehaviour:
   - go: {fileID: 7107788813311594975, guid: b6597490488bb49088f9328ba07b2829, type: 3}
     weight: 0.5
     canFlip: 0
-  diffBeforeDeletion: 20
-  diffBetween: 7
+  diffBeforeDeletion: 50
+  diffBetween: 4
   generationStart: 15
   maxGeneration: 740
 --- !u!1 &1472901984
@@ -2601,6 +2625,17 @@ Transform:
   m_Father: {fileID: 1988933869}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1770027163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7017925239175029770, guid: 0bcb7c2a31190224f9f6b4d70ef63d40, type: 3}
+  m_PrefabInstance: {fileID: 159288416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b473b896f3e54310bb2d2a0f0329bdbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1780400169
 GameObject:
   m_ObjectHideFlags: 0

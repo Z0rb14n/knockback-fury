@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: SMGData 1
+  m_Name: DualRevolversDeadeye
   m_EditorClassIdentifier: 
-  weaponName: SMG(Swift)
+  weaponName: Dual Revolvers (Deadeye)
   numProjectiles: 1
-  range: 10
-  projectileSpeed: 25
-  projectileDamage: 7
+  range: 20
+  projectileSpeed: 40
+  projectileDamage: 50
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 13
-  clipSize: 60
-  reloadTime: 1.2
-  spread: 30
+  roundsPerSecond: 2
+  clipSize: 12
+  reloadTime: 2.6
+  spread: 0
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 8
+  knockbackStrength: 11
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -36,15 +36,15 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
+  sprite: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
   customProjectile: {fileID: 0}
   fireEffect:
     Guid:
-      Data1: 108970357
-      Data2: 1166904568
-      Data3: -286745927
-      Data4: 942258990
-    Path: event:/SFX/Weapons/Weap_Silenced
+      Data1: 1487475868
+      Data2: 1228691077
+      Data3: 1192172165
+      Data4: 789521315
+    Path: event:/SFX/Weapons/Weap_Rifle
   pierceMode: 0
   pierceInfo:
     maxPierces: 0

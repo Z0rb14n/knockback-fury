@@ -36,6 +36,8 @@ namespace GameEnd
         
         public GameEndData endData;
 
+        public void SetColumnMode(bool value) => isColumnMode = value;
+
         private void Awake()
         {
             endData = new GameEndData();

@@ -21,7 +21,6 @@ namespace ColumnMode
         private readonly Queue<ColumnSection> _sections = new();
         private GameObject[] _prefabs;
         private float[] _weights;
-        private float _minHeight = -float.MinValue;
         private float _maxHeight = -float.MinValue;
         private PlayerMovementScript _player;
         private GameEndCanvas _gameEnd;
@@ -32,7 +31,6 @@ namespace ColumnMode
             _weights = columnPrefabs.Select(prefab => prefab.weight).ToArray();
             _player = PlayerMovementScript.Instance;
             _gameEnd = GameEndCanvas.Instance;
-            _minHeight = 0;
             _maxHeight = 0;
             AddSection(0);
         }
@@ -44,10 +42,9 @@ namespace ColumnMode
                 AddSection(_maxHeight + diffBetween);
             }
 
-            while (_player.Pos.y > _minHeight + diffBeforeDeletion)
+            while (_sections.TryPeek(out ColumnSection s) && _player.Pos.y > s.transform.position.y + s.height + diffBeforeDeletion)
             {
                 ColumnSection section = _sections.Dequeue();
-                _minHeight = section.transform.position.y + section.height + diffBetween;
                 Destroy(section.gameObject);
             }
 
