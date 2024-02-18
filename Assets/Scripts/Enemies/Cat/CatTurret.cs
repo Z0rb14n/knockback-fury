@@ -18,6 +18,8 @@ namespace Enemies.Cat
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private Transform projectileParent;
         [SerializeField] private EventReference sound;
+        [SerializeField] private bool requireLineOfSight;
+        [SerializeField] private bool startActive;
         private SpriteRenderer _spriteRenderer;
         private PlayerMovementScript _player;
         private LineRenderer _line;
@@ -28,6 +30,11 @@ namespace Enemies.Cat
             _line.enabled = false;
             _player = PlayerMovementScript.Instance;
             _spriteRenderer.enabled = false;
+            if (startActive)
+            {
+                _spriteRenderer.enabled = true;
+                Fire();
+            }
         }
 
         public void Activate()
@@ -54,8 +61,18 @@ namespace Enemies.Cat
         {
             for (int i = 0; i < numProjectiles; i++)
             {
-                Vector2 playerPos = _player.Pos;
                 Vector2 pos = transform.position;
+                while (requireLineOfSight)
+                {
+                    yield return new WaitForSeconds(delayBeforeFiring);
+                    RaycastHit2D hit = Physics2D.Linecast(pos, _player.Pos);
+                    Debug.DrawLine(pos, _player.Pos, Color.red, 1);
+                    if (hit.collider == null || hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+                    {
+                        break;
+                    }
+                }
+                Vector2 playerPos = _player.Pos;
                 Vector2 dir = (playerPos - pos).normalized;
                 if (Random.Range(0.0f, 1.0f) < 0.3f)
                 {
