@@ -18,7 +18,7 @@ namespace Util
                 Object.Instantiate(prefab, transform);
             }
 
-            for (int i = transform.childCount; i > len; i--)
+            for (int i = transform.childCount-1; i >= len; i--)
             {
                 Object.Destroy(transform.GetChild(i).gameObject);
             }
