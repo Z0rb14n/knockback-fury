@@ -153,7 +153,7 @@ namespace Enemies.Ranged
             const float c = 0;
             float b = g*endingVel.y;
             float a = (g * g) / 2;
-            (Vector2, float) vec = QuarticZeros(a, b, c, d, e)
+            (Vector2 newVel, float time) = QuarticZeros(a, b, c, d, e)
                 .Where(zero => Mathf.Abs((float)zero.Imaginary) <= 0.001f)
                 .Select(zero => (float)zero.Real)
                 .Where(val => val >= 0)
@@ -166,7 +166,7 @@ namespace Enemies.Ranged
                 .DefaultIfEmpty((Vector2.zero, -1))
                 .FirstOrDefault();
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (vec.Item2 == -1)
+            if (time == -1)
             {
                 Debug.LogWarning("No solutions to Quartic polynomial.");
                 float approximateTime = (diff.magnitude) / maxSpeed;
@@ -175,8 +175,6 @@ namespace Enemies.Ranged
                 return CalculateVelocity(startingPos, endingPos, maxSpeed, maxTime, g);
             }
 
-            Vector2 newVel = vec.Item1;
-            float time = vec.Item2;
             Debug.DrawLine(startingPos, startingPos + newVel, Color.red, 2);
             Vector2 collision = new(startingPos.x + newVel.x * time,
                 startingPos.y + newVel.y * time - g * time * time / 2);
