@@ -312,7 +312,7 @@ MonoBehaviour:
   maxSpeed: 9
   jumpForce: 13
   wallJumpForce: {x: 12, y: 13}
-  dashSpeed: 13.5
+  dashSpeed: 20
   dashTime: 0.125
   dashStartDelay: 0
   maxDashes: 1
