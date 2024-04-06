@@ -246,14 +246,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2068343329}
     m_Modifications:
-    - target: {fileID: 3041133532461335286, guid: a85fd61eaea00b64a8b3d645a0c36e24, type: 3}
-      propertyPath: health
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041133532461335286, guid: a85fd61eaea00b64a8b3d645a0c36e24, type: 3}
-      propertyPath: maxHealth
-      value: 120
-      objectReference: {fileID: 0}
     - target: {fileID: 3139948558526521948, guid: a85fd61eaea00b64a8b3d645a0c36e24, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -904,11 +896,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: health
-      value: 120
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: maxHealth
-      value: 120
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7912376528173789717, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: patrolPoints.Array.size
@@ -1749,11 +1741,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: health
-      value: 120
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: maxHealth
-      value: 120
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7912376528173789717, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: patrolPoints.Array.size
@@ -1931,6 +1923,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+    - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: camOffset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.24705884
@@ -3550,6 +3546,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: UpgradeDashDamageCanvasPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8870266499831160279, guid: d905535c1596a3f48936f8511a24858e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d905535c1596a3f48936f8511a24858e, type: 3}
 --- !u!1001 &1900854708
@@ -3697,11 +3709,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: health
-      value: 200
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: maxHealth
-      value: 200
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7912376528173789717, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: patrolPoints.Array.size
@@ -3763,11 +3775,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: health
-      value: 200
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6022205170530981705, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: maxHealth
-      value: 200
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7912376528173789717, guid: c7f861efdfc161f418bc24906ae22b5a, type: 3}
       propertyPath: patrolPoints.Array.size
@@ -4035,6 +4047,9 @@ MonoBehaviour:
   boss: {fileID: 9011247465627692314}
   wallBehindPlayer: {fileID: 1014286423}
   healthBar: {fileID: 8682651374144178873}
+  eventOnTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &2143874713
 BoxCollider2D:
   m_ObjectHideFlags: 0
