@@ -2313,7 +2313,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: columnMode
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: camOffset.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: orthographic size

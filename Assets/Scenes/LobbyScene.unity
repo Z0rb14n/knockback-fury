@@ -30761,6 +30761,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+    - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: camOffset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_BackGroundColor.b
       value: 0.24705882
