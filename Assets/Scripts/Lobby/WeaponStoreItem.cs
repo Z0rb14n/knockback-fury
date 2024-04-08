@@ -1,5 +1,6 @@
 ﻿using FileSave;
 using Player;
+using TMPro;
 using UnityEngine;
 using Util;
 using Weapons;
@@ -9,10 +10,12 @@ namespace Lobby
     /// <summary>
     /// In the weapon store in the lobby, a 'pedestal' of a weapon to purchase.
     /// </summary>
-    [RequireComponent(typeof(SpriteRenderer),typeof(Collider2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class WeaponStoreItem : TriggerTextScript
     {
         public WeaponData data;
+        [SerializeField] private Vector2 gunOffset;
+        [SerializeField] private TextMeshPro gunSprite;
         [SerializeField] private GameObject pickupPrefab;
         [SerializeField] private Color activeColor = Color.white;
         [SerializeField] private Color inactiveColor = Color.gray;
@@ -23,8 +26,15 @@ namespace Lobby
             {
                 CrossRunInfo.Instance.OnCheeseCountChange += OnCheeseCountChangeHandler;
             }
-            GetComponent<SpriteRenderer>().sprite = data.sprite;
+            UpdateDisplayedGun();
             UpdateDisplay();
+        }
+
+        private void UpdateDisplayedGun()
+        {
+            gunSprite.text = data.displayText;
+            gunSprite.rectTransform.localScale = new Vector3(data.shouldFlipDisplay ? -1 : 1, 1, 1);
+            gunSprite.rectTransform.localPosition = data.gunPosOffset + gunOffset;
         }
 
         private void UpdateDisplay()
@@ -58,7 +68,7 @@ namespace Lobby
         private void OnValidate()
         {
             if (!data) return;
-            GetComponent<SpriteRenderer>().sprite = data.sprite;
+            UpdateDisplayedGun();
             UpdateDisplay();
         }
 

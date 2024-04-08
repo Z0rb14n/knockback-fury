@@ -630,6 +630,23 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "               _____\r\n            .':::::::'.\r\n       ___ /:::::::::::\\____
+        _            _.''_\r\n    /||   ||`.______.-`||   | |\\_\\\\\\\\____/_ _.-'\\\\\\\\\r\n.|-|
+        ||===||           ||===| ||_||||____|_| .-'|||||\r\n'|-| ||===||===========||===|
+        ||_||||____|_|`-._|||||\r\n    \\||___||___________||___|_|/ ////       `-._////\r\n           
+        )  _____  (\r\n           / .'| (  '. \\\r\n          ( (  './    ) )\r\n          
+        \\ '._____.' /\r\n            '._______.'"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (6)
@@ -781,6 +798,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: " ,________________________________       \r\n|__________,----------._
+        [____]  \"\"-,__  __...-----===\"\r\n        (_(||||||||||||)___________/  
+        \"\"             |\r\n           `----------'        [ ))\"-,               
+        |\r\n                                \"\"    `,  _,--...___  |\r\n                                       
+        `/          \"\"\""
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (4)
@@ -835,11 +860,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.79
+      value: 1.1933334
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.46
+      value: 0.30666667
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
@@ -1267,6 +1292,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "                           ______\r\n        |\\_______________ (_____\\\\______________\r\nHH======#H###############H#######################\r\n       
+        ' ~\"\"\"\"\"\"\"\"\"\"\"\"\"\"`##(_))#H\\\"\"\"\"\"Y########\r\n                         
+        ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem
@@ -1319,6 +1354,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 7d25aae96ba4ffe4694110905f9ab4be, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.12
@@ -1732,6 +1771,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "  ||\r\n  ||_________________________/'|\r\n _| O======/                  
+        |\r\n|_|              ============  |\r\n  |  __  ______________________|\r\n 
+        |_/  )(     |___||     O-   /\r\n      (  )    /  / |_________/\r\n     
+        (  )   /  /    | ) |   |\r\n      (__)  /  /     \\___|__(\r\n          
+        /  /          )   \\\r\n          /  /            )   \\\r\n         /  /             
+        )___\\\r\n        /  /\r\n       /__/"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (9)
@@ -1784,13 +1836,17 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.705
+      value: 0.6409091
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.675
+      value: 0.6136364
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
@@ -27838,6 +27894,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "                           ______\r\n        |\\_______________ (_____\\\\______________\r\nHH======#H###############H#######################\r\n       
+        ' ~\"\"\"\"\"\"\"\"\"\"\"\"\"\"`##(_))#H\\\"\"\"\"\"Y########\r\n                         
+        ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (1)
@@ -27890,6 +27956,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 0292566a943502d41b03a7c870f82ea3, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.12
@@ -27920,6 +27990,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "  _  __________=__\r      _  __________=__\r\n   \\\\@([____]_____()    
+        \\\\@([____]_____()\n  _/\\|-[____]\r           _/\\|-[____]\n /     /((
+        )           /     /(( )\r\n/____|'----'          /____|'----'\r\n\\____/               
+        \\____/"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (5)
@@ -27972,6 +28057,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 80a554c3e8baa9c4aae2c7f95c8434f7, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
       value: 0.6
@@ -29258,6 +29347,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: " ,________________________________       \r\n|__________,----------._
+        [____]  \"\"-,__  __...-----===\"\r\n        (_(||||||||||||)___________/  
+        \"\"             |\r\n           `----------'        [ ))\"-,               
+        |\r\n                                \"\"    `,  _,--...___  |\r\n                                       
+        `/          \"\"\""
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (8)
@@ -29312,11 +29409,11 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d835523dddd6d2046854387e30949575, type: 2}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.79
+      value: 1.1933334
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.46
+      value: 0.30666667
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
@@ -31094,6 +31191,19 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n    
+        \\  //\n      `-'"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (3)
@@ -31146,6 +31256,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: 399af2651775544498284cb4f4b6b486, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: -0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.border.w
       value: 0.03
@@ -32193,6 +32307,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1612465487}
     m_Modifications:
+    - target: {fileID: 184041452631329426, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3173818000960321697, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: m_text
+      value: "                           ______\r\n        |\\_______________ (_____\\\\______________\r\nHH======#H###############H#######################\r\n       
+        ' ~\"\"\"\"\"\"\"\"\"\"\"\"\"\"`##(_))#H\\\"\"\"\"\"Y########\r\n                         
+        ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861931, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Name
       value: WeaponStoreItem (2)
@@ -32245,6 +32369,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: c92bd80331d97bb42b58323edddf8960, type: 2}
+    - target: {fileID: 6356033031103861933, guid: 785855e5cd9203446949adb02dca1589, type: 3}
+      propertyPath: gunOffset.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1.12
