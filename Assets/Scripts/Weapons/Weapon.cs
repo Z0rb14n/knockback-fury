@@ -18,7 +18,6 @@ namespace Weapons
         // CONSTANT
         [SerializeField] private Transform spritePivot;
         [SerializeField] private TextMeshPro textSprite;
-        [SerializeField] private Transform bulletOrigin;
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
@@ -150,6 +149,8 @@ namespace Weapons
             textSprite.text = WeaponData.displayText;
             if (_audioSource) _audioSource.clip = WeaponData.fireEffect;
             textSprite.transform.localScale = new Vector3(WeaponData.shouldFlipDisplay ? -1 : 1, 1, 1);
+            textSprite.rectTransform.localPosition = WeaponData.gunPosOffset;
+            _spriteStartPosition = WeaponData.gunPosOffset;
         }
 
         private void HitscanHitLogic(RaycastHit2D hit, bool isMelee, Vector2 vel, Vector2 dir)
@@ -232,8 +233,8 @@ namespace Weapons
             }
             StartFireAnimation();
             // instantiate & shoot bullets etc
-            Vector2 origin = textSprite.transform.TransformPoint(_spriteStartPosition);
-            if (_audioSource?.clip) _audioSource.Play();
+            Vector2 origin = textSprite.transform.TransformPoint(WeaponData.gunBulletOffset);
+            if (_audioSource && _audioSource.clip) _audioSource.Play();
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else

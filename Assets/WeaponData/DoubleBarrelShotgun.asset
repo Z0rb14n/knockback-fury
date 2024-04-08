@@ -19,6 +19,8 @@ MonoBehaviour:
     \"\"    `,  _,--...___  |\r\n                                        `/         
     \"\"\""
   shouldFlipDisplay: 1
+  gunPosOffset: {x: 2.5, y: 0}
+  gunBulletOffset: {x: 2.5, y: 0}
   numProjectiles: 12
   range: 7
   projectileSpeed: 20

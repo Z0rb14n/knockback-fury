@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: SniperData 1
   m_EditorClassIdentifier: 
   weaponName: Sniper (Super Heavy)
-  displayText: "                 _    _    _\r\n                |_)=A=0=A=(_|\r\n
-    A____________ _____H___H___o    _____\r\nO____________<^       ====__~`\\_/   
-    /`~~|\r\n              `\\_________(_)>.  ___--'   |\r\n                             
-    \\/   `-----'"
+  displayText: "                 _    _    _\r\n                |_)=A=0=A=(_|\r\nA____________
+    _____H___H___o    _____\r\nO____________<^       ====__~`\\_/    /`~~|\r\n             
+    `\\_________(_)>.  ___--'   |\r\n                              \\/   `-----'"
   shouldFlipDisplay: 1
+  gunPosOffset: {x: 2.5, y: 0}
+  gunBulletOffset: {x: 2.5, y: 0}
   numProjectiles: 1
   range: 40
   projectileSpeed: 69420

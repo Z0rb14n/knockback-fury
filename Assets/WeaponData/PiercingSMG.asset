@@ -20,6 +20,7 @@ MonoBehaviour:
     )   \\\r\n          /  /            )   \\\r\n         /  /              )___\\\r\n       
     /  /\r\n       /__/"
   shouldFlipDisplay: 1
+  gunPosOffset: {x: 1, y: 0}
   numProjectiles: 1
   range: 10
   projectileSpeed: 20

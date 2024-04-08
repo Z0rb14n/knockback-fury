@@ -10,6 +10,8 @@ namespace Weapons
         [TextArea(3, 10)]
         public string displayText;
         public bool shouldFlipDisplay = false;
+        public Vector2 gunPosOffset;
+        public Vector2 gunBulletOffset;
         [Min(0)]
         public int numProjectiles = 1;
         [SerializeField, Min(0)]
