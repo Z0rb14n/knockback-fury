@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using FMODUnity;
 using UnityEngine;
 
 namespace Enemies.Cat
@@ -8,11 +7,12 @@ namespace Enemies.Cat
     public class BatTrap : MonoBehaviour
     {
         [SerializeField] private float speed = 2;
-        [SerializeField] private EventReference bonkSound;
+        private AudioSource _source;
         private Rigidbody2D _rigidbody;
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _source = GetComponent<AudioSource>();
         }
 
         private void FixedUpdate()
@@ -28,7 +28,7 @@ namespace Enemies.Cat
         {
             if (!other.gameObject.CompareTag("Player")) return;
             _rigidbody.freezeRotation = true;
-            if (!bonkSound.Guid.IsNull) RuntimeManager.PlayOneShot(bonkSound,transform.position);
+            if (_source && _source.clip) _source.Play();
             StartCoroutine(DisableAfterDelay(other));
         }
 

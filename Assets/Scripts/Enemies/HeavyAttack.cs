@@ -1,11 +1,10 @@
 using Player;
 using System.Collections;
 using UnityEngine;
-using FMODUnity;
 
 namespace Enemies
 {
-    [RequireComponent(typeof(Animator), typeof(PatrolMovement))]
+    [RequireComponent(typeof(Animator), typeof(PatrolMovement), typeof(AudioSource))]
     public class HeavyAttack : MonoBehaviour
     {
         public float attackDistance;
@@ -26,8 +25,8 @@ namespace Enemies
         private float _attackTimer;
         private bool _isAttacking;
         private Animator _animator;
-        [SerializeField] private EventReference _bonkSound;
         private float _attackAnimationTime;
+        private AudioSource _audioSource;
 
         private static readonly int _animationAtkHash = Animator.StringToHash("Attacking");
 
@@ -39,7 +38,8 @@ namespace Enemies
             _playerMovement = PlayerMovementScript.Instance;
             _playerHealth = PlayerHealth.Instance;
             _animator = GetComponent<Animator>();
-            GetAttackAnimationTime();
+            _audioSource = GetComponent<AudioSource>()
+                ;            GetAttackAnimationTime();
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Enemies
             if (PlayerInRange())
             {
                 _playerHealth.TakeDamage(attackDamage);
-                RuntimeManager.PlayOneShot(_bonkSound, transform.position);
+                _audioSource.Play();
                 Vector2 knockbackDirection =
                     new((_player.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
                 _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);

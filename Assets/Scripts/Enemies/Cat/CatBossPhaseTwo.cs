@@ -2,7 +2,6 @@
 using System.Collections;
 using DashVFX;
 using Enemies.Ranged;
-using FMODUnity;
 using Player;
 using UnityEngine;
 using Util;
@@ -11,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace Enemies.Cat
 {
     [RequireComponent(typeof(EntityHealth), typeof(SpriteRenderer), typeof(Rigidbody2D)),
-    RequireComponent(typeof(AbstractDashTrail))]
+    RequireComponent(typeof(AbstractDashTrail), typeof(AudioSource))]
     public class CatBossPhaseTwo : MonoBehaviour
     {
         public AttackSetting[] attackSettings;
@@ -38,7 +37,6 @@ namespace Enemies.Cat
         [SerializeField, Min(0)] private float batDelay = 1.5f;
         [SerializeField] private GameObject catDebris;
 
-        [SerializeField] private EventReference bonkSound;
         // -1: normal
         // 0: can dash, slightly faster
         // 1: can dash, even faster, activates invuln
@@ -56,6 +54,7 @@ namespace Enemies.Cat
         private CatEntityHealth _catEntityHealth;
         private IEnumerator _batCoroutine;
         private PlayerHealth _playerHealth;
+        private AudioSource _audioSource;
         private bool _canAttackWithBat = true;
         private bool _turretPhaseOver;
         private bool Grounded => _collider.IsTouchingLayers(_groundLayer);
@@ -70,6 +69,7 @@ namespace Enemies.Cat
             _dashTrail = GetComponent<AbstractDashTrail>();
             _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
             _catEntityHealth = GetComponent<CatEntityHealth>();
+            _audioSource = GetComponent<AudioSource>();
             _groundLayer = LayerMask.GetMask("Default", "IgnorePlayer");
         }
 
@@ -245,7 +245,7 @@ namespace Enemies.Cat
             _canAttackWithBat = false;
             batTransform.localEulerAngles = new Vector3(0, 0, batEndRotation);
             _playerHealth.TakeDamage(batAttackDamage);
-            RuntimeManager.PlayOneShot(bonkSound, transform.position);
+            _audioSource.Play();
             Vector2 knockbackDirection = new((_player.Pos - (Vector2)_collider.bounds.center).normalized.x * 0.1f, 0.04f);
             _player.RequestKnockback(knockbackDirection, batKnockback);
             yield return new WaitForSeconds(batDownLength);

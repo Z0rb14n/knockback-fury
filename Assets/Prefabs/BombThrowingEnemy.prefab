@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
+    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: fireDelay
       value: 4
       objectReference: {fileID: 0}
@@ -40,6 +44,10 @@ PrefabInstance:
       value: 1655027631
       objectReference: {fileID: 0}
     - target: {fileID: 1451045152520852183, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
+    - target: {fileID: 1669652327100865791, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
@@ -105,8 +113,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4676967839840957038, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-    - {fileID: 1548388652613100245, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-    - {fileID: 1451045152520852183, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
 --- !u!1 &310210426833455857 stripped
 GameObject:

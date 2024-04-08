@@ -139,11 +139,5 @@ MonoBehaviour:
   rotating: 1
   explosionRange: 2.5
   detonateOnDestroy: 1
-  _explosionSFX:
-    Guid:
-      Data1: -171804792
-      Data2: 1314727608
-      Data3: -1056072544
-      Data4: 1747877661
-    Path: event:/SFX/Weapons/GL/GL_Explode
+  explosionSFX: {fileID: 8300000, guid: 231766e419a254112b26008300462a83, type: 3}
   detonationVFX: {fileID: 4706453752192310371, guid: e637501e229697e469289c858ff2d237, type: 3}
