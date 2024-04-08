@@ -5890,10 +5890,6 @@ PrefabInstance:
         ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
       objectReference: {fileID: 0}
     - target: {fileID: 1582315433640496305, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: m_fontSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582315433640496305, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_fontSizeBase
       value: 1
       objectReference: {fileID: 0}
@@ -5918,20 +5914,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
     - target: {fileID: 2023864772606381927, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2023864772606381927, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2023864772606381927, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_LocalScale.x
       value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2023864772606381927, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4827857991612812766, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_ClearFlags
