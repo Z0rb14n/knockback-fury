@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: CrossbowData
   m_EditorClassIdentifier: 
   weaponName: Crossbow
+  displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n    
+    \\  //\n      `-'"
+  shouldFlipDisplay: 0
   numProjectiles: 1
   range: 16
   projectileSpeed: 30

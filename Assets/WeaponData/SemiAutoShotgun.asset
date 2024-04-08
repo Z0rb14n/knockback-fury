@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: SemiAutoShotgun
   m_EditorClassIdentifier: 
   weaponName: Semi-Auto Shotgun
+  displayText: " ,________________________________       \r\n|__________,----------._
+    [____]  \"\"-,__  __...-----===\"\r\n        (_(||||||||||||)___________/   \"\"            
+    |\r\n           `----------'        [ ))\"-,                |\r\n                               
+    \"\"    `,  _,--...___  |\r\n                                        `/         
+    \"\"\""
+  shouldFlipDisplay: 1
   numProjectiles: 4
   range: 8
   projectileSpeed: 20

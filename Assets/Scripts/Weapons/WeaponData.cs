@@ -7,6 +7,9 @@ namespace Weapons
     public class WeaponData : ScriptableObject, ISerializationCallbackReceiver
     {
         public string weaponName;
+        [TextArea(3, 10)]
+        public string displayText;
+        public bool shouldFlipDisplay = false;
         [Min(0)]
         public int numProjectiles = 1;
         [SerializeField, Min(0)]

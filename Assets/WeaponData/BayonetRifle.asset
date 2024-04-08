@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: BayonetRifle
   m_EditorClassIdentifier: 
   weaponName: Bayonet Rifle
+  displayText: "                           ______\r\n        |\\_______________ (_____\\\\______________\r\nHH======#H###############H#######################\r\n       
+    ' ~\"\"\"\"\"\"\"\"\"\"\"\"\"\"`##(_))#H\\\"\"\"\"\"Y########\r\n                         
+    ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
+  shouldFlipDisplay: 1
   numProjectiles: 1
   range: 12
   projectileSpeed: 50

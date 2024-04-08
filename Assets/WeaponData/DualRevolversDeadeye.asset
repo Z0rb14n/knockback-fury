@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: DualRevolversDeadeye
   m_EditorClassIdentifier: 
   weaponName: Dual Revolvers (Deadeye)
+  displayText: "  _  __________=__\r      _  __________=__\r\n   \\\\@([____]_____()\r    
+    \\\\@([____]_____()\n  _/\\|-[____]\r           _/\\|-[____]\n /     /(( )\r          
+    /     /(( )\r\n/____|'----'\r          /____|'----'\r\n\\____/               
+    \\____/"
+  shouldFlipDisplay: 0
   numProjectiles: 1
   range: 20
   projectileSpeed: 40

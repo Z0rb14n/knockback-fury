@@ -13,6 +13,12 @@ MonoBehaviour:
   m_Name: PistolData
   m_EditorClassIdentifier: 
   weaponName: Mouser Pistol
+  displayText: ",--^----------,--------,-----,-------^--,\r\n | |||||||||   `--------'    
+    |          O\r\n `+---------------------------^----------|\r\n   `\\_,-------,
+    _________________________|\r\n     / XXXXXX /`|     /\r\n    / XXXXXX /  `\\  
+    /\r\n   / XXXXXX /\\______(\r\n  / XXXXXX /\r\n / XXXXXX /\r\n(________(\r\n
+    `------'"
+  shouldFlipDisplay: 0
   numProjectiles: 1
   range: 12
   projectileSpeed: 20

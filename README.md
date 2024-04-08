@@ -34,6 +34,9 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - A CERTAIN SOMEONE USED SILVER WITHOUT CITING: https://poppyworks.itch.io/silver
  - KodeMono from Google Fonts: https://fonts.google.com/specimen/Kode+Mono
  - Roboto: https://github.com/googlefonts/roboto/tree/main/src/hinted
+ - Weapon Ascii Art: https://ascii.co.uk/art/
+ - More weapon ascii art: https://asciiart.website/index.php?art=objects/guns
+ - Even more weapon ascii art: https://www.asciiart.eu/
  - Funny wallpapers: https://www.reddit.com/r/windows/comments/nxbtgh/had_a_little_fun_with_the_macos_monterey/
 
 

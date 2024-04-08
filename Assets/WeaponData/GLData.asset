@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: GLData
   m_EditorClassIdentifier: 
   weaponName: Grenade Launcher
+  displayText: "               _____\r\n            .':::::::'.\r\n       ___ /:::::::::::\\____
+    _            _.''_\r\n    /||   ||`.______.-`||   | |\\_\\\\\\\\____/_ _.-'\\\\\\\\\r\n.|-|
+    ||===||           ||===| ||_||||____|_| .-'|||||\r\n'|-| ||===||===========||===|
+    ||_||||____|_|`-._|||||\r\n    \\||___||___________||___|_|/ ////       `-._////\r\n           
+    )  _____  (\r\n           / .'| (  '. \\\r\n          ( (  './    ) )\r\n          
+    \\ '._____.' /\r\n            '._______.'"
+  shouldFlipDisplay: 0
   numProjectiles: 1
   range: 20
   projectileSpeed: 25

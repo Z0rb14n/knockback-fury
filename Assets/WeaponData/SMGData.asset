@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: SMGData
   m_EditorClassIdentifier: 
   weaponName: SMG
+  displayText: "  ||\r\n  ||_________________________/'|\r\n _| O======/                  
+    |\r\n|_|              ============  |\r\n  |  __  ______________________|\r\n 
+    |_/  )(     |___||     O-   /\r\n      (  )    /  / |_________/\r\n      (  )  
+    /  /    | ) |   |\r\n      (__)  /  /     \\___|__(\r\n           /  /         
+    )   \\\r\n          /  /            )   \\\r\n         /  /              )___\\\r\n       
+    /  /\r\n       /__/"
+  shouldFlipDisplay: 1
   numProjectiles: 1
   range: 10
   projectileSpeed: 20
