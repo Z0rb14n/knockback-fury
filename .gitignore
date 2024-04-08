@@ -74,6 +74,10 @@ crashlytics-build.properties
 # IntelliJ/Rider
 .idea/
 
+# Someone accidentally left their VS Code settings in
+.vscode/
+.vsconfig
+
 # Never ignore DLLs in the FMOD subfolder.
 !/[Aa]ssets/Plugins/FMOD/**/lib/*
 
