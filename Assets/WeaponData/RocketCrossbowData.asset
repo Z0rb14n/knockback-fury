@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RocketCrossbowData
   m_EditorClassIdentifier: 
   weaponName: Crossbow (Rocket-Propelled)
-  displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n    
+  displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n
     \\  //\n      `-'"
   shouldFlipDisplay: 0
   gunPosOffset: {x: 0, y: 0}
@@ -43,7 +43,8 @@ MonoBehaviour:
     meleeRange: 0
   altFireMode: 0
   sprite: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
-  customProjectile: {fileID: 9217971433465759074, guid: 8b61947675352b94ab0e025cb21545ba, type: 3}
+  customProjectile: {fileID: 9217971433465759074, guid: 8b61947675352b94ab0e025cb21545ba,
+    type: 3}
   fireEffect: {fileID: 8300000, guid: d6c04c1b24e8448289694e223e4facd4, type: 3}
   pierceMode: 0
   pierceInfo:

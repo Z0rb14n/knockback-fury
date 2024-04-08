@@ -16,9 +16,9 @@ MonoBehaviour:
   displayText: "               _____\r\n            .':::::::'.\r\n       ___ /:::::::::::\\____
     _            _.''_\r\n    /||   ||`.______.-`||   | |\\_\\\\\\\\____/_ _.-'\\\\\\\\\r\n.|-|
     ||===||           ||===| ||_||||____|_| .-'|||||\r\n'|-| ||===||===========||===|
-    ||_||||____|_|`-._|||||\r\n    \\||___||___________||___|_|/ ////       `-._////\r\n           
-    )  _____  (\r\n           / .'| (  '. \\\r\n          ( (  './    ) )\r\n          
-    \\ '._____.' /\r\n            '._______.'"
+    ||_||||____|_|`-._|||||\r\n    \\||___||___________||___|_|/ ////       `-._////\r\n
+    )  _____  (\r\n           / .'| (  '. \\\r\n          ( (  './    ) )\r\n \\ '._____.'
+    /\r\n            '._______.'"
   shouldFlipDisplay: 0
   gunPosOffset: {x: 0, y: 0}
   displayPosOffset: {x: -1, y: 0.5}
@@ -47,7 +47,8 @@ MonoBehaviour:
     meleeRange: 0
   altFireMode: 0
   sprite: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
-  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}
+  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89,
+    type: 3}
   fireEffect: {fileID: 8300000, guid: 94ddbbb1f31a44143847b1d5d9a3b4d8, type: 3}
   pierceMode: 0
   pierceInfo:

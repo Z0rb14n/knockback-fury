@@ -12,7 +12,6 @@ namespace Weapons
         public bool shouldFlipDisplay = false;
         public Vector2 gunPosOffset;
         public Vector2 displayPosOffset;
-        public Vector2 gunBulletOffset;
         [Min(0)]
         public int numProjectiles = 1;
         [SerializeField, Min(0)]

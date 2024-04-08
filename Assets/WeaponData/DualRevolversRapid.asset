@@ -19,7 +19,7 @@ MonoBehaviour:
   shouldFlipDisplay: 0
   gunPosOffset: {x: -1, y: 0}
   displayPosOffset: {x: -1, y: 0}
-  gunBulletOffset: {x: 1, y: 0}
+  gunBulletOffset: {x: 0, y: 0}
   numProjectiles: 1
   range: 10
   projectileSpeed: 30

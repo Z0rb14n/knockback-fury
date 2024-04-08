@@ -233,7 +233,7 @@ namespace Weapons
             }
             StartFireAnimation();
             // instantiate & shoot bullets etc
-            Vector2 origin = textSprite.transform.TransformPoint(WeaponData.gunBulletOffset);
+            Vector2 origin = spritePivot.transform.position;
             if (_audioSource && _audioSource.clip) _audioSource.Play();
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);

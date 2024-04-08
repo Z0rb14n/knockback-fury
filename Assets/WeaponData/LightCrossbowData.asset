@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LightCrossbowData
   m_EditorClassIdentifier: 
   weaponName: Crossbow (Light)
-  displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n    
+  displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n
     \\  //\n      `-'"
   shouldFlipDisplay: 0
   gunPosOffset: {x: 0, y: 0}
@@ -43,7 +43,8 @@ MonoBehaviour:
     meleeRange: 0
   altFireMode: 0
   sprite: {fileID: 21300000, guid: e05a2612a23ce424886221729537fcdc, type: 3}
-  customProjectile: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed, type: 3}
+  customProjectile: {fileID: 6948486271067249245, guid: c0b5f517b5b722540b5a935e2aa799ed,
+    type: 3}
   fireEffect: {fileID: 8300000, guid: d6c04c1b24e8448289694e223e4facd4, type: 3}
   pierceMode: 0
   pierceInfo:

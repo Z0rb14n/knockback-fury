@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: PiercingSMG
   m_EditorClassIdentifier: 
   weaponName: BSMG
-  displayText: "  ||\r\n  ||_________________________/'|\r\n _| O======/                  
-    |\r\n|_|              ============  |\r\n  |  __  ______________________|\r\n 
-    |_/  )(     |___||     O-   /\r\n      (  )    /  / |_________/\r\n      (  )  
-    /  /    | ) |   |\r\n      (__)  /  /     \\___|__(\r\n           /  /         
-    )   \\\r\n          /  /            )   \\\r\n         /  /              )___\\\r\n       
-    /  /\r\n       /__/"
+  displayText: "  ||\r\n  ||_________________________/'|\r\n _| O======/ |\r\n|_|
+    \             ============  |\r\n  |  __  ______________________|\r\n |_/  )(
+    \    |___||     O-   /\r\n      (  )    /  / |_________/\r\n      (  ) /  /    |
+    ) |   |\r\n      (__)  /  /     \\___|__(\r\n           /  / )   \\\r\n          /
+    \ /            )   \\\r\n         /  /              )___\\\r\n /  /\r\n       /__/"
   shouldFlipDisplay: 1
   gunPosOffset: {x: 1, y: 0}
   displayPosOffset: {x: 1, y: 0.5}
@@ -47,7 +46,8 @@ MonoBehaviour:
     meleeRange: 0
   altFireMode: 0
   sprite: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
-  customProjectile: {fileID: 560219830644459039, guid: e209bb5ca586b2849962249dab7c2f33, type: 3}
+  customProjectile: {fileID: 560219830644459039, guid: e209bb5ca586b2849962249dab7c2f33,
+    type: 3}
   fireEffect: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
   pierceMode: 3
   pierceInfo:
