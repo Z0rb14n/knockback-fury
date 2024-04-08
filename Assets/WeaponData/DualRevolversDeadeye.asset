@@ -18,6 +18,7 @@ MonoBehaviour:
     /     /(( )\r\n/____|'----'          /____|'----'\r\n\\____/                \\____/"
   shouldFlipDisplay: 0
   gunPosOffset: {x: -1, y: 0}
+  displayPosOffset: {x: -1, y: 0}
   gunBulletOffset: {x: 1, y: 0}
   numProjectiles: 1
   range: 20

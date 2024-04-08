@@ -15,9 +15,10 @@ MonoBehaviour:
   weaponName: Burst Rifle
   displayText: "                           ______\r\n        |\\_______________ (_____\\\\______________\r\nHH======#H###############H#######################\r\n       
     ' ~\"\"\"\"\"\"\"\"\"\"\"\"\"\"`##(_))#H\\\"\"\"\"\"Y########\r\n                         
-    ))    \\#H\\       `\"Y###\r\n                          \"      }#H)"
+    ))    \\#H\\       `\"Y###\r\n                          \"      }#H)            "
   shouldFlipDisplay: 1
   gunPosOffset: {x: 2.5, y: 0}
+  displayPosOffset: {x: 1.5, y: 0}
   gunBulletOffset: {x: 2.5, y: 0}
   numProjectiles: 1
   range: 12
@@ -42,7 +43,6 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
   customProjectile: {fileID: 0}
   fireEffect: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
   pierceMode: 0

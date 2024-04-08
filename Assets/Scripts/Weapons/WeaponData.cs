@@ -11,6 +11,7 @@ namespace Weapons
         public string displayText;
         public bool shouldFlipDisplay = false;
         public Vector2 gunPosOffset;
+        public Vector2 displayPosOffset;
         public Vector2 gunBulletOffset;
         [Min(0)]
         public int numProjectiles = 1;
@@ -54,7 +55,6 @@ namespace Weapons
         public MeleeInfo meleeInfo;
         public FireMode altFireMode;
 
-        public Sprite sprite;
         public GameObject customProjectile;
 
         public AudioClip fireEffect;

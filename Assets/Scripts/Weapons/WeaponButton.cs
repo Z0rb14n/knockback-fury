@@ -9,8 +9,8 @@ namespace Weapons
     [DisallowMultipleComponent, RequireComponent(typeof(Button))]
     public class WeaponButton : MonoBehaviour
     {
-        public Image imageToSet;
         public TextMeshProUGUI text;
+        public TextMeshProUGUI gunSprite;
         public int index;
         private WeaponUpgradeUI _weaponUpgradeUI;
         private Button _button;
@@ -35,7 +35,9 @@ namespace Weapons
         {
             index = newIndex;
             WeaponData data = PlayerWeaponControl.Instance.Inventory[newIndex];
-            imageToSet.sprite = data.sprite;
+            gunSprite.text = data.displayText;
+            gunSprite.rectTransform.localScale = new Vector3(data.shouldFlipDisplay ? -1 : 1, 1, 1);
+            gunSprite.rectTransform.localPosition = data.displayPosOffset;
             text.text = data.weaponName;
         }
 

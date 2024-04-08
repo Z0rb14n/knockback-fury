@@ -16,6 +16,9 @@ MonoBehaviour:
   displayText: "      .-.\n     /  \\\\\n.---/-+--||\n|  K=====++->\n'---\\-+--||\n    
     \\  //\n      `-'"
   shouldFlipDisplay: 0
+  gunPosOffset: {x: 0, y: 0}
+  displayPosOffset: {x: -0.5, y: 0}
+  gunBulletOffset: {x: 0, y: 0}
   numProjectiles: 1
   range: 16
   projectileSpeed: 30

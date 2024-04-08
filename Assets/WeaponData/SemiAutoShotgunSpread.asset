@@ -20,6 +20,7 @@ MonoBehaviour:
     \"\"\""
   shouldFlipDisplay: 1
   gunPosOffset: {x: 2.5, y: 0}
+  displayPosOffset: {x: 1.5, y: 0}
   gunBulletOffset: {x: 2.5, y: 0}
   numProjectiles: 8
   range: 8

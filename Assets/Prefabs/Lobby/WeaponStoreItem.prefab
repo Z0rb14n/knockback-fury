@@ -79,7 +79,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   data: {fileID: 11400000, guid: b0c1e383edee634469e31f9f3fa49ef8, type: 2}
-  gunOffset: {x: -1.25, y: 0}
   gunSprite: {fileID: 3173818000960321697}
   pickupPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
   activeColor: {r: 1, g: 1, b: 1, a: 1}
@@ -390,7 +389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.25, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1696624787242088980

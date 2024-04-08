@@ -14,7 +14,6 @@ namespace Lobby
     public class WeaponStoreItem : TriggerTextScript
     {
         public WeaponData data;
-        [SerializeField] private Vector2 gunOffset;
         [SerializeField] private TextMeshPro gunSprite;
         [SerializeField] private GameObject pickupPrefab;
         [SerializeField] private Color activeColor = Color.white;
@@ -34,7 +33,7 @@ namespace Lobby
         {
             gunSprite.text = data.displayText;
             gunSprite.rectTransform.localScale = new Vector3(data.shouldFlipDisplay ? -1 : 1, 1, 1);
-            gunSprite.rectTransform.localPosition = data.gunPosOffset + gunOffset;
+            gunSprite.rectTransform.localPosition = data.displayPosOffset;
         }
 
         private void UpdateDisplay()

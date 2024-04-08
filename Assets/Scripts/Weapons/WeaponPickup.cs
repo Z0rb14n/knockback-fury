@@ -1,15 +1,16 @@
 ﻿using Player;
+using TMPro;
 using UnityEngine;
 
 namespace Weapons
 {
-    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider2D))]
     public class WeaponPickup : MonoBehaviour
     {
         public WeaponData weaponData;
         public float delay;
 
-        private SpriteRenderer _spriteRenderer;
+        [SerializeField] private TextMeshPro gunSprite;
 
         private void Awake()
         {
@@ -20,9 +21,13 @@ namespace Weapons
 
         public void UpdateSprite(WeaponData data)
         {
-            if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
             if (data != null) weaponData = data;
-            if (weaponData != null) _spriteRenderer.sprite = weaponData.sprite;
+            if (weaponData)
+            {
+                gunSprite.text = data.displayText;
+                gunSprite.rectTransform.localScale = new Vector3(data.shouldFlipDisplay ? -1 : 1, 1, 1);
+                gunSprite.rectTransform.localPosition = data.displayPosOffset;
+            }
         }
 
         private void Update()
