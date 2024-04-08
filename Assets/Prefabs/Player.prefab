@@ -644,6 +644,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 580788121172045447}
     m_Modifications:
+    - target: {fileID: 2357702650696084785, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980129342440304359, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: m_text
+      value: ",--^----------,--------,-----,-------^--,\r\n | |||||||||   `--------'    
+        |          O\r\n `+---------------------------^----------|\r\n   `\\_,-------,
+        _________________________|\r\n     / XXXXXX /`|     /\r\n    / XXXXXX / 
+        `\\   /\r\n   / XXXXXX /\\______(\r\n  / XXXXXX /\r\n / XXXXXX /\r\n(________(\r\n
+        `------'"
+      objectReference: {fileID: 0}
     - target: {fileID: 3054874150355908560, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_RootOrder
       value: 0

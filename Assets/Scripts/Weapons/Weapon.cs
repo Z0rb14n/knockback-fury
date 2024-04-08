@@ -5,6 +5,7 @@ using FileSave;
 using GameEnd;
 using PermUpgrade;
 using Player;
+using TMPro;
 using UnityEngine;
 using Upgrades;
 using Random = UnityEngine.Random;
@@ -16,7 +17,8 @@ namespace Weapons
     {
         // CONSTANT
         [SerializeField] private Transform spritePivot;
-        [SerializeField] private SpriteRenderer sprite;
+        [SerializeField] private TextMeshPro textSprite;
+        [SerializeField] private Transform bulletOrigin;
         [SerializeField] private Transform projectileParent;
         [SerializeField] private GameObject linePrefab;
         [SerializeField] private GameObject projectilePrefab;
@@ -83,7 +85,7 @@ namespace Weapons
         private void Awake()
         {
             _mainCam = Camera.main;
-            _spriteStartPosition = sprite.transform.localPosition;
+            _spriteStartPosition = textSprite.rectTransform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
             _audioSource = GetComponent<AudioSource>();
             foreach (WeaponData data in weaponInventory)
@@ -144,8 +146,9 @@ namespace Weapons
         public void UpdateFromWeaponData()
         {
             if (WeaponData == null) return;
-            sprite.sprite = WeaponData.sprite;
+            textSprite.text = WeaponData.displayText;
             if (_audioSource) _audioSource.clip = WeaponData.fireEffect;
+            textSprite.transform.localScale = new Vector3(WeaponData.shouldFlipDisplay ? -1 : 1, 1, 1);
         }
 
         private void HitscanHitLogic(RaycastHit2D hit, bool isMelee, Vector2 vel, Vector2 dir)
@@ -165,7 +168,7 @@ namespace Weapons
 
         private void HitscanLogic(bool isMelee, Vector2 vel)
         {
-            Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            Vector2 origin = textSprite.transform.TransformPoint(_spriteStartPosition);
             float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.actualRange;
             // literally hitscan
             int count = isMelee ? 1 : WeaponData.numProjectiles;
@@ -228,7 +231,7 @@ namespace Weapons
             }
             StartFireAnimation();
             // instantiate & shoot bullets etc
-            Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
+            Vector2 origin = textSprite.transform.TransformPoint(_spriteStartPosition);
             if (_audioSource?.clip) _audioSource.Play();
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
@@ -238,11 +241,14 @@ namespace Weapons
                 GameObject projectile = WeaponData.customProjectile == null ? projectilePrefab : WeaponData.customProjectile;
                 for (int i = 0; i < WeaponData.numProjectiles; i++)
                 {
+                    Vector2 dir = RandomizedLookDirection;
+                    Vector2 newPos = origin + (dir);
                     GameObject go = ReferenceEquals(projectileParent, null)
-                        ? Instantiate(projectile, origin, Quaternion.identity)
-                        : Instantiate(projectile, origin, Quaternion.identity, projectileParent);
+                        ? Instantiate(projectile, newPos, Quaternion.identity)
+                        : Instantiate(projectile, newPos, Quaternion.identity, projectileParent);
                     WeaponProjectile proj = go.GetComponent<WeaponProjectile>();
-                    proj.Initialize(WeaponData, RandomizedLookDirection);
+                    proj.Initialize(WeaponData, dir);
+                    Debug.DrawLine(newPos, newPos + 10*dir, Color.blue, 4);
                     proj.ModifyDamage(mult);
                 }
             }
@@ -392,12 +398,12 @@ namespace Weapons
 
             weight = (weight - 0.5f) * 2;
 
-            sprite.transform.localPosition = Vector2.Lerp(_recoilAnimDisplacement, _spriteStartPosition, weight);
+            textSprite.transform.localPosition = Vector2.Lerp(_recoilAnimDisplacement, _spriteStartPosition, weight);
 
             _recoilAnimTimer -= dt;
             if (_recoilAnimTimer <= 0)
             {
-                sprite.transform.localPosition = _spriteStartPosition;
+                textSprite.transform.localPosition = _spriteStartPosition;
             }
         }
 
@@ -417,7 +423,7 @@ namespace Weapons
             Vector2 pivotPoint = spritePivot.position;
             Vector2 mousePos = GetMousePos();
             spritePivot.right = mousePos - pivotPoint;
-            sprite.flipY = mousePos.x < pivotPoint.x;
+            textSprite.transform.localScale = new Vector3(WeaponData.shouldFlipDisplay ? -1 : 1, mousePos.x < pivotPoint.x ? -1 : 1, 1);
         }
         
         /// <summary>
