@@ -66,6 +66,7 @@ namespace Weapons
 
         private const int BogglingEyesMaxDistance = 30;
         private const int BogglingEyesMinDistance = 10;
+        private const float OriginOffset = 0.6f;
 
         public WeaponData WeaponData => weaponInventory[weaponIndex];
         private Camera _mainCam;
@@ -242,7 +243,7 @@ namespace Weapons
                 for (int i = 0; i < WeaponData.numProjectiles; i++)
                 {
                     Vector2 dir = RandomizedLookDirection;
-                    Vector2 newPos = origin + (dir);
+                    Vector2 newPos = origin + OriginOffset*dir;
                     GameObject go = ReferenceEquals(projectileParent, null)
                         ? Instantiate(projectile, newPos, Quaternion.identity)
                         : Instantiate(projectile, newPos, Quaternion.identity, projectileParent);
