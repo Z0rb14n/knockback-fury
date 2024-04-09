@@ -26,15 +26,12 @@ namespace Pause
         {
             if (!Input.GetKeyDown(KeyCode.Escape)) return;
             if (actualPauseMenu.gameObject.activeSelf) Hide();
-            else Show();
+            else if (!UIUtil.IsUIOpen) Show();
         }
 
         private void Show()
         {
-            PlayerMovementScript.Instance.CanMove = false;
-            PlayerWeaponControl.Instance.enabled = false;
-            CameraScript.Instance.enabled = false;
-            Time.timeScale = 0;
+            UIUtil.OpenUI();
             actualPauseMenu.gameObject.SetActive(true);
             UpgradePickupData[] types = PlayerUpgradeManager.Instance.GetUniqueUpgrades
                 .Select(type => UpgradeManager.Instance.UpgradeMapping[type])
@@ -51,10 +48,7 @@ namespace Pause
 
         private void Hide()
         {
-            PlayerMovementScript.Instance.CanMove = true;
-            PlayerWeaponControl.Instance.enabled = true;
-            CameraScript.Instance.enabled = true;
-            Time.timeScale = 1;
+            UIUtil.CloseUI();
             actualPauseMenu.gameObject.SetActive(false);
         }
 

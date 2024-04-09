@@ -37,6 +37,8 @@ I'd generally advise following this style guide: https://unity.com/how-to/naming
  - Weapon Ascii Art: https://ascii.co.uk/art/
  - More weapon ascii art: https://asciiart.website/index.php?art=objects/guns
  - Even more weapon ascii art: https://www.asciiart.eu/
+ - Computer pixel art: https://opengameart.org/content/censored-media-computer-display
+ - Desktop Icons: https://opengameart.org/content/tango-desktop-icons
  - Funny wallpapers: https://www.reddit.com/r/windows/comments/nxbtgh/had_a_little_fun_with_the_macos_monterey/
 
 

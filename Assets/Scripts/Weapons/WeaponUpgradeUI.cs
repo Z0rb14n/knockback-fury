@@ -30,9 +30,7 @@ namespace Weapons
         {
             _upgradeTrigger = trigger;
             _upgradeTrigger.enabled = false;
-            Time.timeScale = 0;
-            PlayerMovementScript.Instance.enabled = false;
-            PlayerWeaponControl.Instance.enabled = false;
+            UIUtil.OpenUI();
             int numWeapons = PlayerWeaponControl.Instance.NumWeapons;
             EnsureLength(numWeapons);
             for (int i = 0; i < numWeapons; i++)
@@ -63,10 +61,8 @@ namespace Weapons
 
         public void Close()
         {
-            Time.timeScale = 1;
             if (_upgradeTrigger) _upgradeTrigger.enabled = true;
-            PlayerMovementScript.Instance.enabled = true;
-            PlayerWeaponControl.Instance.enabled = true;
+            UIUtil.CloseUI();
             visibleUI.SetActive(false);
         }
 
