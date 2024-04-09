@@ -19,6 +19,18 @@ namespace Lobby
         [SerializeField] private Color activeColor = Color.white;
         [SerializeField] private Color inactiveColor = Color.gray;
 
+        protected override bool CanInteract
+        {
+            get => CrossRunInfo.Instance && CrossRunInfo.Instance.data.cheese >= data.cheeseCost;
+            set
+            {
+                if (isPlayerInside)
+                {
+                    PlayerMovementScript.Instance.CanGrapple = !CanInteract;
+                }
+            }
+        }
+
         private void Awake()
         {
             if (CrossRunInfo.Instance)
@@ -40,28 +52,24 @@ namespace Lobby
         {
             notification.text = data.weaponName + " - " + data.cheeseCost + " cheese";
             notification.color = inactiveColor;
-            if (CrossRunInfo.Instance && CrossRunInfo.Instance.data.cheese >= data.cheeseCost)
+            if (CanInteract)
             {
                 notification.text = "[E] " + notification.text;
                 notification.color = activeColor;
             }
+
+            CanInteract = true; // 
         }
 
         protected override void OnPlayerInteraction()
         {
-            if (CrossRunInfo.Instance)
-            {
-                if (CrossRunInfo.Instance.data.cheese >= data.cheeseCost)
-                {
-                    GameObject go = Instantiate(pickupPrefab, transform.position - new Vector3(0,0.5f,0), Quaternion.identity);
-                    WeaponPickup pickup = go.GetComponent<WeaponPickup>();
-                    pickup.UpdateSprite(Instantiate(data));
-                    pickup.delay = -1;
-                    PlayerWeaponControl.Instance.PickupWeapon(pickup);
-                    Destroy(gameObject);
-                    CrossRunInfo.Instance.AddCheese(-data.cheeseCost);
-                }
-            }
+            GameObject go = Instantiate(pickupPrefab, transform.position - new Vector3(0,0.5f,0), Quaternion.identity);
+            WeaponPickup pickup = go.GetComponent<WeaponPickup>();
+            pickup.UpdateSprite(Instantiate(data));
+            pickup.delay = -1;
+            PlayerWeaponControl.Instance.PickupWeapon(pickup);
+            Destroy(gameObject);
+            CrossRunInfo.Instance.AddCheese(-data.cheeseCost);
         }
 
         private void OnValidate()

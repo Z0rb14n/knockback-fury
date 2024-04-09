@@ -16,14 +16,25 @@ namespace Util
         [SerializeField, Tooltip("Text notification to be displayed")] protected TextMeshPro notification;
 
         [SerializeField, Tooltip("Event triggered on interaction")] protected UnityEvent eventOnInteraction;
-        private bool _isPlayerInside;
+        protected bool isPlayerInside;
         
         private void Update()
         {
-            if (_isPlayerInside && Input.GetKeyDown(KeyCode.E))
+            if (isPlayerInside && Input.GetKeyDown(KeyCode.E) && CanInteract)
             {
                 eventOnInteraction.Invoke();
                 OnPlayerInteraction();
+            }
+        }
+
+        private bool _canInteract = true;
+        protected virtual bool CanInteract
+        {
+            get => _canInteract;
+            set
+            {
+                _canInteract = value;
+                if (isPlayerInside) PlayerMovementScript.Instance.CanGrapple = !value;
             }
         }
 
@@ -38,9 +49,9 @@ namespace Util
         {
             if (other.GetComponent<PlayerMovementScript>())
             {
-                _isPlayerInside = true;
-                notification.gameObject.SetActive(true);
-                PlayerMovementScript.Instance.CanGrapple = false;
+                isPlayerInside = true;
+                if (notification) notification.gameObject.SetActive(true);
+                PlayerMovementScript.Instance.CanGrapple = !CanInteract;
             }
         }
 
@@ -48,8 +59,8 @@ namespace Util
         {
             if (other.GetComponent<PlayerMovementScript>())
             {
-                _isPlayerInside = false;
-                notification.gameObject.SetActive(false);
+                isPlayerInside = false;
+                if (notification) notification.gameObject.SetActive(false);
                 PlayerMovementScript.Instance.CanGrapple = true;
             }
         }
