@@ -12,6 +12,8 @@ namespace NewFloorGen
         public Color connectionActiveColor = Color.yellow;
         public Color connectionInactiveColor = Color.gray;
 
+        public float Angle { get; private set; }
+        
         public bool DisplayingVirus
         {
             get => displayedVirus.activeSelf;
@@ -30,6 +32,7 @@ namespace NewFloorGen
             if (connection)
             {
                 connection.transform.localEulerAngles = new Vector3(0, 0, angle * Mathf.Rad2Deg);
+                Angle = angle > Mathf.PI ? (angle - 2 * Mathf.PI) * Mathf.Rad2Deg : angle * Mathf.Rad2Deg;
             }
 
             if (computer)

@@ -1,5 +1,4 @@
-﻿using System;
-using Player;
+﻿using System.Linq;
 using UnityEngine;
 using Util;
 
@@ -42,6 +41,26 @@ namespace NewFloorGen
                 uiNeighbors[i] = comp;
             }
         }
+        
+        private void TryMoveAngle(float targetAngle)
+        {
+            if (_selectedIndex == -1)
+            {
+                int index = uiNeighbors.Select((comp, index) =>
+                    (Mathf.Abs(Mathf.DeltaAngle(comp.Angle,targetAngle)), index)).Min().index;
+                ChangeIndex(index);
+            }
+            else
+            {
+                float initialDiff = Mathf.Abs(Mathf.DeltaAngle(uiNeighbors[_selectedIndex].Angle,targetAngle));
+                int newIndex = _selectedIndex == 0 ? uiNeighbors.Length-1 : _selectedIndex - 1;
+                int otherIndex = _selectedIndex == uiNeighbors.Length - 1 ? 0 : _selectedIndex + 1;
+                float newDiff = Mathf.Abs(Mathf.DeltaAngle(uiNeighbors[newIndex].Angle,targetAngle));
+                float otherDiff = Mathf.Abs(Mathf.DeltaAngle(uiNeighbors[otherIndex].Angle,targetAngle));
+                if (newDiff <= initialDiff) ChangeIndex(newIndex);
+                else if (otherDiff <= initialDiff) ChangeIndex(otherIndex);
+            }
+        }
 
         public void Update()
         {
@@ -50,31 +69,10 @@ namespace NewFloorGen
                 if (_selectedIndex != -1) Teleport();
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                if (_selectedIndex == -1)
-                    ChangeIndex(uiNeighbors.Length-1);
-                else if (_selectedIndex == uiNeighbors.Length - 1)
-                    ChangeIndex(0);
-                else
-                    ChangeIndex(_selectedIndex+1);
-            }
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                switch (_selectedIndex)
-                {
-                    case -1:
-                        ChangeIndex(0);
-                        break;
-                    case 0:
-                        ChangeIndex(uiNeighbors.Length-1);
-                        break;
-                    default:
-                        ChangeIndex(_selectedIndex-1);
-                        break;
-                }
-            }
+            if (Input.GetKeyDown(KeyCode.A)) TryMoveAngle(180);
+            if (Input.GetKeyDown(KeyCode.D)) TryMoveAngle(0);
+            if (Input.GetKeyDown(KeyCode.W)) TryMoveAngle(90);
+            if (Input.GetKeyDown(KeyCode.S)) TryMoveAngle(-90);
 
             if (Input.GetKeyDown(KeyCode.Escape)) Close();
         }
