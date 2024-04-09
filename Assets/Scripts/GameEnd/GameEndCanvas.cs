@@ -48,10 +48,7 @@ namespace GameEnd
         /// </summary>
         public void GoToTitle()
         {
-            Time.timeScale = 1;
-            PlayerMovementScript.Instance.CanMove = true;
-            PlayerWeaponControl.Instance.enabled = true;
-            CameraScript.Instance.enabled = true;
+            UIUtil.CloseUI();
             MiscUtil.EnablePlayerEnemyCollision();
             SceneManager.LoadScene("MainMenuScene");
         }
@@ -61,10 +58,7 @@ namespace GameEnd
         /// </summary>
         public void GoToLobby()
         {
-            Time.timeScale = 1;
-            PlayerMovementScript.Instance.CanMove = true;
-            PlayerWeaponControl.Instance.enabled = true;
-            CameraScript.Instance.enabled = true;
+            UIUtil.CloseUI();
             MiscUtil.EnablePlayerEnemyCollision();
             SceneManager.LoadScene("LobbyScene");
         }
@@ -79,21 +73,10 @@ namespace GameEnd
             StartCoroutine(DisplayDelayCoroutine(delay, didWin));
         }
 
-        /// <summary>
-        /// Disables all player actions.
-        /// </summary>
-        private static void DisableEverything()
-        {
-            PlayerMovementScript.Instance.CanMove = false;
-            PlayerWeaponControl.Instance.enabled = false;
-            CameraScript.Instance.enabled = false;
-            Time.timeScale = 0;
-        }
-
         private IEnumerator DisplayDelayCoroutine(float delay, bool didWin)
         {
             yield return new WaitForSecondsRealtime(delay);
-            DisableEverything();
+            UIUtil.OpenUI();
             actualUI.gameObject.SetActive(true);
             if (didWin && PlayerHealth.Instance.health <= 0)
             {
