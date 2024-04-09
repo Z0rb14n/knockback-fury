@@ -191,10 +191,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDuration: 6
-  maxLength: 10
-  useFixedDistance: 0
+  maxLength: 20
+  useFixedDistance: 1
   fixedDistance: 0
-  useDistJoint: 1
+  useDistJoint: 0
 --- !u!58 &4251914635419214842
 CircleCollider2D:
   m_ObjectHideFlags: 0
