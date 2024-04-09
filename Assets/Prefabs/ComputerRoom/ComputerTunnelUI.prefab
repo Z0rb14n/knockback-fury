@@ -288,6 +288,7 @@ MonoBehaviour:
   neighborPrefab: {fileID: 5497835525473157441, guid: 20f8e7115c6e64184a9243b862f1f3b4, type: 3}
   neighbors: {fileID: 5452409883144721312}
   neighborRadius: 300
+  mainComputer: {fileID: 3998020656686128286}
 --- !u!1 &5947220751132713293
 GameObject:
   m_ObjectHideFlags: 0
