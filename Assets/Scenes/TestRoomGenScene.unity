@@ -1848,6 +1848,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WeaponUpgradePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3868675004766858145, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 588d14d84f759344188cce2db8fa885a, type: 3}
 --- !u!1001 &1537207266
