@@ -11,7 +11,7 @@ namespace Enemies.Cat
         [SerializeField] private float spinSpeed = 2;
         private Rigidbody2D _body;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _body = GetComponent<Rigidbody2D>();
             Destroy(gameObject, timeBeforeDestruction);

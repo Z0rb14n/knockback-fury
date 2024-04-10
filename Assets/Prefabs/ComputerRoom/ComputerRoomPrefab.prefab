@@ -46,6 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1994fe4ed01c4fc58315f8c0cbe5eda8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileDatas:
+  - {fileID: 11400000, guid: 1360dae9444524da3b60b4d7b1a04cd0, type: 2}
+  - {fileID: 11400000, guid: 50080c2346e5e4c269982d26800a08a9, type: 2}
+  - {fileID: 11400000, guid: cdeaca092ae05489e867943f6b01f1ee, type: 2}
+  - {fileID: 11400000, guid: 9184f049c56d544f2a639393b3a617d2, type: 2}
+  - {fileID: 11400000, guid: 3ee52ff2a62444089b6ff675fa3c4c86, type: 2}
+  - {fileID: 11400000, guid: e6389680cf1424ece94089810ecedbab, type: 2}
+  - {fileID: 11400000, guid: a6cfc7b9b7e3449c8a7ba881468ce275, type: 2}
+  - {fileID: 11400000, guid: b2ae003802fc84c9db02d74dd4b4c47a, type: 2}
+  - {fileID: 11400000, guid: 97b31eba8b406454bb7f2ac1a18245db, type: 2}
+  - {fileID: 11400000, guid: 2c6d327ad18ba43da99ed63819ecb49a, type: 2}
+  - {fileID: 11400000, guid: 83682ae075ce04d3e96e1c06738936b3, type: 2}
   neighbors: []
   spawnPoint: {x: 5, y: 0}
 --- !u!1 &8426212275858426320
