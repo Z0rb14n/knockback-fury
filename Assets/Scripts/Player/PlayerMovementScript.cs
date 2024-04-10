@@ -97,7 +97,14 @@ namespace Player
         public Vector2 Pos
         {
             get => _body.position;
-            set => _body.position = value;
+            set
+            {
+                if (!_body)
+                {
+                    Debug.LogWarning("Rigidbody pos set called when not set - using transform");
+                    transform.position = value;
+                } else _body.position = value;
+            }
         }
 
         private PlayerUpgradeManager _upgradeManager;
