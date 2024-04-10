@@ -1,13 +1,17 @@
 using UnityEngine;
+using Upgrades;
 using Util;
 
 namespace NewFloorGen
 {
     public class ComputerCDDrive : TriggerTextScript
     {
+        [SerializeField] private GameObject uiToCreate;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Sprite hasUpgradeSprite;
         [SerializeField] private Sprite emptySprite;
+
+        public UpgradePickupData[] data;
 
         private bool _isEmpty;
 
@@ -29,6 +33,13 @@ namespace NewFloorGen
 
         protected override void OnPlayerInteraction()
         {
+            GameObject go = Instantiate(uiToCreate);
+            go.GetComponent<FileUpgradeUI>().Open(this);
+        }
+
+        public void Consume()
+        {
+            _isEmpty = true;
             spriteRenderer.sprite = emptySprite;
         }
     }

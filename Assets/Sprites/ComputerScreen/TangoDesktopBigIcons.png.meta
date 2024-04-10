@@ -1,0 +1,4755 @@
+fileFormatVersion: 2
+guid: 0905699084d944d6e8748f8572095637
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 15
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 357955ed48eef4cfaa86a2cb53dd87db
+      internalID: -1442832340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_1
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ab1f8ab72c13474ca3a69f5691ecc4b
+      internalID: -150465837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_2
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bae6cb6055d942f498cf535e31d868f
+      internalID: 2113550175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_3
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c602b259aef004832870889aedba1a6c
+      internalID: -514130510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_4
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4740781d8ed724f658234bc208d7dd25
+      internalID: 1132755269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_5
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfd113a4c475b4b3aba5d8d23c17266e
+      internalID: -1245795279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_6
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed18eef0d97d942cc990a96b11d448fc
+      internalID: 311625142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 233604a54ebf6422681a3d6f5abc5d84
+      internalID: 173186933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_8
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: add6773718a7f49b0ac362496436031a
+      internalID: 1354015149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_9
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 601e6838a8b714b4f89813272b400e00
+      internalID: 140336909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_10
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbaaa675d77264f289506e0649d70892
+      internalID: -2092391678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_11
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 578e3d8b2212242c7977c7148a9c21e5
+      internalID: 2133039368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_12
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9102debb0a5a45fcb9a221030f3d0f0
+      internalID: -1431897189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_13
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09258fac3882d4ccdb6a5d75bd300a7a
+      internalID: 880182233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_14
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57b7a7ba9ded04467ae1895f623d9050
+      internalID: -518032443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_15
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 088980159631f40f7b3eb07e5523aff5
+      internalID: -1232729809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_16
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edec9352142b646ccb5a35dcb2bcf5d0
+      internalID: 1587723664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_17
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefaae4d5a9634b1ea64fc1525c96d50
+      internalID: -1071165213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_18
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8653d73c5ac654cc38bfb60bc13d8bfa
+      internalID: 947582622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_19
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8b24e176720248c5b27bd506ca4135d
+      internalID: 1203722482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_20
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 292
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08dd9d50219d548f6a3aa15e1e3cb4e2
+      internalID: -319237955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_21
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0d62087d641045829a521dd5363394b
+      internalID: 1813098139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_22
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ae1852d65c424a198c7c299e44ed741
+      internalID: -1329884225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_23
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cadff73f239f74709b9f6ee9e686a844
+      internalID: -2014994259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_24
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c841283c95c9a4f8892d42a1e807c204
+      internalID: 613400523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_25
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d50ba5b90c5c41129f9d535debb0076
+      internalID: 646258770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_26
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 887e4e9339a584dacb2af6f5d1a8a976
+      internalID: 1305778618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_27
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2b197f61c7c34088bc9ab495eebfe84
+      internalID: -1633197560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_28
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 503ab7e1899db4275b55217b5d5deedb
+      internalID: 1758274853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_29
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd47262edd7214ac894f8cb55a8c2c58
+      internalID: 1957416575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_30
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e444ece28fd0c47f19fa05744d85b0ab
+      internalID: 88858031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_31
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3773ca9bd53ec4231a32acb789e2cefb
+      internalID: -712025377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_32
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18d95f8ec212c43a48507725374c0a34
+      internalID: -1904418714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_33
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6fc86b8ba1334bd29fa70f0786e89db
+      internalID: 143791913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_34
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24cc50d5e63ff4d3ab9646efe3072386
+      internalID: 1005613752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_35
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8f369b5ebf5d45018ab729f26e3e614
+      internalID: 205779520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_36
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 889b7ee827f6545049d7b3875a57db4f
+      internalID: -1823949269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_37
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba85d3ed9810e4104a92ff8115177560
+      internalID: -1094275053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_38
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c7ff4b41079f41558e28612ca666585
+      internalID: -1560344578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_39
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c1384558c4874047aca49d8c23ec9f7
+      internalID: -361996470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_40
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e119299d7e1a49c2bd877f750079749
+      internalID: 448106402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_41
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 262
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb99d4e9c0604e4889cf80c90f8b5f1
+      internalID: 669531422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_42
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3021bfe93f8734d27862cb784ca4ae3e
+      internalID: -434227549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_43
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 602cac3b2ae5d49beb6095dddff4aea0
+      internalID: -2122274393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_44
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f0ad05dacf8d4d8f8bd4c64848583eb
+      internalID: 1104401229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_45
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41160f864dea34f37a0a7965c0149424
+      internalID: 1714765895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_46
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5420d1875533436595a5684ddefd527
+      internalID: 1538073561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_47
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837369d4ba6f248f9a318205b7cac399
+      internalID: -1004203107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_48
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aabc3ec084abf4c8c83b4a5a9ef657df
+      internalID: -461368193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_49
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60eb9072f397446d7a90e52088a781ca
+      internalID: 704829530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_50
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e136c70c4f4004d5ea15e232c9fcef16
+      internalID: 1160521864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_51
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e3bdd13e052449d69db2de11aee5514
+      internalID: -1108253228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_52
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8e6e0e13d39a4d94a912d6c7e7cc046
+      internalID: 2081739407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_53
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0589a4794bb794f398b659cbd70c679e
+      internalID: 1942354116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_54
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccb14e5681e6b491e8ad1d13481b9d2e
+      internalID: -940559818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_55
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0316486911a3948a7870408e62f1c924
+      internalID: -960864828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_56
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a80a7de5da64825b5aa638a511db98
+      internalID: -302349512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_57
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7347ac664669744849f7cd1ed6b7a776
+      internalID: -618461210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_58
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46136f5a90839439fa948657171054b0
+      internalID: 1943422767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_59
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5240b9af525ba4ec5a8aace451b63744
+      internalID: 765694472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_60
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de79fb7790f8947728bdacdaec216a4a
+      internalID: -1103032876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_61
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2910edf462cde4184a06417c01523013
+      internalID: -61140216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_62
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 232
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 951d659e99766431dad304413204a57c
+      internalID: 1474674926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_63
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcda547872ffb459d8f5550982a4dc5e
+      internalID: -869872105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_64
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 958d24d88c85b44ee9b31cdb7cca163a
+      internalID: -634310580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_65
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd5ec2d9c24114b00a657ac95b642c56
+      internalID: -1357015934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_66
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38a45bef56caf45fab5b91056a3d94bb
+      internalID: -923624762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_67
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0836ad8447ed34c50b35cd875d6246e1
+      internalID: -652336111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_68
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f80e2902d68634b038d63745df3dae21
+      internalID: -2017539796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_69
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31d739fbcd8d04817af444a3733e227d
+      internalID: -196132385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_70
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a93a214c4cec7479183ecf598027d4a2
+      internalID: 1760780955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_71
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f31d6a88d0c74d7c872e94e84c5ca4f
+      internalID: -1045893868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_72
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4264662d8c0b0467ea8c255f73a91d3a
+      internalID: 860220141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_73
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d2320126f7dd417996719a0f40edece
+      internalID: -259487051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_74
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c4d3c9ac2a71430c9f0ef58861fcd41
+      internalID: -764245792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_75
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd964479f15a34041b20514a0ff1d6ed
+      internalID: 2065779469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_76
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e4a629c9aa134ff6ad515ea402ced29
+      internalID: -1444805941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_77
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bba1d3d6bc5546b0b64b4dcc5f26abe
+      internalID: -1365566801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_78
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f50d636d6c5e74762b9c6ee6d1d63c50
+      internalID: 169502170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_79
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28a85823fa260432d867977d1d54d402
+      internalID: 1229899101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_80
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 728d9cae31add4bc2b883725f7f69bef
+      internalID: -1542628915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_81
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c26265f234074f0998bdda02ab954e7
+      internalID: -684893889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_82
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: add3f727a70cf48159be6b5b0ae12e5a
+      internalID: -976794855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_83
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 202
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99cef3f827a4a4322b73e227b2f8fa15
+      internalID: -273564146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_84
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05bbd14849ddd45eeb4f4b8cc6930862
+      internalID: 2038676718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_85
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b528a843367194fe4afb70c095fe980d
+      internalID: -538458735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_86
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d36e62425fd37407fa27425d7bac2833
+      internalID: -457969792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_87
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99fe1d463943d4feb88d27fabe6c3cf4
+      internalID: 1685280826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_88
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31f182b054a84d4c98e9f982b7c4e57
+      internalID: 1605508647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_89
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8e74356fb83041c387272da00344d3b
+      internalID: 1077803523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_90
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb0e045facecd4f8080c20acd3f3dede
+      internalID: 743813340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_91
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188c1e7e9e50f457f82f90ba5442be46
+      internalID: -591172198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_92
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35d8e047fba3c4b05a89e6fde125128b
+      internalID: -1046327561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_93
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce34a2990969041eeb15a52313098101
+      internalID: -425120533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_94
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed4560386cbd84a3ab8763bcbf469e0a
+      internalID: -2084046327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_95
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8b869a0e1de44ba486ce01bba23c896
+      internalID: -1380643534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_96
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2ab29b9d58c4022acc53e6df5fb436
+      internalID: 188816924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_97
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a1a85935b112458aa398a2136ae782c
+      internalID: -240635276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_98
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b102f13e55382414e89a0da3f259d834
+      internalID: -266058957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_99
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba184b8c9fc314984be2a5258ac37282
+      internalID: 2023471050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_100
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90ccba7e23bc5407480e8a8c68896cd4
+      internalID: 1279852181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_101
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6db00ccf63d124134806f83954083985
+      internalID: -748851303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_102
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b64eeaf02509c4ffaa418e90633b6fae
+      internalID: -2112235359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_103
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e720739bb69648ea9b670e306591198
+      internalID: -1729327310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_104
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 172
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c8af530bb83c4d18ae09fe4e787c441
+      internalID: 765373420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_105
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b6b5f946c1a40afa2c68187b7c3942
+      internalID: 121569442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_106
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99ad54f050c90434c807e95ae85e82c9
+      internalID: -1945179182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_107
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef1b2bf1c1f5b437db73753c34df83cb
+      internalID: 1309652736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_108
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95cf4df8a193847e791706aae592e87b
+      internalID: 264417258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_109
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4166880580a12481c9c7aa1e767dbb17
+      internalID: 149150311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_110
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcf7c1cebe461400181f10314f4ca7ba
+      internalID: -422430683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_111
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b23fdbe6253749a686c6a517592dd02
+      internalID: 1234908145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_112
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f7d3362a78374bd2a4ccafcefdd609e
+      internalID: 2025436190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_113
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e5f7083928174843aac5f1a74937ba6
+      internalID: 1102695816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_114
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47f55a61f1dd4277a2a37e67b103d0d
+      internalID: -2042551225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_115
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a7ab05d3da69419cb16afb2b78c8d06
+      internalID: 792508255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_116
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5956bdcbdcf44c5a691e4d39e82b1a
+      internalID: 1632519975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_117
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c7084cde078d4f9b87b524b282df07e
+      internalID: 45837603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_118
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12da4c34b1c7149b4aadaf47aa4d7031
+      internalID: -468170248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_119
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41548e4b455c74af6bd424d51e2e3b44
+      internalID: 1538749327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_120
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2de70c31d992414b869bd8d75480b71
+      internalID: 298084288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_121
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a323562833f004235b97bc6bf5de0367
+      internalID: -1141265465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_122
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65dd060d72a9246318682d9bff1222c4
+      internalID: -483619541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_123
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d9ff4ef2a2b34a04b6648826a005ef2
+      internalID: 1822786593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_124
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e4b9fc9ad1794a19bc057c19be7d657
+      internalID: 1633381495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_125
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 142
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fcf2295df5db456b84752e95ca4f397
+      internalID: -1992934535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_126
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d671113761bd2484da124cefa24fece6
+      internalID: 1191715980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_127
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddfc60d87821c4d61b0cd8fd524bf7ff
+      internalID: 1158265102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_128
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82ab4eb08d08a419e9b8a9b46f83d0fc
+      internalID: 2039104064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_129
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5209703338f944f08200a5c2876fbf8
+      internalID: -1108248385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_130
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e1c6956de26647178eb6cbe39c038a2
+      internalID: 315133381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_131
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb43d7bf5ce814396b77c6f09a8ca69a
+      internalID: -998138239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_132
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3de89246867440b0b382bd07652f838
+      internalID: 1412050806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_133
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdb965dcba5434626838b0985d36280e
+      internalID: 983388015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_134
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7759175b61c8d435ba9fb61cb2d96ffe
+      internalID: -785190015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_135
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb9d0151856774787856891d52902503
+      internalID: -2137974712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_136
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee39db44b8234e229f560908f32de91
+      internalID: 1468074041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_137
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c9aa9582e78b43f2943792301df0a11
+      internalID: 1728179035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_138
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 605ae08a6724e46158a3b4d9d5536dac
+      internalID: 773591396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_139
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968c409df7f84459790fe40d54046c47
+      internalID: 1918544500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_140
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16eea564f1574483d8f6d2fb1470bd09
+      internalID: -897448102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_141
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b87b154e34c3a4f449215bcda800fee6
+      internalID: 1048200866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_142
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06a0f49f5f90c44d59b61c0d2fb47ad5
+      internalID: -1882901050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_143
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cb45df91c63c4415b27e16d465a457b
+      internalID: 272187385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_144
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab5d671483b24e9a817602b88c179e3
+      internalID: 171684737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_145
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1719e16d2a2364b6fb279c9035f49ba2
+      internalID: -917301905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_146
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 112
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d091e93dc69b645b2a5ea00f5291ba8c
+      internalID: -2033398814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_147
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2e15fd7929ef4339816fe7ae058690b
+      internalID: -2076614123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_148
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f252ec8ab0b04f9daf11d0420882d83
+      internalID: -883869576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_149
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ba1fa35cccf34a2c8733410341615d6
+      internalID: 1137929155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_150
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb614e5fe3bf947d48dc9c4caf3a7a53
+      internalID: -198491569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_151
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f302b49a278354e4090ca20827293e8b
+      internalID: 1474032843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_152
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ecd0467ba0be4312845276fbb1ec43b
+      internalID: -646554723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_153
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d1d53274b4f74b598712fbce7f3829a
+      internalID: 602142737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_154
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 330cfe65a667c42529d12b5e489505f0
+      internalID: 1311664843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_155
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 405e8fe3eb72a444791cffb05d4be8b4
+      internalID: -131062076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_156
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12f47013e1f804a6fb2226bfd8473605
+      internalID: -1793337851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_157
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 225623bd1457b4894b457b8b20a957fa
+      internalID: 1314000525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_158
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d405a6e18ec14499c8e4605a2ba17d60
+      internalID: 2146666431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_159
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca113acded16d43a3bc4ba2885d369f8
+      internalID: 775404397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_160
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7abf94f931c114031863e4e2db754d3b
+      internalID: -943302520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_161
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a11bf4c05fc7b430aa006fa12165e4ff
+      internalID: 1299222159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_162
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef017eb89a0f14621a3f45408299d3e9
+      internalID: -675604078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_163
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95f2a7a7efdef4f049e73db252ea5f94
+      internalID: -1291360758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_164
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d375e117705cc4ba8827dd98e92a340d
+      internalID: -493895256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_165
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b63da586299cc45b98cbf3a9b502f471
+      internalID: -1663716789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_166
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c3c89a3d890447f295e60572942552b
+      internalID: -111965554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_167
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 82
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21c45e57621e499091c12c16df7a381
+      internalID: 881891842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_168
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8750c4912bc745268920b7646bedaa0
+      internalID: -1050414217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_169
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62fbc44429d8f4357b7c7ed52a779231
+      internalID: -731203683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_170
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feee96843fe7d457d83802536dffc5ed
+      internalID: 1154705327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_171
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 836fb150f0f0a465ca670fca283492a9
+      internalID: -1247591143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_172
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf3d1128f88d84bcaa0ac15dd11e751b
+      internalID: -1331618188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_173
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4225cf7dbe8b94151a300af0c7e2b222
+      internalID: 210637462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_174
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad2e02e8ba01749529b10c197d45d7a2
+      internalID: -2023161508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_175
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b26e71658f54a44c2bb58107da3548d0
+      internalID: 54941096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_176
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48fb1374a0a164902b5b23b3f490c7cd
+      internalID: -2122293173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_177
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40778298e2dec4dc59dad7330aa7d64a
+      internalID: 848544571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_178
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e97cab499ec345f4b7f1b552bf12c4d
+      internalID: -496655323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_179
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fea070b6a3cbe49679e6973ef028e703
+      internalID: -420477275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_180
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bad8f5f28f3d409796bd69809d0f3e1
+      internalID: -644763991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_181
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e38c327ae01534639a5e7e5d2245451e
+      internalID: -1068715121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_182
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2acb40793f214cbeb948ea406908eb0
+      internalID: -652322035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_183
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f135e65b970946dabe55fc7830e427e
+      internalID: 961820813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_184
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e37fd525c30624106a3cc5f16e3412d7
+      internalID: -1490051710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_185
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48685735833eb430daf90b75df3bf8d3
+      internalID: -1491317632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_186
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5fb362b9574a45a191d6f63ebe2fe90
+      internalID: 483353182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_187
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b76fd2cc3f642c1a4b8ce20c4c92b3
+      internalID: 388890159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_188
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 52
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ee1118aebc1248bda3865f318b1d0f0
+      internalID: 1529888041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_189
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae1380476807541ed80920466a4e75c7
+      internalID: 1274884067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_190
+      rect:
+        serializedVersion: 2
+        x: 44
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03dbe5a673410416e8d230def483f6da
+      internalID: -1062038690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_191
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caee7cb3294814efea4cb181ee1904dc
+      internalID: 698434166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_192
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d5f34d67cbb74abcb9d4bd4b393625c
+      internalID: 1037330640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_193
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e43e24b516b84f2a9f0bc67ca777911
+      internalID: -834130754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_194
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32b1b227d21c94bdcada0ba309be0030
+      internalID: 2126982118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_195
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089816b50a3c34267a1dcff5ebabde6f
+      internalID: -619710363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_196
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dd1fbed681f2498dbc97e0c79f6aa1c
+      internalID: -291647657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_197
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bea8f4a3ba2b4bf7a115d8284931f7d
+      internalID: -110186656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_198
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec640eccced574d4881bfe3032800981
+      internalID: -1130936655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_199
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4361cf1d5af3f4b9bb3c510689a64a4b
+      internalID: -655890906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_200
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bc95f132b37b47d3a1d163070ab355c
+      internalID: 488981833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_201
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d78cb94fa1f6453381ae3ff567c9e67
+      internalID: 646984493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_202
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10fb41ed5846c47db8118c92c3b041dc
+      internalID: -1450343877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_203
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3323ad6d31e584233b5bc9fc29abbfd0
+      internalID: 340930505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_204
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2d31f0899814ee4a13ee2dab829c9f
+      internalID: 848845148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_205
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8877de1757f0246f4abafea146e6c141
+      internalID: 2049112797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_206
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcf97b4ca71324ab8a8d6d329f67cf93
+      internalID: 1082541116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_207
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 135744495c74043be9e277ab26f9c98e
+      internalID: -378014484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_208
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 884cf50dd84184ff28768e2348104039
+      internalID: 1317561027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TangoDesktopBigIcons_209
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 22
+        width: 30
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 661c456c05c9c4e4caf7c887b2e3451c
+      internalID: 1648167017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      TangoDesktopBigIcons_0: -1442832340
+      TangoDesktopBigIcons_1: -150465837
+      TangoDesktopBigIcons_10: -2092391678
+      TangoDesktopBigIcons_100: 1279852181
+      TangoDesktopBigIcons_101: -748851303
+      TangoDesktopBigIcons_102: -2112235359
+      TangoDesktopBigIcons_103: -1729327310
+      TangoDesktopBigIcons_104: 765373420
+      TangoDesktopBigIcons_105: 121569442
+      TangoDesktopBigIcons_106: -1945179182
+      TangoDesktopBigIcons_107: 1309652736
+      TangoDesktopBigIcons_108: 264417258
+      TangoDesktopBigIcons_109: 149150311
+      TangoDesktopBigIcons_11: 2133039368
+      TangoDesktopBigIcons_110: -422430683
+      TangoDesktopBigIcons_111: 1234908145
+      TangoDesktopBigIcons_112: 2025436190
+      TangoDesktopBigIcons_113: 1102695816
+      TangoDesktopBigIcons_114: -2042551225
+      TangoDesktopBigIcons_115: 792508255
+      TangoDesktopBigIcons_116: 1632519975
+      TangoDesktopBigIcons_117: 45837603
+      TangoDesktopBigIcons_118: -468170248
+      TangoDesktopBigIcons_119: 1538749327
+      TangoDesktopBigIcons_12: -1431897189
+      TangoDesktopBigIcons_120: 298084288
+      TangoDesktopBigIcons_121: -1141265465
+      TangoDesktopBigIcons_122: -483619541
+      TangoDesktopBigIcons_123: 1822786593
+      TangoDesktopBigIcons_124: 1633381495
+      TangoDesktopBigIcons_125: -1992934535
+      TangoDesktopBigIcons_126: 1191715980
+      TangoDesktopBigIcons_127: 1158265102
+      TangoDesktopBigIcons_128: 2039104064
+      TangoDesktopBigIcons_129: -1108248385
+      TangoDesktopBigIcons_13: 880182233
+      TangoDesktopBigIcons_130: 315133381
+      TangoDesktopBigIcons_131: -998138239
+      TangoDesktopBigIcons_132: 1412050806
+      TangoDesktopBigIcons_133: 983388015
+      TangoDesktopBigIcons_134: -785190015
+      TangoDesktopBigIcons_135: -2137974712
+      TangoDesktopBigIcons_136: 1468074041
+      TangoDesktopBigIcons_137: 1728179035
+      TangoDesktopBigIcons_138: 773591396
+      TangoDesktopBigIcons_139: 1918544500
+      TangoDesktopBigIcons_14: -518032443
+      TangoDesktopBigIcons_140: -897448102
+      TangoDesktopBigIcons_141: 1048200866
+      TangoDesktopBigIcons_142: -1882901050
+      TangoDesktopBigIcons_143: 272187385
+      TangoDesktopBigIcons_144: 171684737
+      TangoDesktopBigIcons_145: -917301905
+      TangoDesktopBigIcons_146: -2033398814
+      TangoDesktopBigIcons_147: -2076614123
+      TangoDesktopBigIcons_148: -883869576
+      TangoDesktopBigIcons_149: 1137929155
+      TangoDesktopBigIcons_15: -1232729809
+      TangoDesktopBigIcons_150: -198491569
+      TangoDesktopBigIcons_151: 1474032843
+      TangoDesktopBigIcons_152: -646554723
+      TangoDesktopBigIcons_153: 602142737
+      TangoDesktopBigIcons_154: 1311664843
+      TangoDesktopBigIcons_155: -131062076
+      TangoDesktopBigIcons_156: -1793337851
+      TangoDesktopBigIcons_157: 1314000525
+      TangoDesktopBigIcons_158: 2146666431
+      TangoDesktopBigIcons_159: 775404397
+      TangoDesktopBigIcons_16: 1587723664
+      TangoDesktopBigIcons_160: -943302520
+      TangoDesktopBigIcons_161: 1299222159
+      TangoDesktopBigIcons_162: -675604078
+      TangoDesktopBigIcons_163: -1291360758
+      TangoDesktopBigIcons_164: -493895256
+      TangoDesktopBigIcons_165: -1663716789
+      TangoDesktopBigIcons_166: -111965554
+      TangoDesktopBigIcons_167: 881891842
+      TangoDesktopBigIcons_168: -1050414217
+      TangoDesktopBigIcons_169: -731203683
+      TangoDesktopBigIcons_17: -1071165213
+      TangoDesktopBigIcons_170: 1154705327
+      TangoDesktopBigIcons_171: -1247591143
+      TangoDesktopBigIcons_172: -1331618188
+      TangoDesktopBigIcons_173: 210637462
+      TangoDesktopBigIcons_174: -2023161508
+      TangoDesktopBigIcons_175: 54941096
+      TangoDesktopBigIcons_176: -2122293173
+      TangoDesktopBigIcons_177: 848544571
+      TangoDesktopBigIcons_178: -496655323
+      TangoDesktopBigIcons_179: -420477275
+      TangoDesktopBigIcons_18: 947582622
+      TangoDesktopBigIcons_180: -644763991
+      TangoDesktopBigIcons_181: -1068715121
+      TangoDesktopBigIcons_182: -652322035
+      TangoDesktopBigIcons_183: 961820813
+      TangoDesktopBigIcons_184: -1490051710
+      TangoDesktopBigIcons_185: -1491317632
+      TangoDesktopBigIcons_186: 483353182
+      TangoDesktopBigIcons_187: 388890159
+      TangoDesktopBigIcons_188: 1529888041
+      TangoDesktopBigIcons_189: 1274884067
+      TangoDesktopBigIcons_19: 1203722482
+      TangoDesktopBigIcons_190: -1062038690
+      TangoDesktopBigIcons_191: 698434166
+      TangoDesktopBigIcons_192: 1037330640
+      TangoDesktopBigIcons_193: -834130754
+      TangoDesktopBigIcons_194: 2126982118
+      TangoDesktopBigIcons_195: -619710363
+      TangoDesktopBigIcons_196: -291647657
+      TangoDesktopBigIcons_197: -110186656
+      TangoDesktopBigIcons_198: -1130936655
+      TangoDesktopBigIcons_199: -655890906
+      TangoDesktopBigIcons_2: 2113550175
+      TangoDesktopBigIcons_20: -319237955
+      TangoDesktopBigIcons_200: 488981833
+      TangoDesktopBigIcons_201: 646984493
+      TangoDesktopBigIcons_202: -1450343877
+      TangoDesktopBigIcons_203: 340930505
+      TangoDesktopBigIcons_204: 848845148
+      TangoDesktopBigIcons_205: 2049112797
+      TangoDesktopBigIcons_206: 1082541116
+      TangoDesktopBigIcons_207: -378014484
+      TangoDesktopBigIcons_208: 1317561027
+      TangoDesktopBigIcons_209: 1648167017
+      TangoDesktopBigIcons_21: 1813098139
+      TangoDesktopBigIcons_22: -1329884225
+      TangoDesktopBigIcons_23: -2014994259
+      TangoDesktopBigIcons_24: 613400523
+      TangoDesktopBigIcons_25: 646258770
+      TangoDesktopBigIcons_26: 1305778618
+      TangoDesktopBigIcons_27: -1633197560
+      TangoDesktopBigIcons_28: 1758274853
+      TangoDesktopBigIcons_29: 1957416575
+      TangoDesktopBigIcons_3: -514130510
+      TangoDesktopBigIcons_30: 88858031
+      TangoDesktopBigIcons_31: -712025377
+      TangoDesktopBigIcons_32: -1904418714
+      TangoDesktopBigIcons_33: 143791913
+      TangoDesktopBigIcons_34: 1005613752
+      TangoDesktopBigIcons_35: 205779520
+      TangoDesktopBigIcons_36: -1823949269
+      TangoDesktopBigIcons_37: -1094275053
+      TangoDesktopBigIcons_38: -1560344578
+      TangoDesktopBigIcons_39: -361996470
+      TangoDesktopBigIcons_4: 1132755269
+      TangoDesktopBigIcons_40: 448106402
+      TangoDesktopBigIcons_41: 669531422
+      TangoDesktopBigIcons_42: -434227549
+      TangoDesktopBigIcons_43: -2122274393
+      TangoDesktopBigIcons_44: 1104401229
+      TangoDesktopBigIcons_45: 1714765895
+      TangoDesktopBigIcons_46: 1538073561
+      TangoDesktopBigIcons_47: -1004203107
+      TangoDesktopBigIcons_48: -461368193
+      TangoDesktopBigIcons_49: 704829530
+      TangoDesktopBigIcons_5: -1245795279
+      TangoDesktopBigIcons_50: 1160521864
+      TangoDesktopBigIcons_51: -1108253228
+      TangoDesktopBigIcons_52: 2081739407
+      TangoDesktopBigIcons_53: 1942354116
+      TangoDesktopBigIcons_54: -940559818
+      TangoDesktopBigIcons_55: -960864828
+      TangoDesktopBigIcons_56: -302349512
+      TangoDesktopBigIcons_57: -618461210
+      TangoDesktopBigIcons_58: 1943422767
+      TangoDesktopBigIcons_59: 765694472
+      TangoDesktopBigIcons_6: 311625142
+      TangoDesktopBigIcons_60: -1103032876
+      TangoDesktopBigIcons_61: -61140216
+      TangoDesktopBigIcons_62: 1474674926
+      TangoDesktopBigIcons_63: -869872105
+      TangoDesktopBigIcons_64: -634310580
+      TangoDesktopBigIcons_65: -1357015934
+      TangoDesktopBigIcons_66: -923624762
+      TangoDesktopBigIcons_67: -652336111
+      TangoDesktopBigIcons_68: -2017539796
+      TangoDesktopBigIcons_69: -196132385
+      TangoDesktopBigIcons_7: 173186933
+      TangoDesktopBigIcons_70: 1760780955
+      TangoDesktopBigIcons_71: -1045893868
+      TangoDesktopBigIcons_72: 860220141
+      TangoDesktopBigIcons_73: -259487051
+      TangoDesktopBigIcons_74: -764245792
+      TangoDesktopBigIcons_75: 2065779469
+      TangoDesktopBigIcons_76: -1444805941
+      TangoDesktopBigIcons_77: -1365566801
+      TangoDesktopBigIcons_78: 169502170
+      TangoDesktopBigIcons_79: 1229899101
+      TangoDesktopBigIcons_8: 1354015149
+      TangoDesktopBigIcons_80: -1542628915
+      TangoDesktopBigIcons_81: -684893889
+      TangoDesktopBigIcons_82: -976794855
+      TangoDesktopBigIcons_83: -273564146
+      TangoDesktopBigIcons_84: 2038676718
+      TangoDesktopBigIcons_85: -538458735
+      TangoDesktopBigIcons_86: -457969792
+      TangoDesktopBigIcons_87: 1685280826
+      TangoDesktopBigIcons_88: 1605508647
+      TangoDesktopBigIcons_89: 1077803523
+      TangoDesktopBigIcons_9: 140336909
+      TangoDesktopBigIcons_90: 743813340
+      TangoDesktopBigIcons_91: -591172198
+      TangoDesktopBigIcons_92: -1046327561
+      TangoDesktopBigIcons_93: -425120533
+      TangoDesktopBigIcons_94: -2084046327
+      TangoDesktopBigIcons_95: -1380643534
+      TangoDesktopBigIcons_96: 188816924
+      TangoDesktopBigIcons_97: -240635276
+      TangoDesktopBigIcons_98: -266058957
+      TangoDesktopBigIcons_99: 2023471050
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
