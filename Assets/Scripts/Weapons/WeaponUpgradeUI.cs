@@ -7,7 +7,6 @@ namespace Weapons
     [DisallowMultipleComponent]
     public class WeaponUpgradeUI : MonoBehaviour
     {
-        public GameObject visibleUI;
         public GameObject weaponButtonPrefab;
         public RectTransform weaponsArea;
         public RectTransform buttonsArea;
@@ -42,7 +41,6 @@ namespace Weapons
             {
                 buttonsArea.GetChild(i).gameObject.SetActive(_upgradeTrigger.allowedButtons == null || _upgradeTrigger.allowedButtons.Contains(i));
             }
-            visibleUI.SetActive(true);
         }
 
         public void SelectWeapon(int index)
@@ -56,14 +54,14 @@ namespace Weapons
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && visibleUI.activeSelf) Close();
+            if (Input.GetKeyDown(KeyCode.Escape)) Close();
         }
 
         public void Close()
         {
             if (_upgradeTrigger) _upgradeTrigger.enabled = true;
             UIUtil.CloseUI();
-            visibleUI.SetActive(false);
+            Destroy(gameObject);
         }
 
         public void UpgradeAmmo()

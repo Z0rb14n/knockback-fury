@@ -7,17 +7,13 @@ namespace Weapons
     [DisallowMultipleComponent, RequireComponent(typeof(Collider2D))]
     public class WeaponUpgradeTrigger : TriggerTextScript
     {
-        public WeaponUpgradeUI weaponUpgradeUI;
+        public GameObject weaponUpgradeUIPrefab;
         public HashSet<int> allowedButtons;
-
-        private void Awake()
-        {
-            if (!weaponUpgradeUI) weaponUpgradeUI = FindObjectOfType<WeaponUpgradeUI>();
-        }
 
         protected override void OnPlayerInteraction()
         {
-            weaponUpgradeUI.Open(this);
+            GameObject go = Instantiate(weaponUpgradeUIPrefab);
+            go.GetComponent<WeaponUpgradeUI>().Open(this);
         }
     }
 }
