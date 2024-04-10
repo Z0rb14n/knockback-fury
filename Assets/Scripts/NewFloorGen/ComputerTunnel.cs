@@ -16,7 +16,11 @@ namespace NewFloorGen
         protected override bool CanInteract
         {
             get => enabled;
-            set => enabled = value;
+            set
+            {
+                enabled = value;
+                UpdatePlayerGrapple();
+            }
         }
 
         private void Awake()
@@ -28,11 +32,19 @@ namespace NewFloorGen
         private void OnEnable()
         {
             computerSprite.sprite = enabledSprite;
+            notification.text = "[E] Tunnel";
         }
 
         private void OnDisable()
         {
             computerSprite.sprite = disabledSprite;
+            notification.text = "";
+        }
+
+        private void OnValidate()
+        {
+            if (enabled) OnEnable();
+            else OnDisable();
         }
 
         protected override void OnPlayerInteraction()

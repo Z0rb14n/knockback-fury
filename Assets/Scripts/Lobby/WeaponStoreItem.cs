@@ -22,13 +22,7 @@ namespace Lobby
         protected override bool CanInteract
         {
             get => CrossRunInfo.Instance && CrossRunInfo.Instance.data.cheese >= data.cheeseCost;
-            set
-            {
-                if (isPlayerInside)
-                {
-                    PlayerMovementScript.Instance.CanGrapple = !CanInteract;
-                }
-            }
+            set => UpdatePlayerGrapple();
         }
 
         private void Awake()

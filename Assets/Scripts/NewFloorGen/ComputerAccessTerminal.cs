@@ -48,7 +48,11 @@ namespace NewFloorGen
         protected override bool CanInteract
         {
             get => CurrentState == State.Locked;
-            set => CurrentState = value ? stateOnAwake : State.Disabled;
+            set
+            {
+                CurrentState = value ? stateOnAwake : State.Disabled;
+                UpdatePlayerGrapple();
+            }
         }
 
         private void Awake()

@@ -34,8 +34,13 @@ namespace Util
             set
             {
                 _canInteract = value;
-                if (isPlayerInside) PlayerMovementScript.Instance.CanGrapple = !value;
+                UpdatePlayerGrapple();
             }
+        }
+
+        protected void UpdatePlayerGrapple()
+        {
+            if (isPlayerInside) PlayerMovementScript.Instance.CanGrapple = !CanInteract;
         }
 
         /// <summary>
