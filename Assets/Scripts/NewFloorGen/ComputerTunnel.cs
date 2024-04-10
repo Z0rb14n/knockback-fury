@@ -13,6 +13,12 @@ namespace NewFloorGen
         public Sprite enabledSprite;
         public Sprite disabledSprite;
 
+        protected override bool CanInteract
+        {
+            get => enabled;
+            set => enabled = value;
+        }
+
         private void Awake()
         {
             if (!tunnelUI) tunnelUI = FindObjectOfType<ComputerTunnelUI>(true);
