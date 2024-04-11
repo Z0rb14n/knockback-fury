@@ -6,7 +6,8 @@ namespace NewFloorGen
     public class BreakableFile : EntityHealth
     {
         public BreakableFileData fileData;
-
+        public bool randomize = true;
+        
         [SerializeField] private GameObject fileDebris;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private TextMeshPro text;

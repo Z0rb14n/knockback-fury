@@ -44,6 +44,7 @@ namespace NewFloorGen
         
         private void TryMoveAngle(float targetAngle)
         {
+            if (uiNeighbors.Length == 0) return;
             if (_selectedIndex == -1)
             {
                 int index = uiNeighbors.Select((comp, index) =>

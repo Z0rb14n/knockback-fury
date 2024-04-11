@@ -14,7 +14,10 @@ namespace NewFloorGen
         private void Awake()
         {
             BreakableFile[] files = GetComponentsInChildren<BreakableFile>();
-            foreach (BreakableFile file in files) file.SetData(fileDatas.GetRandom());
+            foreach (BreakableFile file in files)
+            {
+                if (file.randomize) file.SetData(fileDatas.GetRandom());
+            }
         }
 
 
