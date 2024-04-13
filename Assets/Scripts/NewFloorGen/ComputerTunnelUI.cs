@@ -68,6 +68,7 @@ namespace NewFloorGen
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (_selectedIndex != -1) Teleport();
+                else Close();
             }
 
             if (Input.GetKeyDown(KeyCode.A)) TryMoveAngle(180);
