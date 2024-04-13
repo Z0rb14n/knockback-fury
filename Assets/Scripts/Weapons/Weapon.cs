@@ -174,6 +174,7 @@ namespace Weapons
             float range = isMelee ? WeaponData.meleeInfo.meleeRange : WeaponData.actualRange;
             // literally hitscan
             int count = isMelee ? 1 : WeaponData.numProjectiles;
+            bool prevQueriesHit = Physics2D.queriesHitTriggers;
             Physics2D.queriesHitTriggers = false;
             for (int i = 0; i < count; i++)
             {
@@ -218,7 +219,7 @@ namespace Weapons
                 }
             }
             
-            Physics2D.queriesHitTriggers = true;
+            Physics2D.queriesHitTriggers = prevQueriesHit;
 
         }
 

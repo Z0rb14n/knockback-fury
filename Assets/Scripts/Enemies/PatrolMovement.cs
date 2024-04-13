@@ -138,7 +138,10 @@ namespace Enemies
 
             Debug.DrawRay(frontFootPos, rayDirection, Color.blue);
 
+            bool prev = Physics2D.queriesHitTriggers;
+            Physics2D.queriesHitTriggers = false;
             RaycastHit2D hit = Physics2D.Raycast(frontFootPos, rayDirection, 0.1f, obstacleLayerMask);
+            Physics2D.queriesHitTriggers = prev;
             if (hit.collider != null)
             {
                 // Debug.Log("Collided with: " + hit.collider.name);
@@ -156,6 +159,7 @@ namespace Enemies
         /// <returns> height of obstacle that can be moved up, -1 if no space </returns>
         private float HasSpaceToMoveUp()
         {
+            bool prevQueriesHitTriggers = Physics2D.queriesHitTriggers;
             float checkAheadDist = 0.1f;
             Vector2 rayDirection;
             Vector2 frontTopCornerPos;
@@ -176,7 +180,12 @@ namespace Enemies
 
             // initial horizontal ray; tests if there are obstacles at head (top corner) level ahead
             Debug.DrawRay(frontTopCornerPos, rayDirection, Color.cyan);
-            if (Physics2D.Raycast(frontTopCornerPos, rayDirection, checkAheadDist, obstacleLayerMask)) return -1.0f;
+            Physics2D.queriesHitTriggers = false;
+            if (Physics2D.Raycast(frontTopCornerPos, rayDirection, checkAheadDist, obstacleLayerMask))
+            {
+                Physics2D.queriesHitTriggers = prevQueriesHitTriggers;
+                return -1.0f;
+            }
 
             // vertical rays up and down from a little bit ahead of head level
             RaycastHit2D hitDown =
@@ -189,14 +198,18 @@ namespace Enemies
             // Debug.Log("maxFallHeight: " + maxFallHeight.ToString());
             // Debug.Log("colliderHeight: " + colliderHeight.ToString());
             // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
-            if (obstacleHeight >= maxFallHeight) return -1.0f;
+            if (obstacleHeight >= maxFallHeight)
+            {
+                Physics2D.queriesHitTriggers = prevQueriesHitTriggers;
+                return -1.0f;
+            }
 
             float rayUpDistance = colliderHeight - distanceToObstacle + 0.2f;
             RaycastHit2D hitUp = Physics2D.Raycast(verticalCheckOrigin, Vector2.up, rayUpDistance, obstacleLayerMask);
             Debug.DrawRay(verticalCheckOrigin, Vector2.up, Color.cyan);
 
-            if (hitUp) return -1.0f;
-            else return obstacleHeight;
+            Physics2D.queriesHitTriggers = prevQueriesHitTriggers;
+            return hitUp ? -1.0f : obstacleHeight;
         }
 
         // checks if sprite needs flipping; if intended movement direction and sprite direction don't match,
