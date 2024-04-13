@@ -41,6 +41,7 @@ namespace NewFloorGen
         {
             _isEmpty = true;
             spriteRenderer.sprite = emptySprite;
+            notification.text = "";
         }
     }
 }
