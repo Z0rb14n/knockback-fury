@@ -1776,6 +1776,7 @@ GameObject:
   - component: {fileID: 552778188}
   - component: {fileID: 552778189}
   - component: {fileID: 552778190}
+  - component: {fileID: 552778191}
   m_Layer: 0
   m_Name: McCoffee
   m_TagString: Untagged
@@ -1922,6 +1923,21 @@ MonoBehaviour:
   canDropCheese: 0
   grappleHookTarget: 0
   cheeseItemPickup: {fileID: 0}
+--- !u!114 &552778191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552778185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 036dc8d9ef2d04d40a83d678a26b6dcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  knockbackForce: 10
+  damageOnTrigger: 0
 --- !u!1 &557703990
 GameObject:
   m_ObjectHideFlags: 0
