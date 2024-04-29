@@ -7,8 +7,7 @@ namespace Enemies
     [RequireComponent(typeof(Collider2D))]
     public class BossTrigger : MonoBehaviour
     {
-        [SerializeField] private BossEnemy boss;
-        [SerializeField] private GameObject wallBehindPlayer;
+        [SerializeField] private AbstractBossEnemy boss;
         [SerializeField] private BossHealthBar healthBar;
         [SerializeField] private UnityEvent eventOnTrigger;
 
@@ -26,7 +25,6 @@ namespace Enemies
             Destroy(gameObject);
             
             if (boss) boss.StartBoss();
-            wallBehindPlayer.SetActive(true);
             healthBar.gameObject.SetActive(true);
             eventOnTrigger?.Invoke();
         }

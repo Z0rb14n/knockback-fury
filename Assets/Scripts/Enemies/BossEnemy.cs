@@ -7,7 +7,7 @@ using Util;
 
 namespace Enemies
 {
-    public class BossEnemy : MonoBehaviour
+    public class BossEnemy : AbstractBossEnemy
     {
 
         [SerializeField, Min(0)] private float speed;
@@ -51,7 +51,7 @@ namespace Enemies
                     speed * Time.fixedDeltaTime);
         }
 
-        public void StartBoss()
+        public override void StartBoss()
         {
             _active = true;
             _zonesCoroutine = ZonesCoroutine();

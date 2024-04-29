@@ -23,7 +23,7 @@ namespace Enemies
             _healthBarRect = healthBar.GetComponent<RectTransform>();
             if (!health)
             {
-                BossEnemy boss = FindObjectOfType<BossEnemy>(true);
+                AbstractBossEnemy boss = FindObjectOfType<AbstractBossEnemy>(true);
                 Debug.Assert(boss);
                 health = boss.GetComponent<EntityHealth>();
                 Debug.Assert(health);

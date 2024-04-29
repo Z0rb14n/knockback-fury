@@ -2901,6 +2901,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8687625388508139843, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
 --- !u!4 &1750932013 stripped
@@ -3295,6 +3299,10 @@ PrefabInstance:
     - target: {fileID: 5430195239519296469, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8687625388508139843, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
@@ -4049,7 +4057,19 @@ MonoBehaviour:
   healthBar: {fileID: 8682651374144178873}
   eventOnTrigger:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1014286423}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!61 &2143874713
 BoxCollider2D:
   m_ObjectHideFlags: 0
