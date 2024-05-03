@@ -15,9 +15,10 @@ namespace Weapons
         public float explosionRange;
         [Tooltip("(For Grenades) Detonates on destruction")]
         public bool detonateOnDestroy;
-        [Tooltip("Detonation VFX Prefab")]
-
+        [Tooltip("Whether we hit the player as well")]
+        public bool hitPlayer;
         [SerializeField] private AudioClip explosionSFX;
+        [Tooltip("Detonation VFX Prefab")]
         public GameObject detonationVFX;
         private float _remainingDistance;
         private int _damage;
@@ -43,8 +44,7 @@ namespace Weapons
         /// </summary>
         /// <param name="data">Weapon that fired this</param>
         /// <param name="direction">Normalized Direction</param>
-        /// <param name="hitPlayer">Whether to hit the player or not</param>
-        public void Initialize(WeaponData data, Vector2 direction, bool hitPlayer = false)
+        public void Initialize(WeaponData data, Vector2 direction)
         {
             _weaponData = data;
             _damage = data.actualDamage;

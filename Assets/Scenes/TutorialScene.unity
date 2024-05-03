@@ -1314,13 +1314,13 @@ GameObject:
   m_Component:
   - component: {fileID: 407225402}
   - component: {fileID: 407225404}
-  m_Layer: 0
-  m_Name: GameObject
+  m_Layer: 7
+  m_Name: McCoffeeCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &407225402
 Transform:
   m_ObjectHideFlags: 0
@@ -1922,7 +1922,7 @@ GameObject:
   - component: {fileID: 552778189}
   - component: {fileID: 552778190}
   - component: {fileID: 552778191}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: McCoffee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1989,7 +1989,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552778185}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2035,6 +2035,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f915c14c8434523a6ff563acf60c88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageCone: {fileID: 407225402}
+  projectile: {fileID: 2759814892890123306, guid: 76d7b34bfaddb584e8f84383db62bae3, type: 3}
+  numProjectiles: 7
+  speed: 5
+  spread: 45
   eventOnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -3750,7 +3755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb813c79cd14a7cb81b1ab7ff604801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 0}
+  boss: {fileID: 552778189}
   healthBar: {fileID: 0}
   eventOnTrigger:
     m_PersistentCalls:
@@ -9318,7 +9323,7 @@ GameObject:
   - component: {fileID: 2136300474}
   - component: {fileID: 2136300473}
   m_Layer: 0
-  m_Name: ComputerRoomPrefab (3)
+  m_Name: BossRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

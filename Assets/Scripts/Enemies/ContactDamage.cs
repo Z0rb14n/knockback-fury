@@ -12,7 +12,7 @@ namespace Enemies
         private LayerMask _playerLayer;
 
 
-        public void Awake()
+        public virtual void Awake()
         {
             _playerLayer = LayerMask.NameToLayer("Player");
         }
@@ -20,7 +20,7 @@ namespace Enemies
         /// <summary>
         /// Hits player: requests knockback, deals damage
         /// </summary>
-        private void OnCollisionStay2D(Collision2D collision)
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.gameObject.layer != _playerLayer) return;
             PlayerHealth.Instance.TakeDamage(damage);
@@ -28,7 +28,7 @@ namespace Enemies
             PlayerMovementScript.Instance.RequestKnockback(knockbackDirection, knockbackForce);
         }
 
-        private void OnTriggerStay2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (!damageOnTrigger) return;
             if (other.gameObject.layer != _playerLayer) return;
