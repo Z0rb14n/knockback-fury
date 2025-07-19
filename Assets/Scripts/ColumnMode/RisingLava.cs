@@ -18,7 +18,7 @@ namespace ColumnMode
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _rigidbody.velocity = new Vector2(0, speed);
+            _rigidbody.linearVelocity = new Vector2(0, speed);
             _player = PlayerMovementScript.Instance;
         }
 
