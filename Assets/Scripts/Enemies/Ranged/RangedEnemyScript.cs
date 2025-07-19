@@ -86,7 +86,7 @@ namespace Enemies.Ranged
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!useProximityCheck) return;
+            if (useProximityCheck) return;
             if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = true;
@@ -96,7 +96,7 @@ namespace Enemies.Ranged
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (!useProximityCheck) return;
+            if (useProximityCheck) return;
             if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = false;
