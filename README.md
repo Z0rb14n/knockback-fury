@@ -4,7 +4,7 @@ Game by a Summer 2023 UBC Game Dev team.
 
 ## Getting Started
 
-This game uses the Unity Editor version 2021.3.26f1 - install it from Unity Hub.
+This game uses the Unity Editor version 6000.1.12f1 (previously 2021.3.26f1) - install it from Unity Hub.
 Clone the repository, then in Unity Hub: Open > Add project from disk to add the cloned repository to the list of projects and open the project.
 
 ## General Stylistic Things
