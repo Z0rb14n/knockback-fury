@@ -13,7 +13,7 @@ using Weapons;
 namespace Player
 {
     [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),
-         typeof(MeshTrail),
+         typeof(AbstractDashTrail),
          typeof(PlayerUpgradeManager))]
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerMovementScript : MonoBehaviour
@@ -103,7 +103,7 @@ namespace Player
         private PlayerUpgradeManager _upgradeManager;
         private Weapon _weapon;
         private int _dashesRemaining = 1;
-        private MeshTrail _meshTrail;
+        private AbstractDashTrail _dashVfx;
         private ContactFilter2D _groundFilter;
         private ContactFilter2D _leftWallFilter;
         private ContactFilter2D _rightWallFilter;
@@ -138,7 +138,7 @@ namespace Player
         {
             instance = this;
             _body = GetComponent<Rigidbody2D>();
-            _meshTrail = GetComponent<MeshTrail>();
+            _dashVfx = GetComponent<AbstractDashTrail>();
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
             _sprite = GetComponent<SpriteRenderer>();
@@ -377,7 +377,7 @@ namespace Player
             bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
             if (!Grounded && _body.linearVelocity.y < 0 && !holdingDown)
             {
-                if (IsOnLeftWall || IsOnRightWall)
+                if ((IsOnLeftWall || IsOnRightWall) && Input.GetAxis("Horizontal") != 0)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();
@@ -479,7 +479,7 @@ namespace Player
             // ReSharper disable once Unity.InefficientPropertyAccess
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-            _meshTrail.StartDash(_sprite.flipX);
+            _dashVfx.StartDash(_sprite.flipX);
 
             if (_upgradeManager[UpgradeType.SleightOfPaws] > 0) _weapon.ImmediateReload();
 
@@ -490,7 +490,7 @@ namespace Player
             _body.gravityScale = gravity;
 
             _dashing = false;
-            _meshTrail.StopDash();
+            _dashVfx.StopDash();
         }
 
         public void AddPlatformOn(PlatformTileScript platform)

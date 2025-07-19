@@ -104,7 +104,7 @@ namespace Player
             
             if (Input.GetKeyDown(KeyCode.R)) _weapon.Reload();
 
-            if (Input.GetKeyDown(KeyCode.LeftControl)) _weapon.SwitchWeapon(true);
+            if (Input.GetKeyDown(KeyCode.Tab)) _weapon.SwitchWeapon(true);
             
             if (Input.mouseScrollDelta.y != 0) _weapon.SwitchWeapon(Input.mouseScrollDelta.y > 0);
 

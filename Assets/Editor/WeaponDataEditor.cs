@@ -45,8 +45,7 @@ namespace Editor
                 return null;
 
             Texture2D tex = new(width, height);
-            
-            EditorUtility.CopySerialized (data.sprite.texture, tex);
+            EditorUtility.CopySerialized(data.sprite.texture, tex);
             return tex;
         }
     }

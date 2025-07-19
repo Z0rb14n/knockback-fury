@@ -9,25 +9,34 @@ namespace Enemies.Ranged
     [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
     public class RangedEnemyScript : EnemyBehaviour
     {
-        [Tooltip("Prefab of bullet object")]
-        public GameObject bulletPrefab;
+        [Tooltip("Prefab of bullet object")] public GameObject bulletPrefab;
+
         [Tooltip("Transform to create bullet position at")]
         public Transform bulletPos;
+
         [Min(0), Tooltip("Time (seconds) between firing")]
         public float fireDelay = 2;
+
         [Tooltip("Whether we check distance to player")]
         public bool useProximityCheck = true;
-        [HideInInspector]
-        public float damageMultiplier = 1;
+
+        [Tooltip("True if triggers are used")]
+        public bool useTriggerCheck = true;
+        [Tooltip("If trigger check is false, hard-coded distance")]
+        public float proximityDistance = 10;
+        [HideInInspector] public float damageMultiplier = 1;
 
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
-        [FormerlySerializedAs("_source")] [SerializeField] private EventReference source;
+
+        [FormerlySerializedAs("_source")] [SerializeField]
+        private EventReference source;
+
         private PlayerMovementScript _playerMovement;
         private SpriteRenderer _sprite;
         private Animator _animator;
         private static readonly int AnimatorThrowHash = Animator.StringToHash("Throw");
-        
+
         private void Awake()
         {
             _sprite = GetComponent<SpriteRenderer>();
@@ -42,7 +51,23 @@ namespace Enemies.Ranged
 
         private void FixedUpdate()
         {
-            _sprite.flipX = _playerMovement.transform.position.x >= transform.position.x;
+            Vector2 pos = transform.position;
+            _sprite.flipX = _playerMovement.Pos.x >= pos.x;
+            if (useProximityCheck && !useTriggerCheck)
+            {
+                if (_isPlayerInside && Vector2.Distance(_playerMovement.Pos, pos) > proximityDistance)
+                {
+                    _isPlayerInside = false;
+                    StopCoroutine(_shootCoroutine);
+                    _shootCoroutine = null;
+                }
+                else if (!_isPlayerInside && Vector2.Distance(_playerMovement.Pos, pos) <= proximityDistance)
+                {
+                    _isPlayerInside = true;
+                    _shootCoroutine = ShootCoroutine();
+                    StartCoroutine(_shootCoroutine);
+                }
+            }
         }
 
         private IEnumerator ShootCoroutine()
@@ -62,15 +87,17 @@ namespace Enemies.Ranged
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!useProximityCheck) return;
+            if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = true;
             _shootCoroutine = ShootCoroutine();
             StartCoroutine(_shootCoroutine);
         }
-        
+
         private void OnTriggerExit2D(Collider2D other)
         {
             if (!useProximityCheck) return;
+            if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = false;
             StopCoroutine(_shootCoroutine);
@@ -84,7 +111,7 @@ namespace Enemies.Ranged
         {
             GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
             go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
-            if (!source.Guid.IsNull) RuntimeManager.PlayOneShot(source,transform.position);
+            if (!source.Guid.IsNull) RuntimeManager.PlayOneShot(source, transform.position);
         }
     }
 }

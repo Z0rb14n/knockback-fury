@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: SemiAutoShotgun 1
+  m_Name: GLStableData
   m_EditorClassIdentifier: 
-  weaponName: Semi-Auto Shotgun (Slug)
+  weaponName: Grenade Launcher (Stable)
   numProjectiles: 1
-  range: 8
-  projectileSpeed: 15
-  projectileDamage: 40
+  range: 20
+  projectileSpeed: 35
+  projectileDamage: 35
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 2.7
-  clipSize: 14
+  roundsPerSecond: 1.9
+  clipSize: 6
   reloadTime: 1.4
-  spread: 35
+  spread: 5
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 14
+  knockbackStrength: 17
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -36,18 +36,18 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
-  customProjectile: {fileID: 0}
+  sprite: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
+  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}
   fireEffect:
     Guid:
-      Data1: 353360515
-      Data2: 1136995414
-      Data3: -1022891902
-      Data4: 2012654420
-    Path: event:/SFX/Weapons/Weap_ShotgunAlt
-  pierceMode: 2
+      Data1: 1318238220
+      Data2: 1301262900
+      Data3: -648970852
+      Data4: 1357936274
+    Path: event:/SFX/Weapons/GL/GL_Fire
+  pierceMode: 0
   pierceInfo:
-    maxPierces: 5
-    invulnTimer: 19
+    maxPierces: 0
+    invulnTimer: 0
     isInfinitePierce: 0
   unlockedByDefault: 1

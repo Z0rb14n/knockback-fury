@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Enemies.Cat
 {
@@ -8,6 +7,7 @@ namespace Enemies.Cat
     {
         [SerializeField] private GameObject objectToUnhide;
         [SerializeField, Min(0)] private float speed;
+        [SerializeField] private bool isVertical;
 
         private Rigidbody2D _rigidbody;
 
@@ -18,9 +18,9 @@ namespace Enemies.Cat
 
         public void OnEnable()
         {
-            objectToUnhide.SetActive(true);
+            if (objectToUnhide) objectToUnhide.SetActive(true);
             if (!_rigidbody) Awake();
-            _rigidbody.linearVelocity = new Vector2(speed, 0);
+            _rigidbody.linearVelocity = isVertical ? new Vector2(0, speed) : new Vector2(speed, 0);
         }
     }
 }
