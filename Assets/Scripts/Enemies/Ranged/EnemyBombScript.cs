@@ -32,12 +32,12 @@ namespace Enemies.Ranged
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             if (playerVelocityPrediction)
             {
-                rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
+                rigidbody2D.linearVelocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
                     playerMovementScript.Velocity, projectileSpeed, delayBeforeDestruction);
             }
             else
             {
-                rigidbody2D.velocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
+                rigidbody2D.linearVelocity = CalculateVelocity(transform.position, playerMovementScript.transform.position,
                     projectileSpeed, delayBeforeDestruction);
             }
 
@@ -103,7 +103,7 @@ namespace Enemies.Ranged
 
         private void FixedUpdate()
         {
-            Vector2 vel = rigidbody2D.velocity;
+            Vector2 vel = rigidbody2D.linearVelocity;
             if (vel.magnitude >= 0.001f)
                 transform.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg);
         }
@@ -112,7 +112,7 @@ namespace Enemies.Ranged
         {
             if (!_hitByPlayer && PlayerUpgradeManager.Instance[UpgradeType.TossBack] > 0)
             {
-                rigidbody2D.velocity *= -1;
+                rigidbody2D.linearVelocity *= -1;
                 gameObject.layer = _projectileLayer;
                 StopCoroutine(_detonationCoroutine);
                 _detonationCoroutine = DelayedExplosion();

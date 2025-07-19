@@ -17,7 +17,7 @@ namespace Enemies.Cat
             Destroy(gameObject, timeBeforeDestruction);
             Vector2 dir = Random.insideUnitCircle;
             if (dir.y < 0) dir.y *= -1;
-            _body.velocity = dir * initialVelocity;
+            _body.linearVelocity = dir * initialVelocity;
             _body.angularVelocity = 360 * spinSpeed;
         }
     }

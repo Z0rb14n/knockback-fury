@@ -81,7 +81,7 @@ namespace Player
         {
             get
             {
-                if (instance == null) instance = FindObjectOfType<PlayerMovementScript>(true);
+                if (instance == null) instance = FindAnyObjectByType<PlayerMovementScript>(FindObjectsInactive.Include);
                 return instance;
             }
         }
@@ -92,7 +92,7 @@ namespace Player
 
         public bool CanGrapple { get; set; } = true;
 
-        public Vector2 Velocity => _body.velocity;
+        public Vector2 Velocity => _body.linearVelocity;
 
         public Vector2 Pos
         {
@@ -182,7 +182,7 @@ namespace Player
                 _sprite.flipX = xInput < 0;
             }
 
-            float originalX = _body.velocity.x;
+            float originalX = _body.linearVelocity.x;
             float newX = originalX;
 
             if (xInput != 0)
@@ -209,7 +209,7 @@ namespace Player
                 newX -= Mathf.Sign(originalX) * Mathf.Min(normalDecel, diff);
             }
 
-            _body.velocity = new Vector2(newX, _body.velocity.y);
+            _body.linearVelocity = new Vector2(newX, _body.linearVelocity.y);
         }
 
         private void JumpLogic()
@@ -220,7 +220,7 @@ namespace Player
                 if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)
                     || Input.GetKeyDown(KeyCode.Space) || _earlyJumpTime > 0))
                 {
-                    _body.velocity = new Vector2(_body.velocity.x, jumpForce * shortJumpPercentage);
+                    _body.linearVelocity = new Vector2(_body.linearVelocity.x, jumpForce * shortJumpPercentage);
                     _isHoldingJump = (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)
                         || Input.GetKey(KeyCode.Space));
                     _earlyJumpTime = 0;
@@ -260,7 +260,7 @@ namespace Player
             //small or big jump
             if (_isHoldingJump && _jumpTime > highJumpTime)
             {
-                _body.velocity = new Vector2(_body.velocity.x, jumpForce * 0.9f);
+                _body.linearVelocity = new Vector2(_body.linearVelocity.x, jumpForce * 0.9f);
                 _isHoldingJump = false;
             }
         }
@@ -274,9 +274,9 @@ namespace Player
                 _timeOfGrapple = Time.time;
                 GameObject go = Instantiate(grapplePrefab, _body.position, Quaternion.identity);
                 Vector2 worldMousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                go.GetComponent<Rigidbody2D>().velocity =
+                go.GetComponent<Rigidbody2D>().linearVelocity =
                     ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized * grappleVelocity +
-                    _body.velocity;
+                    _body.linearVelocity;
                 _activeGrappleHook = go.GetComponent<GrappleHook>();
             }
         }
@@ -375,7 +375,7 @@ namespace Player
             bool isSlidingThisFrame = false;
 
             bool holdingDown = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-            if (!Grounded && _body.velocity.y < 0 && !holdingDown)
+            if (!Grounded && _body.linearVelocity.y < 0 && !holdingDown)
             {
                 if (IsOnLeftWall || IsOnRightWall)
                 {
@@ -436,7 +436,7 @@ namespace Player
         {
             //bool shouldStayStill = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S);
             //float yVel = shouldStayStill ? 0 : -slideSpeed;
-            _body.velocity = new Vector2(_body.velocity.x, -slideSpeed);
+            _body.linearVelocity = new Vector2(_body.linearVelocity.x, -slideSpeed);
             //_body.gravityScale = shouldStayStill ? 0 : 1;
             if (!IsWallSliding)
             {
@@ -485,7 +485,7 @@ namespace Player
 
             float gravity = _body.gravityScale;
             _body.gravityScale = 0;
-            _body.velocity = _dashDirection * dashSpeed;
+            _body.linearVelocity = _dashDirection * dashSpeed;
             yield return new WaitForSeconds(ActualDashTime);
             _body.gravityScale = gravity;
 
@@ -510,7 +510,7 @@ namespace Player
 
         private void OnCollisionExit2D(Collision2D collision)
         {
-            if (_body.velocity.y < 0)
+            if (_body.linearVelocity.y < 0)
             {
                 _lateJumpTime = lateJumpLeeway;
             }

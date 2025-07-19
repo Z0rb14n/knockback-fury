@@ -117,9 +117,9 @@ namespace Enemies.Cat
 
         private IEnumerator DeathCoroutine()
         {
-            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.linearVelocity = Vector2.zero;
             _collider.enabled = false;
-            _rigidbody.isKinematic = true;
+            _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             _spriteRenderer.sprite = normalSprite;
             yield return new WaitForSeconds(delayBeforeJumpBreak);
             Vector2 prevPos = _rigidbody.position;

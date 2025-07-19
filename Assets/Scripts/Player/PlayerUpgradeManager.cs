@@ -14,7 +14,7 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerUpgradeManager>();
+                if (_instance == null) _instance = FindAnyObjectByType<PlayerUpgradeManager>();
                 Debug.Assert(_instance != null);
                 return _instance;
             }

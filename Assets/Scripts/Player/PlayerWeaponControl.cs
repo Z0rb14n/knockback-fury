@@ -16,7 +16,7 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerWeaponControl>(true);
+                if (_instance == null) _instance = FindAnyObjectByType<PlayerWeaponControl>(FindObjectsInactive.Include);
                 if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }
@@ -120,7 +120,7 @@ namespace Player
                 }
             }
 
-            if (Input.GetMouseButtonDown(1)) _weapon.UseRightClick(_body.velocity);
+            if (Input.GetMouseButtonDown(1)) _weapon.UseRightClick(_body.linearVelocity);
         }
         
         public void SetNewInventorySize(int size)

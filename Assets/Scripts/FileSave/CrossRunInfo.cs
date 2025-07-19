@@ -21,7 +21,7 @@ namespace FileSave
             // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<CrossRunInfo>();
+                if (_instance == null) _instance = FindAnyObjectByType<CrossRunInfo>();
                 return _instance;
             }
         }

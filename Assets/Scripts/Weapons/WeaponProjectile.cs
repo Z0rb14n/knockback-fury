@@ -3,7 +3,6 @@ using Player;
 using UnityEngine;
 using Upgrades;
 using FMODUnity;
-using FMOD.Studio;
 using Random = UnityEngine.Random;
 
 namespace Weapons
@@ -29,7 +28,6 @@ namespace Weapons
         private Collider2D _collider;
         private bool _hitPlayer;
         private WeaponData _weaponData;
-        private readonly Collider2D[] _colliderTest = new Collider2D[20];
         private readonly Queue<(EntityHealth, Collider2D, float)> _invulnContacts = new();
         private readonly HashSet<EntityHealth> _entityInvulns = new();
         
@@ -52,7 +50,7 @@ namespace Weapons
             _damage = data.actualDamage;
             _remainingDistance = data.actualRange;
 
-            _body.velocity = direction * data.projectileSpeed;
+            _body.linearVelocity = direction * data.projectileSpeed;
             _hitPlayer = hitPlayer;
             _remainingPierces = data.pierceInfo.maxPierces;
         }
@@ -67,7 +65,7 @@ namespace Weapons
             Vector3 currPos = transform.position;
             _remainingDistance -= (currPos - _prevPosition).magnitude;
             _prevPosition = currPos;
-            Vector2 vel = _body.velocity;
+            Vector2 vel = _body.linearVelocity;
 
             if (rotating)
             {
@@ -160,11 +158,10 @@ namespace Weapons
         private void Detonation()
         {
             if (!detonateOnDestroy) return;
-            int size = Physics2D.OverlapCircleNonAlloc(_body.position, explosionRange, _colliderTest);
-            for (int i = 0; i < size; i++)
-            {
-                Weapon.HitEntity(_colliderTest[i], _damage, _weaponData.selfDamage);
-            }
+            // ReSharper disable once Unity.PreferNonAllocApi
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(_body.position, explosionRange);
+            foreach (Collider2D col in colliders)
+                Weapon.HitEntity(col, _damage, _weaponData.selfDamage);
 
             GameObject go = Instantiate(detonationVFX, transform.parent);
             RuntimeManager.PlayOneShot(_explosionSFX,transform.position);

@@ -28,7 +28,7 @@ namespace Enemies.Cat
         private void Awake()
         {
             catBossP1.CatManager = this;
-            _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
+            _bossHealthBar = FindAnyObjectByType<BossHealthBar>(FindObjectsInactive.Include);
             _triggersRemaining = secretTriggers.Length;
             _originalBossCollider = originalBossEnemy.GetComponent<Collider2D>();
             _catHealth = catBossP1.GetComponent<EntityHealth>();

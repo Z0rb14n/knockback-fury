@@ -13,7 +13,7 @@ namespace Enemies
         private void Awake()
         {
             if (healthBar) return;
-            healthBar = FindObjectOfType<BossHealthBar>(true);
+            healthBar = FindAnyObjectByType<BossHealthBar>(FindObjectsInactive.Include);
             Debug.Assert(healthBar, "Boss Trigger needs boss health bar.");
         }
 

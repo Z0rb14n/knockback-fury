@@ -31,7 +31,7 @@ namespace Enemies.Ranged
         {
             damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
-            rigidbody2D.velocity = direction.normalized * projectileSpeed;
+            rigidbody2D.linearVelocity = direction.normalized * projectileSpeed;
             float rot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.localEulerAngles = new Vector3(0, 0, rot);
             Destroy(gameObject, delayBeforeDestruction);

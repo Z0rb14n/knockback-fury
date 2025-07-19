@@ -11,7 +11,7 @@
         {
             base.Awake();
             _triggerVal = 0;
-            _bossManager = FindObjectOfType<CatBossManager>();
+            _bossManager = FindAnyObjectByType<CatBossManager>();
         }
 
         public override void TakeDamage(int dmg)

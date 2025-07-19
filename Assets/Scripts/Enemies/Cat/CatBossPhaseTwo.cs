@@ -31,7 +31,7 @@ namespace Enemies.Cat
 
         [SerializeField] private float batStartRotation = -5;
         [SerializeField] private float batEndRotation = -30;
-        [SerializeField] private int batAttackDamage = 0;
+        [SerializeField] private int batAttackDamage;
         [SerializeField] private float batKnockback = 50;
         [SerializeField] private Vector2 batJumpVector = new(10, 10);
         [SerializeField, Min(0)] private float batDownLength = 1;
@@ -68,7 +68,7 @@ namespace Enemies.Cat
             _rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _dashTrail = GetComponent<AbstractDashTrail>();
-            _bossHealthBar = FindObjectOfType<BossHealthBar>(true);
+            _bossHealthBar = FindAnyObjectByType<BossHealthBar>(FindObjectsInactive.Include);
             _catEntityHealth = GetComponent<CatEntityHealth>();
             _groundLayer = LayerMask.GetMask("Default", "IgnorePlayer");
         }
@@ -84,7 +84,7 @@ namespace Enemies.Cat
                 transform.localScale = new Vector3(isLeft ? -CurrSetting.size : CurrSetting.size, CurrSetting.size, 1);
                 if (Grounded && !isIn)
                 {
-                    _rigidbody.velocity = batJumpVector * new Vector2(isLeft ? -1 : 1, 1);
+                    _rigidbody.linearVelocity = batJumpVector * new Vector2(isLeft ? -1 : 1, 1);
                 }
 
                 _spriteRenderer.sprite = rightSprite;
@@ -108,7 +108,7 @@ namespace Enemies.Cat
                 {
                     _spriteRenderer.sprite = normalSprite;
                     Vector2 pos = _rigidbody.position;
-                    _rigidbody.velocity = EnemyBombScript.CalculateVelocity(pos, new Vector2(pos.x, _player.Pos.y),
+                    _rigidbody.linearVelocity = EnemyBombScript.CalculateVelocity(pos, new Vector2(pos.x, _player.Pos.y),
                         new Vector2(0, _player.Velocity.y), CurrSetting.maxVel, CurrSetting.timeBeforeDash);
                     yield return new WaitForSeconds(CurrSetting.timeBeforeDash);
                     _rigidbody.gravityScale = 0;
@@ -116,7 +116,7 @@ namespace Enemies.Cat
                     // ReSharper disable once Unity.InefficientPropertyAccess
                     Vector2 playerPos = _player.Pos;
                     pos = _rigidbody.position;
-                    _rigidbody.velocity = (playerPos - pos).normalized * CurrSetting.dashVel;
+                    _rigidbody.linearVelocity = (playerPos - pos).normalized * CurrSetting.dashVel;
                     LookAtPlayer();
                     _dashTrail.StartDash(false);
                     yield return new WaitForSeconds(0.5f);
@@ -137,7 +137,7 @@ namespace Enemies.Cat
                         force = EnemyBombScript.CalculateVelocity(pos, playerPos, CurrSetting.maxVel, CurrSetting.maxTime);
                     }
                     
-                    if (!float.IsNaN(force.x)) _rigidbody.velocity = force;
+                    if (!float.IsNaN(force.x)) _rigidbody.linearVelocity = force;
                 }
             }
             _dashTrail.StopDash();

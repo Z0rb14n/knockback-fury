@@ -16,7 +16,7 @@ namespace Upgrades
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<UpgradeManager>();
+                if (_instance == null) _instance = FindAnyObjectByType<UpgradeManager>();
                 if (!_instance._initialized) _instance.Initialize();
                 return _instance;
             }

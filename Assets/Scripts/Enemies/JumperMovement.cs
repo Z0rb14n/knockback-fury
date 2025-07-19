@@ -121,7 +121,7 @@ namespace Enemies
             // safeguard against accidental calls to reset velocity after jumping off walls
             if (_canResetVelocity)
             {
-                _body.velocity = new Vector2(0, 0);
+                _body.linearVelocity = new Vector2(0, 0);
                 _body.constraints = RigidbodyConstraints2D.FreezeAll;
             }
 

@@ -12,7 +12,7 @@ namespace Weapons
 
         private void Awake()
         {
-            if (!weaponUpgradeUI) weaponUpgradeUI = FindObjectOfType<WeaponUpgradeUI>();
+            if (!weaponUpgradeUI) weaponUpgradeUI = FindAnyObjectByType<WeaponUpgradeUI>();
         }
 
         protected override void OnPlayerInteraction()

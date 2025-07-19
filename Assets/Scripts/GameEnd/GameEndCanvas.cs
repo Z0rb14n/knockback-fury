@@ -17,7 +17,7 @@ namespace GameEnd
         {
             get
             {
-                if (!_instance) _instance = FindObjectOfType<GameEndCanvas>(true);
+                if (!_instance) _instance = FindAnyObjectByType<GameEndCanvas>(FindObjectsInactive.Include);
                 return _instance;
             }
         }

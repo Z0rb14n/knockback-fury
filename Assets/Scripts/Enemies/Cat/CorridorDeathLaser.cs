@@ -20,7 +20,7 @@ namespace Enemies.Cat
         {
             objectToUnhide.SetActive(true);
             if (!_rigidbody) Awake();
-            _rigidbody.velocity = new Vector2(speed, 0);
+            _rigidbody.linearVelocity = new Vector2(speed, 0);
         }
     }
 }

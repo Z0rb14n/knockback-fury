@@ -15,7 +15,7 @@ namespace Player
             get
             {
                 // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-                if (_instance == null) _instance = FindObjectOfType<PlayerHealth>();
+                if (_instance == null) _instance = FindAnyObjectByType<PlayerHealth>();
                 return _instance;
             }
         }

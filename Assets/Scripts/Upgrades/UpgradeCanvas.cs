@@ -20,7 +20,7 @@ namespace Upgrades
         {
             get
             {
-                if (_instance == null) _instance = FindObjectOfType<UpgradeCanvas>();
+                if (_instance == null) _instance = FindAnyObjectByType<UpgradeCanvas>();
                 return _instance;
             }
         }

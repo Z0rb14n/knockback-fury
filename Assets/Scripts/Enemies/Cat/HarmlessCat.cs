@@ -52,7 +52,7 @@ namespace Enemies.Cat
             bool isLeft = playerPos.x < pos.x;
             if (Grounded && _friendDead)
             {
-                _rigidbody.velocity = jumpVector* new Vector2(isLeft? 1 : -1, 1);
+                _rigidbody.linearVelocity = jumpVector* new Vector2(isLeft? 1 : -1, 1);
             }
         }
 

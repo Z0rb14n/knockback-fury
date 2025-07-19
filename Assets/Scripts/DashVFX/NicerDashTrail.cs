@@ -26,7 +26,7 @@ namespace DashVFX
             for (int i = 0; i < objects.Length; i++)
             {
                 objects[i].sprite = _spriteRenderer.sprite;
-                objects[i].transform.localPosition = -(i + 1) * velocityScale * _rigidbody.velocity;
+                objects[i].transform.localPosition = -(i + 1) * velocityScale * _rigidbody.linearVelocity;
             }
         }
 
