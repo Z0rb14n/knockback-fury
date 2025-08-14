@@ -1,12 +1,10 @@
 using System.Collections;
 using Player;
 using UnityEngine;
-using FMODUnity;
-using UnityEngine.Serialization;
 
 namespace Enemies.Ranged
 {
-    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Collider2D), typeof(SpriteRenderer), typeof(AudioSource))]
     public class RangedEnemyScript : EnemyBehaviour
     {
         [Tooltip("Prefab of bullet object")] public GameObject bulletPrefab;
@@ -29,18 +27,17 @@ namespace Enemies.Ranged
         private bool _isPlayerInside;
         private IEnumerator _shootCoroutine;
 
-        [FormerlySerializedAs("_source")] [SerializeField]
-        private EventReference source;
-
         private PlayerMovementScript _playerMovement;
         private SpriteRenderer _sprite;
         private Animator _animator;
+        private AudioSource _audioSource;
         private static readonly int AnimatorThrowHash = Animator.StringToHash("Throw");
 
         private void Awake()
         {
             _sprite = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
+            _audioSource = GetComponent<AudioSource>();
             _playerMovement = PlayerMovementScript.Instance;
             if (!useProximityCheck)
             {
@@ -111,7 +108,7 @@ namespace Enemies.Ranged
         {
             GameObject go = Instantiate(bulletPrefab, bulletPos.position, Quaternion.identity);
             go.GetComponent<EnemyBulletScript>().Initialize(damageMultiplier);
-            if (!source.Guid.IsNull) RuntimeManager.PlayOneShot(source, transform.position);
+            _audioSource.Play();
         }
     }
 }

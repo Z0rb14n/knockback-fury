@@ -2,7 +2,6 @@
 using Player;
 using UnityEngine;
 using Upgrades;
-using FMODUnity;
 using Random = UnityEngine.Random;
 
 namespace Weapons
@@ -18,7 +17,7 @@ namespace Weapons
         public bool detonateOnDestroy;
         [Tooltip("Detonation VFX Prefab")]
 
-        [SerializeField] private EventReference _explosionSFX;
+        [SerializeField] private AudioClip detonationSound;
         public GameObject detonationVFX;
         private float _remainingDistance;
         private int _damage;
@@ -164,7 +163,7 @@ namespace Weapons
                 Weapon.HitEntity(col, _damage, _weaponData.selfDamage);
 
             GameObject go = Instantiate(detonationVFX, transform.parent);
-            RuntimeManager.PlayOneShot(_explosionSFX,transform.position);
+            AudioSource.PlayClipAtPoint(detonationSound, transform.position);
             go.transform.position = transform.position;
             go.GetComponent<ExplosionVFX>().SetSize(explosionRange);
         }

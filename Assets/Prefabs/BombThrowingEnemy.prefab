@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: _source.Guid.Data4
       value: 1655027631
       objectReference: {fileID: 0}
+    - target: {fileID: 1669652327100865791, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: e221380b1481e0742b70d3dcd22bd465, type: 3}
     - target: {fileID: 3140844653701895980, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: health
       value: 60

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Enemies.Ranged;
-using FMODUnity;
 using Player;
 using UnityEngine;
 using Util;
@@ -8,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Enemies.Cat
 {
-    [RequireComponent(typeof(LineRenderer), typeof(SpriteRenderer))]
+    [RequireComponent(typeof(LineRenderer), typeof(SpriteRenderer), typeof(AudioSource))]
     public class CatTurret : MonoBehaviour
     {
         [SerializeField, Min(0)] private float delayBeforeFiring;
@@ -17,16 +16,17 @@ namespace Enemies.Cat
         [SerializeField] private int numAnimationTicks = 10;
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private Transform projectileParent;
-        [SerializeField] private EventReference sound;
         [SerializeField] private bool requireLineOfSight;
         [SerializeField] private bool startActive;
         private SpriteRenderer _spriteRenderer;
+        private AudioSource _audioSource;
         private PlayerMovementScript _player;
         private LineRenderer _line;
         private void Awake()
         {
             _line = GetComponent<LineRenderer>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _audioSource = GetComponent<AudioSource>();
             _line.enabled = false;
             _player = PlayerMovementScript.Instance;
             _spriteRenderer.enabled = false;
@@ -92,7 +92,7 @@ namespace Enemies.Cat
                 GameObject go = Instantiate(projectilePrefab, pos, Quaternion.identity, projectileParent);
                 EnemyBulletScript bullet = go.GetComponent<EnemyBulletScript>();
                 bullet.Initialize(1, dir);
-                RuntimeManager.PlayOneShot(sound, pos);
+                _audioSource.Play();
                 yield return new WaitForSeconds(delayBeforeFiring);
             }
         }

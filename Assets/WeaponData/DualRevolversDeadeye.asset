@@ -38,13 +38,7 @@ MonoBehaviour:
   altFireMode: 0
   sprite: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
   customProjectile: {fileID: 0}
-  fireEffect:
-    Guid:
-      Data1: 1487475868
-      Data2: 1228691077
-      Data3: 1192172165
-      Data4: 789521315
-    Path: event:/SFX/Weapons/Weap_Rifle
+  fireEffect: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
   pierceMode: 0
   pierceInfo:
     maxPierces: 0

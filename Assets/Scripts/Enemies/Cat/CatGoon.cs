@@ -1,16 +1,14 @@
 ﻿using System.Collections;
-using FMODUnity;
 using Player;
 using UnityEngine;
 
 namespace Enemies.Cat
 {
-    [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D), typeof(Rigidbody2D), typeof(AudioSource))]
     public class CatGoon : MonoBehaviour
     {
         [SerializeField, Min(0)] private int attackDamage = 2;
         [SerializeField, Min(0)] private float knockbackForce = 150;
-        [SerializeField] private EventReference bonkSound;
         [SerializeField] private Transform batTransform;
         [SerializeField, Min(0)] private float attackDelay = 1.5f;
         [SerializeField, Min(0)] private float batDownLength = 1f;
@@ -22,6 +20,7 @@ namespace Enemies.Cat
         private PlayerHealth _playerHealth;
         private PlayerMovementScript _playerMovement;
         private Rigidbody2D _rigidbody;
+        private AudioSource _audioSource;
         private Collider2D _collider;
         private IEnumerator _attackCoroutine;
         private bool _canAttack = true;
@@ -32,6 +31,7 @@ namespace Enemies.Cat
             _playerMovement = PlayerMovementScript.Instance;
             _collider = GetComponent<Collider2D>();
             _rigidbody = GetComponent<Rigidbody2D>();
+            _audioSource = GetComponent<AudioSource>();
             _groundLayer = LayerMask.GetMask("Default");
             _groundFilter = new ContactFilter2D
             {
@@ -83,7 +83,7 @@ namespace Enemies.Cat
             _canAttack = false;
             batTransform.localEulerAngles = new Vector3(0, 0, batEndRotation);
             _playerHealth.TakeDamage(attackDamage);
-            RuntimeManager.PlayOneShot(bonkSound, transform.position);
+            _audioSource.Play();
             Vector2 knockbackDirection = new((_playerMovement.transform.position - _collider.bounds.center).normalized.x * 0.1f, 0.04f);
             _playerMovement.RequestKnockback(knockbackDirection, knockbackForce);
             yield return new WaitForSeconds(batDownLength);

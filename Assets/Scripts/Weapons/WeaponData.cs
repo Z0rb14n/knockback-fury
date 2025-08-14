@@ -52,7 +52,7 @@ namespace Weapons
         public Sprite sprite;
         public GameObject customProjectile;
 
-        public FMODUnity.EventReference fireEffect;
+        public AudioClip fireEffect;
         public PierceMode pierceMode = PierceMode.None;
         public PierceInfo pierceInfo;
         public bool unlockedByDefault = true;

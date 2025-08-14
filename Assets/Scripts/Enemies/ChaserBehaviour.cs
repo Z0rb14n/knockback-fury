@@ -56,7 +56,7 @@ namespace Enemies
             //do something before explosion delay
             yield return new WaitForSeconds(explodeDelayTime);
             _entityHealth.KillNonPlayer();
-            EnemyBombScript.DetonateHitPlayer(transform.position, explosionVFX, explosionDamage, explosionRadius, knockbackForce);
+            EnemyBombScript.DetonateHitPlayer(transform.position, explosionVFX, explosionDamage, explosionRadius, knockbackForce, null);
             Destroy(gameObject);
         }
     }
