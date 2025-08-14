@@ -8,11 +8,10 @@ using Player;
 using UnityEngine;
 using Upgrades;
 using Random = UnityEngine.Random;
-using FMODUnity;
 
 namespace Weapons
 {
-    // [RequireComponent(typeof())]
+    [RequireComponent(typeof(AudioSource))]
     public class Weapon : MonoBehaviour
     {
         // CONSTANT
@@ -74,7 +73,7 @@ namespace Weapons
         private float _weaponDelayTimer;
         private float _weaponBurstTimer;
         private int _weaponBurstCount;
-        private EventReference _source;
+        private AudioSource _audioSource;
 
         public float ReloadTime { get; private set; }
 
@@ -85,6 +84,7 @@ namespace Weapons
             _mainCam = Camera.main;
             _spriteStartPosition = sprite.transform.localPosition;
             _recoilAnimDisplacement = new Vector2(-0.02f, 0);
+            _audioSource = GetComponent<AudioSource>();
             foreach (WeaponData data in weaponInventory)
             {
                 if (data) data.OnAfterDeserialize();
@@ -144,7 +144,7 @@ namespace Weapons
         {
             if (WeaponData == null) return;
             sprite.sprite = WeaponData.sprite;
-            _source = WeaponData.fireEffect;
+            if (_audioSource) _audioSource.clip = WeaponData.fireEffect;
         }
 
         private void HitscanHitLogic(RaycastHit2D hit, bool isMelee, Vector2 vel, Vector2 dir)
@@ -228,10 +228,7 @@ namespace Weapons
             StartFireAnimation();
             // instantiate & shoot bullets etc
             Vector2 origin = sprite.transform.TransformPoint(_spriteStartPosition);
-            if (!_source.Guid.IsNull)
-            {
-                RuntimeManager.PlayOneShot(_source,transform.position);
-            }
+            _audioSource.Play();
             if (WeaponData.isHitscan)
                 HitscanLogic(false, Vector2.zero);
             else

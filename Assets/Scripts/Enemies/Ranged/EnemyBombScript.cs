@@ -5,14 +5,12 @@ using Player;
 using UnityEngine;
 using Upgrades;
 using Weapons;
-using FMODUnity;
-using FMOD.Studio;
 using Util;
 using Complex = System.Numerics.Complex;
 
 namespace Enemies.Ranged
 {
-    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D), typeof(AudioSource))]
     public class EnemyBombScript : EnemyBulletScript
     {
         public GameObject explosionVFX;
@@ -23,15 +21,15 @@ namespace Enemies.Ranged
         private bool _hitByPlayer;
         private int _projectileLayer;
         private IEnumerator _detonationCoroutine;
+        private AudioSource _audioSource;
 
-        [SerializeField] private EventReference _bombSound;
-        [SerializeField] private EventReference _fuseSound;
-        private EventInstance _fuseSFX;
+        [SerializeField] private AudioClip bombAudioClip;
 
         public override void Initialize(float damageMult)
         {
             damageMultiplier = damageMult;
             if (!rigidbody2D) rigidbody2D = GetComponent<Rigidbody2D>();
+            _audioSource = GetComponent<AudioSource>();
 
             PlayerMovementScript playerMovementScript = PlayerMovementScript.Instance;
             if (playerVelocityPrediction)
@@ -48,9 +46,7 @@ namespace Enemies.Ranged
             _detonationCoroutine = DelayedExplosion();
             StartCoroutine(_detonationCoroutine);
             _projectileLayer = LayerMask.NameToLayer("Projectile");
-            _fuseSFX = RuntimeManager.CreateInstance(_fuseSound);
-            _fuseSFX.start();
-            _fuseSFX.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject, rigidbody2D));
+            _audioSource.Play();
         }
         
         /// <summary>
@@ -207,10 +203,23 @@ namespace Enemies.Ranged
         }
 
         public static void DetonateHitPlayer(Vector3 pos, GameObject vfx, int damage, float radius,
-            float knockbackForce)
+            float knockbackForce, AudioClip audioClip)
         {
             GameObject explosionObject = Instantiate(vfx, pos, Quaternion.identity);
             explosionObject.GetComponent<ExplosionVFX>().SetSize(radius);
+            if (audioClip != null)
+            {
+                AudioSource audioSource = explosionObject.GetComponent<AudioSource>();
+                if (audioSource)
+                {
+                    audioSource.clip = audioClip;
+                    audioSource.Play();
+                }
+                else
+                {
+                    Debug.LogWarning("No audio source.");
+                }
+            }
 
             Collider2D playerCollider = Physics2D.OverlapCircle(pos, radius, LayerMask.GetMask("Player"));
             if (playerCollider)
@@ -226,9 +235,8 @@ namespace Enemies.Ranged
         private void Detonate(bool playerCaused)
         {
             Vector3 pos = transform.position;
-            RuntimeManager.PlayOneShot(_bombSound, pos);
-            DetonateHitPlayer(pos, explosionVFX, bulletDamage, radius, knockbackForce);
-            _fuseSFX.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            DetonateHitPlayer(pos, explosionVFX, bulletDamage, radius, knockbackForce, bombAudioClip);
+            _audioSource.Stop();
             Destroy(gameObject);
 
             if (!playerCaused) return;
