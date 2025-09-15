@@ -323,8 +323,8 @@ MonoBehaviour:
   maxSpeed: 9
   jumpForce: 13
   wallJumpForce: {x: 12, y: 13}
-  dashSpeed: 20
-  dashTime: 0.125
+  dashSpeed: 15
+  dashTime: 0.12
   dashStartDelay: 0
   maxDashes: 1
   slideSpeed: 0.8
@@ -378,6 +378,8 @@ MonoBehaviour:
   objects:
   - {fileID: 2032858575623416660}
   - {fileID: 6515410614333830638}
+  - {fileID: 4006433729848625830}
+  - {fileID: 4006433729848625830}
   - {fileID: 4006433729848625830}
   velocityScale: 0.01
 --- !u!114 &1994587395661662118
@@ -661,7 +663,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
