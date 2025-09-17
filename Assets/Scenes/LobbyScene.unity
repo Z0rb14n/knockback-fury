@@ -778,7 +778,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f3135f181dfbb0541b06c53b14963aa0, type: 3}
+      objectReference: {fileID: -549789443665989942, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Grenade Launcher - 50 cheese'
@@ -928,16 +928,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 199f8aff6a4d2dd4ea5be41b33b419e6, type: 2}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.79
+      value: 1.1933334
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.46
+      value: 0.30666667
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
+      objectReference: {fileID: 868422998263619930, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Double-Barrel Shotgun - 50 cheese'
@@ -1457,7 +1457,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: 2477708518685008648, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Assault Rifle - 50 cheese'
@@ -1925,16 +1925,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: bf95b8082164e524283a6cb179ff4fc3, type: 2}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.705
+      value: 0.6409091
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.675
+      value: 0.6136364
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: bef3cabbcfc7fe64cb05a98d830f7741, type: 3}
+      objectReference: {fileID: 1721296169258792906, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] SMG - 50 cheese'
@@ -28161,7 +28161,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: -5483469642606233201, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Bayonet Rifle - 50 cheese'
@@ -28251,7 +28251,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
+      objectReference: {fileID: -3753849593638114588, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Dual Revolvers - 50 cheese'
@@ -29652,16 +29652,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d835523dddd6d2046854387e30949575, type: 2}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.79
+      value: 1.1933334
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861934, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.46
+      value: 0.30666667
       objectReference: {fileID: 0}
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ffd65d51b4dec9f4f8b0ee4db619995c, type: 3}
+      objectReference: {fileID: -1068439443906237425, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Semi-Auto Shotgun - 50 cheese'
@@ -30057,7 +30057,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
+      objectReference: {fileID: 3091235889615749175, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Sniper - 50 cheese'
@@ -31157,9 +31157,13 @@ PrefabInstance:
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1367610322427148548, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
-      propertyPath: m_audioClip
+      propertyPath: m_Resource
       value: 
       objectReference: {fileID: 8300000, guid: 9d2812dd810ec7447aaa0bd088e995f6, type: 3}
+    - target: {fileID: 1367610322427148548, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1642441135221724601, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: weaponData
       value: 
@@ -31179,7 +31183,7 @@ PrefabInstance:
     - target: {fileID: 1642441136367506746, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0e179eb804233ae4eb801d24964c800c, type: 3}
+      objectReference: {fileID: 2860768655726451345, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 4250482184927897530, guid: e4407057e7ec397438cf8541912ada1c, type: 3}
       propertyPath: camOffset.x
       value: 0
@@ -32745,7 +32749,7 @@ PrefabInstance:
     - target: {fileID: 6356033031103861935, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6675850f4eb99cb49ab2e2b7abc178b5, type: 3}
+      objectReference: {fileID: 8600191773454914637, guid: f31e38c585406e94581e71a38b91c128, type: 3}
     - target: {fileID: 6356033032081478241, guid: 785855e5cd9203446949adb02dca1589, type: 3}
       propertyPath: m_text
       value: '[E] Burst Rifle - 50 cheese'
