@@ -263,7 +263,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9518738d08a58944f878c970e4bfe13b, type: 3}
+  m_Sprite: {fileID: 3620181909713969315, guid: 0fdb2a52a14df414cbde85943b54d9a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 9
-  jumpForce: 13
+  jumpForce: 15
   wallJumpForce: {x: 12, y: 13}
   dashSpeed: 15
   dashTime: 0.12
@@ -976,6 +976,14 @@ PrefabInstance:
     - target: {fileID: 3054874151477731811, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3054874151477731811, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.034
+      objectReference: {fileID: 0}
+    - target: {fileID: 3054874151477731811, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.042
       objectReference: {fileID: 0}
     - target: {fileID: 3054874151477731811, guid: 4e0c3b7758738aa4d89138b84a91582b, type: 3}
       propertyPath: m_LocalPosition.z

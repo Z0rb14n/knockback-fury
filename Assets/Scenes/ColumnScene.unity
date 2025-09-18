@@ -2686,6 +2686,9 @@ MonoBehaviour:
   - go: {fileID: 309630346916411854, guid: b66726255fe89dd4cacf05e59df4d4ce, type: 3}
     weight: 1
     canFlip: 0
+  - go: {fileID: 309630346916411854, guid: 93a27855a7487e847afe71a3752ff3c3, type: 3}
+    weight: 1
+    canFlip: 0
   diffBeforeDeletion: 10
   diffBetween: 1
   generationStart: 15
