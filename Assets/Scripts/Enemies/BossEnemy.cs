@@ -112,7 +112,8 @@ namespace Enemies
         {
             foreach (Vector3 vec in summonLocations)
             {
-                Gizmos.DrawWireSphere(vec, 1);
+                Vector3 pos = (summonsUseWorld ? vec : transform.parent.TransformPoint(vec));
+                Gizmos.DrawWireSphere(pos, 1);
             }
         }
 
