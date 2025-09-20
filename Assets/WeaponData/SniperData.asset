@@ -19,13 +19,13 @@ MonoBehaviour:
   projectileDamage: 85
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 1
+  roundsPerSecond: 2
   clipSize: 6
   reloadTime: 2.3
   spread: 0
   isHitscan: 1
   rightClickAction: 0
-  knockbackStrength: 20
+  knockbackStrength: 22
   recoilAnimationDuration: 0.5
   fireMode: 1
   burstInfo:
