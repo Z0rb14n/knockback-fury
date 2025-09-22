@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: DevSniper
+  m_Name: DualRevolversRapid
   m_EditorClassIdentifier: 
-  weaponName: Dev Sniper
+  weaponName: Dual Revolvers (Rapid)
   numProjectiles: 1
-  range: 500
-  projectileSpeed: 69420
-  projectileDamage: 69999
+  range: 10
+  projectileSpeed: 30
+  projectileDamage: 14
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 1.2
-  clipSize: 1
-  reloadTime: 1.6
-  spread: 0
-  isHitscan: 1
+  roundsPerSecond: 8
+  clipSize: 6
+  reloadTime: 0.6
+  spread: 37
+  isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 20
-  recoilAnimationDuration: 0.5
+  knockbackStrength: 8
+  recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
     burstAmount: 0
@@ -36,12 +36,12 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: 19abbc8846b8f23418e79d0a2539d880, type: 3}
+  sprite: {fileID: -3753849593638114588, guid: f31e38c585406e94581e71a38b91c128, type: 3}
   customProjectile: {fileID: 0}
-  fireEffect: {fileID: 8300000, guid: f2986af7a19e3c341b98a751ecaa552a, type: 3}
-  pierceMode: 1
+  fireEffect: {fileID: 8300000, guid: a5dbfecbd1d6867478d9a6ae0d39ebd6, type: 3}
+  pierceMode: 0
   pierceInfo:
-    maxPierces: 6
+    maxPierces: 0
     invulnTimer: 0
     isInfinitePierce: 0
-  unlockedByDefault: 0
+  unlockedByDefault: 1

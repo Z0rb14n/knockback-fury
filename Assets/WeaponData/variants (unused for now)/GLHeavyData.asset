@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e, type: 3}
-  m_Name: DualRevolversRapid
+  m_Name: GLHeavyData
   m_EditorClassIdentifier: 
-  weaponName: Dual Revolvers (Rapid)
+  weaponName: Grenade Launcher (Heavy)
   numProjectiles: 1
-  range: 10
-  projectileSpeed: 30
-  projectileDamage: 14
+  range: 20
+  projectileSpeed: 10
+  projectileDamage: 100
   selfDamage: 1
   cheeseCost: 50
-  roundsPerSecond: 8
+  roundsPerSecond: 1.2
   clipSize: 6
-  reloadTime: 0.6
-  spread: 37
+  reloadTime: 1.6
+  spread: 5
   isHitscan: 0
   rightClickAction: 0
-  knockbackStrength: 6
+  knockbackStrength: 17
   recoilAnimationDuration: 0.2
   fireMode: 1
   burstInfo:
@@ -36,9 +36,9 @@ MonoBehaviour:
     velMultiplier: 0
     meleeRange: 0
   altFireMode: 0
-  sprite: {fileID: 21300000, guid: d2b59b9d6de4ee546aacb60936523e5a, type: 3}
-  customProjectile: {fileID: 0}
-  fireEffect: {fileID: 8300000, guid: 5ccb9876e5b096846a6f283a7a169feb, type: 3}
+  sprite: {fileID: -549789443665989942, guid: f31e38c585406e94581e71a38b91c128, type: 3}
+  customProjectile: {fileID: 4869979050320732687, guid: b1645af8a2a4f72428f4814212a15c89, type: 3}
+  fireEffect: {fileID: 8300000, guid: 3ca48eca723e7b442907896cfed350c1, type: 3}
   pierceMode: 0
   pierceInfo:
     maxPierces: 0
