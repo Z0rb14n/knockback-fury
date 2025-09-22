@@ -15,7 +15,7 @@ namespace Player
     [DisallowMultipleComponent, RequireComponent(typeof(Rigidbody2D),
          typeof(AbstractDashTrail),
          typeof(PlayerUpgradeManager))]
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
     public class PlayerMovementScript : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
@@ -88,6 +88,7 @@ namespace Player
             }
         }
         private static PlayerMovementScript instance;
+        private static readonly int AnimatorIsRunningHash = Animator.StringToHash("isRunning");
 
         public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
@@ -141,6 +142,7 @@ namespace Player
         private void Awake()
         {
             instance = this;
+            _animator = GetComponent<Animator>();
             _body = GetComponent<Rigidbody2D>();
             _dashVfx = GetComponent<AbstractDashTrail>();
             _weapon = GetComponentInChildren<Weapon>();
@@ -191,7 +193,7 @@ namespace Player
 
             if (xInput != 0)
             {
-                //_animator.SetBool("isRunning", true);
+                _animator.SetBool(AnimatorIsRunningHash, true);
                 float normalAccel = accel * Time.deltaTime;
                 if (originalX > 0 && xInput < 0)
                 {
@@ -205,6 +207,10 @@ namespace Player
                 {
                     newX += xInput * Mathf.Min(maxSpeed - Mathf.Abs(originalX), normalAccel);
                 }
+            }
+            else
+            {
+                _animator.SetBool(AnimatorIsRunningHash, false);
             }
 
             if (Mathf.Abs(originalX) > maxSpeed)
