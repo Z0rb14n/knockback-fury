@@ -18,6 +18,8 @@ namespace Player
     [RequireComponent(typeof(SpriteRenderer))]
     public class PlayerMovementScript : MonoBehaviour
     {
+        [SerializeField] private Animator _animator;
+
         [Min(0), Tooltip("Affects the speed of the player")]
         public float maxSpeed = 69;
         [Min(0), Tooltip("Jump Impulse")]
@@ -128,6 +130,8 @@ namespace Player
         private Camera _mainCam;
         private GrappleHook _activeGrappleHook;
 
+
+
         private bool Grounded => _body.IsTouching(_groundFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
@@ -187,6 +191,7 @@ namespace Player
 
             if (xInput != 0)
             {
+                //_animator.SetBool("isRunning", true);
                 float normalAccel = accel * Time.deltaTime;
                 if (originalX > 0 && xInput < 0)
                 {
