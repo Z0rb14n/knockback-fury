@@ -221,10 +221,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daec85cff96e4fe0b3ba016a72f63c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 15
+  projectileSpeed: 2
   bulletDamage: 1
   knockbackForce: 100
-  delayBeforeDestruction: 3
+  delayBeforeDestruction: 4
   verticalKnockback: 0.04
   knockbackStrength: 0.1
   explosionVFX: {fileID: 4706453752192310371, guid: e637501e229697e469289c858ff2d237, type: 3}
@@ -245,7 +245,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e89985c56e09bba488b52d9b45d62802, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.507
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
