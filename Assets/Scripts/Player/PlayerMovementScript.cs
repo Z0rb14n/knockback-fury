@@ -221,11 +221,6 @@ namespace Player
         /// <param name="xInput">Horizontal input axis</param>
         private void HorizontalMovementLogic(float xInput)
         {
-            if (xInput != 0)
-            {
-                _sprite.flipX = xInput < 0;
-            }
-
             float originalX = _velocity.x;
             float newX = originalX;
 
@@ -369,6 +364,12 @@ namespace Player
                     break;
             }
 
+            Vector2 screenPoint = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+            float xDiff = screenPoint.x - _body.position.x;
+            if (!Mathf.Approximately(xDiff, 0))
+            {
+                _sprite.flipX = xDiff < 0;
+            }
             HorizontalMovementLogic(xInput);
             GrappleHookLogic();
 
