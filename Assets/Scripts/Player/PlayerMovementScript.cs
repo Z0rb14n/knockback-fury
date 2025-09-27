@@ -29,6 +29,10 @@ namespace Player
         public float turnAroundMultiplier = 2f;
         [Min(0), Tooltip("Deceleration (scaled by time) when above max speed")]
         public float decelWhenAbove = 5;
+        [Min(0), Tooltip("Max Y speed")]
+        public float maxYSpeed = 30;
+        [Min(0), Tooltip("Deceleration (m/s2) when above max Y speed")]
+        public float decelYWhenAbove = 5;
         [Min(0), Tooltip("Slide speed when on a wall")]
         public float slideSpeed = 0.05f;
         public Rigidbody2D.SlideMovement slideMovement;
@@ -115,6 +119,7 @@ namespace Player
         private ContactFilter2D _groundFilter;
         private ContactFilter2D _leftWallFilter;
         private ContactFilter2D _rightWallFilter;
+        private ContactFilter2D _ceilingFilter;
         private Rigidbody2D _body;
         private Vector2 _velocity;
         private bool _dashing;
@@ -145,6 +150,7 @@ namespace Player
         private GrappleHook _activeGrappleHook;
 
         private bool Grounded => _body.IsTouching(_groundFilter);
+        private bool HitCeiling => _body.IsTouching(_ceilingFilter);
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
@@ -189,6 +195,14 @@ namespace Player
                 useNormalAngle = true,
                 minNormalAngle = 150,
                 maxNormalAngle = 210
+            };
+            _ceilingFilter = new ContactFilter2D
+            {
+                layerMask = _physicsCheckMask,
+                useLayerMask = true,
+                useNormalAngle = true,
+                minNormalAngle = -120,
+                maxNormalAngle = -60
             };
         }
 
@@ -244,10 +258,6 @@ namespace Player
             }
 
             _velocity.x = newX;
-            if (Mathf.Abs(xInput) > 0 || Mathf.Abs(newX) > 0.05f)
-            {
-                Debug.Log(xInput + "," + newX);
-            }
         }
 
         /// <summary>
@@ -281,9 +291,8 @@ namespace Player
             {
                 _earlyJumpTime = earlyJumpLeeway;
             }
-            
             // if player exceeded max jump time or is no longer holding jump stop jumping
-            if (_isJumping && (_jumpTime > maxJumpTime || (!jumpButton && _jumpTime > minJumpTime)))
+            if (_isJumping && (_jumpTime > maxJumpTime || (!jumpButton && _jumpTime > minJumpTime) || HitCeiling))
             {
                 _isJumping = false;
                 _jumpTime = 0;
@@ -364,6 +373,13 @@ namespace Player
             GrappleHookLogic();
 
             WallJumpLogic(jumpButtonDown);
+
+            float speedAboveMax = _velocity.y - maxYSpeed;
+            if (speedAboveMax > 0)
+            {
+                float normalDecel = decelYWhenAbove * Time.deltaTime;
+                _velocity.y = Mathf.MoveTowards(_velocity.y, 0, Mathf.Min(normalDecel, speedAboveMax));
+            }
             
             JumpLogic(jumpButtonDown, jumpButton);
             DashLogic(xInput);
