@@ -393,7 +393,7 @@ namespace Player
             
             if (!Grounded && _velocity.y < 0 && !holdingDown)
             {
-                if ((IsOnLeftWall || IsOnRightWall) && xInput != 0)
+                if ((IsOnLeftWall || IsOnRightWall) && Input.GetAxisRaw("Horizontal") != 0)
                 {
                     isSlidingThisFrame = true;
                     WallSlideLogic();
