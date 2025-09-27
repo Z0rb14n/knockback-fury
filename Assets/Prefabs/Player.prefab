@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 2462369353442171125}
   - component: {fileID: 8168244775167315299}
   - component: {fileID: 7387056994418124513}
-  - component: {fileID: 7908162361675463651}
+  - component: {fileID: 5524619614016429982}
   - component: {fileID: 1994587395661662118}
   - component: {fileID: 2238002965259948386}
   - component: {fileID: 3228942646842628699}
@@ -290,9 +290,9 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6244737822807091051}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 1
@@ -305,7 +305,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -322,23 +322,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 9
+  accel: 50
+  decel: 20
+  turnAroundMultiplier: 9
+  decelWhenAbove: 50
+  slideSpeed: 0.8
+  slideMovement:
+    <maxIterations>k__BackingField: 5
+    <surfaceSlideAngle>k__BackingField: 50
+    <gravitySlipAngle>k__BackingField: 60
+    <surfaceUp>k__BackingField: {x: 0, y: 1}
+    <surfaceAnchor>k__BackingField: {x: 0, y: 0}
+    <gravity>k__BackingField: {x: 0, y: 0}
+    <startPosition>k__BackingField: {x: 0, y: 0}
+    <selectedCollider>k__BackingField: {fileID: 3228942646842628699}
+    <layerMask>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 0
+    <useLayerMask>k__BackingField: 0
+    <useStartPosition>k__BackingField: 0
+    <useNoMove>k__BackingField: 0
+    <useSimulationMove>k__BackingField: 0
+    <useAttachedTriggers>k__BackingField: 0
+  groundedKBMultiplier: 1
+  wallKBMultiplier: 1
   jumpForce: 15
+  shortJumpPercentage: 0.75
+  earlyJumpLeeway: 0.2
+  lateJumpLeeway: 0.08
+  minJumpTime: 0.02
+  maxJumpTime: 0.08
+  minTimeBeforeWallJump: 0.07
   wallJumpForce: {x: 12, y: 13}
   dashSpeed: 15
   dashTime: 0.12
   dashStartDelay: 0
   maxDashes: 1
-  slideSpeed: 0.8
-  accel: 50
-  turnAroundMultiplier: 9
-  decelWhenAbove: 5
-  shortJumpPercentage: 0.75
-  earlyJumpLeeway: 0.2
-  lateJumpLeeway: 0.08
-  highJumpTime: 0.08
-  minTimeBeforeWallJump: 0.07
-  groundedKBMultiplier: 1
-  wallKBMultiplier: 1
   grappleVelocity: 25
   grappleCooldown: 3
   grapplePrefab: {fileID: 8171226218910466548, guid: d761d3fd7321b484982293e910d39ed0, type: 3}
@@ -363,7 +382,7 @@ MonoBehaviour:
   firstStrikeBoost: 0.5
   lastStrikeBoost: 50
   weaponItemPrefab: {fileID: 5430195239519296465, guid: 658c33633c8f1374f9f0bd1bec1e37ae, type: 3}
---- !u!114 &7908162361675463651
+--- !u!114 &5524619614016429982
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -372,15 +391,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6244737822807091051}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7e4df46664463db3119a574b2d9dd2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ec5c522ccc148fe86ef94d06c80dcc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objectToHide: {fileID: 7925996666507642937}
   objects:
   - {fileID: 2032858575623416660}
   - {fileID: 6515410614333830638}
-  - {fileID: 4006433729848625830}
-  - {fileID: 4006433729848625830}
   - {fileID: 4006433729848625830}
   velocityScale: 0.01
 --- !u!114 &1994587395661662118
