@@ -52,6 +52,12 @@ namespace Weapons
             _body.linearVelocity = direction * data.projectileSpeed;
             _hitPlayer = hitPlayer;
             _remainingPierces = data.pierceInfo.maxPierces;
+
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                float rotation = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                transform.localEulerAngles = new Vector3(0, 0, rotation);
+            }
         }
 
         public void ModifyDamage(float multiplier)
@@ -66,10 +72,11 @@ namespace Weapons
             _prevPosition = currPos;
             Vector2 vel = _body.linearVelocity;
 
-            if (rotating)
+            // Rotate sprite to face direction of movement
+            if (vel.sqrMagnitude > 0.001f) // avoid NaN when velocity is (0,0)
             {
-                float rotation = Mathf.Atan2(vel.y, vel.x);
-                transform.localEulerAngles = new Vector3(0, 0, rotation * Mathf.Rad2Deg);
+                float rotation = Mathf.Atan2(vel.y, vel.x) * Mathf.Rad2Deg;
+                transform.localEulerAngles = new Vector3(0, 0, rotation);
             }
 
             if (_remainingDistance <= 0)
