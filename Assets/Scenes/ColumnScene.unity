@@ -25074,16 +25074,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   columnPrefabs:
-  - go: {fileID: 309630346916411854, guid: 9d3c24fa758277f42aeeeb1f5734a9cf, type: 3}
+  - go: {fileID: 309630346916411854, guid: b66726255fe89dd4cacf05e59df4d4ce, type: 3}
     weight: 1
     canFlip: 0
-  - go: {fileID: 309630346916411854, guid: b66726255fe89dd4cacf05e59df4d4ce, type: 3}
+  - go: {fileID: 309630346916411854, guid: 9d3c24fa758277f42aeeeb1f5734a9cf, type: 3}
     weight: 1
     canFlip: 0
   - go: {fileID: 309630346916411854, guid: 93a27855a7487e847afe71a3752ff3c3, type: 3}
     weight: 0.5
     canFlip: 0
   - go: {fileID: 309630346916411854, guid: 7a04c0c755cb5bd42ae699024c6e0f12, type: 3}
+    weight: 0.5
+    canFlip: 0
+  - go: {fileID: 309630346916411854, guid: e1141bce8022ff943a228e8de0164282, type: 3}
     weight: 0.5
     canFlip: 0
   diffBeforeDeletion: 10
@@ -25344,6 +25347,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: 1e68b4ac3f2695a43a6d91c8a6ea99d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433667834743774302, guid: 1e68b4ac3f2695a43a6d91c8a6ea99d0, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 433667834743774302, guid: 1e68b4ac3f2695a43a6d91c8a6ea99d0, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6860118764237842642, guid: 1e68b4ac3f2695a43a6d91c8a6ea99d0, type: 3}

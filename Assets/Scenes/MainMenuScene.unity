@@ -405,6 +405,7 @@ GameObject:
   - component: {fileID: 595341450}
   - component: {fileID: 595341454}
   - component: {fileID: 595341455}
+  - component: {fileID: 595341456}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -520,6 +521,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsMenu: {fileID: 1777073757}
+--- !u!114 &595341456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595341449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c73bcc3472024418b69bc19fe13151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultWidth: 1920
+  defaultHeight: 1080
+  defaultScreenMode: 1
+  defaultRefreshRate: 60
+  defaultTargetFPS: 60
+  defaultVSync: 1
 --- !u!1 &862911437
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,11 +709,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1919.9999
+      value: 1184.9283
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080.375
+      value: 666.7538
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_LocalScale.x
@@ -738,7 +757,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 959.99994
+      value: 959.9999
       objectReference: {fileID: 0}
     - target: {fileID: 244400362839279747, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -792,6 +811,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6753137986789391994, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -256.31033
+      objectReference: {fileID: 0}
+    - target: {fileID: 6753137986789391994, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -27.520605
+      objectReference: {fileID: 0}
     - target: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_Name
       value: SettingsMenu
@@ -829,7 +856,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7561599995285737185, guid: e3d125314c84e204da93298de4553a20, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3d125314c84e204da93298de4553a20, type: 3}
