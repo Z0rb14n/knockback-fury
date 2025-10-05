@@ -285,10 +285,13 @@ namespace Player
                 _timeOfGrapple = Time.time;
                 GameObject go = Instantiate(grapplePrefab, _body.position, Quaternion.identity);
                 Vector2 worldMousePos = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 dir = ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized;
                 go.GetComponent<Rigidbody2D>().linearVelocity =
-                    ((Vector2)transform.InverseTransformPoint(worldMousePos)).normalized * grappleVelocity +
+                     dir * grappleVelocity +
                     _body.linearVelocity;
-                _activeGrappleHook = go.GetComponent<GrappleHook>();
+                GrappleHook hook = go.GetComponent<GrappleHook>();
+                _activeGrappleHook = hook;
+                hook.setHookRot(dir);
             }
         }
 
