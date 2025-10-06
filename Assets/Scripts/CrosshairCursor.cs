@@ -1,17 +1,43 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CrosshairCursor : MonoBehaviour
+public class UICursorController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("Sprites")]
+    public Sprite defaultCursor;
+    public Sprite crosshairCursor;
+
+    private Image cursorImage;
+    private RectTransform rectTransform;
+
     void Awake()
     {
+        DontDestroyOnLoad(transform.parent.gameObject);
+
+        cursorImage = GetComponent<Image>();
+        rectTransform = GetComponent<RectTransform>();
+
+        // start with default
+        cursorImage.sprite = defaultCursor;
+
+        // hide the system cursor
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector2 mouseCursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = mouseCursorPos;
+        // move image to mouse position
+        rectTransform.position = Input.mousePosition;
+    }
+
+    public void SetDefaultCursor()
+    {
+        cursorImage.sprite = defaultCursor;
+    }
+
+    public void SetCrosshairCursor()
+    {
+        cursorImage.sprite = crosshairCursor;
     }
 }

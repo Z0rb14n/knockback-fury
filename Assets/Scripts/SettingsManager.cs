@@ -13,6 +13,7 @@ public class SettingsManager : MonoBehaviour
     private void Awake()
     {
         LoadSettings();
+
     }
 
     // --- Resolution + Fullscreen ---
