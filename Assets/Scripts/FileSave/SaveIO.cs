@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using UnityEngine;
 using Application = UnityEngine.Device.Application;
 
@@ -18,6 +19,16 @@ namespace FileSave
 
         public static SaveData Read()
         {
+            if (!File.Exists(saveLocation))
+            {
+                Debug.Log("No save file found, using defaults.");
+                return new SaveData
+                {
+                    cheese = 0,
+                    unlockedPermanentUpgrades = Array.Empty<int>(),
+                    unlockedWeapons = Array.Empty<string>()
+                };
+            }
             return JsonUtility.FromJson<SaveData>(File.ReadAllText(saveLocation));
         }
     }
