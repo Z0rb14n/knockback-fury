@@ -17,12 +17,12 @@ public class SettingsManager : MonoBehaviour
     }
 
     // --- Resolution + Fullscreen ---
-    public void SetResolution(int width, int height, FullScreenMode mode, int refreshRate)
+    public void SetResolution(int width, int height, FullScreenMode mode, uint refreshRate)
     {
-        Screen.SetResolution(width, height, mode, refreshRate);
+        Screen.SetResolution(width, height, mode, new RefreshRate {numerator = refreshRate});
         PlayerPrefs.SetInt("ResolutionWidth", width);
         PlayerPrefs.SetInt("ResolutionHeight", height);
-        PlayerPrefs.SetInt("RefreshRate", refreshRate);
+        PlayerPrefs.SetInt("RefreshRate", (int)refreshRate);
         PlayerPrefs.SetInt("FullScreenMode", (int)mode);
         PlayerPrefs.Save();
     }
@@ -63,8 +63,11 @@ public class SettingsManager : MonoBehaviour
     {
         int width = PlayerPrefs.GetInt("ResolutionWidth", defaultWidth);
         int height = PlayerPrefs.GetInt("ResolutionHeight", defaultHeight);
-        int refreshRate = PlayerPrefs.GetInt("RefreshRate", defaultRefreshRate);
         FullScreenMode mode = (FullScreenMode)PlayerPrefs.GetInt("FullScreenMode", (int)defaultScreenMode);
+        RefreshRate refreshRate = new()
+        {
+            numerator = (uint)PlayerPrefs.GetInt("RefreshRate", defaultRefreshRate)
+        };
         Screen.SetResolution(width, height, mode, refreshRate);
 
         int activeDisplay = PlayerPrefs.GetInt("ActiveDisplay", 0);
