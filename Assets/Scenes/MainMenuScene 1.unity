@@ -506,6 +506,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cb61c00644460c874b7bac208ae0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &626636261 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
+  m_PrefabInstance: {fileID: 932026177}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &862911437
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,9 +735,77 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2137084155438411967, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137084155438411967, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137084155438411967, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 188.16405
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137084155438411967, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -289.22845
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 188.16405
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -165.20505
+      objectReference: {fileID: 0}
     - target: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_Name
       value: SettingCanvasPrefab 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042590540314684394, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042590540314684394, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042590540314684394, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 188.16405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7042590540314684394, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -41.18165
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 188.16405
+      objectReference: {fileID: 0}
+    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -413.25183
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1530,17 +1603,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 7096687128d7c014c8ba3974294f0212, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
-        m_Mode: 5
+      - m_Target: {fileID: 626636261}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: ToggleSettingsMenu
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1806026307
 MonoBehaviour:
