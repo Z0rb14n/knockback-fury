@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Enemies
 {
     [RequireComponent(typeof(Animator), typeof(PatrolMovement), typeof(AudioSource))]
+    [RequireComponent(typeof(Collider2D))]
     public class HeavyAttack : MonoBehaviour
     {
         public float attackDistance;
@@ -13,9 +14,9 @@ namespace Enemies
         public int attackDamage;
         public float knockbackForce;
 
-        [SerializeField] private CapsuleCollider2D _collider;
         [SerializeField] private LayerMask _playerLayer;
         [SerializeField] private float _delayBeforeAttack;
+        private Collider2D _collider;
         private Vector2 _attackBoxCenter;
         private Vector2 _attackBoxSize;
         private PatrolMovement _movement;
@@ -33,6 +34,7 @@ namespace Enemies
 
         private void Awake()
         {
+            _collider = GetComponent<Collider2D>();
             _movement = GetComponent<PatrolMovement>();
             _attackTimer = 0;
             _playerMovement = PlayerMovementScript.Instance;
@@ -72,7 +74,7 @@ namespace Enemies
         /// </summary>
         private bool PlayerInRange()
         {
-            _attackBoxCenter = _collider.bounds.center + transform.right * attackDistance * _movement.Direction;
+            _attackBoxCenter = _collider.bounds.center + transform.right * (attackDistance * _movement.Direction);
             _attackBoxSize = new Vector3(_collider.bounds.size.x * attackWidth, _collider.bounds.size.y * 1.1f,
                 _collider.bounds.size.z);
 
@@ -92,6 +94,8 @@ namespace Enemies
         /// </summary>
         private void OnDrawGizmos()
         {
+            if (!_collider) 
+                _collider = GetComponent<Collider2D>();
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(
                 _collider.bounds.center + transform.right * attackDistance * (_movement?.Direction ?? 1),

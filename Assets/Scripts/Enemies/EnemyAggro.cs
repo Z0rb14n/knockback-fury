@@ -3,13 +3,14 @@ using Player;
 
 namespace Enemies
 {
+    [RequireComponent(typeof(Collider2D))]
     public class EnemyAggro : MonoBehaviour
     {
         public float aggroRange;
         public float deaggroRange;
         public bool showAggroRanges;
 
-        [SerializeField] private CapsuleCollider2D _collider;
+        private Collider2D _collider;
         private Vector3 _position;
         private Transform _player;
         private LayerMask _lineOfSightMask;
@@ -18,6 +19,7 @@ namespace Enemies
 
         private void Awake()
         {
+            _collider = GetComponent<Collider2D>();
             _lineOfSightMask = ~LayerMask.GetMask("Enemy", "EnemyIgnorePlatform", "EnemyBomb", "Ignore Raycast");
             _playerMovementScript = PlayerMovementScript.Instance;
             _player = _playerMovementScript.transform;
@@ -44,6 +46,8 @@ namespace Enemies
         {
             if (showAggroRanges)
             {
+                if (!_collider)
+                    _collider = GetComponent<Collider2D>();
                 Gizmos.color = Color.magenta;
                 Gizmos.DrawWireSphere(_collider.bounds.center, aggroRange);
 
