@@ -119,7 +119,14 @@ namespace Weapons
             if (ReloadTime > 0)
             {
                 ReloadTime -= dt;
-                if (ReloadTime <= 0) ImmediateReload();
+                if (ReloadTime <= 0)
+                {
+                    // Play reload end sound
+                    if (WeaponData.reloadEndEffect)
+                        _audioSource.PlayOneShot(WeaponData.reloadEndEffect);
+
+                    ImmediateReload();
+                }
             }
 
             if (_weaponDelayTimer > 0) _weaponDelayTimer -= dt;
@@ -303,6 +310,10 @@ namespace Weapons
             {
                 ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
             }
+
+            // Play reload start sound
+            if (WeaponData.reloadStartEffect)
+                _audioSource.PlayOneShot(WeaponData.reloadStartEffect);
         }
 
         public void ImmediateReload()

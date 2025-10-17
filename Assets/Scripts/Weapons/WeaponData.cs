@@ -52,12 +52,17 @@ namespace Weapons
         public Sprite sprite;
         public GameObject customProjectile;
 
+        [Header("Sound Effects")]
         public AudioClip fireEffect;
+        public AudioClip reloadStartEffect;
+        public AudioClip reloadEndEffect;
+
         public PierceMode pierceMode = PierceMode.None;
         public PierceInfo pierceInfo;
         public bool unlockedByDefault = true;
         [NonSerialized]
         public int numUpgrades;
+
 
         public int Clip { get; private set; }
 
