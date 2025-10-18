@@ -8,16 +8,20 @@ namespace UI
     public class UICursor : MonoBehaviour
     {
         [SerializeField] private Texture2D cursorInUI;
+        [SerializeField]
+        private Vector2 cursorCenterInUI = Vector2.zero;
         [SerializeField] private Texture2D cursorInCombat;
+        [SerializeField]
+        private Vector2 cursorCenterInCombat = new Vector2(16, 16);
         
         private void OnEnable()
         {
-            Cursor.SetCursor(cursorInUI, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(cursorInUI, cursorCenterInUI, CursorMode.Auto);
         }
 
         private void OnDisable()
         {
-            Cursor.SetCursor(cursorInCombat, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(cursorInCombat, cursorCenterInCombat, CursorMode.Auto);
         }
     }
 }
