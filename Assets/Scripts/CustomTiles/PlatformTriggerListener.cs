@@ -36,7 +36,7 @@ namespace CustomTiles
         {
             if (other == _playerCollider)
             {
-                _tile.gameObject.layer = LayerMask.NameToLayer("PlatformIgnored");
+                _tile.gameObject.layer = _platformIgnoredLayer;
             }
         }
     }
