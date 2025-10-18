@@ -453,7 +453,8 @@ namespace Player
                 _velocity = effector.GetNewVelocity(_velocity, this);
             }
 
-            _body.Slide(_velocity, Time.deltaTime, slideMovement);
+            Rigidbody2D.SlideResults results = _body.Slide(_velocity, Time.deltaTime, slideMovement);
+            // Debug.Log(results.remainingVelocity + "," + results.slideHit.collider.gameObject.name + "," + results.surfaceHit.collider.gameObject.name);
         }
 
         public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
