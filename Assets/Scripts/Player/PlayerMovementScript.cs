@@ -254,6 +254,46 @@ namespace Player
 
             _velocity.x = newX;
         }
+        
+        /// <summary>
+        /// Runs vertical movement logic.
+        /// </summary>
+        /// <param name="yInput">Vertical input axis</param>
+        private void VerticalMovementLogic(float yInput)
+        {
+            float originalY = _velocity.y;
+            float newY = originalY;
+
+            if (yInput != 0)
+            {
+                float normalAccel = accel * Time.deltaTime;
+                if (originalY > 0 && yInput < 0)
+                {
+                    newY -= Mathf.Min(Mathf.Max(originalY, normalAccel), normalAccel * turnAroundMultiplier);
+                }
+                else if (originalY < 0 && yInput > 0)
+                {
+                    newY += Mathf.Min(Mathf.Max(-originalY, normalAccel), normalAccel * turnAroundMultiplier);
+                }
+                else if (Mathf.Abs(originalY) < maxSpeed)
+                {
+                    newY += yInput * Mathf.Min(maxSpeed - Mathf.Abs(originalY), normalAccel);
+                }
+            }
+            else
+            {
+                newY = Mathf.MoveTowards(newY, 0, decel * Time.deltaTime);
+            }
+
+            float speedAboveMax = Mathf.Abs(originalY) - maxSpeed;
+            if (speedAboveMax > 0)
+            {
+                float normalDecel = decelWhenAbove * Time.deltaTime;
+                newY = Mathf.MoveTowards(newY, 0, Mathf.Min(normalDecel, speedAboveMax));
+            }
+
+            _velocity.y = newY;
+        }
 
         /// <summary>
         /// Runs jumping logic.
@@ -344,13 +384,14 @@ namespace Player
                 _hasKeepingInStrideDash = false;
             }
             if (!CanMove) return;
-            if (!Grounded)
+            float yInput = Input.GetAxisRaw("Vertical");
+            if (!Grounded && !IsOnLeftWall && !IsOnRightWall)
             {
                 _velocity += Physics2D.gravity * Time.deltaTime;
             }
             else
             {
-                _velocity.y = 0;
+                VerticalMovementLogic(yInput);
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool jumpButtonDown = Input.GetButtonDown("Jump");
