@@ -25,7 +25,7 @@ namespace Enemies.Ranged
         [HideInInspector] public float damageMultiplier = 1;
 
         private bool _isPlayerInside;
-        private IEnumerator _shootCoroutine;
+        private Coroutine _shootCoroutine;
 
         private PlayerMovementScript _playerMovement;
         private SpriteRenderer _sprite;
@@ -41,8 +41,7 @@ namespace Enemies.Ranged
             _playerMovement = PlayerMovementScript.Instance;
             if (!useProximityCheck)
             {
-                _shootCoroutine = ShootCoroutine();
-                StartCoroutine(_shootCoroutine);
+                _shootCoroutine = StartCoroutine(ShootCoroutine());
             }
         }
 
@@ -61,8 +60,7 @@ namespace Enemies.Ranged
                 else if (!_isPlayerInside && Vector2.Distance(_playerMovement.Pos, pos) <= proximityDistance)
                 {
                     _isPlayerInside = true;
-                    _shootCoroutine = ShootCoroutine();
-                    StartCoroutine(_shootCoroutine);
+                    _shootCoroutine = StartCoroutine(ShootCoroutine());
                 }
             }
         }
@@ -87,8 +85,7 @@ namespace Enemies.Ranged
             if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
             _isPlayerInside = true;
-            _shootCoroutine = ShootCoroutine();
-            StartCoroutine(_shootCoroutine);
+            _shootCoroutine = StartCoroutine(ShootCoroutine());
         }
 
         private void OnTriggerExit2D(Collider2D other)
