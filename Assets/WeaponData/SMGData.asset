@@ -39,6 +39,8 @@ MonoBehaviour:
   sprite: {fileID: 1721296169258792906, guid: f31e38c585406e94581e71a38b91c128, type: 3}
   customProjectile: {fileID: 0}
   fireEffect: {fileID: 8300000, guid: 5bd49e0dcce293f40975da0c0c0dd61f, type: 3}
+  reloadStartEffect: {fileID: 8300000, guid: d2db090f68887014b842a794157d3db9, type: 3}
+  reloadEndEffect: {fileID: 8300000, guid: 2a34103e662f1034296c25c66428e1c3, type: 3}
   pierceMode: 0
   pierceInfo:
     maxPierces: 0

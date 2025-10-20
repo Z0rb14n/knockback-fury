@@ -1,3 +1,16 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: b0ceaaae3cb04c75bf9a6cc3e24e3e9e
-timeCreated: 1685764708
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprite: {instanceID: 0}
+  - customProjectile: {instanceID: 0}
+  - fireEffect: {instanceID: 0}
+  - reloadStartEffect: {fileID: 8300000, guid: d2db090f68887014b842a794157d3db9, type: 3}
+  - reloadEndEffect: {fileID: 8300000, guid: 2a34103e662f1034296c25c66428e1c3, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

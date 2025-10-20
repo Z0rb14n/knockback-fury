@@ -93,9 +93,14 @@ namespace Enemies.Ranged
             if (useProximityCheck) return;
             if (!useTriggerCheck) return;
             if (!other.GetComponent<PlayerMovementScript>()) return;
+
             _isPlayerInside = false;
-            StopCoroutine(_shootCoroutine);
-            _shootCoroutine = null;
+
+            if (_shootCoroutine != null)
+            {
+                StopCoroutine(_shootCoroutine);
+                _shootCoroutine = null;
+            }
         }
 
         /// <summary>

@@ -156,6 +156,9 @@ namespace Player
 
         private bool HasDash => _dashesRemaining > 0 || _hasMomentumDash || _hasKeepingInStrideDash;
 
+        //animation stuff
+        private Animator _animator;
+
         private void Awake()
         {
             instance = this;
@@ -164,6 +167,7 @@ namespace Player
             _weapon = GetComponentInChildren<Weapon>();
             _upgradeManager = GetComponent<PlayerUpgradeManager>();
             _sprite = GetComponent<SpriteRenderer>();
+            _animator = GetComponent<Animator>(); // <-- animation
             _mainCam = Camera.main;
             _velocity = Vector2.zero;
             InitializeContactFilters();
@@ -455,6 +459,11 @@ namespace Player
 
             Rigidbody2D.SlideResults results = _body.Slide(_velocity, Time.deltaTime, slideMovement);
             // Debug.Log(results.remainingVelocity + "," + results.slideHit.collider.gameObject.name + "," + results.surfaceHit.collider.gameObject.name);
+            //_body.Slide(_velocity, Time.deltaTime, slideMovement);
+
+            // Update animator
+            _animator.SetBool("isJumping", !Grounded);
+            _animator.SetFloat("xVelocity", Mathf.Abs(_velocity.x));
         }
 
         public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
