@@ -119,6 +119,7 @@ namespace Player
         private ContactFilter2D _ceilingFilter;
         private Rigidbody2D _body;
         private Vector2 _velocity;
+        private Vector2 _slideMostRecentNormal;
         private bool _dashing;
         private int _physicsCheckMask;
         private bool _hasKeepingInStrideDash;
@@ -146,10 +147,10 @@ namespace Player
         private Camera _mainCam;
         private GrappleHook _activeGrappleHook;
 
-        private bool Grounded => _body.IsTouching(_groundFilter);
-        private bool HitCeiling => _body.IsTouching(_ceilingFilter);
-        private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
-        private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
+        private bool Grounded => _body.IsTouching(_groundFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.up) > 0.9;
+        private bool HitCeiling => _body.IsTouching(_ceilingFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.down) > 0.9;
+        private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.right) > 0.9;
+        private bool IsOnRightWall => _body.IsTouching(_rightWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.left) > 0.9;
 
         private bool HasDash => _dashesRemaining > 0 || _hasMomentumDash || _hasKeepingInStrideDash;
 
@@ -391,7 +392,7 @@ namespace Player
             {
                 _velocity += Physics2D.gravity * Time.deltaTime;
             }
-            else
+            else if (IsOnLeftWall || IsOnRightWall)
             {
                 VerticalMovementLogic(yInput);
             }
@@ -440,8 +441,7 @@ namespace Player
             }
 
             Rigidbody2D.SlideResults results = _body.Slide(_velocity, Time.deltaTime, slideMovement);
-            // Debug.Log(results.remainingVelocity + "," + results.slideHit.collider.gameObject.name + "," + results.surfaceHit.collider.gameObject.name);
-            //_body.Slide(_velocity, Time.deltaTime, slideMovement);
+            _slideMostRecentNormal = results.slideHit.normal;
 
             // Update animator
             _animator.SetBool(IsJumpingAnimatorHash, !Grounded);
