@@ -140,7 +140,7 @@ namespace Enemies
                 PlayerMovementScript player = PlayerMovementScript.Instance;
                 Vector2 diff = player.transform.position - transform.position;
                 bool direction;
-                if (player.IsWallSliding && diff.magnitude <= targetDistance)
+                if (diff.magnitude <= targetDistance)
                 {
                     _body.AddForce(new Vector2(100f * Mathf.Sign(diff.x), jumpForce * 100));
                     direction = Mathf.Sign(diff.x) >= 0;

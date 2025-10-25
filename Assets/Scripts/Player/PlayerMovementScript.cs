@@ -33,14 +33,10 @@ namespace Player
         public float maxYSpeed = 30;
         [Min(0), Tooltip("Deceleration (m/s2) when above max Y speed")]
         public float decelYWhenAbove = 5;
-        [Min(0), Tooltip("Slide speed when on a wall")]
-        public float slideSpeed = 0.05f;
         public Rigidbody2D.SlideMovement slideMovement;
         [Header("KB Multiplier")]
         [Min(0), Tooltip("Grounded KB Multiplier for weapons")]
         public float groundedKBMultiplier = 2;
-        [Min(0), Tooltip("Wall Slid KB Multiplier for weapons")]
-        public float wallKBMultiplier = 2;
         [Header("Jump")]
         [Min(0), Tooltip("Jump Impulse")]
         public float jumpForce = 10;
@@ -98,8 +94,9 @@ namespace Player
             }
         }
         private static PlayerMovementScript instance;
+        private static readonly int IsJumpingAnimatorHash = Animator.StringToHash("isJumping");
+        private static readonly int XVelocityAnimatorHash = Animator.StringToHash("xVelocity");
 
-        public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
 
         public bool CanGrapple { get; set; } = true;
@@ -286,7 +283,8 @@ namespace Player
             }
             else
             {
-                newY = Mathf.MoveTowards(newY, 0, decel * Time.deltaTime);
+                // newY = Mathf.MoveTowards(newY, 0, decel * Time.deltaTime);
+                newY += Physics2D.gravity.y * Time.deltaTime;
             }
 
             float speedAboveMax = Mathf.Abs(originalY) - maxSpeed;
@@ -435,22 +433,6 @@ namespace Player
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
                 _platformsOn.Clear();
             }
-            bool isSlidingThisFrame = false;
-            
-            if (!Grounded && _velocity.y < 0 && !holdingDown)
-            {
-                if ((IsOnLeftWall || IsOnRightWall) && Input.GetAxisRaw("Horizontal") != 0)
-                {
-                    isSlidingThisFrame = true;
-                    WallSlideLogic();
-                }
-            }
-
-            if (IsWallSliding && !isSlidingThisFrame)
-            {
-                PlayerWeaponControl.Instance.OnStopWallSlide();
-                IsWallSliding = false;
-            }
 
             foreach (IPlayerVelocityEffector effector in _playerVelocityEffectors)
             {
@@ -462,8 +444,8 @@ namespace Player
             //_body.Slide(_velocity, Time.deltaTime, slideMovement);
 
             // Update animator
-            _animator.SetBool("isJumping", !Grounded);
-            _animator.SetFloat("xVelocity", Mathf.Abs(_velocity.x));
+            _animator.SetBool(IsJumpingAnimatorHash, !Grounded);
+            _animator.SetFloat(XVelocityAnimatorHash, Mathf.Abs(_velocity.x));
         }
 
         public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
@@ -473,7 +455,6 @@ namespace Player
             if (isWeapon)
             {
                 if (Grounded) vec *= groundedKBMultiplier;
-                else if (IsWallSliding) vec *= wallKBMultiplier;
             }
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
@@ -504,22 +485,6 @@ namespace Player
             {
                 _dashesRemaining = maxDashes;
             }
-        }
-
-        private void WallSlideLogic()
-        {
-            //bool shouldStayStill = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S);
-            //float yVel = shouldStayStill ? 0 : -slideSpeed;
-            _velocity.y = -slideSpeed;
-            //_body.gravityScale = shouldStayStill ? 0 : 1;
-            if (!IsWallSliding)
-            {
-                PlayerWeaponControl.Instance.OnStartWallSlide();
-            }
-
-            IsWallSliding = true;
-
-            _timeOnWall += Time.fixedDeltaTime;
         }
 
         private void DashLogic(float xInput)

@@ -11,7 +11,6 @@ namespace Upgrades
     public class UpgradeDashDamageCanvas : MonoBehaviour
     {
         [SerializeField] private RectTransform adrenaline;
-        [SerializeField] private RectTransform stabilizedAim;
         [SerializeField] private RectTransform dashCharges;
         [SerializeField] private Image grappleCooldownObject;
         [SerializeField] private Image grappleCooldownGrey;
@@ -23,12 +22,10 @@ namespace Upgrades
         private RectTransform _targetAnalysisBackRect;
         private RectTransform _grappleCooldownBackRect;
         private TextMeshProUGUI _adrenalineText;
-        private TextMeshProUGUI _stabilizedAimText;
 
         private void Awake()
         {
             _adrenalineText = adrenaline.GetComponentInChildren<TextMeshProUGUI>();
-            _stabilizedAimText = stabilizedAim.GetComponentInChildren<TextMeshProUGUI>();
             _targetAnalysisBackRect = targetAnalysisGrey.GetComponent<RectTransform>();
             _grappleCooldownBackRect = grappleCooldownGrey.GetComponent<RectTransform>();
         }
@@ -40,10 +37,6 @@ namespace Upgrades
             int adrenalineStacks = Mathf.Min(playerWep.AdrenalineStacks, playerWep.maxAdrenalineStacks);
             adrenaline.gameObject.SetActive(adrenalineStacks > 0);
             _adrenalineText.text = adrenalineStacks > 1 ? adrenalineStacks.ToString() : "";
-            
-            int stabilizedAimStacks = Mathf.Min(playerWep.StabilizedAimStacks, playerWep.maxStabilizedAimStacks);
-            stabilizedAim.gameObject.SetActive(stabilizedAimStacks > 0);
-            _stabilizedAimText.text = stabilizedAimStacks > 1 ? stabilizedAimStacks.ToString() : "";
 
             int charges = playerMove.EffectiveDashes;
             for (int i = 0; i < dashCharges.childCount; i++)
