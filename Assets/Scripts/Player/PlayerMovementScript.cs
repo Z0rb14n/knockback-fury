@@ -492,7 +492,15 @@ namespace Player
             if (!Input.GetButtonDown("Dash")) return;
             if (!_dashing && HasDash && !Grounded && !Mathf.Approximately(xInput, 0))
             {
-                StartCoroutine(DashCoroutine(new Vector2(Mathf.Sign(xInput), 0)));
+                float yInput = Input.GetAxisRaw("Vertical");
+
+                // Clamp the vertical dash input to (15°) 
+                float verticalFactor = Mathf.Clamp(yInput, -0.2679f, 0.2679f);
+
+                // Combine horizontal and limited vertical input
+                Vector2 dashDir = new Vector2(Mathf.Sign(xInput), verticalFactor).normalized;
+
+                StartCoroutine(DashCoroutine(dashDir));
                 if (_dashesRemaining > 0) _dashesRemaining--;
                 else if (_hasKeepingInStrideDash) _hasKeepingInStrideDash = false;
                 else if (_hasMomentumDash) _hasMomentumDash = false;
