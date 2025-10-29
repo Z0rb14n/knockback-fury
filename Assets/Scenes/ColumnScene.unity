@@ -3042,10 +3042,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columnPrefabs:
   - go: {fileID: 309630346916411854, guid: b66726255fe89dd4cacf05e59df4d4ce, type: 3}
-    weight: 1
+    weight: 0.5
     canFlip: 0
   - go: {fileID: 309630346916411854, guid: 9d3c24fa758277f42aeeeb1f5734a9cf, type: 3}
-    weight: 1
+    weight: 0.5
     canFlip: 0
   - go: {fileID: 309630346916411854, guid: 93a27855a7487e847afe71a3752ff3c3, type: 3}
     weight: 0.5

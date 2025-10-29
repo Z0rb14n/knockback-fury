@@ -337,7 +337,7 @@ MonoBehaviour:
   decel: 20
   turnAroundMultiplier: 9
   decelWhenAbove: 50
-  maxYSpeed: 30
+  maxYSpeed: 20
   decelYWhenAbove: 5
   slideMovement:
     <maxIterations>k__BackingField: 5

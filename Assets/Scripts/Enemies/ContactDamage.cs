@@ -20,7 +20,7 @@ namespace Enemies
         /// <summary>
         /// Hits player: requests knockback, deals damage
         /// </summary>
-        private void OnCollisionStay2D(Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.collider.gameObject.layer != _playerLayer) return;
             PlayerHealth.Instance.TakeDamage(damage);
@@ -28,7 +28,7 @@ namespace Enemies
             PlayerMovementScript.Instance.RequestKnockback(knockbackDirection, knockbackForce);
         }
 
-        private void OnTriggerStay2D(Collider2D other)
+        private void OnCollisionEnter2D(Collider2D other)
         {
             if (!damageOnTrigger) return;
             if (other.gameObject.layer != _playerLayer) return;
