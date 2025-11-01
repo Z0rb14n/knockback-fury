@@ -494,7 +494,7 @@ namespace Player
             {
                 float yInput = Input.GetAxisRaw("Vertical");
 
-                // Clamp the vertical dash input to (15°) 
+                // Clamp the vertical dash input to (15 degrees) 
                 float verticalFactor = Mathf.Clamp(yInput, -0.2679f, 0.2679f);
 
                 // Combine horizontal and limited vertical input
