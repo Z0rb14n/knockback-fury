@@ -96,6 +96,7 @@ namespace Player
         private static PlayerMovementScript instance;
         private static readonly int IsJumpingAnimatorHash = Animator.StringToHash("isJumping");
         private static readonly int XVelocityAnimatorHash = Animator.StringToHash("xVelocity");
+        private static readonly int YVelocityAnimatorHash = Animator.StringToHash("yVelocity");
 
         public bool CanMove { get; set; } = true;
 
@@ -456,6 +457,7 @@ namespace Player
             // Update animator
             _animator.SetBool(IsJumpingAnimatorHash, !Grounded);
             _animator.SetFloat(XVelocityAnimatorHash, Mathf.Abs(_velocity.x));
+            _animator.SetFloat(YVelocityAnimatorHash, _velocity.y);
         }
 
         public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
