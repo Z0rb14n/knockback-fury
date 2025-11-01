@@ -420,6 +420,11 @@ namespace Player
                 _sprite.flipX = xDiff < 0;
             }
             HorizontalMovementLogic(xInput);
+            if (IsOnLeftWall && _velocity.x < 0 || IsOnRightWall && _velocity.x > 0)
+            {
+                _velocity.x = 0;
+            }
+
             GrappleHookLogic();
 
             WallJumpLogic(jumpButtonDown);
