@@ -261,7 +261,7 @@ namespace Player
         /// Runs vertical movement logic.
         /// </summary>
         /// <param name="yInput">Vertical input axis</param>
-        private void VerticalMovementLogic(float yInput)
+        private void VerticalWallMovementLogic(float yInput)
         {
             float originalY = _velocity.y;
             float newY = originalY;
@@ -394,7 +394,13 @@ namespace Player
             }
             else if (IsOnLeftWall || IsOnRightWall)
             {
-                VerticalMovementLogic(yInput);
+                VerticalWallMovementLogic(yInput);
+            }
+
+            if (HitCeiling && _velocity.y > 0)
+            {
+                _velocity.y = 0;
+                Debug.Log("Ceiling");
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool jumpButtonDown = Input.GetButtonDown("Jump");
