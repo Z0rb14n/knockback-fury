@@ -148,7 +148,7 @@ namespace Player
         private Camera _mainCam;
         private GrappleHook _activeGrappleHook;
 
-        private bool Grounded => _body.IsTouching(_groundFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.up) > 0.9;
+        private bool Grounded => _body.IsTouching(_groundFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.up) > 0.7;
         private bool HitCeiling => _body.IsTouching(_ceilingFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.down) > 0.9;
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.right) > 0.9;
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.left) > 0.9;
