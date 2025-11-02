@@ -86,7 +86,7 @@ namespace Enemies.Ranged
         public static Vector2 CalculateVelocity(Vector2 startingPos, Vector2 endingPos, float maxSpeed, float maxTime, float g = float.NaN)
         {
             Vector2 diff = endingPos - startingPos;
-            Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
+            // Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
             if (float.IsNaN(g)) g = -Physics2D.gravity.y;
 
             /*
@@ -96,7 +96,7 @@ namespace Enemies.Ranged
              */
             float t = Mathf.Clamp(Mathf.Sqrt(Mathf.Sqrt(4 / (g * g) * diff.sqrMagnitude)), 0.001f, maxTime);
             Vector2 numericalSolution = new(diff.x / t, diff.y / t + g * t / 2);
-            Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
+            // Debug.DrawLine(startingPos, startingPos + numericalSolution, Color.red, 2);
             //Debug.Log(numericalSolution.magnitude);
             return Vector2.ClampMagnitude(numericalSolution, maxSpeed);
         }
@@ -140,7 +140,7 @@ namespace Enemies.Ranged
              */
             
             Vector2 diff = endingPos - startingPos;
-            Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
+            // Debug.DrawLine(startingPos, endingPos, Color.cyan, 2);
             if (float.IsNaN(g)) g = -Physics2D.gravity.y;
             
             if (endingVel.magnitude < 0.1f) return CalculateVelocity(startingPos, endingPos, maxSpeed, maxTime, g);
@@ -164,18 +164,18 @@ namespace Enemies.Ranged
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (time == -1)
             {
-                Debug.LogWarning("No solutions to Quartic polynomial.");
+                // Debug.LogWarning("No solutions to Quartic polynomial.");
                 float approximateTime = (diff.magnitude) / maxSpeed;
                 endingPos += endingVel * approximateTime;
-                Debug.DrawLine(startingPos, endingPos, Color.green, 2);
+                // Debug.DrawLine(startingPos, endingPos, Color.green, 2);
                 return CalculateVelocity(startingPos, endingPos, maxSpeed, maxTime, g);
             }
 
-            Debug.DrawLine(startingPos, startingPos + newVel, Color.red, 2);
-            Vector2 collision = new(startingPos.x + newVel.x * time,
-                startingPos.y + newVel.y * time - g * time * time / 2);
-            DebugUtil.DrawCircle(collision, 1, 8, Color.cyan, 4);
-            Debug.Log(newVel.magnitude);
+            // Debug.DrawLine(startingPos, startingPos + newVel, Color.red, 2);
+            // Vector2 collision = new(startingPos.x + newVel.x * time,
+            //     startingPos.y + newVel.y * time - g * time * time / 2);
+            // DebugUtil.DrawCircle(collision, 1, 8, Color.cyan, 4);
+            // Debug.Log(newVel.magnitude);
             return Vector2.ClampMagnitude(newVel, maxSpeed);
         }
 
