@@ -1517,6 +1517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AccessPlatformLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 7887206165578070628, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -28046,6 +28050,10 @@ PrefabInstance:
     - target: {fileID: 7887206165578070628, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_Name
       value: AccessPlatformRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7887206165578070628, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_RootOrder
