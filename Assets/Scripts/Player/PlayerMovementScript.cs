@@ -401,11 +401,13 @@ namespace Player
             if (HitCeiling && _velocity.y > 0)
             {
                 _velocity.y = 0;
+            } else if (Grounded && _velocity.y < 0)
+            {
+                _velocity.y = 0;
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool jumpButtonDown = Input.GetButtonDown("Jump");
             bool jumpButton = Input.GetButton("Jump");
-            bool holdingDown = Input.GetButton("Down");
             switch (xInput)
             {
                 case > 0 when IsOnRightWall:
@@ -440,7 +442,7 @@ namespace Player
             JumpLogic(jumpButtonDown, jumpButton);
             DashLogic(xInput);
 
-            if (holdingDown)
+            if (Input.GetButton("Down"))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
                 _platformsOn.Clear();
