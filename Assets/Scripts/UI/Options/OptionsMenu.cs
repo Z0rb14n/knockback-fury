@@ -27,14 +27,14 @@ namespace UI.Options
         [SerializeField] private TextMeshProUGUI frameRateValueText;
         [SerializeField] private string unlimitedFrameRateString = "Unlimited";
 
-        private int SetFps => PlayerPrefs.GetInt("TargetFPS", defaultTargetFPS);
-
         private void Awake()
         {
             LoadSettings();
             vsyncToggle.isOn = PlayerPrefs.GetInt("VSync", defaultVSync) == 1;
-            frameRateSlider.value = SetFps;
-            frameRateValueText.text = SetFps == -1 ? unlimitedFrameRateString : SetFps.ToString();
+            int fpsValue = PlayerPrefs.GetInt("TargetFPS", defaultTargetFPS);
+            frameRateSlider.value = fpsValue;
+            frameRateValueText.text = fpsValue == -1 ? unlimitedFrameRateString : fpsValue.ToString();
+            gameObject.SetActive(false);
         }
 
         // --- Resolution + Fullscreen ---
@@ -55,7 +55,7 @@ namespace UI.Options
                 newFps = -1;
             }
             Application.targetFrameRate = newFps;
-            frameRateValueText.text = newFps == -1 ? unlimitedFrameRateString : SetFps.ToString();
+            frameRateValueText.text = newFps == -1 ? unlimitedFrameRateString : newFps.ToString();
             PlayerPrefs.SetInt("TargetFPS", newFps);
             PlayerPrefs.Save();
         }
@@ -80,8 +80,7 @@ namespace UI.Options
             FullScreenMode mode = (FullScreenMode)PlayerPrefs.GetInt("FullScreenMode", (int)defaultScreenMode);
             Screen.SetResolution(width, height, mode);
 
-            int fps = PlayerPrefs.GetInt("TargetFPS", defaultTargetFPS);
-            Application.targetFrameRate = fps;
+            Application.targetFrameRate = PlayerPrefs.GetInt("TargetFPS", defaultTargetFPS);
 
             int vsync = PlayerPrefs.GetInt("VSync", defaultVSync);
             QualitySettings.vSyncCount = vsync;
