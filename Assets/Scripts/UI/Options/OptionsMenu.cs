@@ -32,7 +32,7 @@ namespace UI.Options
             LoadSettings();
             vsyncToggle.isOn = PlayerPrefs.GetInt("VSync", defaultVSync) == 1;
             int fpsValue = PlayerPrefs.GetInt("TargetFPS", defaultTargetFPS);
-            frameRateSlider.value = fpsValue;
+            frameRateSlider.value = fpsValue == -1 ? frameRateSlider.maxValue : fpsValue;
             frameRateValueText.text = fpsValue == -1 ? unlimitedFrameRateString : fpsValue.ToString();
             gameObject.SetActive(false);
         }
