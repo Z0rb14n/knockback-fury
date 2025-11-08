@@ -539,7 +539,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.UICursor
   cursorInUI: {fileID: 2800000, guid: 997986936357bbe4fafc88b1432b59ae, type: 3}
+  cursorCenterInUI: {x: 0, y: 0}
   cursorInCombat: {fileID: 2800000, guid: c3663ce8232368c419e75a19399b93da, type: 3}
+  cursorCenterInCombat: {x: 16, y: 16}
 --- !u!1 &862911437
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,45 +766,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 188.16405
-      objectReference: {fileID: 0}
-    - target: {fileID: 4592325573558260817, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -41.18165
-      objectReference: {fileID: 0}
     - target: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
       propertyPath: m_Name
       value: SettingsMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 6860118764237842642, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 188.16405
-      objectReference: {fileID: 0}
-    - target: {fileID: 7157627991463300483, guid: e3d125314c84e204da93298de4553a20, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -289.22845
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
