@@ -17,7 +17,8 @@ namespace Enemies
         protected Rigidbody2D _body;
         protected SpriteRenderer _sprite;
         protected int _spriteDirection;
-        protected float _switchTargetDistance;
+        [SerializeField]
+        protected float switchTargetDistance = 0.2f;
         protected bool _canMove;
         protected Collider2D _collider2D;
         protected Vector2 _position;
@@ -38,7 +39,6 @@ namespace Enemies
         {
             InitializeCommonVariables();
             _originalSpeed = speed;
-            _switchTargetDistance = 0.2f;
             _canMove = true;
         }
 
@@ -78,7 +78,7 @@ namespace Enemies
             _position = _collider2D.bounds.center;
             _canMove = DetermineCanMove();
             if (!_isAttacking) DetermineDirection();
-            if (Vector2.Distance(transform.position, _targetPos) < _switchTargetDistance)
+            if (Vector2.Distance(transform.position, _targetPos) < switchTargetDistance)
             {
                 SwitchTargets();
                 StartCoroutine(PauseAtDestination());

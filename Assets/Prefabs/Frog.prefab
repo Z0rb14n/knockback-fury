@@ -195,6 +195,7 @@ MonoBehaviour:
   speed: 0
   pauseTime: 0
   maxFallHeight: 0
+  switchTargetDistance: 1
   jumpForce: 10
   jumpCooldown: 2
   stunDuration: 0.5

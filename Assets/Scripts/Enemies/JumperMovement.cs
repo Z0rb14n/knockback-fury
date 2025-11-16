@@ -49,7 +49,6 @@ namespace Enemies
             InitializeContactFilters();
             _canJump = true;
             _canResetVelocity = true;
-            _switchTargetDistance = 1f;
         }
 
         private void InitializeContactFilters()
