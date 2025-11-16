@@ -47,7 +47,6 @@ namespace UI.Options
             List<TMP_Dropdown.OptionData> options = resolutions
                 .Select(res => new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).Reverse().ToList();
             resolutionDropdown.options = options;
-            Debug.Log(Screen.currentResolution);
             resolutionDropdown.SetValueWithoutNotify(options.IndexOf(new TMP_Dropdown.OptionData($"{Screen.currentResolution.width} x {Screen.currentResolution.height}")));
         }
 
