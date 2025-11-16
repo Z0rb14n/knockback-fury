@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace Editor
 {
-    [CustomEditor(typeof(JumperMovement))]
+    [CustomEditor(typeof(JumperMovement)), CanEditMultipleObjects]
     public class JumperMovementEditor : UnityEditor.Editor
     {
         public void OnSceneGUI()

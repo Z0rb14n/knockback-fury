@@ -8,6 +8,8 @@ namespace Enemies
     public class JumperMovement : PatrolMovement
     {
         [Tooltip("Jump force (x100)"), Min(0)] public float jumpForce;
+        [Tooltip("Jump cooldown"), Min(0), SerializeField] private float jumpCooldown = 4;
+        [Tooltip("Duration of stun when hit"), Min(0), SerializeField] private float stunDuration = 0.5f;
 
         [SerializeField] private Collider2D normalCollider;
         [SerializeField] private Collider2D colliderOnWall;
@@ -187,7 +189,7 @@ namespace Enemies
         private IEnumerator JumpCooldown()
         {
             _canJump = false;
-            yield return new WaitForSeconds(4);
+            yield return new WaitForSeconds(jumpCooldown);
             _canJump = true;
             CheckIfFlip();
         }
@@ -201,7 +203,7 @@ namespace Enemies
         {
             _isStunned = true;
             _body.gravityScale = 1;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(stunDuration);
             _isStunned = false;
         }
 
