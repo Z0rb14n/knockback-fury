@@ -8,7 +8,7 @@ namespace CustomTiles
     ///
     /// Can alternatively be placed on custom diagonal structures.
     /// </summary>
-    [RequireComponent(typeof(PlatformEffector2D))]
+    [RequireComponent(typeof(Collider2D))]
     public class PlatformTileScript : MonoBehaviour
     {
         private PlayerMovementScript _playerMovement;

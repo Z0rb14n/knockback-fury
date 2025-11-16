@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Player;
+using UI.Options;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Upgrades;
@@ -17,9 +18,12 @@ namespace Pause
         [SerializeField] private RectTransform upgradeList;
         [SerializeField] private GameObject upgradePrefab;
         
+        private OptionsMenu _optionsMenu;
+        
         private void Awake()
         {
             actualPauseMenu.gameObject.SetActive(false);
+            _optionsMenu = FindAnyObjectByType<OptionsMenu>(FindObjectsInactive.Include);
         }
 
         private void Update()
@@ -63,11 +67,9 @@ namespace Pause
             Hide();
         }
 
-        public void OnRestartButtonClicked()
+        public void OnOptionsButtonClicked()
         {
-            MiscUtil.EnablePlayerEnemyCollision();
-            Hide();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _optionsMenu.gameObject.SetActive(true);
         }
 
         public void OnLobbyButtonClicked()

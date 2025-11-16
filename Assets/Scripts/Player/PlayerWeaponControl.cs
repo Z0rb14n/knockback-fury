@@ -24,10 +24,9 @@ namespace Player
         private static PlayerWeaponControl _instance;
 
         private float AdrenalineDamageBoost => adrenalineBoost * Mathf.Min(AdrenalineStacks, maxAdrenalineStacks);
-        private float StabilizedAimDamageBoost => stabilizedAimBoost * Mathf.Min(StabilizedAimStacks, maxStabilizedAimStacks);
         private float FirstStrikeDamageBoost => _isFirstStrikeActive ? firstStrikeBoost : 0;
 
-        public float NonMeleeDamageBoost => AdrenalineDamageBoost + StabilizedAimDamageBoost;
+        public float NonMeleeDamageBoost => AdrenalineDamageBoost;
         
         public float TotalDamageMult
         {
@@ -35,7 +34,6 @@ namespace Player
             {
                 float ret = 1;
                 ret += PlayerUpgradeManager.Instance[UpgradeType.Adrenaline] * AdrenalineDamageBoost;
-                ret += PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] * StabilizedAimDamageBoost;
                 ret += PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] * FirstStrikeDamageBoost;
                 return ret;
             }
@@ -44,9 +42,6 @@ namespace Player
         [SerializeField] public int maxAdrenalineStacks = 4;
         [SerializeField] private float adrenalineLength = 4;
         [SerializeField, Min(0)] private float adrenalineBoost = 0.15f;
-        [SerializeField] public int maxStabilizedAimStacks = 4;
-        [SerializeField] private float stabilizedAimLength = 5;
-        [SerializeField, Min(0)] private float stabilizedAimBoost = 0.15f;
         [SerializeField, Min(0)] private float firstStrikeBoost = 0.5f;
         [SerializeField, Range(0,100)] public float lastStrikeBoost = 50;
         [SerializeField] private GameObject weaponItemPrefab;
@@ -55,12 +50,9 @@ namespace Player
         private Weapon _weapon;
         private Camera _cam;
         private Rigidbody2D _body;
-        private IEnumerator _stabilizedAimCoroutine;
         private bool _isFirstStrikeActive;
 
         public readonly List<WeaponPickup> weaponsOn = new();
-
-        public int StabilizedAimStacks { get; private set; }
 
         public int AdrenalineStacks { get; private set; }
 
@@ -139,23 +131,6 @@ namespace Player
             }
         }
 
-        public void OnStartWallSlide()
-        {
-            if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
-            {
-                _stabilizedAimCoroutine = StabilizedAimStartCoroutine();
-                StartCoroutine(_stabilizedAimCoroutine);   
-            }
-        }
-
-        public void OnStopWallSlide()
-        {
-            if (PlayerUpgradeManager.Instance[UpgradeType.StabilizedAim] > 0)
-            {
-                StopCoroutine(_stabilizedAimCoroutine);
-            }
-        }
-
         public void OnFinishReload()
         {
             if (PlayerUpgradeManager.Instance[UpgradeType.FirstStrike] > 0)
@@ -193,23 +168,6 @@ namespace Player
             GameObject itemObject = Instantiate(weaponItemPrefab, transform.position, Quaternion.identity);
             WeaponPickup pickupObject = itemObject.GetComponent<WeaponPickup>();
             pickupObject.UpdateSprite(shouldDrop);
-        }
-
-        private IEnumerator StabilizedAimStartCoroutine()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(1);
-                StartCoroutine(StabilizedAimBoostCoroutine());
-            }
-            // ReSharper disable once IteratorNeverReturns
-        }
-
-        private IEnumerator StabilizedAimBoostCoroutine()
-        {
-            StabilizedAimStacks++;
-            yield return new WaitForSeconds(stabilizedAimLength);
-            StabilizedAimStacks--;
         }
 
         private IEnumerator AdrenalineCoroutine()

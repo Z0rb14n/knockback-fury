@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 2364880788829452866}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.14, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4488847752800442322}
@@ -183,8 +183,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.72
+  m_Offset: {x: 0.005610347, y: -0.07573834}
+  m_Radius: 0.3525286
 --- !u!50 &4488847752800442323
 Rigidbody2D:
   serializedVersion: 5
@@ -224,16 +224,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daec85cff96e4fe0b3ba016a72f63c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 2
+  projectileSpeed: 30
   bulletDamage: 1
   knockbackForce: 100
-  delayBeforeDestruction: 4
+  delayBeforeDestruction: 2
   verticalKnockback: 0.04
   knockbackStrength: 0.1
   explosionVFX: {fileID: 4706453752192310371, guid: e637501e229697e469289c858ff2d237, type: 3}
   radius: 1
   playerDamage: 100
-  playerVelocityPrediction: 0
+  playerVelocityPrediction: 1
   bombAudioClip: {fileID: 8300000, guid: c307762ad627d5546b3194f594fdf550, type: 3}
 --- !u!82 &8226202338600707391
 AudioSource:

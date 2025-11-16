@@ -33,14 +33,10 @@ namespace Player
         public float maxYSpeed = 30;
         [Min(0), Tooltip("Deceleration (m/s2) when above max Y speed")]
         public float decelYWhenAbove = 5;
-        [Min(0), Tooltip("Slide speed when on a wall")]
-        public float slideSpeed = 0.05f;
         public Rigidbody2D.SlideMovement slideMovement;
         [Header("KB Multiplier")]
         [Min(0), Tooltip("Grounded KB Multiplier for weapons")]
         public float groundedKBMultiplier = 2;
-        [Min(0), Tooltip("Wall Slid KB Multiplier for weapons")]
-        public float wallKBMultiplier = 2;
         [Header("Jump")]
         [Min(0), Tooltip("Jump Impulse")]
         public float jumpForce = 10;
@@ -98,8 +94,10 @@ namespace Player
             }
         }
         private static PlayerMovementScript instance;
+        private static readonly int IsJumpingAnimatorHash = Animator.StringToHash("isJumping");
+        private static readonly int XVelocityAnimatorHash = Animator.StringToHash("xVelocity");
+        private static readonly int YVelocityAnimatorHash = Animator.StringToHash("yVelocity");
 
-        public bool IsWallSliding { get; private set; }
         public bool CanMove { get; set; } = true;
 
         public bool CanGrapple { get; set; } = true;
@@ -122,6 +120,7 @@ namespace Player
         private ContactFilter2D _ceilingFilter;
         private Rigidbody2D _body;
         private Vector2 _velocity;
+        private Vector2 _slideMostRecentNormal;
         private bool _dashing;
         private int _physicsCheckMask;
         private bool _hasKeepingInStrideDash;
@@ -149,10 +148,10 @@ namespace Player
         private Camera _mainCam;
         private GrappleHook _activeGrappleHook;
 
-        private bool Grounded => _body.IsTouching(_groundFilter);
-        private bool HitCeiling => _body.IsTouching(_ceilingFilter);
-        private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
-        private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
+        private bool Grounded => _body.IsTouching(_groundFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.up) > 0.7;
+        private bool HitCeiling => _body.IsTouching(_ceilingFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.down) > 0.9;
+        private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.right) > 0.9;
+        private bool IsOnRightWall => _body.IsTouching(_rightWallFilter) || Vector2.Dot(_slideMostRecentNormal, Vector2.left) > 0.9;
 
         private bool HasDash => _dashesRemaining > 0 || _hasMomentumDash || _hasKeepingInStrideDash;
 
@@ -263,7 +262,7 @@ namespace Player
         /// Runs vertical movement logic.
         /// </summary>
         /// <param name="yInput">Vertical input axis</param>
-        private void VerticalMovementLogic(float yInput)
+        private void VerticalWallMovementLogic(float yInput)
         {
             float originalY = _velocity.y;
             float newY = originalY;
@@ -286,7 +285,8 @@ namespace Player
             }
             else
             {
-                newY = Mathf.MoveTowards(newY, 0, decel * Time.deltaTime);
+                // newY = Mathf.MoveTowards(newY, 0, decel * Time.deltaTime);
+                newY += Physics2D.gravity.y * Time.deltaTime;
             }
 
             float speedAboveMax = Mathf.Abs(originalY) - maxSpeed;
@@ -393,14 +393,21 @@ namespace Player
             {
                 _velocity += Physics2D.gravity * Time.deltaTime;
             }
-            else
+            else if (IsOnLeftWall || IsOnRightWall)
             {
-                VerticalMovementLogic(yInput);
+                VerticalWallMovementLogic(yInput);
+            }
+
+            if (HitCeiling && _velocity.y > 0)
+            {
+                _velocity.y = 0;
+            } else if (Grounded && _velocity.y < 0)
+            {
+                _velocity.y = 0;
             }
             float xInput = Input.GetAxisRaw("Horizontal");
             bool jumpButtonDown = Input.GetButtonDown("Jump");
             bool jumpButton = Input.GetButton("Jump");
-            bool holdingDown = Input.GetButton("Down");
             switch (xInput)
             {
                 case > 0 when IsOnRightWall:
@@ -416,6 +423,11 @@ namespace Player
                 _sprite.flipX = xDiff < 0;
             }
             HorizontalMovementLogic(xInput);
+            if (IsOnLeftWall && _velocity.x < 0 || IsOnRightWall && _velocity.x > 0)
+            {
+                _velocity.x = 0;
+            }
+
             GrappleHookLogic();
 
             WallJumpLogic(jumpButtonDown);
@@ -430,26 +442,10 @@ namespace Player
             JumpLogic(jumpButtonDown, jumpButton);
             DashLogic(xInput);
 
-            if (holdingDown)
+            if (Input.GetButton("Down"))
             {
                 foreach (PlatformTileScript platform in _platformsOn) platform.TemporarilyIgnore();
                 _platformsOn.Clear();
-            }
-            bool isSlidingThisFrame = false;
-            
-            if (!Grounded && _velocity.y < 0 && !holdingDown)
-            {
-                if ((IsOnLeftWall || IsOnRightWall) && Input.GetAxisRaw("Horizontal") != 0)
-                {
-                    isSlidingThisFrame = true;
-                    WallSlideLogic();
-                }
-            }
-
-            if (IsWallSliding && !isSlidingThisFrame)
-            {
-                PlayerWeaponControl.Instance.OnStopWallSlide();
-                IsWallSliding = false;
             }
 
             foreach (IPlayerVelocityEffector effector in _playerVelocityEffectors)
@@ -458,12 +454,12 @@ namespace Player
             }
 
             Rigidbody2D.SlideResults results = _body.Slide(_velocity, Time.deltaTime, slideMovement);
-            // Debug.Log(results.remainingVelocity + "," + results.slideHit.collider.gameObject.name + "," + results.surfaceHit.collider.gameObject.name);
-            //_body.Slide(_velocity, Time.deltaTime, slideMovement);
+            _slideMostRecentNormal = results.slideHit.normal;
 
             // Update animator
-            _animator.SetBool("isJumping", !Grounded);
-            _animator.SetFloat("xVelocity", Mathf.Abs(_velocity.x));
+            _animator.SetBool(IsJumpingAnimatorHash, !Grounded);
+            _animator.SetFloat(XVelocityAnimatorHash, Mathf.Abs(_velocity.x));
+            _animator.SetFloat(YVelocityAnimatorHash, _velocity.y);
         }
 
         public void RequestKnockback(Vector2 dir, float str, bool isWeapon = false) => RequestKnockback(dir * str, isWeapon);
@@ -473,7 +469,6 @@ namespace Player
             if (isWeapon)
             {
                 if (Grounded) vec *= groundedKBMultiplier;
-                else if (IsWallSliding) vec *= wallKBMultiplier;
             }
             // honestly shouldn't really matter if it's here or just an addForce call
             // but this *feels* slower/unclean but idk
@@ -506,28 +501,20 @@ namespace Player
             }
         }
 
-        private void WallSlideLogic()
-        {
-            //bool shouldStayStill = CrossRunInfo.HasUpgrade(PermUpgradeType.TheRatWhoGrips) && !Input.GetKey(KeyCode.S);
-            //float yVel = shouldStayStill ? 0 : -slideSpeed;
-            _velocity.y = -slideSpeed;
-            //_body.gravityScale = shouldStayStill ? 0 : 1;
-            if (!IsWallSliding)
-            {
-                PlayerWeaponControl.Instance.OnStartWallSlide();
-            }
-
-            IsWallSliding = true;
-
-            _timeOnWall += Time.fixedDeltaTime;
-        }
-
         private void DashLogic(float xInput)
         {
             if (!Input.GetButtonDown("Dash")) return;
             if (!_dashing && HasDash && !Grounded && !Mathf.Approximately(xInput, 0))
             {
-                StartCoroutine(DashCoroutine(new Vector2(Mathf.Sign(xInput), 0)));
+                float yInput = Input.GetAxisRaw("Vertical");
+
+                // Clamp the vertical dash input to (15 degrees) 
+                float verticalFactor = Mathf.Clamp(yInput, -0.2679f, 0.2679f);
+
+                // Combine horizontal and limited vertical input
+                Vector2 dashDir = new Vector2(Mathf.Sign(xInput), verticalFactor).normalized;
+
+                StartCoroutine(DashCoroutine(dashDir));
                 if (_dashesRemaining > 0) _dashesRemaining--;
                 else if (_hasKeepingInStrideDash) _hasKeepingInStrideDash = false;
                 else if (_hasMomentumDash) _hasMomentumDash = false;

@@ -14,7 +14,7 @@
     {
         CloakAndDagger, FarStride, PersonalSpace, SleightOfPaws,
         TossBack, TargetAnalysis, KeepingInStride, BogglingEyes,
-        Momentum, Adrenaline, SneakyJumper, StabilizedAim,
+        Momentum, Adrenaline, SneakyJumper,
         FirstStrike, EfficientScurry, LastStrike, OneYearOfReload,
         SneakyRunner, DeadlyRunner, SpeedyRunner, RunAndGun,
         ReinforcedCord, BountyHunter, RenewedVigor, RatInTheJungle,
