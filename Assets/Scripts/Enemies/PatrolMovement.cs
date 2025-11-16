@@ -45,7 +45,7 @@ namespace Enemies
             if (patrolPoints.Length > 0)
             {
                 _target = 0;
-                _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
+                _targetPos = new Vector2(patrolPoints[0].position.x, _body.position.y);
             }
 
             _spriteDirection = 1;
@@ -68,11 +68,11 @@ namespace Enemies
         /// </summary>
         protected void DoCommonUpdates()
         {
-            _targetPos.y = transform.position.y;
+            _targetPos.y = _body.position.y; // Jon TODO: ?????
             _position = _collider2D.bounds.center;
             _canMove = DetermineCanMove();
             if (!_isAttacking) DetermineDirection();
-            if (Vector2.Distance(transform.position, _targetPos) < switchTargetDistance)
+            if (Vector2.Distance(_body.position, _targetPos) < switchTargetDistance)
             {
                 SwitchTargets();
                 StartCoroutine(PauseAtDestination());
@@ -106,7 +106,7 @@ namespace Enemies
                 }
                 else
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+                    _body.MovePosition(Vector2.MoveTowards(_body.position, target, speed * Time.deltaTime));
                 }
             }
         }
@@ -210,12 +210,12 @@ namespace Enemies
             if (_target == 1)
             {
                 _target = 0;
-                _targetPos = new Vector2(patrolPoints[0].position.x, transform.position.y);
+                _targetPos = new Vector2(patrolPoints[0].position.x, _body.position.y);
             }
             else
             {
                 _target = 1;
-                _targetPos = new Vector2(patrolPoints[1].position.x, transform.position.y);
+                _targetPos = new Vector2(patrolPoints[1].position.x, _body.position.y);
             }
         }
 
