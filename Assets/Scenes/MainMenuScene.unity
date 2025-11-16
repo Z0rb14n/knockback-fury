@@ -520,12 +520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c73bcc3472024418b69bc19fe13151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultWidth: 1920
-  defaultHeight: 1080
-  defaultScreenMode: 1
-  defaultRefreshRate: 60
-  defaultTargetFPS: 60
-  defaultVSync: 1
 --- !u!114 &595341457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1353,25 +1347,25 @@ AudioSource:
   m_GameObject: {fileID: 1701958875}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6138424928547698725, guid: 011ad98ff87cfdd4baadd33fc45e3bf3, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: ed36f2d6cc5325448874dc0c77d94773, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.174
+  m_Volume: 1
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassEffects: 1
+  BypassListenerEffects: 1
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1431,7 +1425,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
