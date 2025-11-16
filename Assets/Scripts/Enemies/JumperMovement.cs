@@ -37,9 +37,8 @@ namespace Enemies
         private bool IsOnLeftWall => _body.IsTouching(_leftWallFilter);
         private bool IsOnRightWall => _body.IsTouching(_rightWallFilter);
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _animator = GetComponent<Animator>();
         }
 

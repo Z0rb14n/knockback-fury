@@ -196,6 +196,9 @@ MonoBehaviour:
   pauseTime: 0
   maxFallHeight: 0
   switchTargetDistance: 1
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 27451
   jumpForce: 10
   jumpCooldown: 2
   stunDuration: 0.5

@@ -23,17 +23,11 @@ namespace Enemies
         protected Collider2D _collider2D;
         protected Vector2 _position;
         protected bool _isAttacking;
+        [SerializeField]
         protected LayerMask obstacleLayerMask;
 
         private float _originalSpeed;
         private Vector2 _colliderSize;
-
-        protected virtual void Awake()
-        {
-            obstacleLayerMask =
-                ~LayerMask.GetMask("Enemy", "Player", "EnemyIgnorePlatform", "EnemyBomb", "Ignore Raycast");
-        }
-
 
         protected virtual void Start()
         {
