@@ -216,7 +216,8 @@ MonoBehaviour:
     <useNoMove>k__BackingField: 0
     <useSimulationMove>k__BackingField: 0
     <useAttachedTriggers>k__BackingField: 0
-  jumpForce: 10
+  horizontalJumpForce: 2
+  verticalJumpForce: 20
   jumpCooldown: 2
   stunDuration: 0.5
   normalCollider: {fileID: 6553265572266371507}

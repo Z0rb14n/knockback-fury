@@ -7,7 +7,9 @@ namespace Enemies
     [RequireComponent(typeof(Animator))]
     public class JumperMovement : PatrolMovement
     {
-        [Tooltip("Jump force (x100)"), Min(0)] public float jumpForce;
+        [Tooltip("Horizontal Jump Force"), Min(0), SerializeField]
+        private float horizontalJumpForce = 2;
+        [Tooltip("Jump force"), Min(0), SerializeField] private float verticalJumpForce = 20;
         [Tooltip("Jump cooldown"), Min(0), SerializeField] private float jumpCooldown = 4;
         [Tooltip("Duration of stun when hit"), Min(0), SerializeField] private float stunDuration = 0.5f;
 
@@ -138,16 +140,16 @@ namespace Enemies
             if (Grounded)
             {
                 PlayerMovementScript player = PlayerMovementScript.Instance;
-                Vector2 diff = player.transform.position - transform.position;
+                Vector2 diff = player.Pos - _body.position;
                 bool direction;
                 if (diff.magnitude <= targetDistance)
                 {
-                    _body.AddForce(new Vector2(100f * Mathf.Sign(diff.x), jumpForce * 100));
+                    _body.AddForce(new Vector2(horizontalJumpForce * Mathf.Sign(diff.x), verticalJumpForce), ForceMode2D.Impulse);
                     direction = Mathf.Sign(diff.x) >= 0;
                 }
                 else
                 {
-                    _body.AddForce(new Vector2(100f * Direction, jumpForce * 100));
+                    _body.AddForce(new Vector2(horizontalJumpForce * Direction, verticalJumpForce), ForceMode2D.Impulse);
                     direction = Direction >= 0;
                 }
 
@@ -155,12 +157,12 @@ namespace Enemies
             }
             else if (IsOnLeftWall)
             {
-                _body.AddForce(new Vector2(100f, jumpForce * 100));
+                _body.AddForce(new Vector2(horizontalJumpForce, verticalJumpForce), ForceMode2D.Impulse);
                 shouldFlipSprite = true;
             }
             else
             {
-                _body.AddForce(new Vector2(-100f, jumpForce * 100));
+                _body.AddForce(new Vector2(-horizontalJumpForce, verticalJumpForce), ForceMode2D.Impulse);
             }
 
             _sprite.flipX = shouldFlipSprite;
