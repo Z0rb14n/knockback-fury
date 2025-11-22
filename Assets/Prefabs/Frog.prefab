@@ -359,3 +359,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveToPlayer: 0
   force: 20
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4224

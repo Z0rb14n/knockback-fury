@@ -12,6 +12,7 @@ namespace Enemies
     {
         [SerializeField] private bool moveToPlayer;
         [SerializeField] private float force = 2;
+        [SerializeField] private LayerMask layerMask;
         private Rigidbody2D _body;
         private ContactFilter2D _enemyBelowFilter;
         private PlayerMovementScript _player;
@@ -24,7 +25,7 @@ namespace Enemies
             _player = PlayerMovementScript.Instance;
             _enemyBelowFilter = new ContactFilter2D
             {
-                layerMask = LayerMask.GetMask("Enemy", "EnemyIgnorePlatform"),
+                layerMask = layerMask,
                 useLayerMask = true,
                 useNormalAngle = true,
                 minNormalAngle = 225,
@@ -40,6 +41,7 @@ namespace Enemies
                 {
                     _isMotionActive = true;
                     _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
+                    Debug.Log("Motion now active" + gameObject.name);
                 }
                 Vector2 dir = moveToPlayer ? new Vector2(force * Mathf.Sign(_player.Pos.x - _body.position.x), 0) : _forceDir;
                 _body.MovePosition(_body.position + dir * Time.fixedDeltaTime);
