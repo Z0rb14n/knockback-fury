@@ -16,6 +16,7 @@ namespace Enemies
         private ContactFilter2D _enemyBelowFilter;
         private PlayerMovementScript _player;
         private Vector2 _forceDir;
+        private bool _isMotionActive = false;
 
         private void Awake()
         {
@@ -26,24 +27,27 @@ namespace Enemies
                 layerMask = LayerMask.GetMask("Enemy", "EnemyIgnorePlatform"),
                 useLayerMask = true,
                 useNormalAngle = true,
-                minNormalAngle = 30,
-                maxNormalAngle = 150
+                minNormalAngle = 225,
+                maxNormalAngle = 315
             };
-            _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
         }
 
         private void FixedUpdate()
         {
             if (_body.IsTouching(_enemyBelowFilter))
             {
+                if (!_isMotionActive)
+                {
+                    _isMotionActive = true;
+                    _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
+                }
                 Vector2 dir = moveToPlayer ? new Vector2(force * Mathf.Sign(_player.Pos.x - _body.position.x), 0) : _forceDir;
-                _body.AddForce(dir);
+                _body.MovePosition(_body.position + dir * Time.fixedDeltaTime);
             }
-        }
-
-        private void OnValidate()
-        {
-            _forceDir = new Vector2(Mathf.Sign(_forceDir.x) * force, 0);
+            else
+            {
+                _isMotionActive = false;
+            }
         }
     }
 }

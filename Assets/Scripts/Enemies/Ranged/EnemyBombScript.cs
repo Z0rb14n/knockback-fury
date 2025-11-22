@@ -240,7 +240,6 @@ namespace Enemies.Ranged
             Destroy(gameObject);
 
             if (!playerCaused) return;
-            bool prev = Physics2D.queriesHitTriggers;
             Physics2D.queriesHitTriggers = false;
             // ReSharper disable once Unity.PreferNonAllocApi
             Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, radius);
@@ -253,7 +252,7 @@ namespace Enemies.Ranged
                 }
             }
 
-            Physics2D.queriesHitTriggers = prev;
+            Physics2D.queriesHitTriggers = true;
         }
 
         private void OnCollisionEnter2D(Collision2D other)
