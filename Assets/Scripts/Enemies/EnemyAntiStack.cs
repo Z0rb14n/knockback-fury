@@ -13,12 +13,12 @@ namespace Enemies
         [SerializeField] private bool moveToPlayer;
         [SerializeField] private float force = 2;
         [SerializeField] private LayerMask layerMask;
-        private ContactPoint2D[] _contacts = new ContactPoint2D[1];
+        private readonly ContactPoint2D[] _contacts = new ContactPoint2D[1];
         private Rigidbody2D _body;
         private ContactFilter2D _enemyBelowFilter;
         private PlayerMovementScript _player;
         private Vector2 _forceDir;
-        private bool _isMotionActive = false;
+        private bool _isMotionActive;
 
         private void Awake()
         {
