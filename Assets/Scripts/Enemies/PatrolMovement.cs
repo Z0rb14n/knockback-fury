@@ -25,7 +25,12 @@ namespace Enemies
         protected bool _isAttacking;
         [SerializeField]
         protected LayerMask obstacleLayerMask;
-
+        [SerializeField] private Rigidbody2D.SlideMovement slideMovement = new()
+        {
+            maxIterations = 2,
+            gravity = new Vector2(0, -9.81f)
+        };
+        
         private float _originalSpeed;
         private Vector2 _colliderSize;
 
@@ -106,7 +111,8 @@ namespace Enemies
                 }
                 else
                 {
-                    _body.MovePosition(Vector2.MoveTowards(_body.position, target, speed * Time.deltaTime));
+                    Vector2 velocity = (target - _body.position).normalized * speed;
+                    _body.Slide(velocity, Time.deltaTime, slideMovement);
                 }
             }
         }
@@ -169,13 +175,13 @@ namespace Enemies
             }
 
             // initial horizontal ray; tests if there are obstacles at head (top corner) level ahead
-            Debug.DrawRay(frontTopCornerPos, rayDirection, Color.cyan);
+            // Debug.DrawRay(frontTopCornerPos, rayDirection, Color.cyan);
             if (Physics2D.Raycast(frontTopCornerPos, rayDirection, checkAheadDist, obstacleLayerMask)) return -1.0f;
 
             // vertical rays up and down from a little bit ahead of head level
             RaycastHit2D hitDown =
                 Physics2D.Raycast(verticalCheckOrigin, Vector2.down, colliderHeight, obstacleLayerMask);
-            Debug.DrawRay(verticalCheckOrigin, Vector2.down, Color.cyan);
+            // Debug.DrawRay(verticalCheckOrigin, Vector2.down, Color.cyan);
             float distanceToObstacle = hitDown.distance;
             float obstacleHeight = colliderHeight - distanceToObstacle;
 
