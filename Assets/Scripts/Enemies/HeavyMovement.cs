@@ -23,7 +23,7 @@ namespace Enemies
         }
 
         // Update is called once per frame
-        protected override void Update()
+        protected override void FixedUpdate()
         {
             _isAggro = _aggroScript.IsAggro;
             _canMove = DetermineCanMove();
@@ -45,7 +45,7 @@ namespace Enemies
             }
             else
             {
-                base.Update();
+                base.FixedUpdate();
             }
         }
     }

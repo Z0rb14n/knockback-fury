@@ -79,7 +79,7 @@ namespace Enemies
             };
         }
 
-        protected override void Update()
+        protected override void FixedUpdate()
         {
             _isTouchingSurface = Grounded || IsOnLeftWall || IsOnRightWall;
             StickOnWall();

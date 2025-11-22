@@ -58,7 +58,7 @@ namespace Enemies
         }
 
 
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
             if (patrolPoints.Length > 0)
             {
@@ -112,7 +112,7 @@ namespace Enemies
                 else
                 {
                     Vector2 velocity = (target - _body.position).normalized * speed;
-                    _body.Slide(velocity, Time.deltaTime, slideMovement);
+                    _body.Slide(velocity, Time.fixedDeltaTime, slideMovement);
                 }
             }
         }
@@ -136,16 +136,10 @@ namespace Enemies
                 rayDirection = Vector2.left;
             }
 
-            Debug.DrawRay(frontFootPos, rayDirection, Color.blue);
+            // Debug.DrawRay(frontFootPos, rayDirection, Color.blue);
 
             RaycastHit2D hit = Physics2D.Raycast(frontFootPos, rayDirection, 0.1f, obstacleLayerMask);
-            if (hit.collider != null)
-            {
-                // Debug.Log("Collided with: " + hit.collider.name);
-                return true;
-            }
-
-            return false;
+            return hit.collider;
         }
 
 
@@ -185,15 +179,11 @@ namespace Enemies
             float distanceToObstacle = hitDown.distance;
             float obstacleHeight = colliderHeight - distanceToObstacle;
 
-            // Debug.Log("distance: " + distanceToObstacle.ToString());
-            // Debug.Log("maxFallHeight: " + maxFallHeight.ToString());
-            // Debug.Log("colliderHeight: " + colliderHeight.ToString());
-            // Debug.Log("obstacleHeight: " + obstacleHeight.ToString());
             if (obstacleHeight >= maxFallHeight) return -1.0f;
 
             float rayUpDistance = colliderHeight - distanceToObstacle + 0.2f;
             RaycastHit2D hitUp = Physics2D.Raycast(verticalCheckOrigin, Vector2.up, rayUpDistance, obstacleLayerMask);
-            Debug.DrawRay(verticalCheckOrigin, Vector2.up, Color.cyan);
+            // Debug.DrawRay(verticalCheckOrigin, Vector2.up, Color.cyan);
 
             if (hitUp) return -1.0f;
             else return obstacleHeight;
@@ -227,19 +217,10 @@ namespace Enemies
 
         protected bool DetermineCanMove()
         {
-            Vector2 rayDirection = Vector2.down;
-            Vector2 position;
-            if (Direction == 1)
-            {
-                position = new Vector2(_collider2D.bounds.max.x, _collider2D.bounds.center.y);
-            }
-            else
-            {
-                position = new Vector2(_collider2D.bounds.min.x, _collider2D.bounds.center.y);
-            }
-
-            Debug.DrawRay(position, rayDirection, Color.black);
-            return Physics2D.Raycast(position, rayDirection, maxFallHeight, obstacleLayerMask);
+            float xPos = Direction == 1 ? _collider2D.bounds.max.x : _collider2D.bounds.min.x;
+            Vector2 position = new(xPos, _collider2D.bounds.center.y);
+            // Debug.DrawRay(position, rayDirection, Color.black);
+            return Physics2D.Raycast(position, Vector2.down, maxFallHeight, obstacleLayerMask);
         }
 
         protected void DetermineDirection()
