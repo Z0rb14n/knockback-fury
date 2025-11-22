@@ -28,8 +28,8 @@ namespace Enemies
                 layerMask = layerMask,
                 useLayerMask = true,
                 useNormalAngle = true,
-                minNormalAngle = 225,
-                maxNormalAngle = 315
+                minNormalAngle = 30,
+                maxNormalAngle = 150
             };
         }
 
@@ -41,7 +41,14 @@ namespace Enemies
                 {
                     _isMotionActive = true;
                     _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
-                    Debug.Log("Motion now active" + gameObject.name);
+                    // ContactPoint2D[] contacts = new ContactPoint2D[4];
+                    // int count = _body.GetContacts(_enemyBelowFilter, contacts);
+                    // Debug.Log("Motion now active " + gameObject.name);
+                    // for (int i = 0; i < count; i++)
+                    // {
+                    //     Debug.Log("Contact: " + contacts[i].normal + "," + contacts[i].point + "," + contacts[i].collider.gameObject.name);
+                    //     Debug.DrawLine(_body.position, contacts[i].point, Color.red);
+                    // }
                 }
                 Vector2 dir = moveToPlayer ? new Vector2(force * Mathf.Sign(_player.Pos.x - _body.position.x), 0) : _forceDir;
                 _body.MovePosition(_body.position + dir * Time.fixedDeltaTime);
