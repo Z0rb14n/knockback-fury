@@ -224,6 +224,12 @@ MonoBehaviour:
   colliderOnRightWall: {fileID: 41531042006896467}
   wallPositionOffset: {x: 0.4, y: 0}
   targetDistance: 18
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 16897
+  wallCheckMask:
+    serializedVersion: 2
+    m_Bits: 1
 --- !u!114 &7310949198750745542
 MonoBehaviour:
   m_ObjectHideFlags: 0

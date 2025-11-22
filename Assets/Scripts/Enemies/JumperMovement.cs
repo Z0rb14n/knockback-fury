@@ -19,13 +19,14 @@ namespace Enemies
         private Vector2 wallPositionOffset;
 
         [SerializeField] private float targetDistance = 16;
+        [SerializeField] private LayerMask groundLayerMask;
+        [SerializeField] private LayerMask wallCheckMask;
 
         private bool _canJump;
         private bool _isTouchingSurface;
         private ContactFilter2D _groundFilter;
         private ContactFilter2D _leftWallFilter;
         private ContactFilter2D _rightWallFilter;
-        private int _physicsCheckMask;
         private bool _canResetVelocity;
         private bool _isStunned;
         private State _state = State.Idle;
@@ -52,10 +53,9 @@ namespace Enemies
 
         private void InitializeContactFilters()
         {
-            _physicsCheckMask = LayerMask.GetMask("Default");
             _groundFilter = new ContactFilter2D
             {
-                layerMask = LayerMask.GetMask("Default", "Platform"),
+                layerMask = groundLayerMask,
                 useLayerMask = true,
                 useNormalAngle = true,
                 minNormalAngle = 30,
@@ -63,7 +63,7 @@ namespace Enemies
             };
             _leftWallFilter = new ContactFilter2D
             {
-                layerMask = _physicsCheckMask,
+                layerMask = wallCheckMask,
                 useLayerMask = true,
                 useNormalAngle = true,
                 minNormalAngle = -60,
@@ -71,7 +71,7 @@ namespace Enemies
             };
             _rightWallFilter = new ContactFilter2D
             {
-                layerMask = _physicsCheckMask,
+                layerMask = wallCheckMask,
                 useLayerMask = true,
                 useNormalAngle = true,
                 minNormalAngle = 120,
