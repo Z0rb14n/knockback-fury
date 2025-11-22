@@ -13,6 +13,7 @@ namespace Enemies
         [SerializeField] private bool moveToPlayer;
         [SerializeField] private float force = 2;
         [SerializeField] private LayerMask layerMask;
+        private ContactPoint2D[] _contacts = new ContactPoint2D[1];
         private Rigidbody2D _body;
         private ContactFilter2D _enemyBelowFilter;
         private PlayerMovementScript _player;
@@ -33,6 +34,21 @@ namespace Enemies
             };
         }
 
+        /// <summary>
+        /// print/show contact debug information
+        /// </summary>
+        private void PrintContactDebug()
+        {
+            ContactPoint2D[] contacts = new ContactPoint2D[4];
+            int count = _body.GetContacts(_enemyBelowFilter, contacts);
+            Debug.Log("Motion now active " + gameObject.name);
+            for (int i = 0; i < count; i++)
+            {
+                Debug.Log("Contact: " + contacts[i].normal + "," + contacts[i].point + "," + contacts[i].collider.gameObject.name);
+                Debug.DrawLine(_body.position, contacts[i].point, Color.red);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (_body.IsTouching(_enemyBelowFilter))
@@ -40,22 +56,21 @@ namespace Enemies
                 if (!_isMotionActive)
                 {
                     _isMotionActive = true;
-                    _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
-                    // ContactPoint2D[] contacts = new ContactPoint2D[4];
-                    // int count = _body.GetContacts(_enemyBelowFilter, contacts);
-                    // Debug.Log("Motion now active " + gameObject.name);
-                    // for (int i = 0; i < count; i++)
-                    // {
-                    //     Debug.Log("Contact: " + contacts[i].normal + "," + contacts[i].point + "," + contacts[i].collider.gameObject.name);
-                    //     Debug.DrawLine(_body.position, contacts[i].point, Color.red);
-                    // }
+                    _body.GetContacts(_enemyBelowFilter, _contacts);
+                    if (Mathf.Approximately(_contacts[0].normal.x, 0))
+                    {
+                        _forceDir = new Vector2(force * Mathf.Sign(Random.Range(-1f,1f)), 0);
+                    }
+                    else
+                    {
+                        _forceDir = new Vector2(force * Mathf.Sign(_contacts[0].normal.x), 0);
+                    }
+                    #if UNITY_EDITOR
+                    PrintContactDebug();
+                    #endif
                 }
                 Vector2 dir = moveToPlayer ? new Vector2(force * Mathf.Sign(_player.Pos.x - _body.position.x), 0) : _forceDir;
                 _body.MovePosition(_body.position + dir * Time.fixedDeltaTime);
-            }
-            else
-            {
-                _isMotionActive = false;
             }
         }
     }
