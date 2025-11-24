@@ -45,7 +45,7 @@ namespace Weapons
             ammoDisplay.gameObject.SetActive(!reloading);
             if (reloading)
             {
-                reloadDisplay.fillAmount = _weapon.ReloadTime / _weapon.MaxReloadTime;
+                reloadDisplay.fillAmount = 1-_weapon.ReloadTime / _weapon.MaxReloadTime;
                 reloadDisplay.color = _weapon.IsOneYearOfReloadPossible ?  oneYearOfReloadColor : normalReloadColor;
             }
             else

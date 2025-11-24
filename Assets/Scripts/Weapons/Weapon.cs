@@ -332,8 +332,8 @@ namespace Weapons
             if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
             {
                 ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
-                MaxReloadTime = ReloadTime;
             }
+            MaxReloadTime = ReloadTime;
 
             // Play reload start sound
             if (WeaponData.reloadStartEffect)
