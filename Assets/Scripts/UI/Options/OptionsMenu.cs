@@ -2,6 +2,7 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace UI.Options
@@ -11,13 +12,15 @@ namespace UI.Options
     /// </summary>
     public class OptionsMenu : MonoBehaviour
     {
-        private static List<(string, FullScreenMode)> ObjectNameMappings = new()
+        private static readonly List<(string, FullScreenMode)> ObjectNameMappings = new()
         {
             // ExclusiveFullscreen is only supported on Windows
-            ("Fullscreen", FullScreenMode.FullScreenWindow ),
+            ("Fullscreen", FullScreenMode.FullScreenWindow),
             // TODO only supported on Desktop
             ("Windowed", FullScreenMode.Windowed)
         };
+        private const string SfxVolumeString = "SfxVolume";
+        private const string MusicVolumeString = "MusicVolume";
         [Header("Default Settings")]
         [SerializeField]
         private int defaultTargetFPS = 60;
@@ -29,10 +32,25 @@ namespace UI.Options
         private TMP_Dropdown resolutionDropdown;
         [SerializeField]
         private Toggle[] windowTypeToggles;
-        [SerializeField] private Toggle vsyncToggle;
-        [SerializeField] private Slider frameRateSlider;
-        [SerializeField] private TextMeshProUGUI frameRateValueText;
-        [SerializeField] private string unlimitedFrameRateString = "Unlimited";
+        [SerializeField]
+        private Toggle vsyncToggle;
+        [SerializeField]
+        private Slider frameRateSlider;
+        [SerializeField]
+        private TextMeshProUGUI frameRateValueText;
+        [SerializeField]
+        private string unlimitedFrameRateString = "Unlimited";
+        [Header("Audio Settings")]
+        [SerializeField]
+        private AudioMixer audioMixer;
+        [SerializeField]
+        private Slider sfxVolumeSlider;
+        [SerializeField]
+        private TextMeshProUGUI sfxVolumeValueText;
+        [SerializeField]
+        private Slider musicVolumeSlider;
+        [SerializeField]
+        private TextMeshProUGUI musicVolumeValueText;
 
         private void Awake()
         {
@@ -48,6 +66,12 @@ namespace UI.Options
                 .Select(res => new TMP_Dropdown.OptionData($"{res.width} x {res.height}")).Reverse().ToList();
             resolutionDropdown.options = options;
             resolutionDropdown.SetValueWithoutNotify(options.IndexOf(new TMP_Dropdown.OptionData($"{Screen.currentResolution.width} x {Screen.currentResolution.height}")));
+            float sfxVolume = PlayerPrefs.GetFloat(SfxVolumeString, 100);
+            sfxVolumeSlider.value = sfxVolume;
+            sfxVolumeValueText.text = Mathf.RoundToInt(sfxVolume).ToString();
+            float musicVolume = PlayerPrefs.GetFloat(MusicVolumeString, 100);
+            musicVolumeSlider.value = musicVolume;
+            musicVolumeValueText.text = Mathf.RoundToInt(musicVolume).ToString();
         }
 
         /// <summary>
@@ -65,6 +89,54 @@ namespace UI.Options
             frameRateValueText.text = newFps == -1 ? unlimitedFrameRateString : newFps.ToString();
             PlayerPrefs.SetInt("TargetFPS", newFps);
             PlayerPrefs.Save();
+        }
+
+        /// <summary>
+        /// Sets the audio mixer volume given the param to change.
+        /// </summary>
+        /// <param name="param">Audio mixer parameter</param>
+        /// <param name="displayVolume">Display volume, 0-100</param>
+        private void SetVolume(string param, float displayVolume)
+        {
+            float dbVolume = ConvertDisplayVolumeToDb(displayVolume);
+            audioMixer.SetFloat(param, dbVolume);
+        }
+
+        /// <summary>
+        /// Called when SFX slider value has changed.
+        /// </summary>
+        /// <param name="newValue">New display volume, 0-100</param>
+        public void OnSfxVolumeChanged(float newValue)
+        {
+            SetVolume(SfxVolumeString, newValue);
+            sfxVolumeValueText.text = Mathf.RoundToInt(newValue).ToString();
+            PlayerPrefs.SetFloat(SfxVolumeString, newValue);
+        }
+
+        /// <summary>
+        /// Called when Volume slider value has changed.
+        /// </summary>
+        /// <param name="newValue">New display volume, 0-100</param>
+        public void OnMusicVolumeChanged(float newValue)
+        {
+            SetVolume(MusicVolumeString, newValue);
+            musicVolumeValueText.text = Mathf.RoundToInt(newValue).ToString();
+            PlayerPrefs.SetFloat(MusicVolumeString, newValue);
+        }
+
+        /// <summary>
+        /// Converts a 0-100 display volume to Db Gain (-80, 0)
+        /// </summary>
+        /// <param name="displayVolume">Display volume, 0-100</param>
+        /// <returns>Db gain, -80 to 0</returns>
+        private static float ConvertDisplayVolumeToDb(float displayVolume)
+        {
+            displayVolume /= 100;
+            if (displayVolume <= 0)
+            {
+                return -80;
+            }
+            return 20 * Mathf.Log10(displayVolume);
         }
 
         /// <summary>
@@ -101,7 +173,6 @@ namespace UI.Options
             if (!toggle.isOn) return;
             FullScreenMode fullScreenMode = ObjectNameMappings.Find(pair => pair.Item1 == toggle.gameObject.name).Item2;
             Screen.fullScreenMode = fullScreenMode;
-            Debug.Log("is now " + fullScreenMode+";" + Screen.fullScreenMode);
         }
 
         /// <summary>
@@ -116,7 +187,7 @@ namespace UI.Options
         /// Loads settings from PlayerPrefs (that unity doesn't save automatically).
         /// </summary>
         /// <remarks>
-        /// Unity  saves the following settings to PlayerPrefs:
+        /// Unity saves the following settings to PlayerPrefs:
         /// <list type="bullet">
         ///  <item><description>full screen mode</description></item>
         ///  <item><description>Resolution (width and height)</description></item>
@@ -130,6 +201,10 @@ namespace UI.Options
 
             int vsync = PlayerPrefs.GetInt("VSync", defaultVSync);
             QualitySettings.vSyncCount = vsync;
+            float musicVolume = PlayerPrefs.GetFloat(MusicVolumeString, 100);
+            SetVolume(MusicVolumeString, musicVolume);
+            float sfxVolume = PlayerPrefs.GetFloat(SfxVolumeString, 100);
+            SetVolume(SfxVolumeString, sfxVolume);
         }
     }
 }
