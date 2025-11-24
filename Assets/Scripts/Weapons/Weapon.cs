@@ -23,6 +23,11 @@ namespace Weapons
         public WeaponData[] weaponInventory;
         [SerializeField] private int weaponIndex;
         [SerializeField] private LayerMask raycastMask;
+
+        /// <summary>
+        /// Called when the weapon data has changed (i.e. weapon switch).
+        /// </summary>
+        public Action OnWeaponChanged;
         
         public bool IsOneYearOfReloadPossible {
             get
@@ -75,7 +80,15 @@ namespace Weapons
         private int _weaponBurstCount;
         private AudioSource _audioSource;
 
+        /// <summary>
+        /// Current remaining reload time.
+        /// </summary>
         public float ReloadTime { get; private set; }
+
+        /// <summary>
+        /// Most recent reload expected duration.
+        /// </summary>
+        public float MaxReloadTime { get; private set; }
 
         private Vector2 LookDirection => spritePivot.right;
         
@@ -135,7 +148,11 @@ namespace Weapons
                 _weaponBurstTimer -= dt;
                 if (_weaponBurstTimer <= 0)
                 {
-                    if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+                    if (WeaponData.IsClipEmpty)
+                    {
+                        ReloadTime = WeaponData.reloadTime;
+                        MaxReloadTime = WeaponData.reloadTime;
+                    }
                     else
                     {
                         Vector3 mousePos = GetMousePos();
@@ -152,6 +169,7 @@ namespace Weapons
             if (WeaponData == null) return;
             sprite.sprite = WeaponData.sprite;
             if (_audioSource) _audioSource.clip = WeaponData.fireEffect;
+            OnWeaponChanged?.Invoke();
         }
 
         private void HitscanHitLogic(RaycastHit2D hit, bool isMelee, Vector2 vel, Vector2 dir)
@@ -254,7 +272,11 @@ namespace Weapons
             }
 
             WeaponData.DecrementClip();
-            if (WeaponData.IsClipEmpty) ReloadTime = WeaponData.reloadTime;
+            if (WeaponData.IsClipEmpty)
+            {
+                ReloadTime = WeaponData.reloadTime;
+                MaxReloadTime = WeaponData.reloadTime;
+            }
             _weaponDelayTimer = 1/WeaponData.roundsPerSecond;
             if (WeaponData.fireMode == FireMode.Burst)
             {
@@ -277,6 +299,7 @@ namespace Weapons
             if (WeaponData.IsClipEmpty)
             {
                 ReloadTime = WeaponData.reloadTime;
+                MaxReloadTime = WeaponData.reloadTime;
                 return false;
             }
             if (WeaponData.fireMode == FireMode.Burst) _weaponBurstCount = WeaponData.burstInfo.burstAmount;
@@ -309,6 +332,7 @@ namespace Weapons
             if (WeaponData.Clip == 1 && PlayerUpgradeManager.Instance[UpgradeType.LastStrike] > 0)
             {
                 ReloadTime *= 1-PlayerWeaponControl.Instance.lastStrikeBoost/100f;
+                MaxReloadTime = ReloadTime;
             }
 
             // Play reload start sound
