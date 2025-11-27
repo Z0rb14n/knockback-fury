@@ -58,7 +58,6 @@ namespace ColumnMode
             if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
                 go.transform.localScale = new Vector3(-1, 1, 1);
             ColumnSection section = go.GetComponent<ColumnSection>();
-            section.Initialize();
             _sections.Enqueue(section);
             _maxHeight = section.transform.position.y + section.height + diffBetween;
             if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;

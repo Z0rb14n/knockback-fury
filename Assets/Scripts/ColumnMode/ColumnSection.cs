@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FileSave;
@@ -21,6 +22,11 @@ namespace ColumnMode
         [SerializeField] private bool hasWeapon;
         [SerializeField] private bool hasWeaponUpgrade;
         [SerializeField] private bool hasPlayerUpgrade;
+
+        private void Awake()
+        {
+            Initialize();
+        }
 
         public void Initialize()
         {
