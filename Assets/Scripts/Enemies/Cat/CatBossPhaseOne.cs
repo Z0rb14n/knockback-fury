@@ -126,17 +126,17 @@ namespace Enemies.Cat
             Vector2 trSpotAboveFloor = transform.parent.TransformPoint(spotAboveFloor);
             for (float time = 0; time < timeToSpotAboveFloor; time += Time.deltaTime)
             {
-                _rigidbody.position = Vector2.Lerp(prevPos, trSpotAboveFloor, time / timeToSpotAboveFloor);
+                _rigidbody.MovePosition(Vector2.Lerp(prevPos, trSpotAboveFloor, time / timeToSpotAboveFloor));
                 yield return null;
             }
 
-            _rigidbody.position = trSpotAboveFloor;
+            _rigidbody.MovePosition(trSpotAboveFloor);
             yield return new WaitForSeconds(delayAboveFloor);
             float floorUpperBound = _floorCollider.bounds.max.y;
             Vector2 trSpotBelowFloor = transform.parent.TransformPoint(spotBelowFloor);
             for (float time = 0; time < floorFallTime; time += Time.deltaTime)
             {
-                _rigidbody.position = Vector2.Lerp(trSpotAboveFloor, trSpotBelowFloor, time / floorFallTime);
+                _rigidbody.MovePosition(Vector2.Lerp(trSpotAboveFloor, trSpotBelowFloor, time / floorFallTime));
                 if (floorToDestroy && _rigidbody.position.y < floorUpperBound)
                 {
                     Destroy(floorToDestroy);

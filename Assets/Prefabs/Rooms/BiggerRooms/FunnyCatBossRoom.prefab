@@ -344,7 +344,7 @@ MonoBehaviour:
   initialVelocity: {x: 0, y: -50}
   delayBeforeAttacking: 1.5
   delayBetweenJumps: 2.5
-  jumpVector: {x: 10, y: 25}
+  jumpVector: {x: 10, y: 32}
   smallJumpVector: {x: 10, y: 7}
   playerOffsetForSmallJump: 0
   floorToDestroy: {fileID: 8547103633080979974}
