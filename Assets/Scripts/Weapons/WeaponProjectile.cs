@@ -106,7 +106,7 @@ namespace Weapons
                 {
                     _invulnContacts.Dequeue();
                     _entityInvulns.Remove(pair.Item1);
-                    Physics2D.IgnoreCollision(_collider, pair.Item2, false);
+                    if (pair.Item2) Physics2D.IgnoreCollision(_collider, pair.Item2, false);
                 }
                 else
                 {
