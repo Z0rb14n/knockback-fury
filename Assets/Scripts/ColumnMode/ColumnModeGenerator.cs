@@ -16,7 +16,7 @@ namespace ColumnMode
         [SerializeField, Min(0)] private float diffBeforeDeletion = 20;
         [SerializeField, Min(0)] private float diffBetween = 10;
         [SerializeField, Min(0)] private float generationStart = 15;
-        [SerializeField] private float maxGeneration = 750;
+        public float maxGeneration = 750;
         
         private readonly Queue<ColumnSection> _sections = new();
         private GameObject[] _prefabs;

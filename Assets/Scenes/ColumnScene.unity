@@ -2886,6 +2886,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f62d6c138fed40b47917520032733922, type: 3}
+--- !u!4 &1347912236 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8521903942143718067, guid: f62d6c138fed40b47917520032733922, type: 3}
+  m_PrefabInstance: {fileID: 1347912235}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1366459999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3091,7 +3096,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 920}
+  m_Size: {x: 3, y: 844}
   m_EdgeRadius: 0
 --- !u!1 &1424167589
 GameObject:
@@ -3171,6 +3176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1432291352}
   - component: {fileID: 1432291353}
+  - component: {fileID: 1432291354}
   m_Layer: 0
   m_Name: ColumnGenerator
   m_TagString: Untagged
@@ -3234,6 +3240,28 @@ MonoBehaviour:
   diffBetween: 1
   generationStart: 15
   maxGeneration: 400
+--- !u!114 &1432291354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432291351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716b7471ad014943bf3d2b6a208077f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColumnMode.ColumnHeightAdjuster
+  height: 100
+  leftWall: {fileID: 1398637142}
+  leftWallHeightMatcher: {fileID: 949190006}
+  rightWall: {fileID: 935579054}
+  rightWallHeightMatcher: {fileID: 1308598883}
+  ceiling: {fileID: 1780400170}
+  upperPlatform: {fileID: 346853266}
+  risingLava: {fileID: 509398204}
+  columnModeGenerator: {fileID: 1432291353}
+  bossLocation: {fileID: 1347912236}
 --- !u!1 &1472901984
 GameObject:
   m_ObjectHideFlags: 0
