@@ -469,7 +469,7 @@ namespace FloorGen
         private static void ExpandSide(Grid grid, Vector2Int vector2Int, RoomType dir)
         {
             // can't be mixed
-            Debug.Assert(dir.GetParts().Count == 1, "[FloorGenerator::ExpandSide] room type isn't a singular enum");
+            Debug.Assert(dir.IsSinglePart(), "[FloorGenerator::ExpandSide] room type isn't a singular enum");
             Vector2Int next = dir.Move(vector2Int);
             grid.EnsureRoomsPresent(vector2Int, next);
             grid.AddGridEdge(vector2Int, next, dir);

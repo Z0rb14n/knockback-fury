@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Enemies;
 using UnityEngine;
+using Util;
 
 namespace FloorGen
 {
@@ -12,15 +13,19 @@ namespace FloorGen
     {
         [SerializeField, Tooltip("Jumper enemy prefab")]
         private GameObject jumperPrefab;
+
         [SerializeField, Tooltip("Heavy enemy prefab")]
         private GameObject heavyPrefab;
+
         [SerializeField, Tooltip("Ranged enemy prefab")]
         private GameObject rangedPrefab;
+
         [SerializeField, Tooltip("Chaser enemy prefab")]
         private GameObject chaserPrefab;
 
-        [SerializeField, Tooltip("Spawn Points")]
+        [SerializeField, Tooltip("Patrol Points")]
         private Transform[] patrolPoints;
+
         [Tooltip("Types of enemies that can spawn here.")]
         public EnemySpawnType types;
 
@@ -31,110 +36,125 @@ namespace FloorGen
             if (_enemies.Count == 0) Destroy(gameObject);
         }
 
+        /// <summary>
+        /// Called on enemy death - deletes this object.
+        /// </summary>
+        /// <param name="health"></param>
         private void OnEntityDeath(EntityHealth health)
         {
+            health.OnDeath -= OnEntityDeath;
             _enemies.Remove(health);
             if (_enemies.Count == 0) Destroy(gameObject);
+        }
+
+        /// <summary>
+        /// Spawns a random enemy.
+        /// </summary>
+        /// <returns>Spawned GameObject</returns>
+        public GameObject SpawnRandomEnemy()
+        {
+            EnemySpawnType[] allowedTypes = types.GetParts();
+            return SpawnEnemy(allowedTypes.GetRandom());
         }
 
         /// <summary>
         /// Spawn an enemy of a given type.
         /// </summary>
         /// <param name="type">Type of enemy to spawn - can't be a flag.</param>
-        /// <param name="go">Spawned GameObject</param>
-        /// <returns>True if an enemy was created.</returns>
-        public bool SpawnEnemy(EnemySpawnType type, out GameObject go)
+        /// <returns>Spawned GameObject</returns>
+        public GameObject SpawnEnemy(EnemySpawnType type)
         {
             switch (type)
             {
                 case EnemySpawnType.Jumper:
-                    return SpawnJumper(out go);
+                    return SpawnJumper();
                 case EnemySpawnType.Heavy:
-                    return SpawnHeavy(out go);
+                    return SpawnHeavy();
                 case EnemySpawnType.Ranged:
-                    return SpawnRanged(out go);
+                    return SpawnRanged();
                 case EnemySpawnType.Chaser:
-                    return SpawnChaser(out go);
+                    return SpawnChaser();
                 default:
                     Debug.LogError("[EnemySpawnPoint::SpawnEnemy] called with invalid type: " + type);
-                    go = null;
-                    return false;
+                    return null;
             }
         }
 
-        private void SetPatrolPoints(GameObject go)
-        {
-            go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
-        }
+        /// <summary>
+        /// Spawns an enemy prefab at a location and provides the patrol points.
+        /// </summary>
+        /// <param name="prefab">Enemy prefab</param>
+        /// <param name="hasPatrolPoints">Whether the enemy has patrol points</param>
+        /// <returns>Returned object</returns>
+        private GameObject SpawnEntityPrefab(GameObject prefab, bool hasPatrolPoints) =>
+            SpawnEntityPrefab(prefab, Vector3.zero, hasPatrolPoints);
 
-        private void AddToEnemyList(GameObject go)
+        /// <summary>
+        /// Spawns an enemy prefab at a location + offset and provides the patrol points.
+        /// </summary>
+        /// <param name="prefab">Enemy prefab</param>
+        /// <param name="offset">Location offset</param>
+        /// <param name="hasPatrolPoints">Whether the enemy has patrol points</param>
+        /// <returns>Returned object</returns>
+        private GameObject SpawnEntityPrefab(GameObject prefab, Vector3 offset, bool hasPatrolPoints)
         {
+            GameObject go = Instantiate(prefab, transform);
+            // TODO FIX FROG UNCENTERED
+            go.transform.position = transform.position + offset;
+            if (hasPatrolPoints)
+                go.GetComponent<PatrolMovement>().patrolPoints = patrolPoints ?? Array.Empty<Transform>();
             EntityHealth health = go.GetComponent<EntityHealth>();
             _enemies.Add(health);
-            go.GetComponent<EntityHealth>().OnDeath += OnEntityDeath;
+            health.OnDeath += OnEntityDeath;
+            return go;
         }
 
         /// <summary>
         /// Spawn a jumper enemy.
         /// </summary>
-        /// <param name="go">Spawned GameObject</param>
-        /// <returns>True if an enemy was created.</returns>
-        public bool SpawnJumper(out GameObject go)
+        /// <returns>Created GameObject if present</returns>
+        public GameObject SpawnJumper()
         {
-            go = null;
-            if ((types & EnemySpawnType.Jumper) == 0) return false;
-            go = Instantiate(jumperPrefab, transform);
-            // TODO FIX FROG UNCENTERED
-            go.transform.position = transform.position + new Vector3(0,0.75f,0);
-            SetPatrolPoints(go);
-            AddToEnemyList(go);
-            return true;
+            return HasType(EnemySpawnType.Jumper)
+                ? SpawnEntityPrefab(jumperPrefab, new Vector3(0, 0.75f), true)
+                : null;
         }
 
         /// <summary>
         /// Spawn a heavy enemy.
         /// </summary>
-        /// <param name="go">Spawned GameObject</param>
-        /// <returns>True if an enemy was created.</returns>
-        public bool SpawnHeavy(out GameObject go)
+        /// <returns>Created GameObject if present</returns>
+        public GameObject SpawnHeavy()
         {
-            go = null;
-            if ((types & EnemySpawnType.Heavy) == 0) return false;
-            go = Instantiate(heavyPrefab, transform);
-            go.transform.position = transform.position;
-            SetPatrolPoints(go);
-            AddToEnemyList(go);
-            return true;
+            return HasType(EnemySpawnType.Heavy) ? SpawnEntityPrefab(heavyPrefab, true) : null;
         }
 
         /// <summary>
         /// Spawn a ranged enemy.
         /// </summary>
-        /// <param name="go">Spawned GameObject</param>
-        /// <returns>True if an enemy was created.</returns>
-        public bool SpawnRanged(out GameObject go)
+        /// <returns>Created GameObject if present</returns>
+        public GameObject SpawnRanged()
         {
-            go = null;
-            if ((types & EnemySpawnType.Ranged) == 0) return false;
-            go = Instantiate(rangedPrefab, transform);
-            go.transform.position = transform.position;
-            AddToEnemyList(go);
-            return true;
+            return HasType(EnemySpawnType.Ranged) ? SpawnEntityPrefab(rangedPrefab, false) : null;
         }
 
         /// <summary>
         /// Spawn a chaser enemy.
         /// </summary>
-        /// <param name="go">Spawned GameObject</param>
-        /// <returns>True if an enemy was created.</returns>
-        public bool SpawnChaser(out GameObject go)
+        /// <returns>Created GameObject if present</returns>
+        public GameObject SpawnChaser()
         {
-            go = null;
-            if ((types & EnemySpawnType.Chaser) == 0) return false;
-            go = Instantiate(chaserPrefab, transform);
-            go.transform.position = transform.position;
-            AddToEnemyList(go);
-            return true;
+            return HasType(EnemySpawnType.Chaser) ? SpawnEntityPrefab(chaserPrefab, false) : null;
+        }
+
+        /// <summary>
+        /// Similar to <see cref="Enum.HasFlag"/> but avoids boxing - determines if we can spawn this type.
+        /// </summary>
+        /// <param name="type">EnemySpawnType type</param>
+        /// <returns>Whether we have this enemy spawn type</returns>
+        private bool HasType(EnemySpawnType type)
+        {
+            return (types & type) != 0;
         }
     }
 }

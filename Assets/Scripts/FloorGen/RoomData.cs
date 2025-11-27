@@ -249,12 +249,12 @@ namespace FloorGen
         public GameObject SpawnEnemy(EnemySpawnType type, Random random)
         {
             if (_spawnPoints == null) InitializePointsAndMappings();
-            Debug.Assert(type.GetParts().Count == 1, "Room Data Spawn Enemy requires singular type");
+            Debug.Assert(type.IsSinglePart(), "Room Data Spawn Enemy requires singular type");
             List<EnemySpawnPoint> points = _spawnTypeMapping[type];
             if (points.Count == 0) return null;
             EnemySpawnPoint point = points.GetRandom(random);
-            bool didSpawn = point.SpawnEnemy(type, out GameObject go);
-            Debug.Assert(didSpawn);
+            GameObject go = point.SpawnEnemy(type);
+            Debug.Assert(go);
             EntityHealth health = go.GetComponent<EntityHealth>();
             EnemyBehaviour behaviour = go.GetComponent<EnemyBehaviour>();
             _enemyBehaviours.Add(health, behaviour);
