@@ -28,7 +28,7 @@ namespace Enemies
             PlayerMovementScript.Instance.RequestKnockback(knockbackDirection, knockbackForce);
         }
 
-        private void OnCollisionEnter2D(Collider2D other)
+        private void OnTriggerStay2D(Collider2D other)
         {
             if (!damageOnTrigger) return;
             if (other.gameObject.layer != _playerLayer) return;
