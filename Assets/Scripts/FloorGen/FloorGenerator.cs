@@ -316,7 +316,8 @@ namespace FloorGen
                             continue;
                         }
                         SocketBehaviour behaviour = supportedBehaviours.GetRandom(_random);
-                        if (behaviour.SpawnEnemy(type, out GameObject spawnedEnemy))
+                        GameObject spawnedEnemy = behaviour.SpawnEnemy(type);
+                        if (spawnedEnemy)
                         {
                             packSize -= GetCost(type);
                             generatedEnemy = true;

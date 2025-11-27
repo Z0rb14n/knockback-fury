@@ -115,7 +115,7 @@ namespace FloorGen
         /// <returns>Created GameObject if present</returns>
         public GameObject SpawnJumper()
         {
-            return HasType(EnemySpawnType.Jumper)
+            return CanSpawnType(EnemySpawnType.Jumper)
                 ? SpawnEntityPrefab(jumperPrefab, new Vector3(0, 0.75f), true)
                 : null;
         }
@@ -126,7 +126,7 @@ namespace FloorGen
         /// <returns>Created GameObject if present</returns>
         public GameObject SpawnHeavy()
         {
-            return HasType(EnemySpawnType.Heavy) ? SpawnEntityPrefab(heavyPrefab, true) : null;
+            return CanSpawnType(EnemySpawnType.Heavy) ? SpawnEntityPrefab(heavyPrefab, true) : null;
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace FloorGen
         /// <returns>Created GameObject if present</returns>
         public GameObject SpawnRanged()
         {
-            return HasType(EnemySpawnType.Ranged) ? SpawnEntityPrefab(rangedPrefab, false) : null;
+            return CanSpawnType(EnemySpawnType.Ranged) ? SpawnEntityPrefab(rangedPrefab, false) : null;
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace FloorGen
         /// <returns>Created GameObject if present</returns>
         public GameObject SpawnChaser()
         {
-            return HasType(EnemySpawnType.Chaser) ? SpawnEntityPrefab(chaserPrefab, false) : null;
+            return CanSpawnType(EnemySpawnType.Chaser) ? SpawnEntityPrefab(chaserPrefab, false) : null;
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace FloorGen
         /// </summary>
         /// <param name="type">EnemySpawnType type</param>
         /// <returns>Whether we have this enemy spawn type</returns>
-        private bool HasType(EnemySpawnType type)
+        public bool CanSpawnType(EnemySpawnType type)
         {
             return (types & type) != 0;
         }
