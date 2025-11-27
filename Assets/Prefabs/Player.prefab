@@ -836,7 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxViewDist: 150
-  camOffset: {x: 2, y: 0, z: 0}
+  camOffset: {x: 0, y: 0, z: 0}
   columnMode: 0
   columnMinX: 0
   columnMaxX: 0
