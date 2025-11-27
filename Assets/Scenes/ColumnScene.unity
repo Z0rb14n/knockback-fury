@@ -3252,7 +3252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 716b7471ad014943bf3d2b6a208077f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColumnMode.ColumnHeightAdjuster
-  height: 100
+  height: 20
   leftWall: {fileID: 1398637142}
   leftWallHeightMatcher: {fileID: 949190006}
   rightWall: {fileID: 935579054}

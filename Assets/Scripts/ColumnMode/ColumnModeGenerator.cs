@@ -53,14 +53,20 @@ namespace ColumnMode
 
         private void AddSection(float yPos)
         {
-            GameObject go = Instantiate(_prefabs.GetRandomWeighted(_weights, out int index),
-                new Vector3(0, yPos), Quaternion.identity, transform);
+            if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
+            GameObject prefab = _prefabs.GetRandomWeighted(_weights, out int index);
+            float height = prefab.GetComponent<ColumnSection>().height;
+            if (yPos + height > maxGeneration + diffBetween)
+            {
+                _maxHeight = float.MaxValue;
+                return;
+            }
+            GameObject go = Instantiate(prefab, new Vector3(0, yPos), Quaternion.identity, transform);
             if (columnPrefabs[index].canFlip && Random.Range(0, 2) == 0)
                 go.transform.localScale = new Vector3(-1, 1, 1);
             ColumnSection section = go.GetComponent<ColumnSection>();
             _sections.Enqueue(section);
             _maxHeight = section.transform.position.y + section.height + diffBetween;
-            if (_maxHeight >= maxGeneration) _maxHeight = float.MaxValue;
         }
 
         private void OnValidate()

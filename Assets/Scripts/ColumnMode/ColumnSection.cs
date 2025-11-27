@@ -22,6 +22,9 @@ namespace ColumnMode
         [SerializeField] private bool hasWeapon;
         [SerializeField] private bool hasWeaponUpgrade;
         [SerializeField] private bool hasPlayerUpgrade;
+        #if UNITY_EDITOR
+        [SerializeField] private float gizmoViewOffset;
+        #endif
 
         private void Awake()
         {
@@ -79,5 +82,11 @@ namespace ColumnMode
                 }
             }
         }
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireCube(transform.position + new Vector3(0, gizmoViewOffset, 0), new Vector3(10, height, 10));
+        }
+#endif
     }
 }
