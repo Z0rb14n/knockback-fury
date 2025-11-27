@@ -28,8 +28,16 @@ namespace FloorGen
 
         [Tooltip("Types of enemies that can spawn here.")]
         public EnemySpawnType types;
+        [SerializeField, Range(0,10), Tooltip("Number of enemies spawned on awake")]
+        private int enemiesSpawnedOnAwake;
 
         private readonly HashSet<EntityHealth> _enemies = new();
+
+        private void Awake()
+        {
+            for (int i = 0; i < enemiesSpawnedOnAwake; i++)
+                SpawnRandomEnemy();
+        }
 
         private void Start()
         {
