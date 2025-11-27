@@ -785,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070628, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_Name
-      value: PlatformTilePrefab (3)
+      value: TopPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_LocalScale.x
@@ -801,7 +801,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 749.75
+      value: 409.75
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1593,7 +1593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070628, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_Name
-      value: PlatformTilePrefab (2)
+      value: BottomPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 7887206165578070630, guid: 9caf437bfa1b2654f9165c3af2a7fedb, type: 3}
       propertyPath: m_LocalScale.x
@@ -1775,7 +1775,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 1500}
+  m_Size: {x: 3, y: 820}
   m_EdgeRadius: 0
 --- !u!1 &941861269
 GameObject:
@@ -2255,7 +2255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   min: -100
-  max: 736.5
+  max: 396.5
   updateTime: 0.5
 --- !u!1001 &967694462
 PrefabInstance:
@@ -2767,7 +2767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   min: -100
-  max: 725
+  max: 385
   updateTime: 0.5
 --- !u!1001 &1347912235
 PrefabInstance:
@@ -2847,7 +2847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8521903942143718067, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 760.5
+      value: 420.5
       objectReference: {fileID: 0}
     - target: {fileID: 8521903942143718067, guid: f62d6c138fed40b47917520032733922, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3091,7 +3091,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3, y: 1600}
+  m_Size: {x: 3, y: 920}
   m_EdgeRadius: 0
 --- !u!1 &1424167589
 GameObject:
@@ -3233,7 +3233,7 @@ MonoBehaviour:
   diffBeforeDeletion: 10
   diffBetween: 1
   generationStart: 15
-  maxGeneration: 740
+  maxGeneration: 400
 --- !u!1 &1472901984
 GameObject:
   m_ObjectHideFlags: 0
@@ -3344,7 +3344,7 @@ Transform:
   m_GameObject: {fileID: 1780400169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 760, z: 0}
+  m_LocalPosition: {x: 0, y: 420, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
