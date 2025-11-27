@@ -95,22 +95,20 @@ namespace Enemies.Ranged
             _shootCoroutine = null;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void OnDetectionAreaEnter()
         {
             // FIX: only trigger if triggerCheck is enabled
             if (!useTriggerCheck) return;
             if (useProximityCheck) return;
-            if (!other.GetComponent<PlayerMovementScript>()) return;
 
             _isPlayerInside = true;
             StartShooting(); // FIX: guarded against duplicates
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        public void OnDetectionAreaExit()
         {
             if (!useTriggerCheck) return;
             if (useProximityCheck) return;
-            if (!other.GetComponent<PlayerMovementScript>()) return;
 
             _isPlayerInside = false;
             StopShooting(); // FIX: use new helper

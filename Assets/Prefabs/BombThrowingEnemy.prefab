@@ -13,52 +13,12 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: source.Path
-      value: event:/SFX/Enemies/BombThrowing/BombThrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: _source.Path
-      value: event:/SFX/Enemies/BombThrowing/BombThrow
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 4488847752800442320, guid: fa90e8493a384014194673dde3e28bbd, type: 3}
     - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: source.Guid.Data1
-      value: 1374531282
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: source.Guid.Data2
-      value: 1223214023
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: source.Guid.Data3
-      value: 648831874
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: source.Guid.Data4
-      value: 1655027631
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: useProximityCheck
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: _source.Guid.Data1
-      value: 1374531282
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: _source.Guid.Data2
-      value: 1223214023
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: _source.Guid.Data3
-      value: 648831874
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063232189279130196, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: _source.Guid.Data4
-      value: 1655027631
       objectReference: {fileID: 0}
     - target: {fileID: 1669652327100865791, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_Volume
@@ -75,14 +35,6 @@ PrefabInstance:
     - target: {fileID: 3140844653701895980, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: maxHealth
       value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3628323996390703106, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: m_Radius
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 3628323996390703106, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6556247770705963524, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
       propertyPath: m_Sprite
@@ -124,16 +76,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: BombThrowingEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6712825411759390433, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
+      propertyPath: m_Radius
+      value: 16
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4676967839840957038, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6556247770705963530, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      insertIndex: 7
+      insertIndex: -1
       addedObject: {fileID: 9054597239896888203}
     - targetCorrespondingSourceObject: {fileID: 6556247770705963530, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
-      insertIndex: 8
+      insertIndex: -1
       addedObject: {fileID: 5840866086126692171}
   m_SourcePrefab: {fileID: 100100000, guid: eb4df8ca97bcd5740bdcd977294eec02, type: 3}
 --- !u!1 &310210426833455857 stripped
